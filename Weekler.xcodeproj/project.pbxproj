@@ -54,14 +54,86 @@
 		449F18D62BACC4BF00F9640D /* Weekler */ = {
 			isa = PBXGroup;
 			children = (
+				449F18F12BACD18C00F9640D /* Model */,
+				449F18EF2BACD0C300F9640D /* CoreData */,
+				449F18EE2BACD0A800F9640D /* Services */,
+				449F18ED2BACD09A00F9640D /* Helpers */,
+				449F18EC2BACD08900F9640D /* Domain */,
+				449F18EB2BACD08000F9640D /* Scenes */,
 				449F18D72BACC4BF00F9640D /* AppDelegate.swift */,
 				449F18D92BACC4BF00F9640D /* SceneDelegate.swift */,
-				449F18DB2BACC4BF00F9640D /* HomeViewController.swift */,
 				449F18E02BACC4C000F9640D /* Assets.xcassets */,
 				449F18E22BACC4C000F9640D /* LaunchScreen.storyboard */,
 				449F18E52BACC4C000F9640D /* Info.plist */,
 			);
 			path = Weekler;
+			sourceTree = "<group>";
+		};
+		449F18EB2BACD08000F9640D /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				449F18F02BACD10D00F9640D /* HomeView */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		449F18EC2BACD08900F9640D /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		449F18ED2BACD09A00F9640D /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		449F18EE2BACD0A800F9640D /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		449F18EF2BACD0C300F9640D /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		449F18F02BACD10D00F9640D /* HomeView */ = {
+			isa = PBXGroup;
+			children = (
+				449F18F32BACD1AB00F9640D /* ViewModel */,
+				449F18F22BACD1A000F9640D /* View */,
+			);
+			path = HomeView;
+			sourceTree = "<group>";
+		};
+		449F18F12BACD18C00F9640D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		449F18F22BACD1A000F9640D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				449F18DB2BACC4BF00F9640D /* HomeViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		449F18F32BACD1AB00F9640D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
