@@ -7,14 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		440770FD2BBB472900AD9C98 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440770FC2BBB472900AD9C98 /* Colors.swift */; };
+		440771002BBB4B4400AD9C98 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440770FF2BBB4B4400AD9C98 /* SideMenuViewController.swift */; };
+		440771022BBB4F9000AD9C98 /* SideMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440771012BBB4F9000AD9C98 /* SideMenuModel.swift */; };
+		440771042BBB4FD500AD9C98 /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440771032BBB4FD500AD9C98 /* SideMenuTableViewCell.swift */; };
 		449F18D82BACC4BF00F9640D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449F18D72BACC4BF00F9640D /* AppDelegate.swift */; };
 		449F18DA2BACC4BF00F9640D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449F18D92BACC4BF00F9640D /* SceneDelegate.swift */; };
 		449F18DC2BACC4BF00F9640D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449F18DB2BACC4BF00F9640D /* HomeViewController.swift */; };
 		449F18E12BACC4C000F9640D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 449F18E02BACC4C000F9640D /* Assets.xcassets */; };
 		449F18E42BACC4C000F9640D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 449F18E22BACC4C000F9640D /* LaunchScreen.storyboard */; };
+		688CBC1AA5740A8CE9EF5169 /* Pods_Weekler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5114AE03E2F4EA1A2414C08E /* Pods_Weekler.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		440770FC2BBB472900AD9C98 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		440770FF2BBB4B4400AD9C98 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		440771012BBB4F9000AD9C98 /* SideMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuModel.swift; sourceTree = "<group>"; };
+		440771032BBB4FD500AD9C98 /* SideMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewCell.swift; sourceTree = "<group>"; };
 		449F18D42BACC4BF00F9640D /* Weekler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weekler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		449F18D72BACC4BF00F9640D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		449F18D92BACC4BF00F9640D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -22,6 +31,9 @@
 		449F18E02BACC4C000F9640D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		449F18E32BACC4C000F9640D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		449F18E52BACC4C000F9640D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5114AE03E2F4EA1A2414C08E /* Pods_Weekler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Weekler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E5DD8D7ADAD4F3EB5113C57 /* Pods-Weekler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weekler.release.xcconfig"; path = "Target Support Files/Pods-Weekler/Pods-Weekler.release.xcconfig"; sourceTree = "<group>"; };
+		A02F1227E093D7907EC64A30 /* Pods-Weekler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weekler.debug.xcconfig"; path = "Target Support Files/Pods-Weekler/Pods-Weekler.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +41,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				688CBC1AA5740A8CE9EF5169 /* Pods_Weekler.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		440770FE2BBB4B2C00AD9C98 /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				440770FF2BBB4B4400AD9C98 /* SideMenuViewController.swift */,
+				440771032BBB4FD500AD9C98 /* SideMenuTableViewCell.swift */,
+			);
+			path = SideMenu;
+			sourceTree = "<group>";
+		};
 		449F18CB2BACC4BF00F9640D = {
 			isa = PBXGroup;
 			children = (
 				449F18D62BACC4BF00F9640D /* Weekler */,
 				449F18D52BACC4BF00F9640D /* Products */,
+				AECF77C25138E21502570D4F /* Pods */,
+				E9833F2DA29C99EA03CD717B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -87,6 +111,7 @@
 		449F18ED2BACD09A00F9640D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				440770FC2BBB472900AD9C98 /* Colors.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -108,6 +133,7 @@
 		449F18F02BACD10D00F9640D /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
+				440770FE2BBB4B2C00AD9C98 /* SideMenu */,
 				449F18F32BACD1AB00F9640D /* ViewModel */,
 				449F18F22BACD1A000F9640D /* View */,
 			);
@@ -117,6 +143,7 @@
 		449F18F12BACD18C00F9640D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				440771012BBB4F9000AD9C98 /* SideMenuModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -136,6 +163,23 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		AECF77C25138E21502570D4F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A02F1227E093D7907EC64A30 /* Pods-Weekler.debug.xcconfig */,
+				6E5DD8D7ADAD4F3EB5113C57 /* Pods-Weekler.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		E9833F2DA29C99EA03CD717B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5114AE03E2F4EA1A2414C08E /* Pods_Weekler.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,9 +187,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 449F18E82BACC4C000F9640D /* Build configuration list for PBXNativeTarget "Weekler" */;
 			buildPhases = (
+				7D173FB83DB4B3A656A97B1E /* [CP] Check Pods Manifest.lock */,
 				449F18D02BACC4BF00F9640D /* Sources */,
 				449F18D12BACC4BF00F9640D /* Frameworks */,
 				449F18D22BACC4BF00F9640D /* Resources */,
+				F13DF9915828D3BA2F80DBD6 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -201,13 +247,59 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		7D173FB83DB4B3A656A97B1E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Weekler-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F13DF9915828D3BA2F80DBD6 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Weekler/Pods-Weekler-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Weekler/Pods-Weekler-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Weekler/Pods-Weekler-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		449F18D02BACC4BF00F9640D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				449F18DC2BACC4BF00F9640D /* HomeViewController.swift in Sources */,
+				440771022BBB4F9000AD9C98 /* SideMenuModel.swift in Sources */,
+				440770FD2BBB472900AD9C98 /* Colors.swift in Sources */,
 				449F18D82BACC4BF00F9640D /* AppDelegate.swift in Sources */,
+				440771042BBB4FD500AD9C98 /* SideMenuTableViewCell.swift in Sources */,
+				440771002BBB4B4400AD9C98 /* SideMenuViewController.swift in Sources */,
 				449F18DA2BACC4BF00F9640D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -252,7 +344,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -263,7 +355,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -315,7 +407,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -326,7 +418,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -347,6 +439,7 @@
 		};
 		449F18E92BACC4C000F9640D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A02F1227E093D7907EC64A30 /* Pods-Weekler.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -376,6 +469,7 @@
 		};
 		449F18EA2BACC4C000F9640D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6E5DD8D7ADAD4F3EB5113C57 /* Pods-Weekler.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
