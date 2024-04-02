@@ -11,6 +11,9 @@
 		440771002BBB4B4400AD9C98 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440770FF2BBB4B4400AD9C98 /* SideMenuViewController.swift */; };
 		440771022BBB4F9000AD9C98 /* SideMenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440771012BBB4F9000AD9C98 /* SideMenuModel.swift */; };
 		440771042BBB4FD500AD9C98 /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440771032BBB4FD500AD9C98 /* SideMenuTableViewCell.swift */; };
+		4416EE0D2BBC90A100DC74FA /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4416EE0C2BBC90A100DC74FA /* ContainerViewController.swift */; };
+		4416EE0F2BBC993300DC74FA /* MenuState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4416EE0E2BBC993300DC74FA /* MenuState.swift */; };
+		4416EE112BBC9C4700DC74FA /* MenuOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4416EE102BBC9C4700DC74FA /* MenuOptions.swift */; };
 		449F18D82BACC4BF00F9640D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449F18D72BACC4BF00F9640D /* AppDelegate.swift */; };
 		449F18DA2BACC4BF00F9640D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449F18D92BACC4BF00F9640D /* SceneDelegate.swift */; };
 		449F18DC2BACC4BF00F9640D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449F18DB2BACC4BF00F9640D /* HomeViewController.swift */; };
@@ -24,6 +27,9 @@
 		440770FF2BBB4B4400AD9C98 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		440771012BBB4F9000AD9C98 /* SideMenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuModel.swift; sourceTree = "<group>"; };
 		440771032BBB4FD500AD9C98 /* SideMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewCell.swift; sourceTree = "<group>"; };
+		4416EE0C2BBC90A100DC74FA /* ContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
+		4416EE0E2BBC993300DC74FA /* MenuState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuState.swift; sourceTree = "<group>"; };
+		4416EE102BBC9C4700DC74FA /* MenuOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuOptions.swift; sourceTree = "<group>"; };
 		449F18D42BACC4BF00F9640D /* Weekler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weekler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		449F18D72BACC4BF00F9640D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		449F18D92BACC4BF00F9640D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -55,6 +61,14 @@
 				440771032BBB4FD500AD9C98 /* SideMenuTableViewCell.swift */,
 			);
 			path = SideMenu;
+			sourceTree = "<group>";
+		};
+		4416EE0B2BBC907C00DC74FA /* ContainerView */ = {
+			isa = PBXGroup;
+			children = (
+				4416EE0C2BBC90A100DC74FA /* ContainerViewController.swift */,
+			);
+			path = ContainerView;
 			sourceTree = "<group>";
 		};
 		449F18CB2BACC4BF00F9640D = {
@@ -96,6 +110,8 @@
 		449F18EB2BACD08000F9640D /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				440770FE2BBB4B2C00AD9C98 /* SideMenu */,
+				4416EE0B2BBC907C00DC74FA /* ContainerView */,
 				449F18F02BACD10D00F9640D /* HomeView */,
 			);
 			path = Scenes;
@@ -133,7 +149,6 @@
 		449F18F02BACD10D00F9640D /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
-				440770FE2BBB4B2C00AD9C98 /* SideMenu */,
 				449F18F32BACD1AB00F9640D /* ViewModel */,
 				449F18F22BACD1A000F9640D /* View */,
 			);
@@ -144,6 +159,8 @@
 			isa = PBXGroup;
 			children = (
 				440771012BBB4F9000AD9C98 /* SideMenuModel.swift */,
+				4416EE0E2BBC993300DC74FA /* MenuState.swift */,
+				4416EE102BBC9C4700DC74FA /* MenuOptions.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -296,9 +313,12 @@
 			files = (
 				449F18DC2BACC4BF00F9640D /* HomeViewController.swift in Sources */,
 				440771022BBB4F9000AD9C98 /* SideMenuModel.swift in Sources */,
+				4416EE0D2BBC90A100DC74FA /* ContainerViewController.swift in Sources */,
 				440770FD2BBB472900AD9C98 /* Colors.swift in Sources */,
 				449F18D82BACC4BF00F9640D /* AppDelegate.swift in Sources */,
 				440771042BBB4FD500AD9C98 /* SideMenuTableViewCell.swift in Sources */,
+				4416EE0F2BBC993300DC74FA /* MenuState.swift in Sources */,
+				4416EE112BBC9C4700DC74FA /* MenuOptions.swift in Sources */,
 				440771002BBB4B4400AD9C98 /* SideMenuViewController.swift in Sources */,
 				449F18DA2BACC4BF00F9640D /* SceneDelegate.swift in Sources */,
 			);
