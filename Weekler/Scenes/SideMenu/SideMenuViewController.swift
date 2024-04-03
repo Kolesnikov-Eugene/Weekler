@@ -8,7 +8,13 @@
 import UIKit
 import SnapKit
 
+protocol SideMenuViewControllerDelegate: AnyObject {
+    func didSelect(menuItem: MenuOptions)
+}
+
 final class SideMenuViewController: UIViewController {
+    weak var delegate: SideMenuViewControllerDelegate?
+    
     private let reuseIdentifier = "menuCell"
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -42,7 +48,7 @@ final class SideMenuViewController: UIViewController {
     
     private func applyConstraints() {
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -72,6 +78,9 @@ extension SideMenuViewController: UITableViewDataSource {
 extension SideMenuViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
+        let item = MenuOptions.allCases[indexPath.row]
+        delegate?.didSelect(menuItem: item)
     }
 }
 

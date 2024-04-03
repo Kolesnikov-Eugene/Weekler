@@ -19,6 +19,7 @@
 		449F18DC2BACC4BF00F9640D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449F18DB2BACC4BF00F9640D /* HomeViewController.swift */; };
 		449F18E12BACC4C000F9640D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 449F18E02BACC4C000F9640D /* Assets.xcassets */; };
 		449F18E42BACC4C000F9640D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 449F18E22BACC4C000F9640D /* LaunchScreen.storyboard */; };
+		44F1D7582BBDE15300F16298 /* CreateScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F1D7572BBDE15300F16298 /* CreateScheduleViewController.swift */; };
 		688CBC1AA5740A8CE9EF5169 /* Pods_Weekler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5114AE03E2F4EA1A2414C08E /* Pods_Weekler.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		449F18E02BACC4C000F9640D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		449F18E32BACC4C000F9640D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		449F18E52BACC4C000F9640D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		44F1D7572BBDE15300F16298 /* CreateScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewController.swift; sourceTree = "<group>"; };
 		5114AE03E2F4EA1A2414C08E /* Pods_Weekler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Weekler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E5DD8D7ADAD4F3EB5113C57 /* Pods-Weekler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weekler.release.xcconfig"; path = "Target Support Files/Pods-Weekler/Pods-Weekler.release.xcconfig"; sourceTree = "<group>"; };
 		A02F1227E093D7907EC64A30 /* Pods-Weekler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weekler.debug.xcconfig"; path = "Target Support Files/Pods-Weekler/Pods-Weekler.debug.xcconfig"; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 		449F18EB2BACD08000F9640D /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				44F1D7562BBDE13800F16298 /* CurrentWeek */,
 				440770FE2BBB4B2C00AD9C98 /* SideMenu */,
 				4416EE0B2BBC907C00DC74FA /* ContainerView */,
 				449F18F02BACD10D00F9640D /* HomeView */,
@@ -178,6 +181,14 @@
 			children = (
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		44F1D7562BBDE13800F16298 /* CurrentWeek */ = {
+			isa = PBXGroup;
+			children = (
+				44F1D7572BBDE15300F16298 /* CreateScheduleViewController.swift */,
+			);
+			path = CurrentWeek;
 			sourceTree = "<group>";
 		};
 		AECF77C25138E21502570D4F /* Pods */ = {
@@ -311,6 +322,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44F1D7582BBDE15300F16298 /* CreateScheduleViewController.swift in Sources */,
 				449F18DC2BACC4BF00F9640D /* HomeViewController.swift in Sources */,
 				440771022BBB4F9000AD9C98 /* SideMenuModel.swift in Sources */,
 				4416EE0D2BBC90A100DC74FA /* ContainerViewController.swift in Sources */,

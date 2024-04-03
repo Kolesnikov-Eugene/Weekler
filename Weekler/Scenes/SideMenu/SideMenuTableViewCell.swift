@@ -8,19 +8,20 @@
 import UIKit
 import SnapKit
 
+
 final class SideMenuTableViewCell: UITableViewCell {
     private lazy var menuIconImageView: UIImageView = {
         let view = UIImageView()
         
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.tintColor = .white
+        view.tintColor = UIColor(resource: .sideMenuText)
         
         return view
     }()
     private lazy var menuItemText: UILabel = {
         let label = UILabel()
 
-        label.textColor = .white
+        label.textColor = UIColor(resource: .sideMenuText)
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label

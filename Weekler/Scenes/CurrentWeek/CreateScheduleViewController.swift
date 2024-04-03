@@ -1,18 +1,13 @@
 //
-//  ViewController.swift
+//  CurrentWeekViewController.swift
 //  Weekler
 //
-//  Created by Eugene Kolesnikov on 21.03.2024.
+//  Created by Eugene Kolesnikov on 03.04.2024.
 //
 
 import UIKit
 
-protocol HomeViewControllerDelegate:AnyObject {
-    func didTapMenuButton()
-}
-
-final class HomeViewController: UIViewController {
-    
+class CreateScheduleViewController: UIViewController {
     weak var delegate: HomeViewControllerDelegate?
     
     private lazy var leftBarButton: UIBarButtonItem = {
@@ -22,17 +17,17 @@ final class HomeViewController: UIViewController {
         button.style = .plain
         button.target = self
         button.action = #selector(didTapMenuButton)
-        //        button.imageInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
+//        button.imageInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
         button.tintColor = .black
         
         return button
     }()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = Colors.background
-        title = "Home"
+        title = "Create your big plans"
         
         navigationItem.leftBarButtonItem = leftBarButton
     }
@@ -41,4 +36,3 @@ final class HomeViewController: UIViewController {
         delegate?.didTapMenuButton()
     }
 }
-
