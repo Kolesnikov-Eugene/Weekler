@@ -15,9 +15,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-//            let homeViewController = HomeViewController()
-            let containerViewController = ContainerViewController()
-            let navController = UINavigationController(rootViewController: containerViewController)
+            
+            let tabBarController = TabBarController()
+            let navController = UINavigationController(rootViewController: tabBarController)
+            
             window.rootViewController = navController
             window.makeKeyAndVisible()
             self.window = window
