@@ -15,6 +15,6 @@ final class StatisticsViewController: UIViewController {
         self.view.backgroundColor = Colors.background
         
 //        navigationItem.leftBarButtonItem = leftBarButton
-        navigationItem.title = "Statistics"
+        navigationItem.title = L10n.Localizable.Tab.statistics
     }
 }

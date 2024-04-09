@@ -37,7 +37,7 @@ final class TabBarController: UITabBarController {
         let image = UIImage(systemName: "list.bullet.clipboard")
 
         scheduleViewController.tabBarItem = UITabBarItem(
-            title: "Расписание",
+            title: L10n.Localizable.Tab.schedule,
             image: image,
             selectedImage: nil)
 
@@ -54,7 +54,7 @@ final class TabBarController: UITabBarController {
         let taskEditorViewController = TaskEditorViewController()
 
         taskEditorViewController.tabBarItem = UITabBarItem(
-            title: "Запланировать",
+            title: L10n.Localizable.Tab.edit,
             image: UIImage(systemName: "square.and.pencil"),
             selectedImage: nil)
 
@@ -71,7 +71,7 @@ final class TabBarController: UITabBarController {
         let statisticsViewController = StatisticsViewController()
 
         statisticsViewController.tabBarItem = UITabBarItem(
-            title: "Статистика",
+            title: L10n.Localizable.Tab.statistics,
             image: UIImage(systemName: "chart.bar.xaxis"),
             selectedImage: nil)
 
@@ -88,7 +88,7 @@ final class TabBarController: UITabBarController {
         let configViewController = ConfigViewController()
 
         configViewController.tabBarItem = UITabBarItem(
-            title: "Настройки",
+            title: L10n.Localizable.Tab.config,
             image: UIImage(systemName: "gearshape"),
             selectedImage: nil)
 

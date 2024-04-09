@@ -15,6 +15,6 @@ class TaskEditorViewController: UIViewController {
         self.view.backgroundColor = Colors.background
         
 //        navigationItem.leftBarButtonItem = leftBarButton
-        navigationItem.title = "Plan your week"
+        navigationItem.title = L10n.Localizable.Tab.edit
     }
 }

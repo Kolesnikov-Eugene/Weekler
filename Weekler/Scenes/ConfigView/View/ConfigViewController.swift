@@ -15,6 +15,6 @@ final class ConfigViewController: UIViewController {
         self.view.backgroundColor = Colors.background
         
 //        navigationItem.leftBarButtonItem = leftBarButton
-        navigationItem.title = "Configuraton"
+        navigationItem.title = L10n.Localizable.Tab.config
     }
 }
