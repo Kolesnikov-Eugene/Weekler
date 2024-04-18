@@ -7,10 +7,12 @@
 
 import UIKit
 import SnapKit
+import JTAppleCalendar
 
 
 final class ScheduleViewController: UIViewController {
-    private let reuseId = "calendarCell"
+//    private let reuseId = "calendarCell"
+    private let reuseId = "dateCell"
     
     private lazy var backCalendarButton: UIButton = {
         let button = UIButton()
@@ -36,15 +38,27 @@ final class ScheduleViewController: UIViewController {
         
         return button
     }()
-    private lazy var calendarCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+//    private lazy var calendarCollectionView: UICollectionView = {
+//        let layout = UICollectionViewFlowLayout()
+//        layout.scrollDirection = .horizontal
+//        
+//        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+//        collection.backgroundColor = .clear
+//        collection.isScrollEnabled = true
+//        collection.allowsSelection = true
+//        collection.allowsMultipleSelection = false
+//        collection.translatesAutoresizingMaskIntoConstraints = false
+//        
+//        return collection
+//    }()
+    private lazy var calendarCollectionView: JTAppleCalendarView = {
+        let collection = JTAppleCalendarView()
         
-        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.backgroundColor = .clear
-        collection.isScrollEnabled = true
-        collection.allowsSelection = true
-        collection.allowsMultipleSelection = false
+        collection.scrollDirection = .horizontal
+        collection.scrollingMode = .stopAtEachCalendarFrame
+        collection.showsHorizontalScrollIndicator = false
+//        collection.scrollToDate(Date())
         collection.translatesAutoresizingMaskIntoConstraints = false
         
         return collection
@@ -54,7 +68,17 @@ final class ScheduleViewController: UIViewController {
         super.viewDidLoad()
         
         setupUI()
+//        self.calendarCollectionView.reloadData(withanchor: Date())
         
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        calendarCollectionView.scrollToDate(Date()) {
+           self.calendarCollectionView.selectDates([Date()])
+        }
         
     }
     
@@ -67,41 +91,41 @@ final class ScheduleViewController: UIViewController {
             navBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
         }
         
-        calendarCollectionView.register(CalendarCollectionViewCell.self, forCellWithReuseIdentifier: reuseId)
-        calendarCollectionView.dataSource = self
-        calendarCollectionView.delegate = self
+        calendarCollectionView.register(WeekCalendarCollectionViewCell.self, forCellWithReuseIdentifier: reuseId)
+        calendarCollectionView.ibCalendarDelegate = self
+        calendarCollectionView.ibCalendarDataSource = self
         
         addSubviews()
         applyConstraints()
     }
     
     private func addSubviews() {
-        view.addSubview(backCalendarButton)
-        view.addSubview(forwardCalendarButton)
+//        view.addSubview(backCalendarButton)
+//        view.addSubview(forwardCalendarButton)
         view.addSubview(calendarCollectionView)
     }
     
     private func applyConstraints() {
         //back calendar button constraints
-        backCalendarButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(16)
-            $0.centerY.equalTo(calendarCollectionView.snp.centerY)
-            $0.width.equalTo(20)
-        }
+//        backCalendarButton.snp.makeConstraints {
+//            $0.leading.equalToSuperview().offset(16)
+//            $0.centerY.equalTo(calendarCollectionView.snp.centerY)
+//            $0.width.equalTo(20)
+//        }
         
         //forward calendar bitton constraints
-        forwardCalendarButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(16)
-            $0.centerY.equalTo(calendarCollectionView.snp.centerY)
-            $0.width.equalTo(20)
-        }
-        
+//        forwardCalendarButton.snp.makeConstraints {
+//            $0.trailing.equalToSuperview().inset(16)
+//            $0.centerY.equalTo(calendarCollectionView.snp.centerY)
+//            $0.width.equalTo(20)
+//        }
+//        
         //calendar collection view constraints
         calendarCollectionView.snp.makeConstraints {
-            $0.leading.equalTo(backCalendarButton.snp.trailing)
-            $0.trailing.equalTo(forwardCalendarButton.snp.leading)
-            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-            $0.height.equalTo(70)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.leading.equalToSuperview().offset(16)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(40)
         }
     }
     
@@ -114,36 +138,89 @@ final class ScheduleViewController: UIViewController {
     }
 }
 
-extension ScheduleViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 7
+extension ScheduleViewController: JTAppleCalendarViewDataSource {
+    func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy MM dd"
+        let startDate = formatter.date(from: "2020 01 02")!
+
+        let endDate = formatter.date(from: "2025 01 02")!
+        return ConfigurationParameters(startDate: startDate,
+                                       endDate: endDate,
+                                       numberOfRows: 1,
+                                       generateInDates: .forFirstMonthOnly,
+                                       generateOutDates: .off,
+                                       firstDayOfWeek: .monday,
+                                       hasStrictBoundaries: false)
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = calendarCollectionView.dequeueReusableCell(
-            withReuseIdentifier: reuseId,
-            for: indexPath) as? CalendarCollectionViewCell else 
-        {
-            assertionFailure("error while creating calendar cell")
-            return UICollectionViewCell()
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return 6
+//    }
+//    
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        guard let cell = calendarCollectionView.dequeueReusableCell(
+//            withReuseIdentifier: reuseId,
+//            for: indexPath) as? CalendarCollectionViewCell else 
+//        {
+//            assertionFailure("error while creating calendar cell")
+//            return UICollectionViewCell()
+//        }
+//        
+//        cell.configureCell()
+//        
+//        return cell
+//    }
+}
+
+extension ScheduleViewController: JTAppleCalendarViewDelegate {
+    func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
+        let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "dateCell", for: indexPath) as! WeekCalendarCollectionViewCell
+        cell.dateLabel.text = cellState.text
+        
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy MM dd"
+        let date = formatter.string(from: cellState.date)
+        
+        if cellState.isSelected {
+            print("true")
+            cell.dateLabel.textColor = .red
         }
-        
-        cell.configureCell()
-        
         return cell
+    }
+    func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
+        let cell = cell as! WeekCalendarCollectionViewCell
+        cell.dateLabel.text = cellState.text
+        
+        if cellState.isSelected {
+            print("true")
+            cell.dateLabel.textColor = .red
+        }
+    }
+    
+    func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy.MM.dd"
+        let date = formatter.string(from: cellState.date)
+        if let cell = cell as? WeekCalendarCollectionViewCell {
+            cell.dateLabel.textColor = .red
+        }
     }
 }
 
 extension ScheduleViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath) -> CGSize
-    {
-       return CGSize(width: 35, height: 60)
-    }
+//    func collectionView(
+//        _ collectionView: UICollectionView,
+//        layout collectionViewLayout: UICollectionViewLayout,
+//        sizeForItemAt indexPath: IndexPath) -> CGSize
+//    {
+//       return CGSize(width: 35, height: 60)
+//    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 10
+        return 0
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
 }
