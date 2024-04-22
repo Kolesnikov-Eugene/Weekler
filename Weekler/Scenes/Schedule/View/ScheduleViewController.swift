@@ -13,6 +13,7 @@ import JTAppleCalendar
 final class ScheduleViewController: UIViewController {
 //    private let reuseId = "calendarCell"
     private let reuseId = "dateCell"
+    private let headerReuseId = "DateHeader"
     
     private lazy var backCalendarButton: UIButton = {
         let button = UIButton()
@@ -63,6 +64,13 @@ final class ScheduleViewController: UIViewController {
         
         return collection
     }()
+    private lazy var formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        
+        formatter.dateFormat = "yyyy.MM.dd"
+        
+        return formatter
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,6 +100,9 @@ final class ScheduleViewController: UIViewController {
         }
         
         calendarCollectionView.register(WeekCalendarCollectionViewCell.self, forCellWithReuseIdentifier: reuseId)
+        calendarCollectionView.register(CalendarCollectionViewCell.self,
+                                        forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                        withReuseIdentifier: headerReuseId)
         calendarCollectionView.ibCalendarDelegate = self
         calendarCollectionView.ibCalendarDataSource = self
         
@@ -100,32 +111,16 @@ final class ScheduleViewController: UIViewController {
     }
     
     private func addSubviews() {
-//        view.addSubview(backCalendarButton)
-//        view.addSubview(forwardCalendarButton)
         view.addSubview(calendarCollectionView)
     }
     
     private func applyConstraints() {
-        //back calendar button constraints
-//        backCalendarButton.snp.makeConstraints {
-//            $0.leading.equalToSuperview().offset(16)
-//            $0.centerY.equalTo(calendarCollectionView.snp.centerY)
-//            $0.width.equalTo(20)
-//        }
-        
-        //forward calendar bitton constraints
-//        forwardCalendarButton.snp.makeConstraints {
-//            $0.trailing.equalToSuperview().inset(16)
-//            $0.centerY.equalTo(calendarCollectionView.snp.centerY)
-//            $0.width.equalTo(20)
-//        }
-//        
         //calendar collection view constraints
         calendarCollectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().inset(16)
-            $0.height.equalTo(40)
+            $0.height.equalTo(60)
         }
     }
     
@@ -140,11 +135,9 @@ final class ScheduleViewController: UIViewController {
 
 extension ScheduleViewController: JTAppleCalendarViewDataSource {
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy MM dd"
         let startDate = formatter.date(from: "2020 01 02")!
-
         let endDate = formatter.date(from: "2025 01 02")!
+        
         return ConfigurationParameters(startDate: startDate,
                                        endDate: endDate,
                                        numberOfRows: 1,
@@ -153,58 +146,67 @@ extension ScheduleViewController: JTAppleCalendarViewDataSource {
                                        firstDayOfWeek: .monday,
                                        hasStrictBoundaries: false)
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return 6
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        guard let cell = calendarCollectionView.dequeueReusableCell(
-//            withReuseIdentifier: reuseId,
-//            for: indexPath) as? CalendarCollectionViewCell else 
-//        {
-//            assertionFailure("error while creating calendar cell")
-//            return UICollectionViewCell()
-//        }
-//        
-//        cell.configureCell()
-//        
-//        return cell
-//    }
 }
 
 extension ScheduleViewController: JTAppleCalendarViewDelegate {
-    func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
-        let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "dateCell", for: indexPath) as! WeekCalendarCollectionViewCell
-        cell.dateLabel.text = cellState.text
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy MM dd"
-        let date = formatter.string(from: cellState.date)
-        
-        if cellState.isSelected {
-            print("true")
-            cell.dateLabel.textColor = .red
+    func calendar(
+        _ calendar: JTAppleCalendarView,
+        cellForItemAt date: Date,
+        cellState: CellState,
+        indexPath: IndexPath) -> JTAppleCell
+    {
+        guard let cell = calendar.dequeueReusableJTAppleCell(
+            withReuseIdentifier: "dateCell",
+            for: indexPath) as? WeekCalendarCollectionViewCell
+        else {
+            fatalError("error while instantiating JTApple cell")
         }
+        
+        
+        let currentDate = cellState.text
+        cell.configureCell(with: currentDate)
+        
+        
+        cell.changeSelectionState(isSelected: cellState.isSelected)
+        
         return cell
     }
+    
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
-        let cell = cell as! WeekCalendarCollectionViewCell
-        cell.dateLabel.text = cellState.text
-        
-        if cellState.isSelected {
-            print("true")
-            cell.dateLabel.textColor = .red
+        guard let cell = cell as? WeekCalendarCollectionViewCell else {
+            assertionFailure("error in displaying calendar cell")
+            return
         }
+        
+        let currentDate = cellState.text
+        cell.configureCell(with: currentDate)
+        
+        cell.changeSelectionState(isSelected: cellState.isSelected)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy.MM.dd"
-        let date = formatter.string(from: cellState.date)
-        if let cell = cell as? WeekCalendarCollectionViewCell {
-            cell.dateLabel.textColor = .red
+        guard let cell = cell as? WeekCalendarCollectionViewCell else {
+            assertionFailure("error in didSelect calendar cell")
+            return
         }
+        
+        cell.changeSelectionState(isSelected: cellState.isSelected)
+    }
+    
+    func calendar(_ calendar: JTAppleCalendarView, shouldDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
+        print("dselected")
+        return false
+    }
+    
+    func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        
+        if let cell = cell as? WeekCalendarCollectionViewCell {
+            cell.changeSelectionState(isSelected: cellState.isSelected)
+        }
+    }
+    
+    func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
+        print(visibleDates)
     }
 }
 
