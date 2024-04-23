@@ -13,6 +13,8 @@ class WeekCalendarCollectionViewCell: JTAppleCell {
         let label = UILabel()
         
         label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
@@ -51,6 +53,7 @@ class WeekCalendarCollectionViewCell: JTAppleCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         dateLabel.textColor = .black
+        selectedStateView.backgroundColor = .clear
     }
     
     private func setupUI() {
