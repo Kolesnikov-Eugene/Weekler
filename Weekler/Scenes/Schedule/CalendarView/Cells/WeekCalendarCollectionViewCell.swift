@@ -9,15 +9,35 @@ import UIKit
 import JTAppleCalendar
 
 class WeekCalendarCollectionViewCell: JTAppleCell {
+    private lazy var dayLabel: UILabel = {
+        let label = UILabel()
+        
+        label.textAlignment = .center
+        label.backgroundColor = .clear
+        label.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
+    }()
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
         
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        
         label.translatesAutoresizingMaskIntoConstraints = false
         
         return label
+    }()
+    private lazy var currentDayView: UIView = {
+        let view = UIView()
+        
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.layer.masksToBounds = false
+        view.clipsToBounds = true
+        view.isHidden = true
+        view.backgroundColor = .lightGray
+        
+        return view
     }()
     private lazy var selectedStateView: UIView = {
         let view = UIView()
@@ -25,10 +45,17 @@ class WeekCalendarCollectionViewCell: JTAppleCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.masksToBounds = false
         view.clipsToBounds = true
-//        view.layer.borderWidth = 1
-//        view.layer.cornerRadius = 20
         view.backgroundColor = .clear
         
+        return view
+    }()
+    private lazy var dateStackView: UIStackView = {
+        let view = UIStackView()
+        
+        view.axis = .vertical
+        view.distribution = .fillEqually
+        view.alignment = .center
+        view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
     }()
@@ -47,13 +74,14 @@ class WeekCalendarCollectionViewCell: JTAppleCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         selectedStateView.layer.cornerRadius = CGRectGetHeight(selectedStateView.bounds) / 2.0
-//        selectedStateView.layer.cornerRadius = 25
+        currentDayView.layer.cornerRadius = CGRectGetHeight(currentDayView.bounds) / 2.0
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         dateLabel.textColor = .black
         selectedStateView.backgroundColor = .clear
+        currentDayView.isHidden = true
     }
     
     private func setupUI() {
@@ -64,34 +92,42 @@ class WeekCalendarCollectionViewCell: JTAppleCell {
     }
     
     private func addSubviews() {
+        contentView.addSubview(currentDayView)
         contentView.addSubview(selectedStateView)
-        contentView.addSubview(dateLabel)
+        contentView.addSubview(dateStackView)
+        dateStackView.addArrangedSubview(dayLabel)
+        dateStackView.addArrangedSubview(dateLabel)
     }
     
     private func applyConstraints() {
-        //date label constraints
-        dateLabel.snp.makeConstraints {
+        //dateStackViewConstraints
+        dateStackView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.bottom.equalToSuperview()
             $0.leading.equalToSuperview()
             $0.trailing.equalToSuperview()
         }
         
-        //selected state view constraints
+        //selectedStateView constraints
         selectedStateView.snp.makeConstraints {
-//            $0.top.equalToSuperview()
-//            $0.bottom.equalToSuperview()
-//            $0.leading.equalToSuperview()
-//            $0.trailing.equalToSuperview()
-            $0.centerY.equalTo(contentView.snp.centerY)
-            $0.centerX.equalTo(contentView.snp.centerX)
+            $0.centerY.equalTo(dateLabel.snp.centerY)
+            $0.centerX.equalTo(dateLabel.snp.centerX)
+            $0.height.equalTo(30)
+            $0.width.equalTo(30)
+        }
+        
+        currentDayView.snp.makeConstraints {
+            $0.centerY.equalTo(dateLabel.snp.centerY)
+            $0.centerX.equalTo(dateLabel.snp.centerX)
             $0.height.equalTo(30)
             $0.width.equalTo(30)
         }
     }
     
-    func configureCell(with currentDate: String) {
+    func configureCell(currentDate: String, day: String, isCurrent: Bool) {
+        dayLabel.text = day
         dateLabel.text = currentDate
+        currentDayView.isHidden = !isCurrent
     }
     
     func changeSelectionState(isSelected: Bool) {

@@ -11,6 +11,7 @@ import JTAppleCalendar
 
 
 final class ScheduleViewController: UIViewController {
+    //MARK: - private properties
     private var startDate = ""
     private var endDate = ""
     private let reuseId = "calendarCell"
@@ -39,19 +40,6 @@ final class ScheduleViewController: UIViewController {
         button.addTarget(self, action: #selector(didTapForwardButton), for: .touchUpInside)
         
         return button
-    }()
-    private lazy var daysCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        
-        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collection.isScrollEnabled = false
-        collection.allowsSelection = false
-        collection.backgroundColor = .clear
-        collection.translatesAutoresizingMaskIntoConstraints = false
-        
-        return collection
-        
     }()
     private lazy var calendarCollectionView: JTAppleCalendarView = {
         let collection = JTAppleCalendarView()
@@ -88,6 +76,7 @@ final class ScheduleViewController: UIViewController {
         
     }
     
+    //MARK: - private methods
     private func setupUI() {
         self.view.backgroundColor = Colors.background
         configureNavBar()
@@ -96,36 +85,21 @@ final class ScheduleViewController: UIViewController {
         calendarCollectionView.ibCalendarDelegate = self
         calendarCollectionView.ibCalendarDataSource = self
         
-        daysCollectionView.register(DaysCollectionViewCell.self, forCellWithReuseIdentifier: daysCellReuseId)
-        daysCollectionView.dataSource = self
-        daysCollectionView.delegate = self
-        
         addSubviews()
         applyConstraints()
     }
     
     private func addSubviews() {
         view.addSubview(calendarCollectionView)
-        view.addSubview(daysCollectionView)
     }
     
     private func applyConstraints() {
         //calendar collection view constraints
         calendarCollectionView.snp.makeConstraints {
-            $0.top.equalTo(daysCollectionView.snp.bottom)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.equalToSuperview().inset(24)
-//            $0.leading.equalTo(daysCollectionView.snp.leading)
-//            $0.leading.equalTo(daysCollectionView.snp.trailing)
-            $0.height.equalTo(40)
-        }
-        
-        //daysOfWeekCollection constraints
-        daysCollectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().inset(16)
-            $0.height.equalTo(15)
+            $0.height.equalTo(70)
         }
     }
     
@@ -147,13 +121,12 @@ final class ScheduleViewController: UIViewController {
     }
 }
 
+//MARK: - JTAppleCalendarViewDataSource
 extension ScheduleViewController: JTAppleCalendarViewDataSource {
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
-//        let startDate = formatter.date(from: "01 января 2020")!
-//        let endDate = formatter.date(from: "01 января 2030")!
         let startDate = Date(timeIntervalSince1970: 1577826000)
         let endDate = Date(timeIntervalSince1970: 4102434000)
-
+        
         return ConfigurationParameters(startDate: startDate,
                                        endDate: endDate,
                                        numberOfRows: 1,
@@ -164,6 +137,7 @@ extension ScheduleViewController: JTAppleCalendarViewDataSource {
     }
 }
 
+//MARK: - JTAppleCalendarViewDelegate
 extension ScheduleViewController: JTAppleCalendarViewDelegate {
     func calendar(
         _ calendar: JTAppleCalendarView,
@@ -178,10 +152,11 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
             fatalError("error while instantiating JTApple cell")
         }
         
+        let isCurrent = formatter.string(from: date) == formatter.string(from: Date())
+        let day = DaysOfWeek.allCases[indexPath.row].rawValue
         let currentDate = cellState.text
         
-        cell.configureCell(with: currentDate)
-        
+        cell.configureCell(currentDate: currentDate, day: day, isCurrent: isCurrent)
         cell.changeSelectionState(isSelected: cellState.isSelected)
         
         return cell
@@ -193,9 +168,11 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
             return
         }
         
+        let isCurrent = formatter.string(from: date) == formatter.string(from: Date())
+        let day = DaysOfWeek.allCases[indexPath.row].rawValue
         let currentDate = cellState.text
-        cell.configureCell(with: currentDate)
         
+        cell.configureCell(currentDate: currentDate, day: day, isCurrent: isCurrent)
         cell.changeSelectionState(isSelected: cellState.isSelected)
     }
     
@@ -231,35 +208,5 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
         startDate = formatter.string(from: start)
         endDate = formatter.string(from: end)
         navigationItem.title = "\(startDate) - \(endDate)"
-    }
-}
-
-extension ScheduleViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        DaysOfWeek.allCases.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = daysCollectionView.dequeueReusableCell(
-            withReuseIdentifier: daysCellReuseId, for: indexPath) as? DaysCollectionViewCell
-        else {
-            fatalError("error when creating days of week cell")
-        }
-        
-        let day = DaysOfWeek.allCases[indexPath.row].rawValue
-        cell.configureCell(with: day)
-        
-        return cell
-    }
-}
-
-extension ScheduleViewController: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
     }
 }
