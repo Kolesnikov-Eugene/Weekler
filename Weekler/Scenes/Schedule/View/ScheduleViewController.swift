@@ -162,7 +162,12 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
         return cell
     }
     
-    func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
+    func calendar(
+        _ calendar: JTAppleCalendarView,
+        willDisplay cell: JTAppleCell,
+        forItemAt date: Date, cellState: CellState,
+        indexPath: IndexPath)
+    {
         guard let cell = cell as? WeekCalendarCollectionViewCell else {
             assertionFailure("error in displaying calendar cell")
             return
@@ -176,7 +181,12 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
         cell.changeSelectionState(isSelected: cellState.isSelected)
     }
     
-    func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+    func calendar(
+        _ calendar: JTAppleCalendarView,
+        didSelectDate date: Date,
+        cell: JTAppleCell?,
+        cellState: CellState)
+    {
         guard let cell = cell as? WeekCalendarCollectionViewCell else {
             assertionFailure("error in didSelect calendar cell")
             return
@@ -185,21 +195,33 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
         cell.changeSelectionState(isSelected: cellState.isSelected)
     }
     
-    func calendar(_ calendar: JTAppleCalendarView, shouldDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
+    func calendar(
+        _ calendar: JTAppleCalendarView,
+        shouldDeselectDate date: Date,
+        cell: JTAppleCell?,
+        cellState: CellState
+    ) -> Bool {
         if let cell = cell as? WeekCalendarCollectionViewCell {
             cell.changeSelectionState(isSelected: cellState.isSelected)
         }
         return true
     }
     
-    func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        
+    func calendar(
+        _ calendar: JTAppleCalendarView,
+        didDeselectDate date: Date,
+        cell: JTAppleCell?,
+        cellState: CellState)
+    {
         if let cell = cell as? WeekCalendarCollectionViewCell {
             cell.changeSelectionState(isSelected: cellState.isSelected)
         }
     }
     
-    func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
+    func calendar(
+        _ calendar: JTAppleCalendarView,
+        didScrollToDateSegmentWith visibleDates: DateSegmentInfo)
+    {
         let start = visibleDates.monthDates[0].date
         let end = visibleDates.monthDates[6].date
         let a = formatter.string(from: start)
