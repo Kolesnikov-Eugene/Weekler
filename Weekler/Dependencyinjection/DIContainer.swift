@@ -5,15 +5,14 @@
 //  Created by Eugene Kolesnikov on 26.04.2024.
 //
 
-import Foundation
 import Swinject
 
 final class DIContainer {
     
     static let shared = DIContainer()
     
-    let container = Container()
-    let assembler: Assembler
+    private let container = Container()
+    private let assembler: Assembler
     
     init() {
         assembler = Assembler([

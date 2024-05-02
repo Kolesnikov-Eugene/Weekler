@@ -8,8 +8,11 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
+    
+    private let tabBarFactory: TabBarFactory
 
-    init() {
+    init(tabBarFactory: TabBarFactory) {
+        self.tabBarFactory = tabBarFactory
         super.init(nibName: nil, bundle: nil)
         setupView()
     }
@@ -28,11 +31,16 @@ final class TabBarController: UITabBarController {
         let statisticsViewController = setupStatisticsViewController()
         let configViewController = setupConfigViewController()
 
-        viewControllers = [scheduleViewController, taskEditorViewController, statisticsViewController, configViewController]
+        viewControllers = [
+            scheduleViewController,
+            taskEditorViewController,
+            statisticsViewController,
+            configViewController
+        ]
     }
 
     private func setupScheduleViewController() -> UINavigationController {
-        let scheduleViewController = ScheduleViewController()
+        let scheduleViewController = tabBarFactory.createScheduleViewController()
         
         let image = UIImage(systemName: "list.bullet.clipboard")
 
