@@ -219,7 +219,7 @@
 		449F18D62BACC4BF00F9640D /* Weekler */ = {
 			isa = PBXGroup;
 			children = (
-				44F116902BDC382700134D5F /* Dependencyinjection */,
+				44F116902BDC382700134D5F /* DependencyInjection */,
 				440549E62BC5D8A700077C61 /* Resources */,
 				440549E32BC5D7CF00077C61 /* Generated */,
 				449F18F12BACD18C00F9640D /* Model */,
@@ -290,13 +290,13 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		44F116902BDC382700134D5F /* Dependencyinjection */ = {
+		44F116902BDC382700134D5F /* DependencyInjection */ = {
 			isa = PBXGroup;
 			children = (
 				44F116912BDC383600134D5F /* DependencyAssemblers */,
 				44F116922BDC384B00134D5F /* DIContainer.swift */,
 			);
-			path = Dependencyinjection;
+			path = DependencyInjection;
 			sourceTree = "<group>";
 		};
 		44F116912BDC383600134D5F /* DependencyAssemblers */ = {
