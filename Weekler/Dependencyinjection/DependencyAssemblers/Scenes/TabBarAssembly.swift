@@ -9,8 +9,8 @@ import Swinject
 
 final class TabBarAssembly: Assembly {
     func assemble(container: Swinject.Container) {
-        container.register(TabBarController.self) { _ in
-            TabBarController()
+        container.register(TabBarController.self) { _, factory in
+            TabBarController(tabBarFactory: factory)
         }.inObjectScope(.container)
     }
 }
