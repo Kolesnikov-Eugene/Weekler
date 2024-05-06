@@ -153,7 +153,7 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
         }
         
         let isCurrent = formatter.string(from: date) == formatter.string(from: Date())
-        let day = DaysOfWeek.allCases[indexPath.row].rawValue
+        let day = DaysOfWeek.getShortDayOfWeek(for: cellState.day)
         let currentDate = cellState.text
         
         cell.configureCell(currentDate: currentDate, day: day, isCurrent: isCurrent)
@@ -174,7 +174,7 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
         }
         
         let isCurrent = formatter.string(from: date) == formatter.string(from: Date())
-        let day = DaysOfWeek.allCases[indexPath.row].rawValue
+        let day = DaysOfWeek.getShortDayOfWeek(for: cellState.day)
         let currentDate = cellState.text
         
         cell.configureCell(currentDate: currentDate, day: day, isCurrent: isCurrent)

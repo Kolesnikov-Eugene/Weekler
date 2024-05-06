@@ -27,6 +27,4 @@ final class TabBarFactory: TabBarFactoryProtocol {
         let statisticsVC: StatisticsViewController = DIContainer.shared.resolve()
         return statisticsVC
     }
-    
-    
 }

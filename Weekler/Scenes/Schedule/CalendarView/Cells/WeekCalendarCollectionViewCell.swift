@@ -79,6 +79,7 @@ class WeekCalendarCollectionViewCell: JTAppleCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        dayLabel.text = ""
         dateLabel.textColor = .black
         selectedStateView.backgroundColor = .clear
         currentDayView.isHidden = true
