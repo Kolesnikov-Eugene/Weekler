@@ -16,8 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             
-            let tabBarFactory: TabBarFactory = DIContainer.shared.resolve()
-            let tabBarController: TabBarController = DIContainer.shared.resolve(argument: tabBarFactory)
+            let tabBarController: TabBarController = DIContainer.shared.resolve()
             
             window.rootViewController = tabBarController
             window.makeKeyAndVisible()

@@ -11,6 +11,6 @@ final class StatisticsAssembly: Assembly {
     func assemble(container: Swinject.Container) {
         container.register(StatisticsViewController.self) { _ in
             StatisticsViewController()
-        }
+        }.inObjectScope(.container)
     }
 }

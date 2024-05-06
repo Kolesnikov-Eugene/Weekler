@@ -11,6 +11,6 @@ final class TaskEditorAssembly: Assembly {
     func assemble(container: Swinject.Container) {
         container.register(TaskEditorViewController.self) { _ in
             TaskEditorViewController()
-        }
+        }.inObjectScope(.container)
     }
 }

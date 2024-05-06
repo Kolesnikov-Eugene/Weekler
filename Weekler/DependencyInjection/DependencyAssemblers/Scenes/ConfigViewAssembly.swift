@@ -11,6 +11,6 @@ final class ConfigViewAssembly: Assembly {
     func assemble(container: Swinject.Container) {
         container.register(ConfigViewController.self) { _ in
             ConfigViewController()
-        }
+        }.inObjectScope(.container)
     }
 }

@@ -11,6 +11,6 @@ final class TabBarFactoryAssembly: Assembly {
     func assemble(container: Swinject.Container) {
         container.register(TabBarFactory.self) { _ in
             TabBarFactory()
-        }
+        }.inObjectScope(.container)
     }
 }
