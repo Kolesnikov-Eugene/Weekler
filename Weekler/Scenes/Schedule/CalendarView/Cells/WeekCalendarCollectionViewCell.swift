@@ -35,7 +35,7 @@ class WeekCalendarCollectionViewCell: JTAppleCell {
         view.layer.masksToBounds = false
         view.clipsToBounds = true
         view.isHidden = true
-        view.backgroundColor = .lightGray
+        view.backgroundColor = Colors.calendarCurrentDateBackground
         
         return view
     }()
@@ -132,6 +132,6 @@ class WeekCalendarCollectionViewCell: JTAppleCell {
     }
     
     func changeSelectionState(isSelected: Bool) {
-        selectedStateView.backgroundColor = isSelected ? .red : .clear
+        selectedStateView.backgroundColor = isSelected ? Colors.dateSelectedBackground : .clear
     }
 }
