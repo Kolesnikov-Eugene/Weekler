@@ -15,7 +15,8 @@ final class ScheduleViewController: UIViewController {
     private var startDate = ""
     private var endDate = ""
     private let reuseId = "calendarCell"
-    private let daysCellReuseId = "daysCell"
+//    private let daysCellReuseId = "daysCell"
+    private let scheduleCellReuseId = "scheduleCell"
     
     private lazy var backCalendarButton: UIButton = {
         let button = UIButton()
@@ -52,6 +53,16 @@ final class ScheduleViewController: UIViewController {
         
         return collection
     }()
+    private lazy var scheduleTableView: UITableView = {
+        let tableView = UITableView()
+        
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.allowsSelection = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return tableView
+    }()
     private lazy var formatter: DateFormatter = {
         let formatter = DateFormatter()
         
@@ -85,12 +96,17 @@ final class ScheduleViewController: UIViewController {
         calendarCollectionView.ibCalendarDelegate = self
         calendarCollectionView.ibCalendarDataSource = self
         
+        scheduleTableView.register(ScheduleTableViewCell.self, forCellReuseIdentifier: scheduleCellReuseId)
+        scheduleTableView.dataSource = self
+        scheduleTableView.delegate = self
+        
         addSubviews()
         applyConstraints()
     }
     
     private func addSubviews() {
         view.addSubview(calendarCollectionView)
+        view.addSubview(scheduleTableView)
     }
     
     private func applyConstraints() {
@@ -100,6 +116,14 @@ final class ScheduleViewController: UIViewController {
             $0.leading.equalToSuperview().offset(16)
             $0.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(70)
+        }
+        
+        //scheduleTableView Constraints
+        scheduleTableView.snp.makeConstraints {
+            $0.top.equalTo(calendarCollectionView.snp.bottom)
+            $0.leading.equalTo(calendarCollectionView.snp.leading)
+            $0.trailing.equalTo(calendarCollectionView.snp.trailing)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
     }
     
@@ -230,5 +254,32 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
         startDate = formatter.string(from: start)
         endDate = formatter.string(from: end)
         navigationItem.title = "\(startDate) - \(endDate)"
+    }
+}
+
+//MARK: - scheduleTableView data source
+extension ScheduleViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = scheduleTableView.dequeueReusableCell(
+            withIdentifier: scheduleCellReuseId,
+            for: indexPath) as? ScheduleTableViewCell else 
+        {
+            fatalError("Error when instanciating ScheduleTableViewCell")
+        }
+        
+        cell.configureCell()
+        
+        return cell
+    }
+}
+
+//MARK: - scheduleTableView delegate
+extension ScheduleViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
     }
 }
