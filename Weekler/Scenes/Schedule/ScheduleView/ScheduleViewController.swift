@@ -63,6 +63,19 @@ final class ScheduleViewController: UIViewController {
         
         return tableView
     }()
+    private lazy var addNewEventButton: UIButton = {
+        var configuration = UIButton.Configuration.plain()
+        configuration.image = UIImage(systemName: "plus.circle.fill")?.withRenderingMode(.alwaysTemplate)
+        configuration.baseForegroundColor = .orange
+        configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 40)
+
+        let button = UIButton(configuration: configuration, primaryAction: nil)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+        button.addTarget(self, action: #selector(didTapAddNewEventButton), for: .touchUpInside)
+        
+        return button
+    }()
     private lazy var formatter: DateFormatter = {
         let formatter = DateFormatter()
         
@@ -107,23 +120,37 @@ final class ScheduleViewController: UIViewController {
     private func addSubviews() {
         view.addSubview(calendarCollectionView)
         view.addSubview(scheduleTableView)
+        view.addSubview(addNewEventButton)
     }
     
     private func applyConstraints() {
         //calendar collection view constraints
         calendarCollectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.leading.equalToSuperview().offset(16)
-            $0.trailing.equalToSuperview().inset(16)
+//            $0.leading.equalToSuperview().offset(16)
+//            $0.trailing.equalToSuperview().inset(16)
+            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
             $0.height.equalTo(70)
         }
         
         //scheduleTableView Constraints
         scheduleTableView.snp.makeConstraints {
+//            $0.top.equalTo(calendarCollectionView.snp.bottom)
+//            $0.leading.equalTo(calendarCollectionView.snp.leading)
+//            $0.trailing.equalTo(calendarCollectionView.snp.trailing)
             $0.top.equalTo(calendarCollectionView.snp.bottom)
-            $0.leading.equalTo(calendarCollectionView.snp.leading)
-            $0.trailing.equalTo(calendarCollectionView.snp.trailing)
+            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+        }
+        
+        //addNewEventButton constraints
+        addNewEventButton.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).inset(16)
+//            $0.width.equalTo(60)
+//            $0.height.equalTo(60)
         }
     }
     
@@ -134,6 +161,10 @@ final class ScheduleViewController: UIViewController {
             navigationItem.title = "\(startDate) - \(startDate)"
             navBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
         }
+    }
+    
+    @objc private func didTapAddNewEventButton() {
+        print("add button")
     }
     
     @objc private func didTapBackButton() {
