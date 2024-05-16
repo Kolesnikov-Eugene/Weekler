@@ -34,7 +34,6 @@ final class ScheduleTableViewCell: UITableViewCell {
         mainView.layer.shadowRadius = 4
         mainView.layer.shadowOpacity = 0.5
         mainView.layer.shadowOffset = CGSize.zero
-        
     }
     
     func configureCell() {
@@ -54,10 +53,10 @@ final class ScheduleTableViewCell: UITableViewCell {
     
     private func applyConstraints() {
         mainView.snp.makeConstraints {
-            $0.top.equalTo(contentView.snp.top).inset(16)
+            $0.top.equalTo(contentView.snp.top).inset(10)
             $0.leading.equalTo(contentView.snp.leading).inset(16)
             $0.trailing.equalTo(contentView.snp.trailing).inset(16)
-            $0.bottom.equalTo(contentView.snp.bottom).inset(16)
+            $0.bottom.equalTo(contentView.snp.bottom).inset(10)
         }
     }
 }
