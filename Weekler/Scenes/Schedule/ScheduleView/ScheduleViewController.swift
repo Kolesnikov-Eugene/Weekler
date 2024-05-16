@@ -83,6 +83,19 @@ final class ScheduleViewController: UIViewController {
         
         return formatter
     }()
+    private lazy var calendarSwitchRightBarButtonItem: UIBarButtonItem = {
+        let button = UIBarButtonItem()
+        
+        let image = UIImage(systemName: "calendar")?.withRenderingMode(.alwaysTemplate)
+        button.image = image
+        button.tintColor = .gray
+        button.style = .plain
+        button.target = self
+        button.action = #selector(calendarSwitchRightBarButtonItemTapped)
+        button.imageInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
+        
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,6 +111,13 @@ final class ScheduleViewController: UIViewController {
             self.calendarCollectionView.selectDates([Date()])
         }
         
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+//        scheduleTableView.setContentOffset(CGPoint(x: 0, y: -100), animated: false)
+        //TODO: - add dinamic content inset when table view will display the lsat cell
+        scheduleTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 75, right: 0)
     }
     
     //MARK: - private methods
@@ -156,6 +176,7 @@ final class ScheduleViewController: UIViewController {
     
     private func configureNavBar() {
         startDate = formatter.string(from: Date())
+        navigationItem.rightBarButtonItem = calendarSwitchRightBarButtonItem
         if let navBar = navigationController?.navigationBar {
             navBar.prefersLargeTitles = false
             navigationItem.title = "\(startDate) - \(startDate)"
@@ -173,6 +194,10 @@ final class ScheduleViewController: UIViewController {
     
     @objc private func didTapForwardButton() {
         print("FORWARD")
+    }
+    
+    @objc private func calendarSwitchRightBarButtonItemTapped() {
+        print("calendar")
     }
 }
 
@@ -291,7 +316,7 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
 //MARK: - scheduleTableView data source
 extension ScheduleViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 15
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -311,6 +336,6 @@ extension ScheduleViewController: UITableViewDataSource {
 //MARK: - scheduleTableView delegate
 extension ScheduleViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 65
     }
 }
