@@ -336,6 +336,6 @@ extension ScheduleViewController: UITableViewDataSource {
 //MARK: - scheduleTableView delegate
 extension ScheduleViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 65
+        return 50
     }
 }
