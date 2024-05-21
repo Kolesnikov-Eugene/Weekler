@@ -17,6 +17,7 @@ final class ScheduleViewController: UIViewController {
     private let reuseId = "calendarCell"
 //    private let daysCellReuseId = "daysCell"
     private let scheduleCellReuseId = "scheduleCell"
+    private let collectionCellReuseId = "collectionCell"
     
     private lazy var backCalendarButton: UIButton = {
         let button = UIButton()
@@ -96,6 +97,19 @@ final class ScheduleViewController: UIViewController {
         
         return button
     }()
+    private lazy var selectMainModeCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collection.isScrollEnabled = true
+        collection.allowsMultipleSelection = false
+        collection.backgroundColor = .clear
+        collection.showsHorizontalScrollIndicator = false
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        
+        return collection
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -133,12 +147,17 @@ final class ScheduleViewController: UIViewController {
         scheduleTableView.dataSource = self
         scheduleTableView.delegate = self
         
+        selectMainModeCollectionView.register(SelectMainModeCollectionViewCell.self, forCellWithReuseIdentifier: collectionCellReuseId)
+        selectMainModeCollectionView.dataSource = self
+        selectMainModeCollectionView.delegate = self
+        
         addSubviews()
         applyConstraints()
     }
     
     private func addSubviews() {
         view.addSubview(calendarCollectionView)
+        view.addSubview(selectMainModeCollectionView)
         view.addSubview(scheduleTableView)
         view.addSubview(addNewEventButton)
     }
@@ -154,12 +173,20 @@ final class ScheduleViewController: UIViewController {
             $0.height.equalTo(70)
         }
         
+        //selectMainModeCollection constraints
+        selectMainModeCollectionView.snp.makeConstraints {
+            $0.top.equalTo(calendarCollectionView.snp.bottom)
+            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).inset(16)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).inset(16)
+            $0.height.equalTo(20)
+        }
+        
         //scheduleTableView Constraints
         scheduleTableView.snp.makeConstraints {
 //            $0.top.equalTo(calendarCollectionView.snp.bottom)
 //            $0.leading.equalTo(calendarCollectionView.snp.leading)
 //            $0.trailing.equalTo(calendarCollectionView.snp.trailing)
-            $0.top.equalTo(calendarCollectionView.snp.bottom)
+            $0.top.equalTo(selectMainModeCollectionView.snp.bottom)
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
@@ -337,5 +364,35 @@ extension ScheduleViewController: UITableViewDataSource {
 extension ScheduleViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
+    }
+}
+
+//MARK: - CollectionView data source
+extension ScheduleViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 6
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = selectMainModeCollectionView.dequeueReusableCell(
+            withReuseIdentifier: collectionCellReuseId,
+            for: indexPath) as? SelectMainModeCollectionViewCell else {
+            fatalError("Error while instanciating selectedMainStateCell")
+        }
+        
+        cell.configureCell()
+        
+        return cell
+    }
+}
+
+//MARK: - CollectionView delegate
+extension ScheduleViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        CGSize(width: 100, height: 20)
     }
 }
