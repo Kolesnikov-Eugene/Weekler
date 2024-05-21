@@ -35,7 +35,7 @@ class WeekCalendarCollectionViewCell: JTAppleCell {
         view.layer.masksToBounds = false
         view.clipsToBounds = true
         view.isHidden = true
-        view.backgroundColor = .lightGray
+        view.backgroundColor = Colors.calendarCurrentDateBackground
         
         return view
     }()
@@ -59,6 +59,17 @@ class WeekCalendarCollectionViewCell: JTAppleCell {
         
         return view
     }()
+    private lazy var plannedDayMarkerLabel: UIView = {
+        let view = UIView()
+        
+        view.layer.masksToBounds = false
+        view.clipsToBounds = true
+        view.backgroundColor = .red
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
+        
+        return view
+    }()
     
     
     override init(frame: CGRect) {
@@ -75,10 +86,12 @@ class WeekCalendarCollectionViewCell: JTAppleCell {
         super.layoutSubviews()
         selectedStateView.layer.cornerRadius = CGRectGetHeight(selectedStateView.bounds) / 2.0
         currentDayView.layer.cornerRadius = CGRectGetHeight(currentDayView.bounds) / 2.0
+        plannedDayMarkerLabel.layer.cornerRadius = CGRectGetHeight(plannedDayMarkerLabel.bounds) / 2.0
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        dayLabel.text = ""
         dateLabel.textColor = .black
         selectedStateView.backgroundColor = .clear
         currentDayView.isHidden = true
@@ -92,6 +105,7 @@ class WeekCalendarCollectionViewCell: JTAppleCell {
     }
     
     private func addSubviews() {
+        contentView.addSubview(plannedDayMarkerLabel)
         contentView.addSubview(currentDayView)
         contentView.addSubview(selectedStateView)
         contentView.addSubview(dateStackView)
@@ -116,11 +130,20 @@ class WeekCalendarCollectionViewCell: JTAppleCell {
             $0.width.equalTo(30)
         }
         
+        //currentDayView constraints
         currentDayView.snp.makeConstraints {
             $0.centerY.equalTo(dateLabel.snp.centerY)
             $0.centerX.equalTo(dateLabel.snp.centerX)
             $0.height.equalTo(30)
             $0.width.equalTo(30)
+        }
+        
+        //plannedDayMarkerLabel constraints
+        plannedDayMarkerLabel.snp.makeConstraints {
+            $0.width.equalTo(4)
+            $0.height.equalTo(4)
+            $0.centerX.equalTo(dateStackView.snp.centerX)
+            $0.bottom.equalTo(contentView.snp.bottom).offset(2)
         }
     }
     
@@ -131,6 +154,6 @@ class WeekCalendarCollectionViewCell: JTAppleCell {
     }
     
     func changeSelectionState(isSelected: Bool) {
-        selectedStateView.backgroundColor = isSelected ? .red : .clear
+        selectedStateView.backgroundColor = isSelected ? Colors.dateSelectedBackground : .clear
     }
 }

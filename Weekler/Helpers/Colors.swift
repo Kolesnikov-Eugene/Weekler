@@ -10,4 +10,6 @@ import UIKit
 struct Colors {
     static let background = UIColor(resource: .background)
     static let grayBackground = UIColor(resource: .sideMenuBack)
+    static let dateSelectedBackground = UIColor(resource: .dateSelectedBack)
+    static let calendarCurrentDateBackground = UIColor(resource: .calendarCurrentDate)
 }

@@ -8,8 +8,11 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
+    
+    private let tabBarFactory: TabBarFactory
 
-    init() {
+    init(tabBarFactory: TabBarFactory) {
+        self.tabBarFactory = tabBarFactory
         super.init(nibName: nil, bundle: nil)
         setupView()
     }
@@ -28,11 +31,16 @@ final class TabBarController: UITabBarController {
         let statisticsViewController = setupStatisticsViewController()
         let configViewController = setupConfigViewController()
 
-        viewControllers = [scheduleViewController, taskEditorViewController, statisticsViewController, configViewController]
+        viewControllers = [
+            scheduleViewController,
+            taskEditorViewController,
+            statisticsViewController,
+            configViewController
+        ]
     }
 
     private func setupScheduleViewController() -> UINavigationController {
-        let scheduleViewController = ScheduleViewController()
+        let scheduleViewController = tabBarFactory.createScheduleViewController()
         
         let image = UIImage(systemName: "list.bullet.clipboard")
 
@@ -42,10 +50,8 @@ final class TabBarController: UITabBarController {
             selectedImage: nil)
 
         let scheduleNavigationController = UINavigationController(rootViewController: scheduleViewController)
-
-        scheduleNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        scheduleNavigationController.navigationBar.shadowImage = UIImage()
-        scheduleNavigationController.navigationBar.isTranslucent = true
+        
+        configureNavController(controller: scheduleNavigationController)
 
         return scheduleNavigationController
     }
@@ -59,10 +65,8 @@ final class TabBarController: UITabBarController {
             selectedImage: nil)
 
         let taskEditorNavigationController = UINavigationController(rootViewController: taskEditorViewController)
-
-        taskEditorNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        taskEditorNavigationController.navigationBar.shadowImage = UIImage()
-        taskEditorNavigationController.navigationBar.isTranslucent = true
+        
+        configureNavController(controller: taskEditorNavigationController)
 
         return taskEditorNavigationController
     }
@@ -76,10 +80,8 @@ final class TabBarController: UITabBarController {
             selectedImage: nil)
 
         let statisticsNavigationController = UINavigationController(rootViewController: statisticsViewController)
-
-        statisticsNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        statisticsNavigationController.navigationBar.shadowImage = UIImage()
-        statisticsNavigationController.navigationBar.isTranslucent = true
+        
+        configureNavController(controller: statisticsNavigationController)
 
         return statisticsNavigationController
     }
@@ -93,12 +95,16 @@ final class TabBarController: UITabBarController {
             selectedImage: nil)
 
         let configNavigationController = UINavigationController(rootViewController: configViewController)
-
-        configNavigationController.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        configNavigationController.navigationBar.shadowImage = UIImage()
-        configNavigationController.navigationBar.isTranslucent = true
+        
+        configureNavController(controller: configNavigationController)
 
         return configNavigationController
+    }
+    
+    private func configureNavController(controller: UINavigationController) {
+        controller.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        controller.navigationBar.shadowImage = UIImage()
+        controller.navigationBar.isTranslucent = true
     }
 
     private func configureTabBar() {
