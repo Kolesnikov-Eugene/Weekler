@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class SelectMainModeCollectionViewCell: UICollectionViewCell {
+final class SelectMainModeCollectionViewCell: UICollectionViewCell {
     
     private lazy var textLabel: UILabel = {
         let label = UILabel()
@@ -38,6 +38,12 @@ class SelectMainModeCollectionViewCell: UICollectionViewCell {
         textLabel.layer.cornerRadius = 5
     }
     
+    //MARK: - public methods
+    func configureCell() {
+        textLabel.text = "some mode"
+    }
+    
+    //MARK: - private methods
     private func setupUI() {
         contentView.backgroundColor = .clear
         
@@ -56,10 +62,5 @@ class SelectMainModeCollectionViewCell: UICollectionViewCell {
             $0.top.equalTo(contentView.snp.top)
             $0.bottom.equalTo(contentView.snp.bottom)
         }
-    }
-    
-    //MARK: - public methods
-    func configureCell() {
-        textLabel.text = "some mode"
     }
 }

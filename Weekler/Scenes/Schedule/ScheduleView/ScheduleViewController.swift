@@ -15,7 +15,7 @@ final class ScheduleViewController: UIViewController {
     private var startDate = ""
     private var endDate = ""
     private let reuseId = "calendarCell"
-//    private let daysCellReuseId = "daysCell"
+    //    private let daysCellReuseId = "daysCell"
     private let scheduleCellReuseId = "scheduleCell"
     private let collectionCellReuseId = "collectionCell"
     
@@ -69,7 +69,7 @@ final class ScheduleViewController: UIViewController {
         configuration.image = UIImage(systemName: "plus.circle.fill")?.withRenderingMode(.alwaysTemplate)
         configuration.baseForegroundColor = .orange
         configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 40)
-
+        
         let button = UIButton(configuration: configuration, primaryAction: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         
@@ -129,7 +129,7 @@ final class ScheduleViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        scheduleTableView.setContentOffset(CGPoint(x: 0, y: -100), animated: false)
+        //        scheduleTableView.setContentOffset(CGPoint(x: 0, y: -100), animated: false)
         //TODO: - add dinamic content inset when table view will display the lsat cell
         scheduleTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 75, right: 0)
     }
@@ -166,8 +166,8 @@ final class ScheduleViewController: UIViewController {
         //calendar collection view constraints
         calendarCollectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-//            $0.leading.equalToSuperview().offset(16)
-//            $0.trailing.equalToSuperview().inset(16)
+            //            $0.leading.equalToSuperview().offset(16)
+            //            $0.trailing.equalToSuperview().inset(16)
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
             $0.height.equalTo(70)
@@ -183,9 +183,9 @@ final class ScheduleViewController: UIViewController {
         
         //scheduleTableView Constraints
         scheduleTableView.snp.makeConstraints {
-//            $0.top.equalTo(calendarCollectionView.snp.bottom)
-//            $0.leading.equalTo(calendarCollectionView.snp.leading)
-//            $0.trailing.equalTo(calendarCollectionView.snp.trailing)
+            //            $0.top.equalTo(calendarCollectionView.snp.bottom)
+            //            $0.leading.equalTo(calendarCollectionView.snp.leading)
+            //            $0.trailing.equalTo(calendarCollectionView.snp.trailing)
             $0.top.equalTo(selectMainModeCollectionView.snp.bottom)
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
@@ -196,8 +196,8 @@ final class ScheduleViewController: UIViewController {
         addNewEventButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).inset(16)
-//            $0.width.equalTo(60)
-//            $0.height.equalTo(60)
+            //            $0.width.equalTo(60)
+            //            $0.height.equalTo(60)
         }
     }
     
@@ -250,8 +250,8 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
         _ calendar: JTAppleCalendarView,
         cellForItemAt date: Date,
         cellState: CellState,
-        indexPath: IndexPath) -> JTAppleCell
-    {
+        indexPath: IndexPath
+    ) -> JTAppleCell {
         guard let cell = calendar.dequeueReusableJTAppleCell(
             withReuseIdentifier: reuseId,
             for: indexPath) as? WeekCalendarCollectionViewCell
@@ -273,11 +273,10 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
         _ calendar: JTAppleCalendarView,
         willDisplay cell: JTAppleCell,
         forItemAt date: Date, cellState: CellState,
-        indexPath: IndexPath)
-    {
+        indexPath: IndexPath
+    ) -> Void {
         guard let cell = cell as? WeekCalendarCollectionViewCell else {
-            assertionFailure("error in displaying calendar cell")
-            return
+            fatalError("error in displaying calendar cell")
         }
         
         let isCurrent = formatter.string(from: date) == formatter.string(from: Date())
@@ -292,11 +291,10 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
         _ calendar: JTAppleCalendarView,
         didSelectDate date: Date,
         cell: JTAppleCell?,
-        cellState: CellState)
-    {
+        cellState: CellState
+    ) -> Void {
         guard let cell = cell as? WeekCalendarCollectionViewCell else {
-            assertionFailure("error in didSelect calendar cell")
-            return
+            fatalError("Error in didSelect calendar cell")
         }
         
         cell.changeSelectionState(isSelected: cellState.isSelected)
@@ -318,8 +316,8 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
         _ calendar: JTAppleCalendarView,
         didDeselectDate date: Date,
         cell: JTAppleCell?,
-        cellState: CellState)
-    {
+        cellState: CellState
+    ) -> Void {
         if let cell = cell as? WeekCalendarCollectionViewCell {
             cell.changeSelectionState(isSelected: cellState.isSelected)
         }
@@ -327,8 +325,8 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
     
     func calendar(
         _ calendar: JTAppleCalendarView,
-        didScrollToDateSegmentWith visibleDates: DateSegmentInfo)
-    {
+        didScrollToDateSegmentWith visibleDates: DateSegmentInfo
+    ) -> Void {
         let start = visibleDates.monthDates[0].date
         let end = visibleDates.monthDates[6].date
         let a = formatter.string(from: start)
@@ -349,8 +347,7 @@ extension ScheduleViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = scheduleTableView.dequeueReusableCell(
             withIdentifier: scheduleCellReuseId,
-            for: indexPath) as? ScheduleTableViewCell else 
-        {
+            for: indexPath) as? ScheduleTableViewCell else {
             fatalError("Error when instanciating ScheduleTableViewCell")
         }
         
@@ -373,7 +370,10 @@ extension ScheduleViewController: UICollectionViewDataSource {
         return 6
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         guard let cell = selectMainModeCollectionView.dequeueReusableCell(
             withReuseIdentifier: collectionCellReuseId,
             for: indexPath) as? SelectMainModeCollectionViewCell else {
