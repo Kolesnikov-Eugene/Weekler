@@ -52,7 +52,7 @@ final class ScheduleTableViewCell: UITableViewCell {
         
         return view
     }()
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -64,15 +64,15 @@ final class ScheduleTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-//        mainView.layer.shadowRadius = 4
-//        mainView.layer.shadowOpacity = 0.5
-//        mainView.layer.shadowOffset = CGSize.zero
+        //        mainView.layer.shadowRadius = 4
+        //        mainView.layer.shadowOpacity = 0.5
+        //        mainView.layer.shadowOffset = CGSize.zero
     }
     
     func configureCell() {
         
     }
-
+    
     private func setupUI() {
         contentView.backgroundColor = Colors.background
         

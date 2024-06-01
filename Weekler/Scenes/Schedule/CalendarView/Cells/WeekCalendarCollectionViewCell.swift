@@ -8,7 +8,9 @@
 import UIKit
 import JTAppleCalendar
 
-class WeekCalendarCollectionViewCell: JTAppleCell {
+final class WeekCalendarCollectionViewCell: JTAppleCell {
+    
+    //MARK: - private properties
     private lazy var dayLabel: UILabel = {
         let label = UILabel()
         
@@ -97,6 +99,18 @@ class WeekCalendarCollectionViewCell: JTAppleCell {
         currentDayView.isHidden = true
     }
     
+    //MARK: - public methods
+    func configureCell(currentDate: String, day: String, isCurrent: Bool) {
+        dayLabel.text = day
+        dateLabel.text = currentDate
+        currentDayView.isHidden = !isCurrent
+    }
+    
+    func changeSelectionState(isSelected: Bool) {
+        selectedStateView.backgroundColor = isSelected ? Colors.dateSelectedBackground : .clear
+    }
+    
+    //MARK: - private methods
     private func setupUI() {
         contentView.backgroundColor = .clear
         
@@ -145,15 +159,5 @@ class WeekCalendarCollectionViewCell: JTAppleCell {
             $0.centerX.equalTo(dateStackView.snp.centerX)
             $0.bottom.equalTo(contentView.snp.bottom).offset(2)
         }
-    }
-    
-    func configureCell(currentDate: String, day: String, isCurrent: Bool) {
-        dayLabel.text = day
-        dateLabel.text = currentDate
-        currentDayView.isHidden = !isCurrent
-    }
-    
-    func changeSelectionState(isSelected: Bool) {
-        selectedStateView.backgroundColor = isSelected ? Colors.dateSelectedBackground : .clear
     }
 }
