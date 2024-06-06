@@ -212,7 +212,21 @@ final class ScheduleViewController: UIViewController {
     }
     
     @objc private func didTapAddNewEventButton() {
-        print("add button")
+        let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve()
+        
+        if let sheet = createScheduleVC.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.largestUndimmedDetentIdentifier = .medium
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.prefersEdgeAttachedInCompactHeight = true
+            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+        }
+        
+//        createScheduleVC.modalPresentationStyle = .pageSheet
+        createScheduleVC.hidesBottomBarWhenPushed = true
+        
+        navigationController?.present(createScheduleVC, animated: true)
+//        navigationController?.pushViewController(createScheduleVC, animated: true)
     }
     
     @objc private func didTapBackButton() {
