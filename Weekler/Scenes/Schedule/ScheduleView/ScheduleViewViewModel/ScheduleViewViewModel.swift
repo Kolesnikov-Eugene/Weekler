@@ -10,5 +10,6 @@ import RxSwift
 import RxCocoa
 
 final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
-    
+    //MARK: - public properties
+    var scheduleArray: [ScheduleTask] = []
 }
