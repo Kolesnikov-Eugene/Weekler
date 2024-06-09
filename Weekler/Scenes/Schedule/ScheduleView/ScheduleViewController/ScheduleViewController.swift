@@ -15,34 +15,9 @@ final class ScheduleViewController: UIViewController {
     private var startDate = ""
     private var endDate = ""
     private let reuseId = "calendarCell"
-    //    private let daysCellReuseId = "daysCell"
     private let scheduleCellReuseId = "scheduleCell"
     private let collectionCellReuseId = "collectionCell"
     
-    private lazy var backCalendarButton: UIButton = {
-        let button = UIButton()
-        
-        let image = UIImage(systemName: "chevron.backward")
-        button.setImage(image, for: .normal)
-        button.tintColor = .black
-        button.contentVerticalAlignment = .center
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didTapBackButton), for: .touchUpInside)
-        
-        return button
-    }()
-    private lazy var forwardCalendarButton: UIButton = {
-        let button = UIButton()
-        
-        let image = UIImage(systemName: "chevron.forward")
-        button.setImage(image, for: .normal)
-        button.tintColor = .black
-        button.contentVerticalAlignment = .center
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didTapForwardButton), for: .touchUpInside)
-        
-        return button
-    }()
     private lazy var calendarCollectionView: JTAppleCalendarView = {
         let collection = JTAppleCalendarView()
         
@@ -227,14 +202,6 @@ final class ScheduleViewController: UIViewController {
         
         navigationController?.present(createScheduleVC, animated: true)
 //        navigationController?.pushViewController(createScheduleVC, animated: true)
-    }
-    
-    @objc private func didTapBackButton() {
-        print("BACK")
-    }
-    
-    @objc private func didTapForwardButton() {
-        print("FORWARD")
     }
     
     @objc private func calendarSwitchRightBarButtonItemTapped() {
