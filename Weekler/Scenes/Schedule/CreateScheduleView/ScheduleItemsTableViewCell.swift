@@ -57,19 +57,19 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         case 0:
             cellTypeImageView.image = UIImage(systemName: "calendar")
             cellTypeImageView.tintColor = .orange
-            descriptionLabel.text = "Дата"
+            descriptionLabel.text = ScheduleItem.allCases[0].rawValue
         case 1:
             cellTypeImageView.image = UIImage(systemName: "clock")
             cellTypeImageView.tintColor = .orange
-            descriptionLabel.text = "Время"
+            descriptionLabel.text = ScheduleItem.allCases[1].rawValue
         case 2:
             cellTypeImageView.image = UIImage(systemName: "bell")
             cellTypeImageView.tintColor = .orange
-            descriptionLabel.text = "Уведомление"
+            descriptionLabel.text = ScheduleItem.allCases[2].rawValue
         case 3:
             cellTypeImageView.image = UIImage(systemName: "repeat")
             cellTypeImageView.tintColor = .orange
-            descriptionLabel.text = "Повтор"
+            descriptionLabel.text = ScheduleItem.allCases[3].rawValue
         default:
             break
         }
