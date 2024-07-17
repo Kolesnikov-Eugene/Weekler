@@ -36,7 +36,7 @@ final class ScheduleTableViewCell: UITableViewCell {
     private lazy var scheduleDescriptionlabel: UILabel = {
         let label = UILabel()
         
-        label.text = "Some task that should be fulfilled"
+//        label.text = "Some task that should be fulfilled"
         label.font = UIFont.systemFont(ofSize: 16, weight: .light)
         label.numberOfLines = 0
         label.textAlignment = .left
@@ -69,8 +69,8 @@ final class ScheduleTableViewCell: UITableViewCell {
         //        mainView.layer.shadowOffset = CGSize.zero
     }
     
-    func configureCell() {
-        
+    func configureCell(text: String) {
+        scheduleDescriptionlabel.text = text
     }
     
     private func setupUI() {

@@ -11,12 +11,15 @@ import JTAppleCalendar
 
 
 final class ScheduleViewController: UIViewController {
+    
     //MARK: - private properties
     private var startDate = ""
     private var endDate = ""
     private let reuseId = "calendarCell"
     private let scheduleCellReuseId = "scheduleCell"
     private let collectionCellReuseId = "collectionCell"
+    private var mainMode: ScheduleMode = .task
+    private var tableDataSource: UITableViewDiffableDataSource<UITableView.Section, SourceItem>!
     
     private lazy var calendarCollectionView: JTAppleCalendarView = {
         let collection = JTAppleCalendarView()
@@ -42,7 +45,7 @@ final class ScheduleViewController: UIViewController {
     private lazy var addNewEventButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.image = UIImage(systemName: "plus.circle.fill")?.withRenderingMode(.alwaysTemplate)
-        configuration.baseForegroundColor = .orange
+        configuration.baseForegroundColor = Colors.mainForeground
         configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 40)
         
         let button = UIButton(configuration: configuration, primaryAction: nil)
@@ -85,10 +88,20 @@ final class ScheduleViewController: UIViewController {
         
         return collection
     }()
+    private var viewModel: ScheduleViewViewModelProtocol
+    
+    init(viewModel: ScheduleViewViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        viewModel.data = viewModel.tasks.map { .task($0) }
         setupUI()
         //        self.calendarCollectionView.reloadData(withanchor: Date())
     }
@@ -119,8 +132,8 @@ final class ScheduleViewController: UIViewController {
         calendarCollectionView.ibCalendarDataSource = self
         
         scheduleTableView.register(ScheduleTableViewCell.self, forCellReuseIdentifier: scheduleCellReuseId)
-        scheduleTableView.dataSource = self
         scheduleTableView.delegate = self
+        setupTableViewDataSource()
         
         selectMainModeCollectionView.register(SelectMainModeCollectionViewCell.self, forCellWithReuseIdentifier: collectionCellReuseId)
         selectMainModeCollectionView.dataSource = self
@@ -128,6 +141,40 @@ final class ScheduleViewController: UIViewController {
         
         addSubviews()
         applyConstraints()
+    }
+    
+    // REFACTOR
+    private func setupTableViewDataSource() {
+        tableDataSource = UITableViewDiffableDataSource<UITableView.Section, SourceItem>(
+            tableView: scheduleTableView,
+            cellProvider: { tableView, indexPath, itemIdentifier in
+                guard let cell = tableView
+                    .dequeueReusableCell(withIdentifier: self.scheduleCellReuseId) as? ScheduleTableViewCell else { fatalError() }
+                switch itemIdentifier {
+                case .goal(let goal):
+                    cell.configureCell(text: goal.description)
+                case .priority(let priority):
+                    cell.configureCell(text: priority.description)
+                case .task(let task):
+                    cell.configureCell(text: task.description)
+                }
+                return cell
+        })
+        updateSnapshot()
+    }
+    
+    private func updateSnapshot() {
+        var snapshot = NSDiffableDataSourceSnapshot<UITableView.Section, SourceItem>()
+        snapshot.deleteAllItems()
+        snapshot.appendSections([.task])
+        snapshot.appendItems(viewModel.data)
+        tableDataSource.apply(snapshot, animatingDifferences: true)
+    }
+    
+    private func addTask(_ task: ScheduleTask) {
+        viewModel.tasks.append(task)
+        viewModel.data = viewModel.tasks.map { .task($0) }
+        updateSnapshot()
     }
     
     private func addSubviews() {
@@ -141,8 +188,6 @@ final class ScheduleViewController: UIViewController {
         //calendar collection view constraints
         calendarCollectionView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            //            $0.leading.equalToSuperview().offset(16)
-            //            $0.trailing.equalToSuperview().inset(16)
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
             $0.height.equalTo(70)
@@ -153,14 +198,11 @@ final class ScheduleViewController: UIViewController {
             $0.top.equalTo(calendarCollectionView.snp.bottom)
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).inset(16)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).inset(16)
-            $0.height.equalTo(20)
+            $0.height.equalTo(25)
         }
         
         //scheduleTableView Constraints
         scheduleTableView.snp.makeConstraints {
-            //            $0.top.equalTo(calendarCollectionView.snp.bottom)
-            //            $0.leading.equalTo(calendarCollectionView.snp.leading)
-            //            $0.trailing.equalTo(calendarCollectionView.snp.trailing)
             $0.top.equalTo(selectMainModeCollectionView.snp.bottom)
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
@@ -171,8 +213,6 @@ final class ScheduleViewController: UIViewController {
         addNewEventButton.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).inset(16)
-            //            $0.width.equalTo(60)
-            //            $0.height.equalTo(60)
         }
     }
     
@@ -206,6 +246,8 @@ final class ScheduleViewController: UIViewController {
     
     @objc private func calendarSwitchRightBarButtonItemTapped() {
         print("calendar")
+        let task = ScheduleTask(id: UUID(), date: Date(), description: "Do nothing all day long")
+        addTask(task)
     }
 }
 
@@ -319,25 +361,6 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
     }
 }
 
-//MARK: - scheduleTableView data source
-extension ScheduleViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 15
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = scheduleTableView.dequeueReusableCell(
-            withIdentifier: scheduleCellReuseId,
-            for: indexPath) as? ScheduleTableViewCell else {
-            fatalError("Error when instanciating ScheduleTableViewCell")
-        }
-        
-        cell.configureCell()
-        
-        return cell
-    }
-}
-
 //MARK: - scheduleTableView delegate
 extension ScheduleViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -348,20 +371,25 @@ extension ScheduleViewController: UITableViewDelegate {
 //MARK: - CollectionView data source
 extension ScheduleViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return ScheduleMode.allCases.count
     }
     
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        guard let cell = selectMainModeCollectionView.dequeueReusableCell(
+        guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: collectionCellReuseId,
             for: indexPath) as? SelectMainModeCollectionViewCell else {
             fatalError("Error while instanciating selectedMainStateCell")
         }
         
-        cell.configureCell()
+        if indexPath.row == 0 {
+            cell.isSelected = true
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .centeredHorizontally)
+        }
+        let mode = ScheduleMode.allCases[indexPath.row].rawValue
+        cell.configureCell(mode)
         
         return cell
     }
@@ -374,6 +402,39 @@ extension ScheduleViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        CGSize(width: 100, height: 20)
+        let item = ScheduleMode.allCases[indexPath.row].rawValue
+        let itemSize = item.size(withAttributes: [
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .medium)
+        ])
+        return itemSize
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) -> Void {
+        if let cell = collectionView.cellForItem(at: indexPath) as? SelectMainModeCollectionViewCell {
+            cell.reconfigureState()
+        }
+        mainMode = ScheduleMode.allCases[indexPath.row]
+        switch mainMode {
+        case .goal:
+            viewModel.data = viewModel.goals.map { .goal($0) }
+        case .priority:
+            viewModel.data = viewModel.priorities.map { .priority($0) }
+        case .task:
+            viewModel.data = viewModel.tasks.map { .task($0) }
+        }
+        updateSnapshot()
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didDeselectItemAt indexPath: IndexPath
+    ) -> Void {
+        if let cell = collectionView.cellForItem(at: indexPath) as? SelectMainModeCollectionViewCell {
+            cell.reconfigureState()
+        }
     }
 }
+

@@ -9,11 +9,10 @@ import UIKit
 import SnapKit
 
 final class SelectMainModeCollectionViewCell: UICollectionViewCell {
-    
     private lazy var textLabel: UILabel = {
         let label = UILabel()
         
-        label.backgroundColor = UIColor(resource: .calendarCurrentDate)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         
@@ -38,9 +37,21 @@ final class SelectMainModeCollectionViewCell: UICollectionViewCell {
         textLabel.layer.cornerRadius = 5
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        isSelected = false
+    }
+    
     //MARK: - public methods
-    func configureCell() {
-        textLabel.text = "some mode"
+    func configureCell(_ mode: String) {
+        textLabel.text = mode
+        
+        reconfigureState()
+    }
+    
+    func reconfigureState() {
+        textLabel.backgroundColor = isSelected ?
+        Colors.mainForeground.withAlphaComponent(0.8) : Colors.mainForeground.withAlphaComponent(0.3)
     }
     
     //MARK: - private methods

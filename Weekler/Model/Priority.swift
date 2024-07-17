@@ -1,15 +1,14 @@
 //
-//  ScheduleTask.swift
+//  Priority.swift
 //  Weekler
 //
-//  Created by Eugene Kolesnikov on 06.06.2024.
+//  Created by Eugene Kolesnikov on 18.07.2024.
 //
 
 import Foundation
 
-struct ScheduleTask: Hashable {
+struct Priority: Hashable {
     let id: UUID
     let date: Date
     let description: String
 }
-

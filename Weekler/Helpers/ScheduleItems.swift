@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ScheduleItem: String, CaseIterable {
+enum ScheduleItems: String, CaseIterable {
     case date = "Дата"
     case time = "Время"
     case notification = "Уведомление"

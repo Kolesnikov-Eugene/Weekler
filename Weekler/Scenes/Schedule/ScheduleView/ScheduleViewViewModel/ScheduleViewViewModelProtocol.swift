@@ -8,5 +8,8 @@
 import Foundation
 
 protocol ScheduleViewViewModelProtocol: AnyObject {
-    
+    var tasks: [ScheduleTask] { get set }
+    var priorities: [Priority] { get set }
+    var goals: [Goal] { get set }
+    var data: [SourceItem] { get set }
 }

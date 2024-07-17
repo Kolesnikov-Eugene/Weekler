@@ -107,7 +107,7 @@ final class WeekCalendarCollectionViewCell: JTAppleCell {
     }
     
     func changeSelectionState(isSelected: Bool) {
-        selectedStateView.backgroundColor = isSelected ? Colors.dateSelectedBackground : .clear
+        selectedStateView.backgroundColor = isSelected ? Colors.mainForeground : .clear
     }
     
     //MARK: - private methods
@@ -161,3 +161,4 @@ final class WeekCalendarCollectionViewCell: JTAppleCell {
         }
     }
 }
+

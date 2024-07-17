@@ -16,7 +16,8 @@ final class SceneAssembly: Assembly {
             TaskEditorAssembly(),
             ConfigViewAssembly(),
             TabBarFactoryAssembly(),
-            CreateScheduleViewAssembly()
+            CreateScheduleViewAssembly(),
+            ScheduleViewModelAssembly()
         ]
         assemblies.forEach { $0.assemble(container: container) }
     }

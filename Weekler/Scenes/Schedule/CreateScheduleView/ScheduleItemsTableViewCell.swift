@@ -10,7 +10,10 @@ import SnapKit
 
 final class ScheduleItemsTableViewCell: UITableViewCell {
     
-    //Private properties
+    // MARK: - Public properties
+    var cellType: ScheduleItems?
+    
+    // Private properties
     private lazy var cellTypeImageView: UIImageView = {
         let view = UIImageView()
         
@@ -25,10 +28,9 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         
         return label
     }()
-    private lazy var forwardArrow: UIImageView = {
-        let view = UIImageView()
+    private lazy var notificationSwitch: UISwitch = {
+        let view = UISwitch()
         
-        view.image = UIImage(systemName: "chevron.forward")
         view.tintColor = .lightGray
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -41,6 +43,35 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         
         return view
+    }()
+    private lazy var datePicker: UIDatePicker = {
+        let picker = UIDatePicker()
+        
+        picker.datePickerMode = .date
+        picker.preferredDatePickerStyle = .compact
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        
+        return picker
+    }()
+    private lazy var timePicker: UIDatePicker = {
+        let picker = UIDatePicker()
+        
+        picker.datePickerMode = .time
+        picker.preferredDatePickerStyle = .compact
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        
+        return picker
+    }()
+    private lazy var selectedDaysLabel: UILabel = {
+        let label = UILabel()
+        
+        label.text = "Выкл."
+        label.textColor = .lightGray
+        label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        label.textAlignment = .right
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
+        return label
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -55,21 +86,30 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
     func configureCell(index: Int) {
         switch index {
         case 0:
+            configureDatePicker()
+            
             cellTypeImageView.image = UIImage(systemName: "calendar")
             cellTypeImageView.tintColor = .orange
-            descriptionLabel.text = ScheduleItem.allCases[0].rawValue
+            descriptionLabel.text = ScheduleItems.allCases[0].rawValue
         case 1:
+            configureTimePicker()
+            
             cellTypeImageView.image = UIImage(systemName: "clock")
             cellTypeImageView.tintColor = .orange
-            descriptionLabel.text = ScheduleItem.allCases[1].rawValue
+            descriptionLabel.text = ScheduleItems.allCases[1].rawValue
         case 2:
+            configureNotificationSwitch()
+            
             cellTypeImageView.image = UIImage(systemName: "bell")
             cellTypeImageView.tintColor = .orange
-            descriptionLabel.text = ScheduleItem.allCases[2].rawValue
+            descriptionLabel.text = ScheduleItems.allCases[2].rawValue
         case 3:
+            configureSelectedDaysLabel()
+            
             cellTypeImageView.image = UIImage(systemName: "repeat")
             cellTypeImageView.tintColor = .orange
-            descriptionLabel.text = ScheduleItem.allCases[3].rawValue
+            descriptionLabel.text = ScheduleItems.allCases[3].rawValue
+            cellType = ScheduleItems.isRepeated
         default:
             break
         }
@@ -84,7 +124,6 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
     private func addSubviews() {
         contentView.addSubview(cellTypeImageView)
         contentView.addSubview(descriptionLabel)
-        contentView.addSubview(forwardArrow)
         contentView.addSubview(separatorString)
     }
     
@@ -104,18 +143,51 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
             $0.height.equalTo(30)
         }
         
-        //forwardArrow constraints
-        forwardArrow.snp.makeConstraints {
-            $0.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing)
-            $0.centerY.equalTo(descriptionLabel.snp.centerY)
-        }
-        
         //separatorString constraints
         separatorString.snp.makeConstraints {
             $0.bottom.equalTo(contentView.safeAreaLayoutGuide.snp.bottom)
             $0.leading.equalTo(descriptionLabel.snp.leading)
-            $0.trailing.equalTo(forwardArrow.snp.trailing)
+            $0.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing)
             $0.height.equalTo(0.5)
+        }
+    }
+    
+    private func configureDatePicker() {
+        contentView.addSubview(datePicker)
+        
+        // datePicker constraints
+        datePicker.snp.makeConstraints {
+            $0.centerY.equalTo(descriptionLabel.snp.centerY)
+            $0.trailing.equalTo(separatorString.snp.trailing)
+        }
+    }
+    
+    private func configureTimePicker() {
+        contentView.addSubview(timePicker)
+        
+        timePicker.snp.makeConstraints {
+            $0.centerY.equalTo(descriptionLabel.snp.centerY)
+            $0.trailing.equalTo(separatorString.snp.trailing)
+        }
+    }
+    
+    private func configureNotificationSwitch() {
+        contentView.addSubview(notificationSwitch)
+        //forwardArrow constraints
+        notificationSwitch.snp.makeConstraints {
+            $0.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing)
+            $0.centerY.equalTo(descriptionLabel.snp.centerY)
+        }
+    }
+    
+    private func configureSelectedDaysLabel() {
+        contentView.addSubview(selectedDaysLabel)
+        
+        // selectedDaysLabel constraints
+        selectedDaysLabel.snp.makeConstraints {
+            $0.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing)
+            $0.centerY.equalTo(descriptionLabel.snp.centerY)
+            $0.leading.lessThanOrEqualTo(descriptionLabel.snp.trailing).offset(20)
         }
     }
 }
