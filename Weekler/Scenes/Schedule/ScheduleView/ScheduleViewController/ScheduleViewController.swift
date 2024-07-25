@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import JTAppleCalendar
+import RxSwift
+import RxCocoa
 
 
 final class ScheduleViewController: UIViewController {
@@ -89,6 +91,7 @@ final class ScheduleViewController: UIViewController {
         return collection
     }()
     private var viewModel: ScheduleViewViewModelProtocol
+    private var bag = DisposeBag()
     
     init(viewModel: ScheduleViewViewModelProtocol) {
         self.viewModel = viewModel
@@ -101,8 +104,8 @@ final class ScheduleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel.data = viewModel.tasks.map { .task($0) }
         setupUI()
+        bind()
         //        self.calendarCollectionView.reloadData(withanchor: Date())
     }
     
@@ -143,6 +146,16 @@ final class ScheduleViewController: UIViewController {
         applyConstraints()
     }
     
+    private func bind() {
+        viewModel.dataList
+            .observe(on: MainScheduler.instance)
+            .skip(1)
+            .subscribe(onNext: { [weak self] _ in
+                self?.updateSnapshot(animated: true)
+            })
+            .disposed(by: bag)
+    }
+    
     // REFACTOR
     private func setupTableViewDataSource() {
         tableDataSource = UITableViewDiffableDataSource<UITableView.Section, SourceItem>(
@@ -160,21 +173,15 @@ final class ScheduleViewController: UIViewController {
                 }
                 return cell
         })
-        updateSnapshot()
+        updateSnapshot(animated: false)
     }
     
-    private func updateSnapshot() {
+    private func updateSnapshot(animated: Bool) {
         var snapshot = NSDiffableDataSourceSnapshot<UITableView.Section, SourceItem>()
         snapshot.deleteAllItems()
         snapshot.appendSections([.task])
         snapshot.appendItems(viewModel.data)
-        tableDataSource.apply(snapshot, animatingDifferences: true)
-    }
-    
-    private func addTask(_ task: ScheduleTask) {
-        viewModel.tasks.append(task)
-        viewModel.data = viewModel.tasks.map { .task($0) }
-        updateSnapshot()
+        tableDataSource.apply(snapshot, animatingDifferences: animated)
     }
     
     private func addSubviews() {
@@ -228,6 +235,7 @@ final class ScheduleViewController: UIViewController {
     
     @objc private func didTapAddNewEventButton() {
         let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve()
+        createScheduleVC.delegate = viewModel as? CreateScheduleDelegate
         
         if let sheet = createScheduleVC.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
@@ -246,8 +254,6 @@ final class ScheduleViewController: UIViewController {
     
     @objc private func calendarSwitchRightBarButtonItemTapped() {
         print("calendar")
-        let task = ScheduleTask(id: UUID(), date: Date(), description: "Do nothing all day long")
-        addTask(task)
     }
 }
 
@@ -417,15 +423,8 @@ extension ScheduleViewController: UICollectionViewDelegateFlowLayout {
             cell.reconfigureState()
         }
         mainMode = ScheduleMode.allCases[indexPath.row]
-        switch mainMode {
-        case .goal:
-            viewModel.data = viewModel.goals.map { .goal($0) }
-        case .priority:
-            viewModel.data = viewModel.priorities.map { .priority($0) }
-        case .task:
-            viewModel.data = viewModel.tasks.map { .task($0) }
-        }
-        updateSnapshot()
+        viewModel.reconfigureMode(mainMode)
+        updateSnapshot(animated: false)
     }
     
     func collectionView(

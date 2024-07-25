@@ -11,11 +11,7 @@ import RxCocoa
 
 final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     //MARK: - public properties
-    var tasks: [ScheduleTask] = [
-        ScheduleTask(id: UUID(), date: Date(), description: "Buy 10 eggs in supermarket"),
-        ScheduleTask(id: UUID(), date: Date(), description: "Do homewark"),
-        ScheduleTask(id: UUID(), date: Date(), description: "Call grandma")
-    ]
+    var tasks: [ScheduleTask] = []
     
     var priorities: [Priority] = [
         Priority(id: UUID(), date: Date(), description: "Study"),
@@ -30,10 +26,30 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     ]
     
     var data: [SourceItem]
+    var dataList = BehaviorRelay<[SourceItem]>(value: [])
     var mainMode: ScheduleMode = .task
     
     init() {
         data = []
-        print("ScheduleViewModel init")
+        dataList.accept(data)
+    }
+    
+    func reconfigureMode(_ mode: ScheduleMode) {
+        switch mode {
+        case .goal:
+            data = goals.map { .goal($0) }
+        case .priority:
+            data = priorities.map { .priority($0) }
+        case .task:
+            data = tasks.map { .task($0) }
+        }
+    }
+}
+
+extension ScheduleViewViewModel: CreateScheduleDelegate {
+    func didAddTask(_ task: ScheduleTask, mode: ScheduleMode) {
+        tasks.append(task)
+        data = tasks.map { .task($0) }
+        dataList.accept(data)
     }
 }

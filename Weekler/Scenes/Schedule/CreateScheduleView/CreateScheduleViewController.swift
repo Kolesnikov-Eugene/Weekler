@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 final class CreateScheduleViewController: UIViewController {
+    // MARK: - public properties
+    weak var delegate: CreateScheduleDelegate?
     
     //MARK: - private properties
     private let scheduleItemTableViewReuseId = "ScheduleItem"
@@ -16,7 +18,7 @@ final class CreateScheduleViewController: UIViewController {
         let textField = UITextView()
         
         textField.backgroundColor = Colors.background
-        textField.layer.borderWidth = 0.5
+        textField.layer.borderWidth = 1
         textField.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
         textField.layer.cornerRadius = 10
         textField.font = UIFont.systemFont(ofSize: 14, weight: .medium)
@@ -41,19 +43,6 @@ final class CreateScheduleViewController: UIViewController {
         
         return button
     }()
-//    private lazy var taskDatePicker: UIDatePicker = {
-//        let picker = UIDatePicker()
-//
-//        picker.datePickerMode = .dateAndTime
-//        picker.preferredDatePickerStyle = .compact
-//        picker.locale = .current
-//        picker.contentMode = .center
-//        picker.contentVerticalAlignment = .center
-//        picker.contentHorizontalAlignment = .center
-//        picker.translatesAutoresizingMaskIntoConstraints = false
-//
-//        return picker
-//    }()
     private lazy var scheduleItemsTableView: UITableView = {
         let tableView = UITableView()
         
@@ -66,6 +55,8 @@ final class CreateScheduleViewController: UIViewController {
         
         return tableView
     }()
+    
+    // TODO: - Create init for delegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,8 +119,18 @@ final class CreateScheduleViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
     }
     
+    private func createPlaceholder() {
+        createScheduleDescriptionTextField.text = "Enter some text..."
+        createScheduleDescriptionTextField.textColor = .lightGray
+    }
+    
     @objc private func didTapSaveButton() {
-        print("SAVE")
+        let description = createScheduleDescriptionTextField.text ?? ""
+        let task = ScheduleTask(id: UUID(), date: Date(), description: description)
+        createPlaceholder()
+        
+        delegate?.didAddTask(task, mode: .task)
+        dismiss(animated: true)
     }
     
     @objc private func createDescriptionTextViewDidEndEditing() {
@@ -167,12 +168,6 @@ extension CreateScheduleViewController: UITableViewDelegate {
         vc.modalPresentationStyle = .pageSheet
         present(vc, animated: true)
     }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        guard indexPath.row == 0,
-//              let cell = scheduleItemsTableView.cellForRow(at: indexPath) as? ScheduleItemsTableViewCell else { return }
-//        cell.toggleDatePicker()
-//    }
 }
 
 // MARK: - UITextViewDelegate
@@ -186,8 +181,7 @@ extension CreateScheduleViewController: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if createScheduleDescriptionTextField.text.isEmpty {
-            createScheduleDescriptionTextField.text = "Enter some text..."
-            createScheduleDescriptionTextField.textColor = .lightGray
+            createPlaceholder()
         }
     }
 }
