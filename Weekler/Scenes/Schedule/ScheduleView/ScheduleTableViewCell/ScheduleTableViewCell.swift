@@ -26,7 +26,6 @@ final class ScheduleTableViewCell: UITableViewCell {
     private lazy var timeLabel: UILabel = {
         let label = UILabel()
         
-        label.text = "12:00"
         label.font = UIFont.systemFont(ofSize: 14, weight: .light)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -67,6 +66,16 @@ final class ScheduleTableViewCell: UITableViewCell {
         //        mainView.layer.shadowRadius = 4
         //        mainView.layer.shadowOpacity = 0.5
         //        mainView.layer.shadowOffset = CGSize.zero
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        clearAllFields()
+    }
+    
+    func configureCell(with model: ScheduleTask) {
+        scheduleDescriptionlabel.text = model.description
+        timeLabel.text = model.date.description
     }
     
     func configureCell(text: String) {
@@ -118,6 +127,11 @@ final class ScheduleTableViewCell: UITableViewCell {
             $0.leading.equalTo(contentView.snp.leading).inset(40)
             $0.height.equalTo(0.5)
         }
+    }
+    
+    private func clearAllFields() {
+        timeLabel.text = ""
+        scheduleDescriptionlabel.text = ""
     }
     
     @objc private func didTapCheckmarkButton() {

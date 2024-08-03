@@ -11,5 +11,6 @@ struct ScheduleTask: Hashable {
     let id: UUID
     let date: Date
     let description: String
+    let isNotificationEnabled: Bool
 }
 

@@ -27,11 +27,17 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     
     var data: [SourceItem]
     var dataList = BehaviorRelay<[SourceItem]>(value: [])
+    var emptyStateIsActive: Driver<Bool>
     var mainMode: ScheduleMode = .task
     
     init() {
         data = []
         dataList.accept(data)
+        emptyStateIsActive = dataList
+            .map({ items in
+                !items.isEmpty
+            })
+            .asDriver(onErrorJustReturn: false)
     }
     
     func reconfigureMode(_ mode: ScheduleMode) {
@@ -43,6 +49,7 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
         case .task:
             data = tasks.map { .task($0) }
         }
+        dataList.accept(data)
     }
 }
 

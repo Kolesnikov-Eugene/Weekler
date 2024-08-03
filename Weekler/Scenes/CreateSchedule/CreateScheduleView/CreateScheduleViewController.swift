@@ -55,9 +55,18 @@ final class CreateScheduleViewController: UIViewController {
         
         return tableView
     }()
+    private var viewModel: CreateScheduleViewModelProtocol
     
     // TODO: - Create init for delegate?
-
+    init(viewModel: CreateScheduleViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -120,17 +129,26 @@ final class CreateScheduleViewController: UIViewController {
     }
     
     private func createPlaceholder() {
-        createScheduleDescriptionTextField.text = "Enter some text..."
+        createScheduleDescriptionTextField.text = "Enter your task..."
         createScheduleDescriptionTextField.textColor = .lightGray
     }
     
     @objc private func didTapSaveButton() {
         let description = createScheduleDescriptionTextField.text ?? ""
-        let task = ScheduleTask(id: UUID(), date: Date(), description: description)
-        createPlaceholder()
-        
-        delegate?.didAddTask(task, mode: .task)
-        dismiss(animated: true)
+        let date = viewModel.dateAndTimeOfTask
+        let notification = viewModel.isNotificationEnabled
+        if description == "Enter your task..." || description == "" || description == " " {
+            dismiss(animated: true)
+            createPlaceholder()
+        } else {
+            print(date)
+            print(notification)
+            let task = ScheduleTask(id: UUID(), date: date, description: description, isNotificationEnabled: notification)
+            createPlaceholder()
+            
+            delegate?.didAddTask(task, mode: .task)
+            dismiss(animated: true)
+        }
     }
     
     @objc private func createDescriptionTextViewDidEndEditing() {
@@ -151,6 +169,12 @@ extension CreateScheduleViewController: UITableViewDataSource {
             fatalError("Error while instanciating ScheduleItemsTableViewCell")
         }
         cell.configureCell(index: indexPath.row)
+        cell.onDatePickerChangedValue = { date in
+            self.viewModel.dateAndTimeOfTask = date
+        }
+        cell.onSwitchChangedValue = { isAlertEnabled in
+            self.viewModel.isNotificationEnabled = isAlertEnabled
+        }
         return cell
     }
 }

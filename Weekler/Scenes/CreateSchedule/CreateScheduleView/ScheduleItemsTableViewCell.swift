@@ -12,6 +12,8 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
     
     // MARK: - Public properties
     var cellType: ScheduleItems?
+    var onSwitchChangedValue: ((Bool) -> (Void))?
+    var onDatePickerChangedValue: ((Date) -> (Void))?
     
     // Private properties
     private lazy var cellTypeImageView: UIImageView = {
@@ -33,6 +35,7 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         
         view.tintColor = .lightGray
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.addTarget(self, action: #selector(notificationSwitchDidChangeValue), for: .valueChanged)
         
         return view
     }()
@@ -47,21 +50,22 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
     private lazy var datePicker: UIDatePicker = {
         let picker = UIDatePicker()
         
-        picker.datePickerMode = .date
+        picker.datePickerMode = .dateAndTime
         picker.preferredDatePickerStyle = .compact
         picker.translatesAutoresizingMaskIntoConstraints = false
+        picker.addTarget(self, action: #selector(datePickerDidChangeValue), for: .valueChanged)
         
         return picker
     }()
-    private lazy var timePicker: UIDatePicker = {
-        let picker = UIDatePicker()
-        
-        picker.datePickerMode = .time
-        picker.preferredDatePickerStyle = .compact
-        picker.translatesAutoresizingMaskIntoConstraints = false
-        
-        return picker
-    }()
+//    private lazy var timePicker: UIDatePicker = {
+//        let picker = UIDatePicker()
+//        
+//        picker.datePickerMode = .time
+//        picker.preferredDatePickerStyle = .compact
+//        picker.translatesAutoresizingMaskIntoConstraints = false
+//        
+//        return picker
+//    }()
     private lazy var selectedDaysLabel: UILabel = {
         let label = UILabel()
         
@@ -92,11 +96,12 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
             cellTypeImageView.tintColor = .orange
             descriptionLabel.text = ScheduleItems.allCases[0].rawValue
         case 1:
-            configureTimePicker()
-            
-            cellTypeImageView.image = UIImage(systemName: "clock")
-            cellTypeImageView.tintColor = .orange
-            descriptionLabel.text = ScheduleItems.allCases[1].rawValue
+            break
+//            configureTimePicker()
+//            
+//            cellTypeImageView.image = UIImage(systemName: "clock")
+//            cellTypeImageView.tintColor = .orange
+//            descriptionLabel.text = ScheduleItems.allCases[1].rawValue
         case 2:
             configureNotificationSwitch()
             
@@ -162,20 +167,20 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         }
     }
     
-    private func configureTimePicker() {
-        contentView.addSubview(timePicker)
-        
-        timePicker.snp.makeConstraints {
-            $0.centerY.equalTo(descriptionLabel.snp.centerY)
-            $0.trailing.equalTo(separatorString.snp.trailing)
-        }
-    }
+//    private func configureTimePicker() {
+//        contentView.addSubview(timePicker)
+//        
+//        timePicker.snp.makeConstraints {
+//            $0.centerY.equalTo(descriptionLabel.snp.centerY)
+//            $0.trailing.equalTo(separatorString.snp.trailing)
+//        }
+//    }
     
     private func configureNotificationSwitch() {
         contentView.addSubview(notificationSwitch)
         //forwardArrow constraints
         notificationSwitch.snp.makeConstraints {
-            $0.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing)
+            $0.trailing.equalTo(contentView.safeAreaLayoutGuide.snp.trailing).inset(2)
             $0.centerY.equalTo(descriptionLabel.snp.centerY)
         }
     }
@@ -189,5 +194,13 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
             $0.centerY.equalTo(descriptionLabel.snp.centerY)
             $0.leading.lessThanOrEqualTo(descriptionLabel.snp.trailing).offset(20)
         }
+    }
+    
+    @objc private func datePickerDidChangeValue(_ sender: UIDatePicker) {
+        onDatePickerChangedValue?(sender.date)
+    }
+    
+    @objc private func notificationSwitchDidChangeValue(_ sender: UISwitch) {
+        onSwitchChangedValue?(sender.isOn)
     }
 }

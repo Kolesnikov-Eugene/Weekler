@@ -90,6 +90,13 @@ final class ScheduleViewController: UIViewController {
         
         return collection
     }()
+    private lazy var emptyStateImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(resource: .dailySchedule)
+        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.clipsToBounds = true
+        return view
+    }()
     private var viewModel: ScheduleViewViewModelProtocol
     private var bag = DisposeBag()
     
@@ -123,6 +130,7 @@ final class ScheduleViewController: UIViewController {
         //        scheduleTableView.setContentOffset(CGPoint(x: 0, y: -100), animated: false)
         //TODO: - add dinamic content inset when table view will display the lsat cell
         scheduleTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 75, right: 0)
+//        emptyStateImageView.layer.cornerRadius = CGRectGetWidth(CGRect(origin: CGPoint.zero, size: emptyStateImageView.bounds.size)) / 2
     }
     
     //MARK: - private methods
@@ -154,6 +162,10 @@ final class ScheduleViewController: UIViewController {
                 self?.updateSnapshot(animated: true)
             })
             .disposed(by: bag)
+        
+        viewModel.emptyStateIsActive
+            .drive(emptyStateImageView.rx.isHidden)
+            .disposed(by: bag)
     }
     
     // REFACTOR
@@ -169,7 +181,7 @@ final class ScheduleViewController: UIViewController {
                 case .priority(let priority):
                     cell.configureCell(text: priority.description)
                 case .task(let task):
-                    cell.configureCell(text: task.description)
+                    cell.configureCell(with: task)
                 }
                 return cell
         })
@@ -185,10 +197,14 @@ final class ScheduleViewController: UIViewController {
     }
     
     private func addSubviews() {
-        view.addSubview(calendarCollectionView)
-        view.addSubview(selectMainModeCollectionView)
-        view.addSubview(scheduleTableView)
-        view.addSubview(addNewEventButton)
+        let subviews = [
+            calendarCollectionView,
+            selectMainModeCollectionView,
+            scheduleTableView,
+            addNewEventButton,
+            emptyStateImageView
+        ]
+        subviews.forEach { view.addSubview($0) }
     }
     
     private func applyConstraints() {
@@ -221,6 +237,14 @@ final class ScheduleViewController: UIViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).inset(16)
         }
+        
+        //emptyStateImageView constraints
+        emptyStateImageView.snp.makeConstraints {
+            $0.centerX.equalTo(view.snp.centerX)
+            $0.centerY.equalTo(view.snp.centerY)
+            $0.width.equalTo(250)
+            $0.height.equalTo(250)
+        }
     }
     
     private func configureNavBar() {
@@ -234,7 +258,8 @@ final class ScheduleViewController: UIViewController {
     }
     
     @objc private func didTapAddNewEventButton() {
-        let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve()
+        let createViewModel: CreateScheduleViewModelProtocol = DIContainer.shared.resolve()
+        let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve(argument: createViewModel)
         createScheduleVC.delegate = viewModel as? CreateScheduleDelegate
         
         if let sheet = createScheduleVC.sheetPresentationController {
@@ -424,7 +449,7 @@ extension ScheduleViewController: UICollectionViewDelegateFlowLayout {
         }
         mainMode = ScheduleMode.allCases[indexPath.row]
         viewModel.reconfigureMode(mainMode)
-        updateSnapshot(animated: false)
+//        updateSnapshot(animated: false)
     }
     
     func collectionView(
