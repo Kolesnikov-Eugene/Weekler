@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Priority: Hashable {
+struct Priority: Hashable, SourceItemProtocol {
     let id: UUID
     let date: Date
     let description: String

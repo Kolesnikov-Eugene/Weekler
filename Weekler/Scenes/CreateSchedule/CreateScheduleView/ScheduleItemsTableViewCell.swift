@@ -50,6 +50,7 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
     private lazy var datePicker: UIDatePicker = {
         let picker = UIDatePicker()
         
+        picker.minuteInterval = 5
         picker.datePickerMode = .dateAndTime
         picker.preferredDatePickerStyle = .compact
         picker.translatesAutoresizingMaskIntoConstraints = false

@@ -192,7 +192,7 @@ final class ScheduleViewController: UIViewController {
         var snapshot = NSDiffableDataSourceSnapshot<UITableView.Section, SourceItem>()
         snapshot.deleteAllItems()
         snapshot.appendSections([.task])
-        snapshot.appendItems(viewModel.data)
+        snapshot.appendItems(viewModel.data.sorted { $0 < $1 })
         tableDataSource.apply(snapshot, animatingDifferences: animated)
     }
     

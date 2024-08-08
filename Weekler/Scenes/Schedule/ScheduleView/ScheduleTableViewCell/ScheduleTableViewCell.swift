@@ -51,6 +51,12 @@ final class ScheduleTableViewCell: UITableViewCell {
         
         return view
     }()
+    private lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        formatter.locale = .current
+        return formatter
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -74,8 +80,9 @@ final class ScheduleTableViewCell: UITableViewCell {
     }
     
     func configureCell(with model: ScheduleTask) {
+        let time = dateFormatter.string(from: model.date)
+        timeLabel.text = time
         scheduleDescriptionlabel.text = model.description
-        timeLabel.text = model.date.description
     }
     
     func configureCell(text: String) {

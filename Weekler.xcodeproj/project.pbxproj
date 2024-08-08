@@ -17,6 +17,7 @@
 		4442BA6E2BE425F0002DC469 /* ConfigViewAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA6D2BE425F0002DC469 /* ConfigViewAssembly.swift */; };
 		4442BA702BE4277B002DC469 /* TabBarFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA6F2BE4277B002DC469 /* TabBarFactoryProtocol.swift */; };
 		444B387F2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444B387E2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift */; };
+		444DAB862C655A8F005B8ABC /* SourceItemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DAB852C655A8F005B8ABC /* SourceItemProtocol.swift */; };
 		44727B392C486895007756A3 /* ScheduleViewModelAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44727B382C486895007756A3 /* ScheduleViewModelAssembly.swift */; };
 		44727B3B2C486918007756A3 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44727B3A2C486918007756A3 /* Priority.swift */; };
 		44727B3D2C48692E007756A3 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44727B3C2C48692E007756A3 /* Goal.swift */; };
@@ -69,6 +70,7 @@
 		4442BA6D2BE425F0002DC469 /* ConfigViewAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigViewAssembly.swift; sourceTree = "<group>"; };
 		4442BA6F2BE4277B002DC469 /* TabBarFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarFactoryProtocol.swift; sourceTree = "<group>"; };
 		444B387E2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCalendarCollectionViewCell.swift; sourceTree = "<group>"; };
+		444DAB852C655A8F005B8ABC /* SourceItemProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItemProtocol.swift; sourceTree = "<group>"; };
 		44727B382C486895007756A3 /* ScheduleViewModelAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModelAssembly.swift; sourceTree = "<group>"; };
 		44727B3A2C486918007756A3 /* Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
 		44727B3C2C48692E007756A3 /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
@@ -330,6 +332,7 @@
 				44727B3C2C48692E007756A3 /* Goal.swift */,
 				44727B3E2C48694E007756A3 /* SourceItem.swift */,
 				44727B402C486970007756A3 /* ScheduleMode.swift */,
+				444DAB852C655A8F005B8ABC /* SourceItemProtocol.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -585,6 +588,7 @@
 				44727B3F2C48694E007756A3 /* SourceItem.swift in Sources */,
 				4442BA702BE4277B002DC469 /* TabBarFactoryProtocol.swift in Sources */,
 				4442BA6E2BE425F0002DC469 /* ConfigViewAssembly.swift in Sources */,
+				444DAB862C655A8F005B8ABC /* SourceItemProtocol.swift in Sources */,
 				4442BA6A2BE4243D002DC469 /* StatisticsAssembly.swift in Sources */,
 				44CE3BBB2C0BA31C00719B84 /* CreateScheduleViewController.swift in Sources */,
 				44727B3B2C486918007756A3 /* Priority.swift in Sources */,
