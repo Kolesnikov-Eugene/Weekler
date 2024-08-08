@@ -9,7 +9,8 @@ import Foundation
 
 final class TabBarFactory: TabBarFactoryProtocol {
     func createScheduleViewController() -> ScheduleViewController {
-        let scheduleVC: ScheduleViewController = DIContainer.shared.resolve()
+        let scheduleViewModel: ScheduleViewViewModelProtocol = DIContainer.shared.resolve()
+        let scheduleVC: ScheduleViewController = DIContainer.shared.resolve(argument: scheduleViewModel)
         return scheduleVC
     }
     
