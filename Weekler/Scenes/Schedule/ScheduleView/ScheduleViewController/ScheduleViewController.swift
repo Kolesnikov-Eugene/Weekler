@@ -260,7 +260,7 @@ final class ScheduleViewController: UIViewController {
     @objc private func didTapAddNewEventButton() {
         let createViewModel: CreateScheduleViewModelProtocol = DIContainer.shared.resolve()
         let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve(argument: createViewModel)
-        createScheduleVC.delegate = viewModel as? CreateScheduleDelegate
+        createViewModel.delegate = viewModel as? CreateScheduleDelegate
         
         if let sheet = createScheduleVC.sheetPresentationController {
             sheet.detents = [.medium(), .large()]

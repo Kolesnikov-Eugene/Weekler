@@ -8,7 +8,9 @@
 import Foundation
 
 protocol CreateScheduleViewModelProtocol: AnyObject {
+    var delegate: CreateScheduleDelegate? { get set }
     var dateAndTimeOfTask: Date { get set }
     var taskDescription: String { get set }
     var isNotificationEnabled: Bool { get set }
+    func createTask()
 }

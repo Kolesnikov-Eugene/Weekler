@@ -16,35 +16,20 @@ enum SourceItem: Hashable, Comparable {
         let left: SourceItemProtocol? = lhs.castSelfToModel
         let right: SourceItemProtocol? = rhs.castSelfToModel
         
-        guard let left = left,
-              let right = right else { return false }
+        guard let left,
+              let right else { return false }
         
         return left.date < right.date
     }
     
     var castSelfToModel: SourceItemProtocol? {
-        var item: SourceItemProtocol?
         switch self {
         case .goal(let goal):
-            item = goal
+            return goal
         case .priority(let priority):
-            item = priority
+            return priority
         case .task(let task):
-            item = task
+            return task
         }
-        return item
-    }
-    
-    private func getTypeOfSelf() -> SourceItemProtocol? {
-        var item: SourceItemProtocol?
-        switch self {
-        case .goal(let goal):
-            item = goal
-        case .priority(let priority):
-            item = priority
-        case .task(let task):
-            item = task
-        }
-        return item
     }
 }
