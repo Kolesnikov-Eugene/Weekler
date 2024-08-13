@@ -18,7 +18,8 @@ final class SceneAssembly: Assembly {
             TabBarFactoryAssembly(),
             CreateScheduleViewAssembly(),
             ScheduleViewModelAssembly(),
-            CreateScheduleViewModelAssembly()
+            CreateScheduleViewModelAssembly(),
+            ScheduleDataManagerAssembly()
         ]
         assemblies.forEach { $0.assemble(container: container) }
     }

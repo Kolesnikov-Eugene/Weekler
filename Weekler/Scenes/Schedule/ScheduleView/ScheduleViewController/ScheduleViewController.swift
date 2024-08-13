@@ -92,7 +92,8 @@ final class ScheduleViewController: UIViewController {
     }()
     private lazy var emptyStateImageView: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(resource: .dailySchedule)
+        view.image = UIImage(resource: .clock)
+        view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
 //        view.clipsToBounds = true
         return view
@@ -113,16 +114,9 @@ final class ScheduleViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         bind()
-        //        self.calendarCollectionView.reloadData(withanchor: Date())
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        calendarCollectionView.scrollToDate(Date()) {
+        calendarCollectionView.scrollToDate(Date(), animateScroll: false) {
             self.calendarCollectionView.selectDates([Date()])
         }
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -130,7 +124,7 @@ final class ScheduleViewController: UIViewController {
         //        scheduleTableView.setContentOffset(CGPoint(x: 0, y: -100), animated: false)
         //TODO: - add dinamic content inset when table view will display the lsat cell
         scheduleTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 75, right: 0)
-//        emptyStateImageView.layer.cornerRadius = CGRectGetWidth(CGRect(origin: CGPoint.zero, size: emptyStateImageView.bounds.size)) / 2
+        emptyStateImageView.layer.cornerRadius = CGRectGetWidth(CGRect(origin: CGPoint.zero, size: emptyStateImageView.bounds.size)) / 2
     }
     
     //MARK: - private methods
@@ -192,8 +186,9 @@ final class ScheduleViewController: UIViewController {
         var snapshot = NSDiffableDataSourceSnapshot<UITableView.Section, SourceItem>()
         snapshot.deleteAllItems()
         snapshot.appendSections([.task])
-        snapshot.appendItems(viewModel.data.sorted { $0 < $1 })
+        snapshot.appendItems(viewModel.data)
         tableDataSource.apply(snapshot, animatingDifferences: animated)
+//            .sorted { $0 < $1 }
     }
     
     private func addSubviews() {
@@ -350,7 +345,7 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
         guard let cell = cell as? WeekCalendarCollectionViewCell else {
             fatalError("Error in didSelect calendar cell")
         }
-        
+        print(formatter.string(from: date))
         cell.changeSelectionState(isSelected: cellState.isSelected)
     }
     

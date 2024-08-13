@@ -30,14 +30,22 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     var emptyStateIsActive: Driver<Bool>
     var mainMode: ScheduleMode = .task
     
-    init() {
+    // MARK: - private properties
+    private let scheduleDataManager: ScheduleDataManagerProtocol
+    
+    init(scheduleDataManager: ScheduleDataManagerProtocol) {
+        self.scheduleDataManager = scheduleDataManager
+        
         data = []
-        dataList.accept(data)
+        
+//        dataList.accept(data)
         emptyStateIsActive = dataList
             .map({ items in
                 !items.isEmpty
             })
             .asDriver(onErrorJustReturn: false)
+        
+        fetchSchedule()
     }
     
     func reconfigureMode(_ mode: ScheduleMode) {
@@ -51,12 +59,42 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
         }
         dataList.accept(data)
     }
+    
+    private func fetchSchedule() {
+        let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
+        
+        scheduleDataManager.fetchTaskItems(sortDescriptor: sortDescriptor) { [weak self] (result: Result<[TaskItem], Error>) in
+            guard let self = self else { return }
+            switch result {
+            case .success(let scheduleItems):
+                tasks = scheduleItems.map { ScheduleTask(
+                    id: $0.id,
+                    date: $0.date,
+                    description: $0.taskDescription,
+                    isNotificationEnabled: $0.isNotificationEnabled
+                ) }
+                data = tasks.map { .task($0) }
+                dataList.accept(data)
+            case .failure(let error):
+                fatalError(error.localizedDescription)
+            }
+        }
+    }
 }
 
 extension ScheduleViewViewModel: CreateScheduleDelegate {
     func didAddTask(_ task: ScheduleTask, mode: ScheduleMode) {
-        tasks.append(task)
-        data = tasks.map { .task($0) }
-        dataList.accept(data)
+        let model = TaskItem(
+            id: task.id,
+            date: task.date,
+            taskDescription: task.description,
+            isNotificationEnabled: task.isNotificationEnabled
+        )
+        scheduleDataManager.insert(model)
+        fetchSchedule()
+        
+//        tasks.append(task)
+//        data = tasks.map { .task($0) }
+//        dataList.accept(data)
     }
 }
