@@ -9,6 +9,11 @@ import SwiftData
 import Foundation
 
 final class ScheduleDataManager: ScheduleDataManagerProtocol {
+    
+    // MARK: - public properties
+    var onContextUpdate: (() -> ())?
+    
+    // MARK: - private properties
     private lazy var context: ModelContext = {
         do {
             let container = try ModelContainer(for: TaskItem.self)
@@ -19,7 +24,9 @@ final class ScheduleDataManager: ScheduleDataManagerProtocol {
         }
     }()
     
-    init() {}
+    init() {
+        subscribeToContextUpdates()
+    }
     
     // MARK: - public methods
     func fetchTaskItems<T: ScheduleDataBaseType>(sortDescriptor: SortDescriptor<T>, _ completion: (Result<[T], Error>) -> Void) {
@@ -36,12 +43,29 @@ final class ScheduleDataManager: ScheduleDataManagerProtocol {
         context.insert(model)
     }
     
-    func delete<T: ScheduleDataBaseType>(_ model: T) {
-        context.delete(model)
+    func delete<T: ScheduleDataBaseType>(_ id: UUID, predicate: Predicate<T>) {
+        try? context.delete(model: T.self, where: predicate)
+    }
+    
+    // MARK: - private methods
+    private func subscribeToContextUpdates() {
+        NotificationCenter.default
+            .addObserver(
+                self,
+                selector: #selector(modelContextDidUpdate),
+                name: .NSManagedObjectContextObjectsDidChange,
+                object: nil
+            )
+    }
+    
+    @objc private func modelContextDidUpdate() {
+        onContextUpdate?()
     }
 }
 
 protocol ScheduleDataManagerProtocol {
+    var onContextUpdate: (() -> ())? { get set }
     func fetchTaskItems<T: ScheduleDataBaseType>(sortDescriptor: SortDescriptor<T>, _ completion: (Result<[T], Error>) -> Void)
     func insert<T: ScheduleDataBaseType>(_ model: T)
+    func delete<T: ScheduleDataBaseType>(_ id: UUID, predicate: Predicate<T>)
 }

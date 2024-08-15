@@ -31,14 +31,11 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     var mainMode: ScheduleMode = .task
     
     // MARK: - private properties
-    private let scheduleDataManager: ScheduleDataManagerProtocol
+    private var scheduleDataManager: ScheduleDataManagerProtocol
     
     init(scheduleDataManager: ScheduleDataManagerProtocol) {
         self.scheduleDataManager = scheduleDataManager
-        
         data = []
-        
-//        dataList.accept(data)
         emptyStateIsActive = dataList
             .map({ items in
                 !items.isEmpty
@@ -46,8 +43,10 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
             .asDriver(onErrorJustReturn: false)
         
         fetchSchedule()
+        bindToScheduleUpdates()
     }
     
+    // MARK: - public methods
     func reconfigureMode(_ mode: ScheduleMode) {
         switch mode {
         case .goal:
@@ -60,6 +59,13 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
         dataList.accept(data)
     }
     
+    func deleteTask(at index: Int) {
+        let taskId = tasks[index].id
+        let predicate = #Predicate<TaskItem> { $0.id == taskId }
+        scheduleDataManager.delete(taskId, predicate: predicate)
+    }
+    
+    // MARK: - private methods
     private func fetchSchedule() {
         let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
         
@@ -80,6 +86,13 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
             }
         }
     }
+    
+    private func bindToScheduleUpdates() {
+        scheduleDataManager.onContextUpdate = { [weak self] in
+            guard let self = self else { return }
+            self.fetchSchedule()
+        }
+    }
 }
 
 extension ScheduleViewViewModel: CreateScheduleDelegate {
@@ -91,10 +104,5 @@ extension ScheduleViewViewModel: CreateScheduleDelegate {
             isNotificationEnabled: task.isNotificationEnabled
         )
         scheduleDataManager.insert(model)
-        fetchSchedule()
-        
-//        tasks.append(task)
-//        data = tasks.map { .task($0) }
-//        dataList.accept(data)
     }
 }

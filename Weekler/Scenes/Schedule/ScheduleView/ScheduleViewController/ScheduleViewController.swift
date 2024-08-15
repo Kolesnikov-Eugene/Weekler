@@ -392,6 +392,29 @@ extension ScheduleViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
+    
+    // TODO: - Implement swipe to edit action
+    func tableView(
+        _ tableView: UITableView,
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    ) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(
+            style: .destructive,
+            title: "Удалить") { [weak self] contextualAction, view, boolValue in
+                guard let self = self else { return }
+                self.viewModel.deleteTask(at: indexPath.row)
+            }
+        let editAction = UIContextualAction(
+            style: .normal,
+            title: "") { [weak self] contextualAction, view, boolValue  in
+                guard let self = self else { return }
+                print("Edit")
+            }
+        editAction.image = UIImage(systemName: "pencil")
+        editAction.backgroundColor = .lightGray
+        let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+        return swipeActions
+    }
 }
 
 //MARK: - CollectionView data source
