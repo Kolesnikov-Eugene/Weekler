@@ -10,6 +10,10 @@
 		440549E52BC5D7E400077C61 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440549E42BC5D7E400077C61 /* Strings.swift */; };
 		440549EE2BC5DDBA00077C61 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 440549EC2BC5DDBA00077C61 /* Localizable.strings */; };
 		440770FD2BBB472900AD9C98 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440770FC2BBB472900AD9C98 /* Colors.swift */; };
+		442256822C6BE61500172C0A /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256812C6BE61500172C0A /* TaskItem.swift */; };
+		442256842C6BE7B300172C0A /* ScheduleDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256832C6BE7B300172C0A /* ScheduleDataManager.swift */; };
+		442256862C6BE82900172C0A /* ScheduleDataManagerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256852C6BE82900172C0A /* ScheduleDataManagerAssembly.swift */; };
+		442256882C6BEB4400172C0A /* ScheduleDataBaseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256872C6BEB4400172C0A /* ScheduleDataBaseType.swift */; };
 		4442BA652BE41CD8002DC469 /* TabBarFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA642BE41CD8002DC469 /* TabBarFactory.swift */; };
 		4442BA682BE41F38002DC469 /* TabBarFactoryAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA672BE41F38002DC469 /* TabBarFactoryAssembly.swift */; };
 		4442BA6A2BE4243D002DC469 /* StatisticsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA692BE4243D002DC469 /* StatisticsAssembly.swift */; };
@@ -63,6 +67,10 @@
 		440549ED2BC5DDBA00077C61 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		440549EF2BC5DDF200077C61 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		440770FC2BBB472900AD9C98 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		442256812C6BE61500172C0A /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
+		442256832C6BE7B300172C0A /* ScheduleDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataManager.swift; sourceTree = "<group>"; };
+		442256852C6BE82900172C0A /* ScheduleDataManagerAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataManagerAssembly.swift; sourceTree = "<group>"; };
+		442256872C6BEB4400172C0A /* ScheduleDataBaseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataBaseType.swift; sourceTree = "<group>"; };
 		4442BA642BE41CD8002DC469 /* TabBarFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarFactory.swift; sourceTree = "<group>"; };
 		4442BA672BE41F38002DC469 /* TabBarFactoryAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarFactoryAssembly.swift; sourceTree = "<group>"; };
 		4442BA692BE4243D002DC469 /* StatisticsAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsAssembly.swift; sourceTree = "<group>"; };
@@ -149,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				4442BA672BE41F38002DC469 /* TabBarFactoryAssembly.swift */,
+				442256852C6BE82900172C0A /* ScheduleDataManagerAssembly.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -278,7 +287,7 @@
 				440549E62BC5D8A700077C61 /* Resources */,
 				440549E32BC5D7CF00077C61 /* Generated */,
 				449F18F12BACD18C00F9640D /* Model */,
-				449F18EF2BACD0C300F9640D /* CoreData */,
+				449F18EF2BACD0C300F9640D /* SwiftData */,
 				449F18EE2BACD0A800F9640D /* Services */,
 				449F18ED2BACD09A00F9640D /* Helpers */,
 				449F18EC2BACD08900F9640D /* Domain */,
@@ -293,6 +302,7 @@
 		449F18EC2BACD08900F9640D /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				442256832C6BE7B300172C0A /* ScheduleDataManager.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -317,11 +327,13 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		449F18EF2BACD0C300F9640D /* CoreData */ = {
+		449F18EF2BACD0C300F9640D /* SwiftData */ = {
 			isa = PBXGroup;
 			children = (
+				442256812C6BE61500172C0A /* TaskItem.swift */,
+				442256872C6BEB4400172C0A /* ScheduleDataBaseType.swift */,
 			);
-			path = CoreData;
+			path = SwiftData;
 			sourceTree = "<group>";
 		};
 		449F18F12BACD18C00F9640D /* Model */ = {
@@ -580,9 +592,11 @@
 				447DBE622BC4A8EB00A99A38 /* ScheduleViewController.swift in Sources */,
 				44727B4A2C486B29007756A3 /* SelectRepeatedDaysViewController.swift in Sources */,
 				44F1169A2BDC3A3200134D5F /* TabBarAssembly.swift in Sources */,
+				442256842C6BE7B300172C0A /* ScheduleDataManager.swift in Sources */,
 				44727B4C2C486B7B007756A3 /* DaysOfWeekTableViewCell.swift in Sources */,
 				4498EAA22C2E019E0081E7EE /* ScheduleItems.swift in Sources */,
 				44B06E142BECEE0E000C3CC6 /* ScheduleViewViewModel.swift in Sources */,
+				442256862C6BE82900172C0A /* ScheduleDataManagerAssembly.swift in Sources */,
 				440549E52BC5D7E400077C61 /* Strings.swift in Sources */,
 				44727B392C486895007756A3 /* ScheduleViewModelAssembly.swift in Sources */,
 				44727B3F2C48694E007756A3 /* SourceItem.swift in Sources */,
@@ -605,6 +619,7 @@
 				449F18D82BACC4BF00F9640D /* AppDelegate.swift in Sources */,
 				44F116982BDC398E00134D5F /* ScheduleAssembly.swift in Sources */,
 				44727B412C486970007756A3 /* ScheduleMode.swift in Sources */,
+				442256822C6BE61500172C0A /* TaskItem.swift in Sources */,
 				44B06E192BECF08F000C3CC6 /* ScheduleTableViewCell.swift in Sources */,
 				44B06E162BECEE3C000C3CC6 /* ScheduleViewViewModelProtocol.swift in Sources */,
 				447DBE632BC4A8EB00A99A38 /* StatisticsViewController.swift in Sources */,
@@ -619,6 +634,7 @@
 				444B387F2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift in Sources */,
 				44DBAE572C13222400BF130E /* ScheduleItemsTableViewCell.swift in Sources */,
 				449F18DA2BACC4BF00F9640D /* SceneDelegate.swift in Sources */,
+				442256882C6BEB4400172C0A /* ScheduleDataBaseType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -782,7 +798,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -812,7 +828,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

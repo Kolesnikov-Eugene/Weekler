@@ -88,6 +88,18 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - public methods
+    func resetAllFieldsForCell(at index: Int) {
+        switch index {
+        case 0:
+            datePicker.date = Date()
+        case 2:
+            notificationSwitch.isOn = false
+        default:
+            break // TODO: implement rest cases when other modes enabled
+        }
+    }
+    
     func configureCell(index: Int) {
         switch index {
         case 0:
@@ -121,6 +133,7 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         }
     }
     
+    // MARK: - private methods
     private func setupUI() {
         contentView.backgroundColor = Colors.background
         addSubviews()

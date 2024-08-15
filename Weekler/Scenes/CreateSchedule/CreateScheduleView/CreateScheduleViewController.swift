@@ -7,10 +7,10 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 final class CreateScheduleViewController: UIViewController {
-    // MARK: - public properties
-    weak var delegate: CreateScheduleDelegate?
     
     //MARK: - private properties
     private let scheduleItemTableViewReuseId = "ScheduleItem"
@@ -38,7 +38,7 @@ final class CreateScheduleViewController: UIViewController {
         button.setTitle("Done", for: .normal)
         button.setTitleColor(.orange, for: .normal)
         button.contentHorizontalAlignment = .trailing
-        button.addTarget(self, action: #selector(didTapSaveButton), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(didTapSaveButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         return button
@@ -56,6 +56,7 @@ final class CreateScheduleViewController: UIViewController {
         return tableView
     }()
     private var viewModel: CreateScheduleViewModelProtocol
+    private var bag = DisposeBag()
     
     // TODO: - Create init for delegate?
     init(viewModel: CreateScheduleViewModelProtocol) {
@@ -69,8 +70,13 @@ final class CreateScheduleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupUI()
+        bind()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        resetAllFieldsToDefault()
     }
     
     //MARK: - private methods
@@ -120,6 +126,24 @@ final class CreateScheduleViewController: UIViewController {
         }
     }
     
+    private func bind() {
+        createScheduleDescriptionTextField.rx
+            .text
+            .orEmpty
+            .asObservable()
+            .subscribe(onNext: { text in
+                self.viewModel.taskDescription = text
+            })
+            .disposed(by: bag)
+        
+        saveTaskButton.rx
+            .tap
+            .subscribe(onNext: {
+                self.didTapSaveButton()
+            })
+            .disposed(by: bag)
+    }
+    
     private func configureTapGesture() {
         let tapGesture = UITapGestureRecognizer(
             target: self,
@@ -133,22 +157,22 @@ final class CreateScheduleViewController: UIViewController {
         createScheduleDescriptionTextField.textColor = .lightGray
     }
     
-    @objc private func didTapSaveButton() {
-        let description = createScheduleDescriptionTextField.text ?? ""
-        let date = viewModel.dateAndTimeOfTask
-        let notification = viewModel.isNotificationEnabled
-        if description == "Enter your task..." || description == "" || description == " " {
-            dismiss(animated: true)
-            createPlaceholder()
-        } else {
-            print(date)
-            print(notification)
-            let task = ScheduleTask(id: UUID(), date: date, description: description, isNotificationEnabled: notification)
-            createPlaceholder()
-            
-            delegate?.didAddTask(task, mode: .task)
-            dismiss(animated: true)
+    private func resetAllFieldsToDefault() {
+        createPlaceholder()
+        for index in 0..<ScheduleItems.allCases.count {
+            let indePath = IndexPath(row: index, section: 0)
+            guard let cell = scheduleItemsTableView
+                .cellForRow(at: indePath) as? ScheduleItemsTableViewCell else {
+                return assertionFailure("Error instantiating ScheduleItem cell on reset")
+            }
+            cell.resetAllFieldsForCell(at: index)
         }
+    }
+    
+    private func didTapSaveButton() {
+        viewModel.createTask()
+        createPlaceholder()
+        dismiss(animated: true)
     }
     
     @objc private func createDescriptionTextViewDidEndEditing() {
