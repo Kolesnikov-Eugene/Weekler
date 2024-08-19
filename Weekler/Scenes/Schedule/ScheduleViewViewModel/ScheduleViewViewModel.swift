@@ -32,9 +32,11 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     
     // MARK: - private properties
     private var scheduleDataManager: ScheduleDataManagerProtocol
+    private var currentDate: Date
     
     init(scheduleDataManager: ScheduleDataManagerProtocol) {
         self.scheduleDataManager = scheduleDataManager
+        currentDate = Date()
         data = []
         emptyStateIsActive = dataList
             .map({ items in
@@ -59,6 +61,11 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
         dataList.accept(data)
     }
     
+    func changeDate(for selectedDate: Date) {
+        currentDate = selectedDate
+        fetchSchedule()
+    }
+    
     func deleteTask(at index: Int) {
         let taskId = tasks[index].id
         let predicate = #Predicate<TaskItem> { $0.id == taskId }
@@ -68,8 +75,11 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     // MARK: - private methods
     private func fetchSchedule() {
         let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
+        let predicate = #Predicate<TaskItem> { $0.onlyDate == currentDate.onlyDate }
         
-        scheduleDataManager.fetchTaskItems(sortDescriptor: sortDescriptor) { [weak self] (result: Result<[TaskItem], Error>) in
+        scheduleDataManager.fetchTaskItems(
+            predicate: predicate,
+            sortDescriptor: sortDescriptor) { [weak self] (result: Result<[TaskItem], Error>) in
             guard let self = self else { return }
             switch result {
             case .success(let scheduleItems):

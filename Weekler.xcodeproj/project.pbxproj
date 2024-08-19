@@ -10,6 +10,7 @@
 		440549E52BC5D7E400077C61 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440549E42BC5D7E400077C61 /* Strings.swift */; };
 		440549EE2BC5DDBA00077C61 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 440549EC2BC5DDBA00077C61 /* Localizable.strings */; };
 		440770FD2BBB472900AD9C98 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440770FC2BBB472900AD9C98 /* Colors.swift */; };
+		440CF1F72C73CAE600FEFDE0 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */; };
 		442256822C6BE61500172C0A /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256812C6BE61500172C0A /* TaskItem.swift */; };
 		442256842C6BE7B300172C0A /* ScheduleDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256832C6BE7B300172C0A /* ScheduleDataManager.swift */; };
 		442256862C6BE82900172C0A /* ScheduleDataManagerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256852C6BE82900172C0A /* ScheduleDataManagerAssembly.swift */; };
@@ -67,6 +68,7 @@
 		440549ED2BC5DDBA00077C61 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		440549EF2BC5DDF200077C61 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		440770FC2BBB472900AD9C98 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
 		442256812C6BE61500172C0A /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
 		442256832C6BE7B300172C0A /* ScheduleDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataManager.swift; sourceTree = "<group>"; };
 		442256852C6BE82900172C0A /* ScheduleDataManagerAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataManagerAssembly.swift; sourceTree = "<group>"; };
@@ -316,6 +318,7 @@
 				44727B422C486A48007756A3 /* DaysOfWeekEnum.swift */,
 				44727B442C486A68007756A3 /* UITableView+Extension.swift */,
 				44727B462C486AAC007756A3 /* ScheduleTableViewSectionItem.swift */,
+				440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -613,6 +616,7 @@
 				440770FD2BBB472900AD9C98 /* Colors.swift in Sources */,
 				4442BA652BE41CD8002DC469 /* TabBarFactory.swift in Sources */,
 				447DBE652BC4A8EB00A99A38 /* TaskEditorViewController.swift in Sources */,
+				440CF1F72C73CAE600FEFDE0 /* Date+extension.swift in Sources */,
 				44F116932BDC384B00134D5F /* DIContainer.swift in Sources */,
 				44727B432C486A48007756A3 /* DaysOfWeekEnum.swift in Sources */,
 				4442BA682BE41F38002DC469 /* TabBarFactoryAssembly.swift in Sources */,

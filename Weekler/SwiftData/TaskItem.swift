@@ -15,10 +15,13 @@ final class TaskItem: ScheduleDataBaseType {
     let taskDescription: String
     let isNotificationEnabled: Bool
     
+    var onlyDate: String
+    
     init(id: UUID = UUID(), date: Date, taskDescription: String, isNotificationEnabled: Bool) {
         self.id = id
         self.date = date
         self.taskDescription = taskDescription
         self.isNotificationEnabled = isNotificationEnabled
+        onlyDate = date.onlyDate
     }
 }

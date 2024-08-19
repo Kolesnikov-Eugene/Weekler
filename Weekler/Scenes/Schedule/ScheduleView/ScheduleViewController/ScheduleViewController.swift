@@ -346,7 +346,9 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
             fatalError("Error in didSelect calendar cell")
         }
         print(formatter.string(from: date))
+        let selectedDate = date
         cell.changeSelectionState(isSelected: cellState.isSelected)
+        viewModel.changeDate(for: selectedDate)
     }
     
     func calendar(

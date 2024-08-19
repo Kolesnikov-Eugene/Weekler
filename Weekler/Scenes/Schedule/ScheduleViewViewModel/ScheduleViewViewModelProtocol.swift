@@ -17,4 +17,5 @@ protocol ScheduleViewViewModelProtocol: AnyObject {
     var emptyStateIsActive: Driver<Bool> { get set }
     func reconfigureMode(_ mode: ScheduleMode)
     func deleteTask(at index: Int)
+    func changeDate(for selectedDate: Date)
 }

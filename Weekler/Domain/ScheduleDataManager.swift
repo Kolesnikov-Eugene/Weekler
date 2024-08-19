@@ -29,8 +29,12 @@ final class ScheduleDataManager: ScheduleDataManagerProtocol {
     }
     
     // MARK: - public methods
-    func fetchTaskItems<T: ScheduleDataBaseType>(sortDescriptor: SortDescriptor<T>, _ completion: (Result<[T], Error>) -> Void) {
-        let descriptor = FetchDescriptor<T>(sortBy: [sortDescriptor])
+    func fetchTaskItems<T: ScheduleDataBaseType>(
+        predicate: Predicate<T>,
+        sortDescriptor: SortDescriptor<T>,
+        _ completion: (Result<[T], Error>
+        ) -> Void) {
+        let descriptor = FetchDescriptor<T>(predicate: predicate, sortBy: [sortDescriptor])
         
         do {
             completion(.success(try context.fetch(descriptor)))
@@ -65,7 +69,10 @@ final class ScheduleDataManager: ScheduleDataManagerProtocol {
 
 protocol ScheduleDataManagerProtocol {
     var onContextUpdate: (() -> ())? { get set }
-    func fetchTaskItems<T: ScheduleDataBaseType>(sortDescriptor: SortDescriptor<T>, _ completion: (Result<[T], Error>) -> Void)
+    func fetchTaskItems<T: ScheduleDataBaseType>(
+        predicate: Predicate<T>,
+        sortDescriptor: SortDescriptor<T>,
+        _ completion: (Result<[T], Error>) -> Void)
     func insert<T: ScheduleDataBaseType>(_ model: T)
     func delete<T: ScheduleDataBaseType>(_ id: UUID, predicate: Predicate<T>)
 }
