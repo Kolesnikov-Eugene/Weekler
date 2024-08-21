@@ -348,7 +348,7 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
         print(formatter.string(from: date))
         let selectedDate = date
         cell.changeSelectionState(isSelected: cellState.isSelected)
-        viewModel.changeDate(for: selectedDate)
+        viewModel.currentDateChangesObserver.accept(selectedDate)
     }
     
     func calendar(

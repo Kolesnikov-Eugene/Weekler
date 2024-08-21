@@ -12,6 +12,11 @@ import RxCocoa
 final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     //MARK: - public properties
     var tasks: [ScheduleTask] = []
+    var data: [SourceItem]
+    var dataList = BehaviorRelay<[SourceItem]>(value: [])
+    var emptyStateIsActive: Driver<Bool>
+    var currentDateChangesObserver = BehaviorRelay<Date>(value: Date())
+    var mainMode: ScheduleMode = .task
     
     var priorities: [Priority] = [
         Priority(id: UUID(), date: Date(), description: "Study"),
@@ -25,14 +30,10 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
         Goal(id: UUID(), date: Date(), description: "10000 steps every day")
     ]
     
-    var data: [SourceItem]
-    var dataList = BehaviorRelay<[SourceItem]>(value: [])
-    var emptyStateIsActive: Driver<Bool>
-    var mainMode: ScheduleMode = .task
-    
     // MARK: - private properties
     private var scheduleDataManager: ScheduleDataManagerProtocol
     private var currentDate: Date
+    private var bag = DisposeBag()
     
     init(scheduleDataManager: ScheduleDataManagerProtocol) {
         self.scheduleDataManager = scheduleDataManager
@@ -102,6 +103,15 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
             guard let self = self else { return }
             self.fetchSchedule()
         }
+        
+        currentDateChangesObserver
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] selectedDateByUser in
+                guard let self = self else { return }
+                self.currentDate = selectedDateByUser
+                self.fetchSchedule()
+            })
+            .disposed(by: bag)
     }
 }
 
