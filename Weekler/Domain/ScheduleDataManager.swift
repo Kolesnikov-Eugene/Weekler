@@ -51,6 +51,15 @@ final class ScheduleDataManager: ScheduleDataManagerProtocol {
         try? context.delete(model: T.self, where: predicate)
     }
     
+    // TODO: - implement logic
+    func editTask(_ predicate: Predicate<TaskItem>) {
+        let descriptor = FetchDescriptor<TaskItem>(predicate: predicate)
+        let task = try? context.fetch(descriptor)
+        if let taskToEdit = task?.first {
+            taskToEdit.edit(<#T##task: ScheduleTask##ScheduleTask#>)
+        }
+    }
+    
     // MARK: - private methods
     private func subscribeToContextUpdates() {
         NotificationCenter.default
@@ -75,4 +84,5 @@ protocol ScheduleDataManagerProtocol {
         _ completion: (Result<[T], Error>) -> Void)
     func insert<T: ScheduleDataBaseType>(_ model: T)
     func delete<T: ScheduleDataBaseType>(_ id: UUID, predicate: Predicate<T>)
+    func editTask<T: ScheduleDataBaseType>(_ predicate: Predicate<T>)
 }

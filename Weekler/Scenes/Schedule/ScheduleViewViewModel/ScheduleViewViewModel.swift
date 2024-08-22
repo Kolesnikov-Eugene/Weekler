@@ -50,6 +50,10 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     }
     
     // MARK: - public methods
+    func task(at index: Int) -> ScheduleTask {
+        tasks[index]
+    }
+    
     func reconfigureMode(_ mode: ScheduleMode) {
         switch mode {
         case .goal:

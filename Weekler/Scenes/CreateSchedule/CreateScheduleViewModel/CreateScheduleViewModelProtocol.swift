@@ -6,11 +6,17 @@
 //
 
 import Foundation
+import RxCocoa
 
 protocol CreateScheduleViewModelProtocol: AnyObject {
+    var textFieldValue: BehaviorRelay<String> { get set }
+    var datePickerValue: BehaviorRelay<Date> { get set }
+    var notificationSwitchValue: BehaviorRelay<Bool> { get set }
     var delegate: CreateScheduleDelegate? { get set }
-    var dateAndTimeOfTask: Date { get set }
+//    var dateAndTimeOfTask: Date { get set }
     var taskDescription: String { get set }
-    var isNotificationEnabled: Bool { get set }
+//    var isNotificationEnabled: Bool { get set }
     func createTask()
+    func set(_ date: Date)
+    func set(_ notification: Bool)
 }

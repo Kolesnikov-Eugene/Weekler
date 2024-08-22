@@ -253,9 +253,10 @@ final class ScheduleViewController: UIViewController {
     }
     
     @objc private func didTapAddNewEventButton() {
-        let createViewModel: CreateScheduleViewModelProtocol = DIContainer.shared.resolve()
+        let createDelegate = viewModel as? CreateScheduleDelegate
+        let task: ScheduleTask? = nil
+        let createViewModel: CreateScheduleViewModelProtocol = DIContainer.shared.resolve(arguments: createDelegate, task)
         let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve(argument: createViewModel)
-        createViewModel.delegate = viewModel as? CreateScheduleDelegate
         
         if let sheet = createScheduleVC.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
@@ -410,7 +411,12 @@ extension ScheduleViewController: UITableViewDelegate {
             style: .normal,
             title: "") { [weak self] contextualAction, view, boolValue  in
                 guard let self = self else { return }
-                print("Edit")
+                tableView.isEditing = false
+                let task: ScheduleTask? = viewModel.task(at: indexPath.row)
+                let createDelegate = viewModel as? CreateScheduleDelegate
+                let createViewModel = CreateScheduleViewModel(delegate: createDelegate, taskToEdit: task)
+                let vc = CreateScheduleViewController(viewModel: createViewModel)
+                navigationController?.present(vc, animated: true)
             }
         editAction.image = UIImage(systemName: "pencil")
         editAction.backgroundColor = .lightGray

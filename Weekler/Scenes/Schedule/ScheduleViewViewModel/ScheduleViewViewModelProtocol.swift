@@ -18,4 +18,5 @@ protocol ScheduleViewViewModelProtocol: AnyObject {
     var currentDateChangesObserver: BehaviorRelay<Date> { get set }
     func reconfigureMode(_ mode: ScheduleMode)
     func deleteTask(at index: Int)
+    func task(at index: Int) -> ScheduleTask
 }

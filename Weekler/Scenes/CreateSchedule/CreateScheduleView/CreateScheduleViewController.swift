@@ -142,6 +142,17 @@ final class CreateScheduleViewController: UIViewController {
                 self.didTapSaveButton()
             })
             .disposed(by: bag)
+        
+        viewModel.textFieldValue
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
+                if text != "" {
+                    self.createScheduleDescriptionTextField.text = text
+                    self.createScheduleDescriptionTextField.textColor = .black
+                }
+            })
+            .disposed(by: bag)
     }
     
     private func configureTapGesture() {
@@ -194,12 +205,29 @@ extension CreateScheduleViewController: UITableViewDataSource {
         }
         cell.configureCell(index: indexPath.row)
         cell.onDatePickerChangedValue = { date in
-            self.viewModel.dateAndTimeOfTask = date
+            self.viewModel.set(date)
         }
-        cell.onSwitchChangedValue = { isAlertEnabled in
-            self.viewModel.isNotificationEnabled = isAlertEnabled
+        cell.onSwitchChangedValue = { notification in
+            self.viewModel.set(notification)
         }
+        bindViewModelEditState(to: cell)
         return cell
+    }
+    
+    private func bindViewModelEditState(to cell: ScheduleItemsTableViewCell) {
+        viewModel.datePickerValue
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { date in
+                cell.set(date)
+            })
+            .disposed(by: bag)
+        
+        viewModel.notificationSwitchValue
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { notification in
+                cell.set(notification)
+            })
+            .disposed(by: bag)
     }
 }
 
