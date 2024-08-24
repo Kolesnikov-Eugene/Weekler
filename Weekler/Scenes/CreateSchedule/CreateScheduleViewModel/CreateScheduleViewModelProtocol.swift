@@ -17,6 +17,7 @@ protocol CreateScheduleViewModelProtocol: AnyObject {
     var taskDescription: String { get set }
 //    var isNotificationEnabled: Bool { get set }
     func createTask()
+    func editTask()
     func set(_ date: Date)
     func set(_ notification: Bool)
 }

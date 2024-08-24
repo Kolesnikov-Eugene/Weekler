@@ -10,6 +10,11 @@ import SnapKit
 import RxSwift
 import RxCocoa
 
+enum CreateMode {
+    case create
+    case edit
+}
+
 final class CreateScheduleViewController: UIViewController {
     
     //MARK: - private properties
@@ -55,13 +60,16 @@ final class CreateScheduleViewController: UIViewController {
         
         return tableView
     }()
+    private var mode: CreateMode
     private var viewModel: CreateScheduleViewModelProtocol
     private var bag = DisposeBag()
     
     // TODO: - Create init for delegate?
-    init(viewModel: CreateScheduleViewModelProtocol) {
+    init(viewModel: CreateScheduleViewModelProtocol, mode: CreateMode) {
         self.viewModel = viewModel
+        self.mode = mode
         super.init(nibName: nil, bundle: nil)
+        withUnsafePointer(to: self) { print("\($0)") }
     }
     
     required init?(coder: NSCoder) {
@@ -131,7 +139,8 @@ final class CreateScheduleViewController: UIViewController {
             .text
             .orEmpty
             .asObservable()
-            .subscribe(onNext: { text in
+            .subscribe(onNext: { [weak self] text in
+                guard let self = self else { return }
                 self.viewModel.taskDescription = text
             })
             .disposed(by: bag)
@@ -181,7 +190,12 @@ final class CreateScheduleViewController: UIViewController {
     }
     
     private func didTapSaveButton() {
-        viewModel.createTask()
+        switch mode {
+        case .create:
+            viewModel.createTask()
+        case .edit:
+            viewModel.editTask()
+        }
         createPlaceholder()
         dismiss(animated: true)
     }
@@ -204,10 +218,12 @@ extension CreateScheduleViewController: UITableViewDataSource {
             fatalError("Error while instanciating ScheduleItemsTableViewCell")
         }
         cell.configureCell(index: indexPath.row)
-        cell.onDatePickerChangedValue = { date in
+        cell.onDatePickerChangedValue = { [weak self] date in
+            guard let self = self else { return }
             self.viewModel.set(date)
         }
-        cell.onSwitchChangedValue = { notification in
+        cell.onSwitchChangedValue = { [weak self] notification in
+            guard let self = self else { return }
             self.viewModel.set(notification)
         }
         bindViewModelEditState(to: cell)

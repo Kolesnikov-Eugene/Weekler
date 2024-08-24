@@ -9,4 +9,5 @@ import Foundation
 
 protocol CreateScheduleDelegate: AnyObject {
     func didAddTask(_ task: ScheduleTask, mode: ScheduleMode)
+    func edit(_ task: ScheduleTask)
 }

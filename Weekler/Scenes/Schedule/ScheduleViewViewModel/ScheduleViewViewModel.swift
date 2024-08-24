@@ -129,4 +129,8 @@ extension ScheduleViewViewModel: CreateScheduleDelegate {
         )
         scheduleDataManager.insert(model)
     }
+    
+    func edit(_ task: ScheduleTask) {
+        scheduleDataManager.edit(task)
+    }
 }

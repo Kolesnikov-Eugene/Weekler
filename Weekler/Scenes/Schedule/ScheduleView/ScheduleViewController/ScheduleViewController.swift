@@ -255,8 +255,9 @@ final class ScheduleViewController: UIViewController {
     @objc private func didTapAddNewEventButton() {
         let createDelegate = viewModel as? CreateScheduleDelegate
         let task: ScheduleTask? = nil
+        let mode: CreateMode = .create
         let createViewModel: CreateScheduleViewModelProtocol = DIContainer.shared.resolve(arguments: createDelegate, task)
-        let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve(argument: createViewModel)
+        let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve(arguments: createViewModel, mode)
         
         if let sheet = createScheduleVC.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
@@ -414,14 +415,19 @@ extension ScheduleViewController: UITableViewDelegate {
                 tableView.isEditing = false
                 let task: ScheduleTask? = viewModel.task(at: indexPath.row)
                 let createDelegate = viewModel as? CreateScheduleDelegate
-                let createViewModel = CreateScheduleViewModel(delegate: createDelegate, taskToEdit: task)
-                let vc = CreateScheduleViewController(viewModel: createViewModel)
-                navigationController?.present(vc, animated: true)
+                let mode: CreateMode = .edit
+                let createViewModel: CreateScheduleViewModelProtocol = DIContainer.shared.resolve(arguments: createDelegate, task)
+                let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve(arguments: createViewModel, mode)
+                navigationController?.present(createScheduleVC, animated: true)
             }
-        editAction.image = UIImage(systemName: "pencil")
-        editAction.backgroundColor = .lightGray
+        configure(editAction)
         let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
         return swipeActions
+    }
+    
+    private func configure(_ action: UIContextualAction) {
+        action.image = UIImage(systemName: "pencil")
+        action.backgroundColor = .lightGray
     }
 }
 

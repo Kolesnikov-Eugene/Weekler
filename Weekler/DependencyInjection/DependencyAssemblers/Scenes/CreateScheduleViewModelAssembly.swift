@@ -11,6 +11,6 @@ final class CreateScheduleViewModelAssembly: Assembly {
     func assemble(container: Swinject.Container) {
         container.register(CreateScheduleViewModelProtocol.self) { resolver, createScheduleDelegate, task in
             return CreateScheduleViewModel(delegate: createScheduleDelegate, taskToEdit: task)
-        }.inObjectScope(.container)
+        }.inObjectScope(.transient)
     }
 }

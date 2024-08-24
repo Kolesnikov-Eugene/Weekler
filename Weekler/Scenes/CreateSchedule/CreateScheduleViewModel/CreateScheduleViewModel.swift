@@ -20,14 +20,17 @@ final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
     // MARK: - private properties
     private var dateAndTimeOfTask: Date = Date()
     private var isNotificationEnabled: Bool = false
+    private var taskToEdit: ScheduleTask?
     
     init(delegate: CreateScheduleDelegate?, taskToEdit: ScheduleTask?) {
         self.delegate = delegate
+        self.taskToEdit = taskToEdit
         if let task = taskToEdit {
-            print("edit")
             textFieldValue.accept(task.description)
             datePickerValue.accept(task.date)
             notificationSwitchValue.accept(task.isNotificationEnabled)
+            dateAndTimeOfTask = task.date
+            isNotificationEnabled = task.isNotificationEnabled
         }
     }
     
@@ -38,6 +41,21 @@ final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
             let notification = isNotificationEnabled
             let task = ScheduleTask(id: UUID(), date: date, description: taskDescription, isNotificationEnabled: notification)
             delegate?.didAddTask(task, mode: .task)
+        }
+    }
+    
+    func editTask() {
+        if taskDescription != "Enter your task...",
+           taskDescription != "",
+           taskDescription != " ",
+           let taskToEdit = taskToEdit {
+            let task = ScheduleTask(
+                id: taskToEdit.id,
+                date: dateAndTimeOfTask,
+                description: taskDescription,
+                isNotificationEnabled: isNotificationEnabled
+            )
+            delegate?.edit(task)
         }
     }
     
