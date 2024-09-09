@@ -19,4 +19,5 @@ protocol ScheduleViewViewModelProtocol: AnyObject {
     func reconfigureMode(_ mode: ScheduleMode)
     func deleteTask(at index: Int)
     func task(at index: Int) -> ScheduleTask
+    func completeTask(with id: UUID)
 }

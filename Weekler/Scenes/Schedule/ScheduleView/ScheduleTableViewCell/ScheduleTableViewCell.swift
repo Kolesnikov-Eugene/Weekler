@@ -10,45 +10,36 @@ import SnapKit
 
 final class ScheduleTableViewCell: UITableViewCell {
     
-    private lazy var checkmarkButton: UIButton = {
-        var configuration = UIButton.Configuration.plain()
-        configuration.image = UIImage(systemName: "circle")?.withRenderingMode(.alwaysTemplate)
-        configuration.baseForegroundColor = .orange
-        configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 16)
-        
-        let button = UIButton(configuration: configuration, primaryAction: nil)
+    // MARK: - public properties
+    var onTaskCompleted: (() -> ())?
+    
+    // MARK: - private properties
+    private lazy var completeTaskButton: UIButton = {
+        let button = UIButton(configuration: uncompletedTaskButtonConfiguration, primaryAction: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
-        
         button.addTarget(self, action: #selector(didTapCheckmarkButton), for: .touchUpInside)
         
         return button
     }()
     private lazy var timeLabel: UILabel = {
         let label = UILabel()
-        
         label.font = UIFont.systemFont(ofSize: 14, weight: .light)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     private lazy var scheduleDescriptionlabel: UILabel = {
         let label = UILabel()
-        
-//        label.text = "Some task that should be fulfilled"
         label.font = UIFont.systemFont(ofSize: 16, weight: .light)
         label.numberOfLines = 0
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     private lazy var separatorView: UIView = {
         let view = UIView()
-        
         view.backgroundColor = .lightGray
         view.translatesAutoresizingMaskIntoConstraints = false
-        
         return view
     }()
     private lazy var dateFormatter: DateFormatter = {
@@ -57,6 +48,20 @@ final class ScheduleTableViewCell: UITableViewCell {
         formatter.locale = .current
         return formatter
     }()
+    private var uncompletedTaskButtonConfiguration: UIButton.Configuration {
+        var configuration = UIButton.Configuration.plain()
+        configuration.image = UIImage(systemName: "circle")?.withRenderingMode(.alwaysTemplate)
+        configuration.baseForegroundColor = .orange
+        configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 16)
+        return configuration
+    }
+    private var completedTaskButtonConfguration: UIButton.Configuration {
+        var configuration = UIButton.Configuration.plain()
+        configuration.image = UIImage(systemName: "checkmark.circle")
+        configuration.baseForegroundColor = .orange
+        configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 16)
+        return configuration
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -69,16 +74,15 @@ final class ScheduleTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        //        mainView.layer.shadowRadius = 4
-        //        mainView.layer.shadowOpacity = 0.5
-        //        mainView.layer.shadowOffset = CGSize.zero
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         clearAllFields()
+        completeTaskButton.configuration = uncompletedTaskButtonConfiguration
     }
     
+    // MARK: - public methods
     func configureCell(with model: ScheduleTask) {
         let time = dateFormatter.string(from: model.date)
         timeLabel.text = time
@@ -89,6 +93,7 @@ final class ScheduleTableViewCell: UITableViewCell {
         scheduleDescriptionlabel.text = text
     }
     
+    // MARK: - private methods
     private func setupUI() {
         contentView.backgroundColor = Colors.background
         
@@ -97,7 +102,7 @@ final class ScheduleTableViewCell: UITableViewCell {
     }
     
     private func addSubviews() {
-        contentView.addSubview(checkmarkButton)
+        contentView.addSubview(completeTaskButton)
         contentView.addSubview(timeLabel)
         contentView.addSubview(scheduleDescriptionlabel)
         contentView.addSubview(separatorView)
@@ -105,7 +110,7 @@ final class ScheduleTableViewCell: UITableViewCell {
     
     private func applyConstraints() {
         //checkmarkButton
-        checkmarkButton.snp.makeConstraints {
+        completeTaskButton.snp.makeConstraints {
             $0.top.equalTo(contentView.snp.top)
             $0.leading.equalTo(contentView.snp.leading)
             $0.trailing.equalTo(separatorView.snp.leading)
@@ -142,6 +147,11 @@ final class ScheduleTableViewCell: UITableViewCell {
     }
     
     @objc private func didTapCheckmarkButton() {
-        print("checkmark")
+        UIView.animate(
+            withDuration: 0.2) { [weak self] in
+                self?.completeTaskButton.configuration = self?.completedTaskButtonConfguration
+            } completion: { [weak self] _ in
+                self?.onTaskCompleted?()
+            }
     }
 }

@@ -21,6 +21,7 @@ final class ScheduleViewController: UIViewController {
     private let scheduleCellReuseId = "scheduleCell"
     private let collectionCellReuseId = "collectionCell"
     private var mainMode: ScheduleMode = .task
+    private let queue = DispatchQueue(label: "writeDb", qos: .userInitiated)
     private var tableDataSource: UITableViewDiffableDataSource<UITableView.Section, SourceItem>!
     
     private lazy var calendarCollectionView: JTAppleCalendarView = {
@@ -176,6 +177,11 @@ final class ScheduleViewController: UIViewController {
                     cell.configureCell(text: priority.description)
                 case .task(let task):
                     cell.configureCell(with: task)
+                    cell.onTaskCompleted = { [weak self] in
+                        self?.queue.async {
+                            self?.viewModel.completeTask(with: task.id)
+                        }
+                    }
                 }
                 return cell
         })

@@ -77,11 +77,17 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
         scheduleDataManager.delete(taskId, predicate: predicate)
     }
     
+    func completeTask(with id: UUID) {
+        let task = tasks.first(where: { $0.id == id })
+        if let task = task {
+            scheduleDataManager.complete(task)
+        }
+    }
+    
     // MARK: - private methods
     private func fetchSchedule() {
         let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
-        let predicate = #Predicate<TaskItem> { $0.onlyDate == currentDate.onlyDate }
-        
+        let predicate = #Predicate<TaskItem> { $0.onlyDate == currentDate.onlyDate && $0.completed == nil }
         scheduleDataManager.fetchTaskItems(
             predicate: predicate,
             sortDescriptor: sortDescriptor) { [weak self] (result: Result<[TaskItem], Error>) in
@@ -107,6 +113,12 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
             guard let self = self else { return }
             self.fetchSchedule()
         }
+//        scheduleDataManager.contextDidUpdate
+//            .observe(on: MainScheduler.instance)
+//            .subscribe(onNext: { [weak self] updated in
+//                self?.fetchSchedule()
+//            })
+//            .disposed(by: bag)
         
         currentDateChangesObserver
             .observe(on: MainScheduler.instance)

@@ -14,6 +14,7 @@ final class TaskItem: ScheduleDataBaseType {
     var date: Date
     var taskDescription: String
     var isNotificationEnabled: Bool
+    @Relationship(deleteRule: .cascade) var completed: CompletedTask?
     
     var onlyDate: String
     
