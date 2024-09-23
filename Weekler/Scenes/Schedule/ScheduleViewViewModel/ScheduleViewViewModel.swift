@@ -18,6 +18,8 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     var currentDateChangesObserver = BehaviorRelay<Date>(value: Date())
     var mainMode: ScheduleMode = .task
     
+    private var completedTasks: [ScheduleTask] = []
+    
     var priorities: [Priority] = [
         Priority(id: UUID(), date: Date(), description: "Study"),
         Priority(id: UUID(), date: Date(), description: "Sport"),
@@ -56,10 +58,12 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     
     func reconfigureMode(_ mode: ScheduleMode) {
         switch mode {
-        case .goal:
-            data = goals.map { .goal($0) }
-        case .priority:
-            data = priorities.map { .priority($0) }
+//        case .goal:
+//            data = goals.map { .goal($0) }
+        case .completedTask:
+            data = completedTasks.map { .task($0) }
+//        case .priority:
+//            data = priorities.map { .priority($0) }
         case .task:
             data = tasks.map { .task($0) }
         }

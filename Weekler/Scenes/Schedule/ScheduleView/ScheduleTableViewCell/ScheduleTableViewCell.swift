@@ -80,6 +80,8 @@ final class ScheduleTableViewCell: UITableViewCell {
         super.prepareForReuse()
         clearAllFields()
         completeTaskButton.configuration = uncompletedTaskButtonConfiguration
+        scheduleDescriptionlabel.textColor = .black
+        timeLabel.textColor = .black
     }
     
     // MARK: - public methods
@@ -96,7 +98,6 @@ final class ScheduleTableViewCell: UITableViewCell {
     // MARK: - private methods
     private func setupUI() {
         contentView.backgroundColor = Colors.background
-        
         addSubviews()
         applyConstraints()
     }
@@ -148,8 +149,10 @@ final class ScheduleTableViewCell: UITableViewCell {
     
     @objc private func didTapCheckmarkButton() {
         UIView.animate(
-            withDuration: 0.2) { [weak self] in
+            withDuration: 0.3) { [weak self] in
                 self?.completeTaskButton.configuration = self?.completedTaskButtonConfguration
+                self?.scheduleDescriptionlabel.textColor = .lightGray
+                self?.timeLabel.textColor = .lightGray
             } completion: { [weak self] _ in
                 self?.onTaskCompleted?()
             }

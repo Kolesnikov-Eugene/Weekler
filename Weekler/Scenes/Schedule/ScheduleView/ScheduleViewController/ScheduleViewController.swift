@@ -412,7 +412,9 @@ extension ScheduleViewController: UITableViewDelegate {
             style: .destructive,
             title: "Удалить") { [weak self] contextualAction, view, boolValue in
                 guard let self = self else { return }
-                self.viewModel.deleteTask(at: indexPath.row)
+                queue.async {
+                    self.viewModel.deleteTask(at: indexPath.row)
+                }
             }
         let editAction = UIContextualAction(
             style: .normal,

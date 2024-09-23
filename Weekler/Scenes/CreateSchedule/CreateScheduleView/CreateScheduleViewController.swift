@@ -18,6 +18,7 @@ enum CreateMode {
 final class CreateScheduleViewController: UIViewController {
     
     //MARK: - private properties
+    private let queue = DispatchQueue(label: "create", qos: .userInteractive)
     private let scheduleItemTableViewReuseId = "ScheduleItem"
     private lazy var createScheduleDescriptionTextField: UITextView = {
         let textField = UITextView()
@@ -192,9 +193,13 @@ final class CreateScheduleViewController: UIViewController {
     private func didTapSaveButton() {
         switch mode {
         case .create:
-            viewModel.createTask()
+            queue.async {
+                self.viewModel.createTask()
+            }
         case .edit:
-            viewModel.editTask()
+            queue.async {
+                self.viewModel.editTask()
+            }
         }
         createPlaceholder()
         dismiss(animated: true)
