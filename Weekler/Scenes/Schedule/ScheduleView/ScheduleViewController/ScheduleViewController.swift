@@ -182,6 +182,13 @@ final class ScheduleViewController: UIViewController {
                             self?.viewModel.completeTask(with: task.id)
                         }
                     }
+                case .completedTask(let completedTask):
+                    cell.configureCompletedTaskCell(with: completedTask)
+                    cell.onTaskCompleted = { [weak self] in
+                        self?.queue.async {
+                            self?.viewModel.unCompleteTask(with: completedTask.id)
+                        }
+                    }
                 }
                 return cell
         })

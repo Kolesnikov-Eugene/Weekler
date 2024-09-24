@@ -19,6 +19,7 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     var mainMode: ScheduleMode = .task
     
     private var completedTasks: [ScheduleTask] = []
+    private var queue = DispatchQueue(label: "db", qos: .userInteractive)
     
     var priorities: [Priority] = [
         Priority(id: UUID(), date: Date(), description: "Study"),
@@ -57,17 +58,19 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     }
     
     func reconfigureMode(_ mode: ScheduleMode) {
-        switch mode {
-//        case .goal:
-//            data = goals.map { .goal($0) }
-        case .completedTask:
-            data = completedTasks.map { .task($0) }
-//        case .priority:
-//            data = priorities.map { .priority($0) }
-        case .task:
-            data = tasks.map { .task($0) }
-        }
-        dataList.accept(data)
+        mainMode = mode
+        populateData()
+//        switch mainMode {
+////        case .goal:
+////            data = goals.map { .goal($0) }
+//        case .completedTask:
+//            data = completedTasks.map { .task($0) }
+////        case .priority:
+////            data = priorities.map { .priority($0) }
+//        case .task:
+//            data = tasks.map { .task($0) }
+//        }
+//        dataList.accept(data)
     }
     
     func changeDate(for selectedDate: Date) {
@@ -76,9 +79,16 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     }
     
     func deleteTask(at index: Int) {
-        let taskId = tasks[index].id
+        var taskId = UUID()
+        switch mainMode {
+        case .task:
+            taskId = tasks[index].id
+        case .completedTask:
+            taskId = completedTasks[index].id
+        }
         let predicate = #Predicate<TaskItem> { $0.id == taskId }
         scheduleDataManager.delete(taskId, predicate: predicate)
+//        fetchSchedule()
     }
     
     func completeTask(with id: UUID) {
@@ -88,28 +98,59 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
         }
     }
     
+    func unCompleteTask(with id: UUID) {
+        let task = completedTasks.first(where: { $0.id == id })
+        if let task = task {
+            scheduleDataManager.unComplete(task)
+        }
+    }
+    
     // MARK: - private methods
     private func fetchSchedule() {
         let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
-        let predicate = #Predicate<TaskItem> { $0.onlyDate == currentDate.onlyDate && $0.completed == nil }
+        let predicate = #Predicate<TaskItem> { $0.onlyDate == currentDate.onlyDate }
         scheduleDataManager.fetchTaskItems(
             predicate: predicate,
             sortDescriptor: sortDescriptor) { [weak self] (result: Result<[TaskItem], Error>) in
             guard let self = self else { return }
             switch result {
             case .success(let scheduleItems):
-                tasks = scheduleItems.map { ScheduleTask(
-                    id: $0.id,
-                    date: $0.date,
-                    description: $0.taskDescription,
-                    isNotificationEnabled: $0.isNotificationEnabled
-                ) }
-                data = tasks.map { .task($0) }
-                dataList.accept(data)
+                tasks = scheduleItems.compactMap { task in
+                    if task.completed == nil {
+                        return ScheduleTask(
+                            id: task.id,
+                            date: task.date,
+                            description: task.taskDescription,
+                            isNotificationEnabled: task.isNotificationEnabled)
+                    }
+                    return nil
+                }
+                
+                completedTasks = scheduleItems.compactMap { task in
+                    if task.completed != nil {
+                        return ScheduleTask(
+                            id: task.id,
+                            date: task.date,
+                            description: task.taskDescription,
+                            isNotificationEnabled: task.isNotificationEnabled)
+                    }
+                    return nil
+                }
+                populateData()
             case .failure(let error):
                 fatalError(error.localizedDescription)
             }
         }
+    }
+    
+    private func populateData() {
+        switch mainMode {
+        case .task:
+            data = tasks.map { .task($0) }
+        case .completedTask:
+            data = completedTasks.map { .completedTask($0) }
+        }
+        dataList.accept(data)
     }
     
     private func bindToScheduleUpdates() {
@@ -143,10 +184,14 @@ extension ScheduleViewViewModel: CreateScheduleDelegate {
             taskDescription: task.description,
             isNotificationEnabled: task.isNotificationEnabled
         )
-        scheduleDataManager.insert(model)
+        queue.async { [weak self] in
+            self?.scheduleDataManager.insert(model)
+        }
     }
     
     func edit(_ task: ScheduleTask) {
-        scheduleDataManager.edit(task)
+        queue.async { [weak self] in
+            self?.scheduleDataManager.edit(task)
+        }
     }
 }

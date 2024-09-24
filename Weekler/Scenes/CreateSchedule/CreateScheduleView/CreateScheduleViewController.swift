@@ -18,7 +18,7 @@ enum CreateMode {
 final class CreateScheduleViewController: UIViewController {
     
     //MARK: - private properties
-    private let queue = DispatchQueue(label: "create", qos: .userInteractive)
+    private let queue = DispatchQueue(label: "create", qos: .userInitiated)
     private let scheduleItemTableViewReuseId = "ScheduleItem"
     private lazy var createScheduleDescriptionTextField: UITextView = {
         let textField = UITextView()

@@ -58,7 +58,7 @@ final class ScheduleTableViewCell: UITableViewCell {
     private var completedTaskButtonConfguration: UIButton.Configuration {
         var configuration = UIButton.Configuration.plain()
         configuration.image = UIImage(systemName: "checkmark.circle")
-        configuration.baseForegroundColor = .orange
+        configuration.baseForegroundColor = .orange.withAlphaComponent(0.3)
         configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 16)
         return configuration
     }
@@ -93,6 +93,16 @@ final class ScheduleTableViewCell: UITableViewCell {
     
     func configureCell(text: String) {
         scheduleDescriptionlabel.text = text
+    }
+    
+    func configureCompletedTaskCell(with completedTask: ScheduleTask) {
+        let time = dateFormatter.string(from: completedTask.date)
+        timeLabel.text = time
+        scheduleDescriptionlabel.text = completedTask.description
+
+        timeLabel.textColor = .lightGray
+        scheduleDescriptionlabel.textColor = .lightGray
+        completeTaskButton.configuration = completedTaskButtonConfguration
     }
     
     // MARK: - private methods

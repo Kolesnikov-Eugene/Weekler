@@ -20,4 +20,5 @@ protocol ScheduleViewViewModelProtocol: AnyObject {
     func deleteTask(at index: Int)
     func task(at index: Int) -> ScheduleTask
     func completeTask(with id: UUID)
+    func unCompleteTask(with id: UUID)
 }

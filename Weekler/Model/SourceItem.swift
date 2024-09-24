@@ -11,6 +11,7 @@ enum SourceItem: Hashable, Comparable {
     case task(ScheduleTask)
     case priority(Priority)
     case goal(Goal)
+    case completedTask(ScheduleTask)
     
     static func < (lhs: SourceItem, rhs: SourceItem) -> Bool {
         let left: SourceItemProtocol? = lhs.castSelfToModel
@@ -30,6 +31,8 @@ enum SourceItem: Hashable, Comparable {
             return priority
         case .task(let task):
             return task
+        case .completedTask(let completedTask):
+            return completedTask
         }
     }
 }
