@@ -62,6 +62,7 @@ final class ScheduleTableViewCell: UITableViewCell {
         configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 16)
         return configuration
     }
+    private var mainMode: ScheduleMode = .task
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -89,6 +90,7 @@ final class ScheduleTableViewCell: UITableViewCell {
         let time = dateFormatter.string(from: model.date)
         timeLabel.text = time
         scheduleDescriptionlabel.text = model.description
+        mainMode = .task
     }
     
     func configureCell(text: String) {
@@ -103,6 +105,7 @@ final class ScheduleTableViewCell: UITableViewCell {
         timeLabel.textColor = .lightGray
         scheduleDescriptionlabel.textColor = .lightGray
         completeTaskButton.configuration = completedTaskButtonConfguration
+        mainMode = .completedTask
     }
     
     // MARK: - private methods
@@ -160,9 +163,18 @@ final class ScheduleTableViewCell: UITableViewCell {
     @objc private func didTapCheckmarkButton() {
         UIView.animate(
             withDuration: 0.3) { [weak self] in
-                self?.completeTaskButton.configuration = self?.completedTaskButtonConfguration
-                self?.scheduleDescriptionlabel.textColor = .lightGray
-                self?.timeLabel.textColor = .lightGray
+                guard let self = self else { return }
+                switch self.mainMode {
+                case .task:
+                    self.completeTaskButton.configuration = self.completedTaskButtonConfguration
+                    self.scheduleDescriptionlabel.textColor = .lightGray
+                    self.timeLabel.textColor = .lightGray
+                case .completedTask:
+                    self.completeTaskButton.configuration = self.uncompletedTaskButtonConfiguration
+                    self.scheduleDescriptionlabel.textColor = .black
+                    self.timeLabel.textColor = .black
+                }
+                
             } completion: { [weak self] _ in
                 self?.onTaskCompleted?()
             }

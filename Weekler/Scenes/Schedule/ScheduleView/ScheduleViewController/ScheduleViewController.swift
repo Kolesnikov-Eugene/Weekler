@@ -21,7 +21,6 @@ final class ScheduleViewController: UIViewController {
     private let scheduleCellReuseId = "scheduleCell"
     private let collectionCellReuseId = "collectionCell"
     private var mainMode: ScheduleMode = .task
-    private let queue = DispatchQueue(label: "writeDb", qos: .userInitiated)
     private var tableDataSource: UITableViewDiffableDataSource<UITableView.Section, SourceItem>!
     
     private lazy var calendarCollectionView: JTAppleCalendarView = {
@@ -178,16 +177,12 @@ final class ScheduleViewController: UIViewController {
                 case .task(let task):
                     cell.configureCell(with: task)
                     cell.onTaskCompleted = { [weak self] in
-                        self?.queue.async {
-                            self?.viewModel.completeTask(with: task.id)
-                        }
+                        self?.viewModel.completeTask(with: task.id)
                     }
                 case .completedTask(let completedTask):
                     cell.configureCompletedTaskCell(with: completedTask)
                     cell.onTaskCompleted = { [weak self] in
-                        self?.queue.async {
-                            self?.viewModel.unCompleteTask(with: completedTask.id)
-                        }
+                        self?.viewModel.unCompleteTask(with: completedTask.id)
                     }
                 }
                 return cell
@@ -419,9 +414,7 @@ extension ScheduleViewController: UITableViewDelegate {
             style: .destructive,
             title: "Удалить") { [weak self] contextualAction, view, boolValue in
                 guard let self = self else { return }
-                queue.async {
-                    self.viewModel.deleteTask(at: indexPath.row)
-                }
+                self.viewModel.deleteTask(at: indexPath.row)
             }
         let editAction = UIContextualAction(
             style: .normal,

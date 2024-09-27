@@ -6,13 +6,19 @@
 //
 
 import Foundation
+import SwiftData
 
 final class TabBarFactory: TabBarFactoryProtocol {
     func createScheduleViewController() -> ScheduleViewController {
-        let scheduleDataManager: ScheduleDataManagerProtocol = DIContainer.shared.resolve()
-        let scheduleViewModel: ScheduleViewViewModelProtocol = DIContainer.shared.resolve(argument: scheduleDataManager)
-        let scheduleVC: ScheduleViewController = DIContainer.shared.resolve(argument: scheduleViewModel)
-        return scheduleVC
+        do {
+            let container = try ModelContainer(for: TaskItem.self)
+            let scheduleDataManager: ScheduleDataManagerProtocol = DIContainer.shared.resolve(argument: container)
+            let scheduleViewModel: ScheduleViewViewModelProtocol = DIContainer.shared.resolve(argument: scheduleDataManager)
+            let scheduleVC: ScheduleViewController = DIContainer.shared.resolve(argument: scheduleViewModel)
+            return scheduleVC
+        } catch {
+            fatalError(error.localizedDescription)
+        }
     }
     
     func createTaskEditorViewController() -> TaskEditorViewController {

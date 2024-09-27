@@ -19,7 +19,6 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     var mainMode: ScheduleMode = .task
     
     private var completedTasks: [ScheduleTask] = []
-    private var queue = DispatchQueue(label: "db", qos: .userInteractive)
     
     var priorities: [Priority] = [
         Priority(id: UUID(), date: Date(), description: "Study"),
@@ -60,17 +59,6 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     func reconfigureMode(_ mode: ScheduleMode) {
         mainMode = mode
         populateData()
-//        switch mainMode {
-////        case .goal:
-////            data = goals.map { .goal($0) }
-//        case .completedTask:
-//            data = completedTasks.map { .task($0) }
-////        case .priority:
-////            data = priorities.map { .priority($0) }
-//        case .task:
-//            data = tasks.map { .task($0) }
-//        }
-//        dataList.accept(data)
     }
     
     func changeDate(for selectedDate: Date) {
@@ -79,67 +67,75 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     }
     
     func deleteTask(at index: Int) {
-        var taskId = UUID()
-        switch mainMode {
-        case .task:
-            taskId = tasks[index].id
-        case .completedTask:
-            taskId = completedTasks[index].id
+        Task {
+            var taskId = UUID()
+            switch mainMode {
+            case .task:
+                taskId = tasks[index].id
+            case .completedTask:
+                taskId = completedTasks[index].id
+            }
+            let predicate = #Predicate<TaskItem> { $0.id == taskId }
+            await scheduleDataManager.delete(taskId, predicate: predicate)
         }
-        let predicate = #Predicate<TaskItem> { $0.id == taskId }
-        scheduleDataManager.delete(taskId, predicate: predicate)
-//        fetchSchedule()
     }
     
     func completeTask(with id: UUID) {
-        let task = tasks.first(where: { $0.id == id })
-        if let task = task {
-            scheduleDataManager.complete(task)
+        Task {
+            let task = tasks.first(where: { $0.id == id })
+            if let task = task {
+                await scheduleDataManager.complete(task)
+            }
         }
     }
     
     func unCompleteTask(with id: UUID) {
-        let task = completedTasks.first(where: { $0.id == id })
-        if let task = task {
-            scheduleDataManager.unComplete(task)
+        Task {
+            let task = completedTasks.first(where: { $0.id == id })
+            if let task = task {
+                await scheduleDataManager.unComplete(task)
+            }
         }
     }
     
     // MARK: - private methods
     private func fetchSchedule() {
-        let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
-        let predicate = #Predicate<TaskItem> { $0.onlyDate == currentDate.onlyDate }
-        scheduleDataManager.fetchTaskItems(
-            predicate: predicate,
-            sortDescriptor: sortDescriptor) { [weak self] (result: Result<[TaskItem], Error>) in
-            guard let self = self else { return }
-            switch result {
-            case .success(let scheduleItems):
-                tasks = scheduleItems.compactMap { task in
-                    if task.completed == nil {
-                        return ScheduleTask(
-                            id: task.id,
-                            date: task.date,
-                            description: task.taskDescription,
-                            isNotificationEnabled: task.isNotificationEnabled)
+        Task {
+            let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
+            let predicate = #Predicate<TaskItem> { $0.onlyDate == currentDate.onlyDate }
+            
+            await scheduleDataManager.fetchTaskItems(
+                predicate: predicate,
+                sortDescriptor: sortDescriptor) { [weak self] (result: Result<[TaskItem], Error>) in
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let scheduleItems):
+                        tasks = scheduleItems.compactMap { task in
+                            if task.completed == nil {
+                                return ScheduleTask(
+                                    id: task.id,
+                                    date: task.date,
+                                    description: task.taskDescription,
+                                    isNotificationEnabled: task.isNotificationEnabled)
+                            }
+                            return nil
+                        }
+                        
+                        completedTasks = scheduleItems.compactMap { task in
+                            if task.completed != nil {
+                                return ScheduleTask(
+                                    id: task.id,
+                                    date: task.date,
+                                    description: task.taskDescription,
+                                    isNotificationEnabled: task.isNotificationEnabled)
+                            }
+                            return nil
+                        }
+                        populateData()
+                    case .failure(let error):
+                        fatalError(error.localizedDescription)
                     }
-                    return nil
                 }
-                
-                completedTasks = scheduleItems.compactMap { task in
-                    if task.completed != nil {
-                        return ScheduleTask(
-                            id: task.id,
-                            date: task.date,
-                            description: task.taskDescription,
-                            isNotificationEnabled: task.isNotificationEnabled)
-                    }
-                    return nil
-                }
-                populateData()
-            case .failure(let error):
-                fatalError(error.localizedDescription)
-            }
         }
     }
     
@@ -154,16 +150,13 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     }
     
     private func bindToScheduleUpdates() {
-        scheduleDataManager.onContextUpdate = { [weak self] in
-            guard let self = self else { return }
-            self.fetchSchedule()
-        }
-//        scheduleDataManager.contextDidUpdate
-//            .observe(on: MainScheduler.instance)
-//            .subscribe(onNext: { [weak self] updated in
-//                self?.fetchSchedule()
-//            })
-//            .disposed(by: bag)
+        NotificationCenter.default
+            .addObserver(
+                forName: .NSManagedObjectContextObjectsDidChange,
+                object: nil,
+                queue: .main) { [weak self] _ in
+                    self?.fetchSchedule()
+                }
         
         currentDateChangesObserver
             .observe(on: MainScheduler.instance)
@@ -184,14 +177,14 @@ extension ScheduleViewViewModel: CreateScheduleDelegate {
             taskDescription: task.description,
             isNotificationEnabled: task.isNotificationEnabled
         )
-        queue.async { [weak self] in
-            self?.scheduleDataManager.insert(model)
+        Task {
+            await scheduleDataManager.insert(model)
         }
     }
     
     func edit(_ task: ScheduleTask) {
-        queue.async { [weak self] in
-            self?.scheduleDataManager.edit(task)
+        Task {
+            await scheduleDataManager.edit(task)
         }
     }
 }

@@ -9,8 +9,8 @@ import Swinject
 
 final class ScheduleDataManagerAssembly: Assembly {
     func assemble(container: Swinject.Container) {
-        container.register(ScheduleDataManagerProtocol.self) { _ in
-            ScheduleDataManager()
+        container.register(ScheduleDataManagerProtocol.self) { resolver, container in
+            ScheduleDataManager(container: container)
         }.inObjectScope(.container)
     }
 }
