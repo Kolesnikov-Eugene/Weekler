@@ -39,7 +39,7 @@ final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
         if taskDescription != "Enter your task..." && taskDescription != "" && taskDescription != " " {
             let date = dateAndTimeOfTask
             let notification = isNotificationEnabled
-            let task = ScheduleTask(id: UUID(), date: date, description: taskDescription, isNotificationEnabled: notification)
+            let task = ScheduleTask(id: UUID(), date: date, description: taskDescription, isNotificationEnabled: notification, completed: false)
             delegate?.didAddTask(task, mode: .task)
         }
     }
@@ -53,7 +53,8 @@ final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
                 id: taskToEdit.id,
                 date: dateAndTimeOfTask,
                 description: taskDescription,
-                isNotificationEnabled: isNotificationEnabled
+                isNotificationEnabled: isNotificationEnabled,
+                completed: taskToEdit.completed
             )
             delegate?.edit(task)
         }

@@ -5,96 +5,102 @@
 //  Created by Eugene Kolesnikov on 13.08.2024.
 //
 
-import SwiftData
 import Foundation
-import RxSwift
-import RxCocoa
+import SwiftData
 
-@ModelActor
-final actor ScheduleDataManager: ScheduleDataManagerProtocol {
-    private var context: ModelContext { modelExecutor.modelContext }
+final class ScheduleDataManager: ScheduleDataManagerProtocol, Sendable {
+    private let dataBuilder: ScheduleDataProviderBuilderProtocol
     
-    init(container: ModelContainer) {
-        self.modelContainer = container
-        let context = ModelContext(container)
-        modelExecutor = DefaultSerialModelExecutor(modelContext: context)
+    init(dataBulder: ScheduleDataProviderBuilderProtocol) {
+        self.dataBuilder = dataBulder
     }
     
     // MARK: - public methods
-    func fetchTaskItems<T: ScheduleDataBaseType>(
-        predicate: Predicate<T>,
-        sortDescriptor: SortDescriptor<T>,
-        _ completion: (Result<[T], Error>
-        ) -> Void) {
-        let descriptor = FetchDescriptor<T>(predicate: predicate, sortBy: [sortDescriptor])
-        
-        do {
-            completion(.success(try context.fetch(descriptor)))
-        } catch {
-            completion(.failure(error))
+    func fetchTaskItems(
+        predicate: Predicate<TaskItem>,
+        sortDescriptor: SortDescriptor<TaskItem>,
+        _ completion: @escaping (Result<[ScheduleTask], Error>) -> Void) {
+            Task.detached {
+                do {
+//                    let container = try ModelContainer(for: TaskItem.self)
+//                    let scheduleStorageDataProvider = ScheduleStorageDataProvider(container: container)
+                    let provider = self.dataBuilder.createDataProvider()
+                    await provider().fetchTaskItems(
+                        predicate: predicate,
+                        sortDescriptor: sortDescriptor) { [weak self] (result: Result<[TaskItem], Error>) in
+                            guard let self = self else { return }
+                            switch result {
+                            case .success(let items):
+                                print(items)
+                                let tasks = items.compactMap { task in
+                                    let completed = task.completed != nil
+                                    return ScheduleTask(
+                                        id: task.id,
+                                        date: task.date,
+                                        description: task.taskDescription,
+                                        isNotificationEnabled: task.isNotificationEnabled,
+                                        completed: completed)
+                                }
+                                completion(.success(tasks))
+                            case .failure(let error):
+                                fatalError(error.localizedDescription)
+                            }
+                        }
+                    
+                } catch {
+                    fatalError(error.localizedDescription)
+                }
+                
         }
     }
     
-    func insert<T: ScheduleDataBaseType>(_ model: T) {
-        self.context.insert(model)
+    func insert(_ model: ScheduleTask) {
+        Task.detached {
+            do {
+                let provider = self.dataBuilder.createDataProvider()
+                let model = TaskItem(
+                    id: model.id,
+                    date: model.date,
+                    taskDescription: model.description,
+                    isNotificationEnabled: model.isNotificationEnabled
+                )
+                
+                await provider().insert(model)
+            } catch {
+                fatalError(error.localizedDescription)
+            }
+        }
     }
     
-    func delete<T: ScheduleDataBaseType>(_ id: UUID, predicate: Predicate<T>) {
-        try? self.context.delete(model: T.self, where: predicate)
+    func delete(_ id: UUID, predicate: Predicate<TaskItem>) {
+        
     }
     
     func edit(_ task: ScheduleTask) {
-        let id: UUID = task.id
-        let predicate = #Predicate<TaskItem> { $0.id == id }
-        let descriptor = FetchDescriptor<TaskItem>(predicate: predicate)
-        let items = try? context.fetch(descriptor)
-        if let taskToEdit = items?.first {
-            taskToEdit.editWithNew(task)
-        }
+        
     }
     
     func complete(_ task: ScheduleTask) {
-        let id: UUID = task.id
-        let predicate = #Predicate<TaskItem> { $0.id == id }
-        let descriptor = FetchDescriptor<TaskItem>(predicate: predicate)
-        let items = try? self.context.fetch(descriptor)
-        if let taskToEdit = items?.first {
-            let completedTask = CompletedTask(id: UUID(), task: taskToEdit)
-            taskToEdit.completed = completedTask
-        }
+        
     }
     
-    // TODO: - implement deletion from completed
     func unComplete(_ task: ScheduleTask) {
-            let id: UUID = task.id
-            let predicate = #Predicate<TaskItem> { $0.id == id }
-            let descriptor = FetchDescriptor<TaskItem>(predicate: predicate)
-            let items = try? self.context.fetch(descriptor)
-            if let taskToEdit = items?.first {
-                taskToEdit.completed = nil
-            }
+        
     }
-    
-    // MARK: - private methods
-//    private func subscribeToContextUpdates() {
-//        NotificationCenter.default
-//            .addObserver(
-//                self,
-//                selector: #selector(modelContextDidUpdate),
-//                name: .NSManagedObjectContextObjectsDidChange,
-//                object: nil
-//            )
-//    }
 }
 
-protocol ScheduleDataManagerProtocol: ModelActor {
-    func fetchTaskItems<T: ScheduleDataBaseType>(
-        predicate: Predicate<T>,
-        sortDescriptor: SortDescriptor<T>,
-        _ completion: (Result<[T], Error>) -> Void)
-    func insert<T: ScheduleDataBaseType>(_ model: T)
-    func delete<T: ScheduleDataBaseType>(_ id: UUID, predicate: Predicate<T>)
+protocol ScheduleDataManagerProtocol {
+    func fetchTaskItems(
+        predicate: Predicate<TaskItem>,
+        sortDescriptor: SortDescriptor<TaskItem>,
+        _ completion: @escaping (Result<[ScheduleTask], Error>) -> Void)
+    func insert(_ model: ScheduleTask)
+    func delete(_ id: UUID, predicate: Predicate<TaskItem>)
     func edit(_ task: ScheduleTask)
     func complete(_ task: ScheduleTask)
     func unComplete(_ task: ScheduleTask)
+}
+
+protocol ScheduleDataProviderBuilderProtocol: Sendable {
+    func createDataProvider()  -> @Sendable () async -> ScheduleStorageDataProviderProtocol
 }
