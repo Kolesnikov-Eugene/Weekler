@@ -10,10 +10,7 @@ import SwiftData
 
 final class TabBarFactory: TabBarFactoryProtocol {
     func createScheduleViewController() -> ScheduleViewController {
-//            let container = try ModelContainer(for: TaskItem.self)
-//            let scheduleDataManager: ScheduleDataManagerProtocol = DIContainer.shared.resolve(argument: container)
-        let dataBuilder = DataBuilder()
-        let scheduleDataManager: ScheduleDataManagerProtocol = ScheduleDataManager(dataBulder: dataBuilder)
+        let scheduleDataManager: ScheduleDataManagerProtocol = DIContainer.shared.resolve()
         let scheduleViewModel: ScheduleViewViewModelProtocol = DIContainer.shared.resolve(argument: scheduleDataManager)
         let scheduleVC: ScheduleViewController = DIContainer.shared.resolve(argument: scheduleViewModel)
         return scheduleVC
@@ -32,16 +29,5 @@ final class TabBarFactory: TabBarFactoryProtocol {
     func createStatisticsView() -> StatisticsViewController {
         let statisticsVC: StatisticsViewController = DIContainer.shared.resolve()
         return statisticsVC
-    }
-}
-
-final class DataBuilder: ScheduleDataProviderBuilderProtocol {
-    func createDataProvider() -> @Sendable () async -> ScheduleStorageDataProviderProtocol {
-        do {
-            let container = try ModelContainer(for: TaskItem.self)
-            return { ScheduleStorageDataProvider(container: container) }
-        } catch {
-            fatalError(error.localizedDescription)
-        }
     }
 }

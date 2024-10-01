@@ -67,49 +67,61 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     }
     
     func deleteTask(at index: Int) {
-        var taskId = UUID()
-        switch mainMode {
-        case .task:
-            taskId = tasks[index].id
-        case .completedTask:
-            taskId = completedTasks[index].id
+        Task.detached { [weak self] in
+            guard let self = self else { return }
+            var taskId = UUID()
+            switch mainMode {
+            case .task:
+                taskId = tasks[index].id
+            case .completedTask:
+                taskId = completedTasks[index].id
+            }
+            let predicate = #Predicate<TaskItem> { $0.id == taskId }
+            await scheduleDataManager.delete(taskId, predicate: predicate)
         }
-        let predicate = #Predicate<TaskItem> { $0.id == taskId }
-        scheduleDataManager.delete(taskId, predicate: predicate)
     }
     
     func completeTask(with id: UUID) {
-        let task = tasks.first(where: { $0.id == id })
-        if let task = task {
-            scheduleDataManager.complete(task)
+        Task.detached {
+            let task = self.tasks.first(where: { $0.id == id })
+            if let task = task {
+                await self.scheduleDataManager.complete(task)
+            }
         }
     }
     
     func unCompleteTask(with id: UUID) {
-        let task = completedTasks.first(where: { $0.id == id })
-        if let task = task {
-            scheduleDataManager.unComplete(task)
+        Task.detached {[weak self] in
+            guard let self = self else { return }
+            let task = completedTasks.first(where: { $0.id == id })
+            if let task = task {
+                await scheduleDataManager.unComplete(task)
+            }
         }
     }
     
     // MARK: - private methods
     private func fetchSchedule() {
-        let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
-        let predicate = #Predicate<TaskItem> { $0.onlyDate == currentDate.onlyDate }
         
-        scheduleDataManager.fetchTaskItems(
-            predicate: predicate,
-            sortDescriptor: sortDescriptor) { [weak self] (result: Result<[ScheduleTask], Error>) in
-                guard let self = self else { return }
-                switch result {
-                case .success(let scheduleItems):
-                    tasks = scheduleItems.filter { !$0.completed }
-                    completedTasks = scheduleItems.filter { $0.completed }
-                    populateData()
-                case .failure(let error):
-                    fatalError(error.localizedDescription)
+        let currentDateOnly = currentDate.onlyDate
+        Task.detached {
+            let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
+            let predicate = #Predicate<TaskItem> { $0.onlyDate == currentDateOnly }
+            
+            await self.scheduleDataManager.fetchTaskItems(
+                predicate: predicate,
+                sortDescriptor: sortDescriptor) { [weak self] (result: Result<[ScheduleTask], Error>) in
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let scheduleItems):
+                        tasks = scheduleItems.filter { !$0.completed }
+                        completedTasks = scheduleItems.filter { $0.completed }
+                        populateData()
+                    case .failure(let error):
+                        fatalError(error.localizedDescription)
+                    }
                 }
-            }
+        }
     }
     
     private func populateData() {
@@ -144,10 +156,14 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
 
 extension ScheduleViewViewModel: CreateScheduleDelegate {
     func didAddTask(_ task: ScheduleTask, mode: ScheduleMode) {
-        scheduleDataManager.insert(task)
+        Task.detached {
+            await self.scheduleDataManager.insert(task)
+        }
     }
     
     func edit(_ task: ScheduleTask) {
-        scheduleDataManager.edit(task)
+        Task.detached {
+            await self.scheduleDataManager.edit(task)
+        }
     }
 }

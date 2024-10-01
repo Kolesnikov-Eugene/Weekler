@@ -27,6 +27,7 @@ final actor ScheduleStorageDataProvider: ScheduleStorageDataProviderProtocol {
         let descriptor = FetchDescriptor<T>(predicate: predicate, sortBy: [sortDescriptor])
         
         do {
+            print(Thread.current)
             completion(.success(try context.fetch(descriptor)))
         } catch {
             completion(.failure(error))
@@ -36,10 +37,12 @@ final actor ScheduleStorageDataProvider: ScheduleStorageDataProviderProtocol {
     func insert<T: ScheduleDataBaseType>(_ model: T) {
         context.insert(model)
         try? context.save()
+        print(Thread.current)
     }
     
     func delete<T: ScheduleDataBaseType>(_ id: UUID, predicate: Predicate<T>) {
         try? self.context.delete(model: T.self, where: predicate)
+        print(Thread.current)
     }
     
     func edit(_ task: ScheduleTask) {
@@ -49,6 +52,8 @@ final actor ScheduleStorageDataProvider: ScheduleStorageDataProviderProtocol {
         let items = try? context.fetch(descriptor)
         if let taskToEdit = items?.first {
             taskToEdit.editWithNew(task)
+            try? context.save()
+            print(Thread.current)
         }
     }
     
@@ -60,6 +65,8 @@ final actor ScheduleStorageDataProvider: ScheduleStorageDataProviderProtocol {
         if let taskToEdit = items?.first {
             let completedTask = CompletedTask(id: UUID(), task: taskToEdit)
             taskToEdit.completed = completedTask
+            try? context.save()
+            print(Thread.current)
         }
     }
     
@@ -71,6 +78,8 @@ final actor ScheduleStorageDataProvider: ScheduleStorageDataProviderProtocol {
         let items = try? self.context.fetch(descriptor)
         if let taskToEdit = items?.first {
             taskToEdit.completed = nil
+            try? context.save()
+            print(Thread.current)
         }
     }
 }
