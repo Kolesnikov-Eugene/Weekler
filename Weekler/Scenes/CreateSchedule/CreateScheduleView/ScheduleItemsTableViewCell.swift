@@ -89,6 +89,14 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
     }
     
     // MARK: - public methods
+    func set(_ date: Date) {
+        datePicker.date = date
+    }
+    
+    func set(_ notification: Bool) {
+        notificationSwitch.isOn = notification
+    }
+    
     func resetAllFieldsForCell(at index: Int) {
         switch index {
         case 0:

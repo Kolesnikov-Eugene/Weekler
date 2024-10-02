@@ -176,6 +176,14 @@ final class ScheduleViewController: UIViewController {
                     cell.configureCell(text: priority.description)
                 case .task(let task):
                     cell.configureCell(with: task)
+                    cell.onTaskCompleted = { [weak self] in
+                        self?.viewModel.completeTask(with: task.id)
+                    }
+                case .completedTask(let completedTask):
+                    cell.configureCompletedTaskCell(with: completedTask)
+                    cell.onTaskCompleted = { [weak self] in
+                        self?.viewModel.unCompleteTask(with: completedTask.id)
+                    }
                 }
                 return cell
         })
@@ -253,9 +261,11 @@ final class ScheduleViewController: UIViewController {
     }
     
     @objc private func didTapAddNewEventButton() {
-        let createViewModel: CreateScheduleViewModelProtocol = DIContainer.shared.resolve()
-        let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve(argument: createViewModel)
-        createViewModel.delegate = viewModel as? CreateScheduleDelegate
+        let createDelegate = viewModel as? CreateScheduleDelegate
+        let task: ScheduleTask? = nil
+        let mode: CreateMode = .create
+        let createViewModel: CreateScheduleViewModelProtocol = DIContainer.shared.resolve(arguments: createDelegate, task)
+        let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve(arguments: createViewModel, mode)
         
         if let sheet = createScheduleVC.sheetPresentationController {
             sheet.detents = [.medium(), .large()]
@@ -346,7 +356,9 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
             fatalError("Error in didSelect calendar cell")
         }
         print(formatter.string(from: date))
+        let selectedDate = date
         cell.changeSelectionState(isSelected: cellState.isSelected)
+        viewModel.currentDateChangesObserver.accept(selectedDate)
     }
     
     func calendar(
@@ -408,12 +420,22 @@ extension ScheduleViewController: UITableViewDelegate {
             style: .normal,
             title: "") { [weak self] contextualAction, view, boolValue  in
                 guard let self = self else { return }
-                print("Edit")
+                tableView.isEditing = false
+                let task: ScheduleTask? = viewModel.task(at: indexPath.row)
+                let createDelegate = viewModel as? CreateScheduleDelegate
+                let mode: CreateMode = .edit
+                let createViewModel: CreateScheduleViewModelProtocol = DIContainer.shared.resolve(arguments: createDelegate, task)
+                let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve(arguments: createViewModel, mode)
+                navigationController?.present(createScheduleVC, animated: true)
             }
-        editAction.image = UIImage(systemName: "pencil")
-        editAction.backgroundColor = .lightGray
+        configure(editAction)
         let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
         return swipeActions
+    }
+    
+    private func configure(_ action: UIContextualAction) {
+        action.image = UIImage(systemName: "pencil")
+        action.backgroundColor = .lightGray
     }
 }
 

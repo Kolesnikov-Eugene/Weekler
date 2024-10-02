@@ -161,4 +161,3 @@ final class WeekCalendarCollectionViewCell: JTAppleCell {
         }
     }
 }
-

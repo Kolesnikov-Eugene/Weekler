@@ -12,6 +12,13 @@ import RxCocoa
 final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     //MARK: - public properties
     var tasks: [ScheduleTask] = []
+    var data: [SourceItem]
+    var dataList = BehaviorRelay<[SourceItem]>(value: [])
+    var emptyStateIsActive: Driver<Bool>
+    var currentDateChangesObserver = BehaviorRelay<Date>(value: Date())
+    var mainMode: ScheduleMode = .task
+    
+    private var completedTasks: [ScheduleTask] = []
     
     var priorities: [Priority] = [
         Priority(id: UUID(), date: Date(), description: "Study"),
@@ -25,16 +32,14 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
         Goal(id: UUID(), date: Date(), description: "10000 steps every day")
     ]
     
-    var data: [SourceItem]
-    var dataList = BehaviorRelay<[SourceItem]>(value: [])
-    var emptyStateIsActive: Driver<Bool>
-    var mainMode: ScheduleMode = .task
-    
     // MARK: - private properties
     private var scheduleDataManager: ScheduleDataManagerProtocol
+    private var currentDate: Date
+    private var bag = DisposeBag()
     
     init(scheduleDataManager: ScheduleDataManagerProtocol) {
         self.scheduleDataManager = scheduleDataManager
+        currentDate = Date()
         data = []
         emptyStateIsActive = dataList
             .map({ items in
@@ -47,62 +52,121 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     }
     
     // MARK: - public methods
+    func task(at index: Int) -> ScheduleTask {
+        tasks[index]
+    }
+    
     func reconfigureMode(_ mode: ScheduleMode) {
-        switch mode {
-        case .goal:
-            data = goals.map { .goal($0) }
-        case .priority:
-            data = priorities.map { .priority($0) }
-        case .task:
-            data = tasks.map { .task($0) }
-        }
-        dataList.accept(data)
+        mainMode = mode
+        populateData()
+    }
+    
+    func changeDate(for selectedDate: Date) {
+        currentDate = selectedDate
+        fetchSchedule()
     }
     
     func deleteTask(at index: Int) {
-        let taskId = tasks[index].id
-        let predicate = #Predicate<TaskItem> { $0.id == taskId }
-        scheduleDataManager.delete(taskId, predicate: predicate)
+        Task.detached { [weak self] in
+            guard let self = self else { return }
+            var taskId = UUID()
+            switch mainMode {
+            case .task:
+                taskId = tasks[index].id
+            case .completedTask:
+                taskId = completedTasks[index].id
+            }
+            let predicate = #Predicate<TaskItem> { $0.id == taskId }
+            await scheduleDataManager.delete(taskId, predicate: predicate)
+        }
     }
     
-    // MARK: - private methods
-    private func fetchSchedule() {
-        let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
-        
-        scheduleDataManager.fetchTaskItems(sortDescriptor: sortDescriptor) { [weak self] (result: Result<[TaskItem], Error>) in
-            guard let self = self else { return }
-            switch result {
-            case .success(let scheduleItems):
-                tasks = scheduleItems.map { ScheduleTask(
-                    id: $0.id,
-                    date: $0.date,
-                    description: $0.taskDescription,
-                    isNotificationEnabled: $0.isNotificationEnabled
-                ) }
-                data = tasks.map { .task($0) }
-                dataList.accept(data)
-            case .failure(let error):
-                fatalError(error.localizedDescription)
+    func completeTask(with id: UUID) {
+        Task.detached {
+            let task = self.tasks.first(where: { $0.id == id })
+            if let task = task {
+                await self.scheduleDataManager.complete(task)
             }
         }
     }
     
-    private func bindToScheduleUpdates() {
-        scheduleDataManager.onContextUpdate = { [weak self] in
+    func unCompleteTask(with id: UUID) {
+        Task.detached {[weak self] in
             guard let self = self else { return }
-            self.fetchSchedule()
+            let task = completedTasks.first(where: { $0.id == id })
+            if let task = task {
+                await scheduleDataManager.unComplete(task)
+            }
         }
+    }
+    
+    // MARK: - private methods
+    private func fetchSchedule() {
+        
+        let currentDateOnly = currentDate.onlyDate
+        Task.detached {
+            let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
+            let predicate = #Predicate<TaskItem> { $0.onlyDate == currentDateOnly }
+            
+            await self.scheduleDataManager.fetchTaskItems(
+                predicate: predicate,
+                sortDescriptor: sortDescriptor) { [weak self] (result: Result<[ScheduleTask], Error>) in
+                    guard let self = self else { return }
+                    switch result {
+                    case .success(let scheduleItems):
+                        DispatchQueue.main.async {
+                            self.tasks = scheduleItems.filter { !$0.completed }
+                            self.completedTasks = scheduleItems.filter { $0.completed }
+                            self.populateData()
+                        }
+                    case .failure(let error):
+                        fatalError(error.localizedDescription)
+                    }
+                }
+        }
+    }
+    
+    private func populateData() {
+        switch mainMode {
+        case .task:
+            data = tasks.map { .task($0) }
+        case .completedTask:
+            data = completedTasks.map { .completedTask($0) }
+        }
+        dataList.accept(data)
+    }
+    
+    private func bindToScheduleUpdates() {
+        NotificationCenter.default
+            .addObserver(
+                //                forName: .NSManagedObjectContextObjectsDidChange,
+                forName: .NSPersistentStoreRemoteChange,
+                object: nil,
+                queue: .main) { [weak self] _ in
+                    self?.fetchSchedule()
+                }
+        
+        currentDateChangesObserver
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] selectedDateByUser in
+                guard let self = self else { return }
+                self.currentDate = selectedDateByUser
+                self.fetchSchedule()
+            })
+            .disposed(by: bag)
     }
 }
 
 extension ScheduleViewViewModel: CreateScheduleDelegate {
     func didAddTask(_ task: ScheduleTask, mode: ScheduleMode) {
-        let model = TaskItem(
-            id: task.id,
-            date: task.date,
-            taskDescription: task.description,
-            isNotificationEnabled: task.isNotificationEnabled
-        )
-        scheduleDataManager.insert(model)
+        Task.detached {
+            await self.scheduleDataManager.insert(task)
+        }
+    }
+    
+    func edit(_ task: ScheduleTask) {
+        Task.detached {
+            await self.scheduleDataManager.edit(task)
+        }
     }
 }

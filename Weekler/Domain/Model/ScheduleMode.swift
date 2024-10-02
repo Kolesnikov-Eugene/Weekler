@@ -9,6 +9,7 @@ import Foundation
 
 enum ScheduleMode: String, CaseIterable {
     case task = "Задачи"
-    case priority = "Приоритеты"
-    case goal = "Цели"
+//    case priority = "Приоритеты"
+//    case goal = "Цели"
+    case completedTask = "Завершенные"
 }
