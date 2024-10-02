@@ -114,9 +114,11 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
                     guard let self = self else { return }
                     switch result {
                     case .success(let scheduleItems):
-                        tasks = scheduleItems.filter { !$0.completed }
-                        completedTasks = scheduleItems.filter { $0.completed }
-                        populateData()
+                        DispatchQueue.main.async {
+                            self.tasks = scheduleItems.filter { !$0.completed }
+                            self.completedTasks = scheduleItems.filter { $0.completed }
+                            self.populateData()
+                        }
                     case .failure(let error):
                         fatalError(error.localizedDescription)
                     }
@@ -137,7 +139,8 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     private func bindToScheduleUpdates() {
         NotificationCenter.default
             .addObserver(
-                forName: .NSManagedObjectContextObjectsDidChange,
+                //                forName: .NSManagedObjectContextObjectsDidChange,
+                forName: .NSPersistentStoreRemoteChange,
                 object: nil,
                 queue: .main) { [weak self] _ in
                     self?.fetchSchedule()

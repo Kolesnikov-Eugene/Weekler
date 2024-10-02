@@ -30,5 +30,6 @@ final class TaskItem: ScheduleDataBaseType {
         date = task.date
         taskDescription = task.description
         isNotificationEnabled = task.isNotificationEnabled
+        onlyDate = date.onlyDate
     }
 }

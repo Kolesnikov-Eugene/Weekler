@@ -9,14 +9,14 @@ import Foundation
 import SwiftData
 
 final class ScheduleDataManager: ScheduleDataManagerProtocol {
-    private lazy var provider: ScheduleStorageDataProviderProtocol = {
+    private let provider: ScheduleStorageDataProviderProtocol = {
         do {
-            let configuration = ModelConfiguration(for: TaskItem.self, isStoredInMemoryOnly: true)
-
-            let schema = Schema(versionedSchema: MySchema.self)
-            let container = try ModelContainer(for: schema, configurations: configuration)
+            //            let configuration = ModelConfiguration(for: TaskItem.self, isStoredInMemoryOnly: true)
+            //
+            //            let schema = Schema(versionedSchema: MySchema.self)
+            //            let container = try ModelContainer(for: schema, configurations: configuration)
             
-//            let container = try ModelContainer(for: TaskItem.self)
+            let container = try ModelContainer(for: TaskItem.self)
             return ScheduleStorageDataProvider(container: container)
         } catch {
             fatalError(error.localizedDescription)
@@ -30,16 +30,11 @@ final class ScheduleDataManager: ScheduleDataManagerProtocol {
         predicate: Predicate<TaskItem>,
         sortDescriptor: SortDescriptor<TaskItem>,
         _ completion: @escaping (Result<[ScheduleTask], Error>) -> Void) async {
-            //                    let container = try ModelContainer(for: TaskItem.self)
-            //                    let scheduleStorageDataProvider = ScheduleStorageDataProvider(container: container)
-            //                    let provider = self.dataBuilder.createDataProvider()
-//            let provider = createDataProvider()
             await provider.fetchTaskItems(
                 predicate: predicate,
                 sortDescriptor: sortDescriptor) { (result: Result<[TaskItem], Error>) in
                     switch result {
                     case .success(let items):
-                        print(items)
                         let tasks = items.compactMap { task in
                             let completed = task.completed != nil
                             return ScheduleTask(

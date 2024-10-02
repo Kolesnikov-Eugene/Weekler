@@ -101,7 +101,7 @@ final class ScheduleTableViewCell: UITableViewCell {
         let time = dateFormatter.string(from: completedTask.date)
         timeLabel.text = time
         scheduleDescriptionlabel.text = completedTask.description
-
+        
         timeLabel.textColor = .lightGray
         scheduleDescriptionlabel.textColor = .lightGray
         completeTaskButton.configuration = completedTaskButtonConfguration
@@ -160,21 +160,24 @@ final class ScheduleTableViewCell: UITableViewCell {
         scheduleDescriptionlabel.text = ""
     }
     
+    private func configureAnimationTransition() {
+        switch mainMode {
+        case .task:
+            self.completeTaskButton.configuration = self.completedTaskButtonConfguration
+            self.scheduleDescriptionlabel.textColor = .lightGray
+            self.timeLabel.textColor = .lightGray
+        case .completedTask:
+            self.completeTaskButton.configuration = self.uncompletedTaskButtonConfiguration
+            self.scheduleDescriptionlabel.textColor = .black
+            self.timeLabel.textColor = .black
+        }
+    }
+    
     @objc private func didTapCheckmarkButton() {
         UIView.animate(
             withDuration: 0.3) { [weak self] in
                 guard let self = self else { return }
-                switch self.mainMode {
-                case .task:
-                    self.completeTaskButton.configuration = self.completedTaskButtonConfguration
-                    self.scheduleDescriptionlabel.textColor = .lightGray
-                    self.timeLabel.textColor = .lightGray
-                case .completedTask:
-                    self.completeTaskButton.configuration = self.uncompletedTaskButtonConfiguration
-                    self.scheduleDescriptionlabel.textColor = .black
-                    self.timeLabel.textColor = .black
-                }
-                
+                self.configureAnimationTransition()
             } completion: { [weak self] _ in
                 self?.onTaskCompleted?()
             }
