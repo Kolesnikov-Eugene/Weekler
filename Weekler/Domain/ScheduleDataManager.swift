@@ -5,67 +5,87 @@
 //  Created by Eugene Kolesnikov on 13.08.2024.
 //
 
-import SwiftData
 import Foundation
+import SwiftData
 
 final class ScheduleDataManager: ScheduleDataManagerProtocol {
-    
-    // MARK: - public properties
-    var onContextUpdate: (() -> ())?
-    
-    // MARK: - private properties
-    private lazy var context: ModelContext = {
+    private let provider: ScheduleStorageDataProviderProtocol = {
         do {
+            //            let configuration = ModelConfiguration(for: TaskItem.self, isStoredInMemoryOnly: true)
+            //
+            //            let schema = Schema(versionedSchema: MySchema.self)
+            //            let container = try ModelContainer(for: schema, configurations: configuration)
+            
             let container = try ModelContainer(for: TaskItem.self)
-            let context = ModelContext(container)
-            return context
+            return ScheduleStorageDataProvider(container: container)
         } catch {
             fatalError(error.localizedDescription)
         }
     }()
     
-    init() {
-        subscribeToContextUpdates()
-    }
+    init() {}
     
     // MARK: - public methods
-    func fetchTaskItems<T: ScheduleDataBaseType>(sortDescriptor: SortDescriptor<T>, _ completion: (Result<[T], Error>) -> Void) {
-        let descriptor = FetchDescriptor<T>(sortBy: [sortDescriptor])
-        
-        do {
-            completion(.success(try context.fetch(descriptor)))
-        } catch {
-            completion(.failure(error))
+    func fetchTaskItems(
+        predicate: Predicate<TaskItem>,
+        sortDescriptor: SortDescriptor<TaskItem>,
+        _ completion: @escaping (Result<[ScheduleTask], Error>) -> Void) async {
+            await provider.fetchTaskItems(
+                predicate: predicate,
+                sortDescriptor: sortDescriptor) { (result: Result<[TaskItem], Error>) in
+                    switch result {
+                    case .success(let items):
+                        let tasks = items.compactMap { task in
+                            let completed = task.completed != nil
+                            return ScheduleTask(
+                                id: task.id,
+                                date: task.date,
+                                description: task.taskDescription,
+                                isNotificationEnabled: task.isNotificationEnabled,
+                                completed: completed)
+                        }
+                        completion(.success(tasks))
+                    case .failure(let error):
+                        fatalError(error.localizedDescription)
+                    }
+                }
         }
+    
+    func insert(_ model: ScheduleTask) async {
+        let model = TaskItem(
+            id: model.id,
+            date: model.date,
+            taskDescription: model.description,
+            isNotificationEnabled: model.isNotificationEnabled
+        )
+        await provider.insert(model)
     }
     
-    func insert<T: ScheduleDataBaseType>(_ model: T) {
-        context.insert(model)
+    func delete(_ id: UUID, predicate: Predicate<TaskItem>) async {
+        await provider.delete(id, predicate: predicate)
     }
     
-    func delete<T: ScheduleDataBaseType>(_ id: UUID, predicate: Predicate<T>) {
-        try? context.delete(model: T.self, where: predicate)
+    func edit(_ task: ScheduleTask) async {
+        await provider.edit(task)
     }
     
-    // MARK: - private methods
-    private func subscribeToContextUpdates() {
-        NotificationCenter.default
-            .addObserver(
-                self,
-                selector: #selector(modelContextDidUpdate),
-                name: .NSManagedObjectContextObjectsDidChange,
-                object: nil
-            )
+    func complete(_ task: ScheduleTask) async {
+        await provider.complete(task)
     }
     
-    @objc private func modelContextDidUpdate() {
-        onContextUpdate?()
+    func unComplete(_ task: ScheduleTask) async {
+        await provider.unComplete(task)
     }
 }
 
 protocol ScheduleDataManagerProtocol {
-    var onContextUpdate: (() -> ())? { get set }
-    func fetchTaskItems<T: ScheduleDataBaseType>(sortDescriptor: SortDescriptor<T>, _ completion: (Result<[T], Error>) -> Void)
-    func insert<T: ScheduleDataBaseType>(_ model: T)
-    func delete<T: ScheduleDataBaseType>(_ id: UUID, predicate: Predicate<T>)
+    func fetchTaskItems(
+        predicate: Predicate<TaskItem>,
+        sortDescriptor: SortDescriptor<TaskItem>,
+        _ completion: @escaping (Result<[ScheduleTask], Error>) -> Void) async
+    func insert(_ model: ScheduleTask) async
+    func delete(_ id: UUID, predicate: Predicate<TaskItem>) async
+    func edit(_ task: ScheduleTask) async
+    func complete(_ task: ScheduleTask) async
+    func unComplete(_ task: ScheduleTask) async
 }

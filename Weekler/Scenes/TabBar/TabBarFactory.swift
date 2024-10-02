@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 
 final class TabBarFactory: TabBarFactoryProtocol {
     func createScheduleViewController() -> ScheduleViewController {

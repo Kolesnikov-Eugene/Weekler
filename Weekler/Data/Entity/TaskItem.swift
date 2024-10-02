@@ -11,14 +11,25 @@ import SwiftData
 @Model
 final class TaskItem: ScheduleDataBaseType {
     @Attribute(.unique) let id: UUID
-    let date: Date
-    let taskDescription: String
-    let isNotificationEnabled: Bool
+    var date: Date
+    var taskDescription: String
+    var isNotificationEnabled: Bool
+    @Relationship(deleteRule: .cascade) var completed: CompletedTask?
+    
+    var onlyDate: String
     
     init(id: UUID = UUID(), date: Date, taskDescription: String, isNotificationEnabled: Bool) {
         self.id = id
         self.date = date
         self.taskDescription = taskDescription
         self.isNotificationEnabled = isNotificationEnabled
+        onlyDate = date.onlyDate
+    }
+    
+    func editWithNew(_ task: ScheduleTask) {
+        date = task.date
+        taskDescription = task.description
+        isNotificationEnabled = task.isNotificationEnabled
+        onlyDate = date.onlyDate
     }
 }

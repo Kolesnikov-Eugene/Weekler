@@ -9,8 +9,8 @@ import Swinject
 
 final class CreateScheduleViewModelAssembly: Assembly {
     func assemble(container: Swinject.Container) {
-        container.register(CreateScheduleViewModelProtocol.self) { _ in
-            CreateScheduleViewModel()
-        }.inObjectScope(.container)
+        container.register(CreateScheduleViewModelProtocol.self) { resolver, createScheduleDelegate, task in
+            return CreateScheduleViewModel(delegate: createScheduleDelegate, taskToEdit: task)
+        }.inObjectScope(.transient)
     }
 }

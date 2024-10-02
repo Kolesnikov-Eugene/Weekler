@@ -6,6 +6,12 @@
 //
 
 import UIKit
+import SwiftData
+
+enum MySchema: VersionedSchema {
+        static var versionIdentifier: SwiftData.Schema.Version = .init(1, 0, 0)
+        static var models: [any PersistentModel.Type] = [TaskItem.self]
+    }
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -14,6 +20,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         if let windowScene = scene as? UIWindowScene {
+
+            
             let window = UIWindow(windowScene: windowScene)
             
             let tabBarController: TabBarController = DIContainer.shared.resolve()
