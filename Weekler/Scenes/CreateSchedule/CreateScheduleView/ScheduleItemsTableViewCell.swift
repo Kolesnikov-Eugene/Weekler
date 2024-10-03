@@ -51,22 +51,22 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         let picker = UIDatePicker()
         
         picker.minuteInterval = 5
-        picker.datePickerMode = .dateAndTime
+        picker.datePickerMode = .date
         picker.preferredDatePickerStyle = .compact
         picker.translatesAutoresizingMaskIntoConstraints = false
         picker.addTarget(self, action: #selector(datePickerDidChangeValue), for: .valueChanged)
         
         return picker
     }()
-//    private lazy var timePicker: UIDatePicker = {
-//        let picker = UIDatePicker()
-//        
-//        picker.datePickerMode = .time
-//        picker.preferredDatePickerStyle = .compact
-//        picker.translatesAutoresizingMaskIntoConstraints = false
-//        
-//        return picker
-//    }()
+    private lazy var timePicker: TimePicker = {
+        let picker = TimePicker()
+        
+        picker.datePickerMode = .time
+        picker.preferredDatePickerStyle = .compact
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        picker.addTarget(self, action: #selector(timePickerDidChangeValue), for: .valueChanged)
+        return picker
+    }()
     private lazy var selectedDaysLabel: UILabel = {
         let label = UILabel()
         
@@ -78,6 +78,8 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         
         return label
     }()
+    private var myDate: MyDate?
+    private var myTime: MyTime?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -117,12 +119,12 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
             cellTypeImageView.tintColor = .orange
             descriptionLabel.text = ScheduleItems.allCases[0].rawValue
         case 1:
-            break
-//            configureTimePicker()
-//            
-//            cellTypeImageView.image = UIImage(systemName: "clock")
-//            cellTypeImageView.tintColor = .orange
-//            descriptionLabel.text = ScheduleItems.allCases[1].rawValue
+//            break
+            configureTimePicker()
+            
+            cellTypeImageView.image = UIImage(systemName: "clock")
+            cellTypeImageView.tintColor = .orange
+            descriptionLabel.text = ScheduleItems.allCases[1].rawValue
         case 2:
             configureNotificationSwitch()
             
@@ -189,14 +191,14 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         }
     }
     
-//    private func configureTimePicker() {
-//        contentView.addSubview(timePicker)
-//        
-//        timePicker.snp.makeConstraints {
-//            $0.centerY.equalTo(descriptionLabel.snp.centerY)
-//            $0.trailing.equalTo(separatorString.snp.trailing)
-//        }
-//    }
+    private func configureTimePicker() {
+        contentView.addSubview(timePicker)
+        
+        timePicker.snp.makeConstraints {
+            $0.centerY.equalTo(descriptionLabel.snp.centerY)
+            $0.trailing.equalTo(separatorString.snp.trailing)
+        }
+    }
     
     private func configureNotificationSwitch() {
         contentView.addSubview(notificationSwitch)
@@ -219,10 +221,101 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
     }
     
     @objc private func datePickerDidChangeValue(_ sender: UIDatePicker) {
-        onDatePickerChangedValue?(sender.date)
+        let day = Calendar.current.component(.day, from: sender.date)
+        let d = MyDate(day: day)
+        myDate = DeepCopier.Copy(of: d)
+        myDate?.day = 6
+        print(myDate?.day)
+        print(myTime?.hour)
+        print(myTime?.time)
+//        print("date \(pickedDate)")
+//        print("time \(pickedTime)")
+//        let pickedDateAndTime = calculateDate()
+//        onDatePickerChangedValue?(pickedDateAndTime)
     }
     
     @objc private func notificationSwitchDidChangeValue(_ sender: UISwitch) {
         onSwitchChangedValue?(sender.isOn)
+    }
+    
+    @objc private func timePickerDidChangeValue(_ sender: UIDatePicker) {
+        let hour = Calendar.current.component(.hour, from: sender.date)
+        let minute = Calendar.current.component(.minute, from: sender.date)
+        let d = MyTime(hour: hour, time: minute)
+        myTime = DeepCopier.Copy(of: d)
+        myTime?.hour = 15
+        myTime?.time = 10
+        print(myDate?.day)
+        print(myTime?.hour)
+        print(myTime?.time)
+//        print("date \(cloneDate?.date)")
+//        print("time \(pickedTime.time)")
+        let pickedDateAndTime = calculateDate()
+        onDatePickerChangedValue?(pickedDateAndTime)
+    }
+    
+    private func calculateDate() -> Date {
+        guard let date = myDate,
+              let time = myTime else { return Date() }
+        let calendar = Calendar.current
+        var components = DateComponents()
+        components.year = calendar.component(.year, from: Date())
+        components.month = calendar.component(.month, from: Date())
+        components.day = date.day
+        components.hour = time.hour
+        components.minute = time.time
+        guard let date = calendar.date(from: components) else { return Date() }
+        print(date)
+        return date
+    }
+}
+
+struct MyDate: Codable {
+    var day: Int
+    
+    init(day: Int) {
+        self.day = day
+    }
+}
+
+struct MyTime: Codable {
+    var hour: Int
+    var time: Int
+    
+    init(hour: Int, time: Int) {
+        self.hour = hour
+        self.time = time
+    }
+}
+
+class DeepCopier {
+    //Used to expose generic
+    static func Copy<T:Codable>(of object:T) -> T? {
+       do {
+           let json = try JSONEncoder().encode(object)
+           return try JSONDecoder().decode(T.self, from: json)
+       }
+       catch let error {
+           print(error)
+           return nil
+       }
+    }
+}
+
+class Node {
+    var value: Int
+    var next: Node?
+    
+    init(value: Int, next: Node? = nil) {
+        self.value = value
+        self.next = next
+    }
+    
+    func deepCopy() -> Node {
+        let copiedNode = Node(value: self.value)
+        if let nextNode = self.next {
+            copiedNode.next = nextNode.deepCopy()
+        }
+        return copiedNode
     }
 }
