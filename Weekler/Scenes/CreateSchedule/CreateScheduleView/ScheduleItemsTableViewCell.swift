@@ -58,8 +58,8 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         
         return picker
     }()
-    private lazy var timePicker: TimePicker = {
-        let picker = TimePicker()
+    private lazy var timePicker: UIDatePicker = {
+        let picker = UIDatePicker()
         
         picker.datePickerMode = .time
         picker.preferredDatePickerStyle = .compact
@@ -78,8 +78,38 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         
         return label
     }()
-    private var myDate: MyDate?
-    private var myTime: MyTime?
+    private var datePickerPickedDate: Date? {
+        set {
+            let encoder = JSONEncoder()
+            if let encodedValue = try? encoder.encode(newValue) {
+                UserDefaults.standard.setValue(encodedValue, forKey: "date")
+            }
+        }
+        get {
+            if let savedValue = UserDefaults.standard.object(forKey: "date") as? Data {
+                let decoder = JSONDecoder()
+                let date = try? decoder.decode(Date.self, from: savedValue)
+                return date
+            }
+            return nil
+        }
+    }
+    private var timePickerPickedTime: Date? {
+        set {
+            let encoder = JSONEncoder()
+            if let encodedValue = try? encoder.encode(newValue) {
+                UserDefaults.standard.setValue(encodedValue, forKey: "time")
+            }
+        }
+        get {
+            if let savedValue = UserDefaults.standard.object(forKey: "time") as? Data {
+                let decoder = JSONDecoder()
+                let time = try? decoder.decode(Date.self, from: savedValue)
+                return time
+            }
+            return nil
+        }
+    }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -92,7 +122,10 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
     
     // MARK: - public methods
     func set(_ date: Date) {
+        datePickerPickedDate = date
+        timePickerPickedTime = date
         datePicker.date = date
+        timePicker.date = date
     }
     
     func set(_ notification: Bool) {
@@ -103,6 +136,10 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         switch index {
         case 0:
             datePicker.date = Date()
+            datePickerPickedDate = Date()
+        case 1:
+            timePicker.date = Date()
+            timePickerPickedTime = Date()
         case 2:
             notificationSwitch.isOn = false
         default:
@@ -119,7 +156,6 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
             cellTypeImageView.tintColor = .orange
             descriptionLabel.text = ScheduleItems.allCases[0].rawValue
         case 1:
-//            break
             configureTimePicker()
             
             cellTypeImageView.image = UIImage(systemName: "clock")
@@ -221,17 +257,9 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
     }
     
     @objc private func datePickerDidChangeValue(_ sender: UIDatePicker) {
-        let day = Calendar.current.component(.day, from: sender.date)
-        let d = MyDate(day: day)
-        myDate = DeepCopier.Copy(of: d)
-        myDate?.day = 6
-        print(myDate?.day)
-        print(myTime?.hour)
-        print(myTime?.time)
-//        print("date \(pickedDate)")
-//        print("time \(pickedTime)")
-//        let pickedDateAndTime = calculateDate()
-//        onDatePickerChangedValue?(pickedDateAndTime)
+        datePickerPickedDate = sender.date
+        let pickedDateAndTime = calculateDateAndTime()
+        onDatePickerChangedValue?(pickedDateAndTime)
     }
     
     @objc private func notificationSwitchDidChangeValue(_ sender: UISwitch) {
@@ -239,83 +267,22 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
     }
     
     @objc private func timePickerDidChangeValue(_ sender: UIDatePicker) {
-        let hour = Calendar.current.component(.hour, from: sender.date)
-        let minute = Calendar.current.component(.minute, from: sender.date)
-        let d = MyTime(hour: hour, time: minute)
-        myTime = DeepCopier.Copy(of: d)
-        myTime?.hour = 15
-        myTime?.time = 10
-        print(myDate?.day)
-        print(myTime?.hour)
-        print(myTime?.time)
-//        print("date \(cloneDate?.date)")
-//        print("time \(pickedTime.time)")
-        let pickedDateAndTime = calculateDate()
+        timePickerPickedTime = sender.date
+        let pickedDateAndTime = calculateDateAndTime()
         onDatePickerChangedValue?(pickedDateAndTime)
     }
     
-    private func calculateDate() -> Date {
-        guard let date = myDate,
-              let time = myTime else { return Date() }
+    private func calculateDateAndTime() -> Date {
+        guard let date = datePickerPickedDate,
+              let time = timePickerPickedTime else { return Date() }
         let calendar = Calendar.current
         var components = DateComponents()
-        components.year = calendar.component(.year, from: Date())
-        components.month = calendar.component(.month, from: Date())
-        components.day = date.day
-        components.hour = time.hour
-        components.minute = time.time
+        components.year = calendar.component(.year, from: date)
+        components.month = calendar.component(.month, from: date)
+        components.day = calendar.component(.day, from: date)
+        components.hour = calendar.component(.hour, from: time)
+        components.minute = calendar.component(.minute, from: time)
         guard let date = calendar.date(from: components) else { return Date() }
-        print(date)
         return date
-    }
-}
-
-struct MyDate: Codable {
-    var day: Int
-    
-    init(day: Int) {
-        self.day = day
-    }
-}
-
-struct MyTime: Codable {
-    var hour: Int
-    var time: Int
-    
-    init(hour: Int, time: Int) {
-        self.hour = hour
-        self.time = time
-    }
-}
-
-class DeepCopier {
-    //Used to expose generic
-    static func Copy<T:Codable>(of object:T) -> T? {
-       do {
-           let json = try JSONEncoder().encode(object)
-           return try JSONDecoder().decode(T.self, from: json)
-       }
-       catch let error {
-           print(error)
-           return nil
-       }
-    }
-}
-
-class Node {
-    var value: Int
-    var next: Node?
-    
-    init(value: Int, next: Node? = nil) {
-        self.value = value
-        self.next = next
-    }
-    
-    func deepCopy() -> Node {
-        let copiedNode = Node(value: self.value)
-        if let nextNode = self.next {
-            copiedNode.next = nextNode.deepCopy()
-        }
-        return copiedNode
     }
 }
