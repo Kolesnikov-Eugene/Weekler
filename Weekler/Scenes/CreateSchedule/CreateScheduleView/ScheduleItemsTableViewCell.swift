@@ -51,22 +51,22 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         let picker = UIDatePicker()
         
         picker.minuteInterval = 5
-        picker.datePickerMode = .dateAndTime
+        picker.datePickerMode = .date
         picker.preferredDatePickerStyle = .compact
         picker.translatesAutoresizingMaskIntoConstraints = false
         picker.addTarget(self, action: #selector(datePickerDidChangeValue), for: .valueChanged)
         
         return picker
     }()
-//    private lazy var timePicker: UIDatePicker = {
-//        let picker = UIDatePicker()
-//        
-//        picker.datePickerMode = .time
-//        picker.preferredDatePickerStyle = .compact
-//        picker.translatesAutoresizingMaskIntoConstraints = false
-//        
-//        return picker
-//    }()
+    private lazy var timePicker: UIDatePicker = {
+        let picker = UIDatePicker()
+        
+        picker.datePickerMode = .time
+        picker.preferredDatePickerStyle = .compact
+        picker.translatesAutoresizingMaskIntoConstraints = false
+        picker.addTarget(self, action: #selector(timePickerDidChangeValue), for: .valueChanged)
+        return picker
+    }()
     private lazy var selectedDaysLabel: UILabel = {
         let label = UILabel()
         
@@ -78,6 +78,38 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         
         return label
     }()
+    private var datePickerPickedDate: Date? {
+        set {
+            let encoder = JSONEncoder()
+            if let encodedValue = try? encoder.encode(newValue) {
+                UserDefaults.standard.setValue(encodedValue, forKey: "date")
+            }
+        }
+        get {
+            if let savedValue = UserDefaults.standard.object(forKey: "date") as? Data {
+                let decoder = JSONDecoder()
+                let date = try? decoder.decode(Date.self, from: savedValue)
+                return date
+            }
+            return nil
+        }
+    }
+    private var timePickerPickedTime: Date? {
+        set {
+            let encoder = JSONEncoder()
+            if let encodedValue = try? encoder.encode(newValue) {
+                UserDefaults.standard.setValue(encodedValue, forKey: "time")
+            }
+        }
+        get {
+            if let savedValue = UserDefaults.standard.object(forKey: "time") as? Data {
+                let decoder = JSONDecoder()
+                let time = try? decoder.decode(Date.self, from: savedValue)
+                return time
+            }
+            return nil
+        }
+    }
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -90,7 +122,10 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
     
     // MARK: - public methods
     func set(_ date: Date) {
+        datePickerPickedDate = date
+        timePickerPickedTime = date
         datePicker.date = date
+        timePicker.date = date
     }
     
     func set(_ notification: Bool) {
@@ -101,6 +136,10 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         switch index {
         case 0:
             datePicker.date = Date()
+            datePickerPickedDate = Date()
+        case 1:
+            timePicker.date = Date()
+            timePickerPickedTime = Date()
         case 2:
             notificationSwitch.isOn = false
         default:
@@ -117,12 +156,11 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
             cellTypeImageView.tintColor = .orange
             descriptionLabel.text = ScheduleItems.allCases[0].rawValue
         case 1:
-            break
-//            configureTimePicker()
-//            
-//            cellTypeImageView.image = UIImage(systemName: "clock")
-//            cellTypeImageView.tintColor = .orange
-//            descriptionLabel.text = ScheduleItems.allCases[1].rawValue
+            configureTimePicker()
+            
+            cellTypeImageView.image = UIImage(systemName: "clock")
+            cellTypeImageView.tintColor = .orange
+            descriptionLabel.text = ScheduleItems.allCases[1].rawValue
         case 2:
             configureNotificationSwitch()
             
@@ -189,14 +227,14 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         }
     }
     
-//    private func configureTimePicker() {
-//        contentView.addSubview(timePicker)
-//        
-//        timePicker.snp.makeConstraints {
-//            $0.centerY.equalTo(descriptionLabel.snp.centerY)
-//            $0.trailing.equalTo(separatorString.snp.trailing)
-//        }
-//    }
+    private func configureTimePicker() {
+        contentView.addSubview(timePicker)
+        
+        timePicker.snp.makeConstraints {
+            $0.centerY.equalTo(descriptionLabel.snp.centerY)
+            $0.trailing.equalTo(separatorString.snp.trailing)
+        }
+    }
     
     private func configureNotificationSwitch() {
         contentView.addSubview(notificationSwitch)
@@ -219,10 +257,32 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
     }
     
     @objc private func datePickerDidChangeValue(_ sender: UIDatePicker) {
-        onDatePickerChangedValue?(sender.date)
+        datePickerPickedDate = sender.date
+        let pickedDateAndTime = calculateDateAndTime()
+        onDatePickerChangedValue?(pickedDateAndTime)
     }
     
     @objc private func notificationSwitchDidChangeValue(_ sender: UISwitch) {
         onSwitchChangedValue?(sender.isOn)
+    }
+    
+    @objc private func timePickerDidChangeValue(_ sender: UIDatePicker) {
+        timePickerPickedTime = sender.date
+        let pickedDateAndTime = calculateDateAndTime()
+        onDatePickerChangedValue?(pickedDateAndTime)
+    }
+    
+    private func calculateDateAndTime() -> Date {
+        guard let date = datePickerPickedDate,
+              let time = timePickerPickedTime else { return Date() }
+        let calendar = Calendar.current
+        var components = DateComponents()
+        components.year = calendar.component(.year, from: date)
+        components.month = calendar.component(.month, from: date)
+        components.day = calendar.component(.day, from: date)
+        components.hour = calendar.component(.hour, from: time)
+        components.minute = calendar.component(.minute, from: time)
+        guard let date = calendar.date(from: components) else { return Date() }
+        return date
     }
 }
