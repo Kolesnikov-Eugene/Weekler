@@ -22,8 +22,7 @@ final class TabBarController: UITabBarController {
     }
 
     private func setupView() {
-        view.backgroundColor = Colors.background
-
+        view.backgroundColor = Colors.viewBackground
         configureTabBar()
 
         let scheduleViewController = setupScheduleViewController()
@@ -108,7 +107,7 @@ final class TabBarController: UITabBarController {
     }
 
     private func configureTabBar() {
-//        tabBar.tintColor = .blue
+        tabBar.tintColor = Colors.mainForeground
         tabBar.unselectedItemTintColor = .gray
 //        let myColor = UIColor(red: 0.255, green: 0.255, blue: 0.255, alpha: 1)
 //        let appearance = tabBar.standardAppearance

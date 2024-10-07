@@ -18,19 +18,19 @@ final class ScheduleTableViewCell: UITableViewCell {
         let button = UIButton(configuration: uncompletedTaskButtonConfiguration, primaryAction: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(didTapCheckmarkButton), for: .touchUpInside)
-        
         return button
     }()
     private lazy var timeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .light)
-        label.textColor = .black
+        label.textColor = Colors.textColorMain
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     private lazy var scheduleDescriptionlabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        label.textColor = Colors.textColorMain
         label.numberOfLines = 0
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -81,8 +81,6 @@ final class ScheduleTableViewCell: UITableViewCell {
         super.prepareForReuse()
         clearAllFields()
         completeTaskButton.configuration = uncompletedTaskButtonConfiguration
-        scheduleDescriptionlabel.textColor = .black
-        timeLabel.textColor = .black
     }
     
     // MARK: - public methods
@@ -110,7 +108,7 @@ final class ScheduleTableViewCell: UITableViewCell {
     
     // MARK: - private methods
     private func setupUI() {
-        contentView.backgroundColor = Colors.background
+        contentView.backgroundColor = Colors.viewBackground
         addSubviews()
         applyConstraints()
     }
@@ -168,8 +166,8 @@ final class ScheduleTableViewCell: UITableViewCell {
             self.timeLabel.textColor = .lightGray
         case .completedTask:
             self.completeTaskButton.configuration = self.uncompletedTaskButtonConfiguration
-            self.scheduleDescriptionlabel.textColor = .black
-            self.timeLabel.textColor = .black
+            self.scheduleDescriptionlabel.textColor = Colors.textColorMain
+            self.timeLabel.textColor = Colors.textColorMain
         }
     }
     

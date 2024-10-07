@@ -21,43 +21,34 @@ final class CreateScheduleViewController: UIViewController {
     private let scheduleItemTableViewReuseId = "ScheduleItem"
     private lazy var createScheduleDescriptionTextField: UITextView = {
         let textField = UITextView()
-        
-        textField.backgroundColor = Colors.background
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = CGColor(red: 0, green: 0, blue: 0, alpha: 1)
-        textField.layer.cornerRadius = 10
+        textField.backgroundColor = Colors.viewBackground
         textField.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         textField.text = "Enter your task..."
         textField.textColor = .lightGray
-        textField.tintColor = .black
+        textField.tintColor = Colors.textColorMain
         textField.sizeToFit()
         textField.isScrollEnabled = false
         textField.translatesAutoresizingMaskIntoConstraints = false
-        
         return textField
     }()
     private lazy var saveTaskButton: UIButton = {
         let button = UIButton(type: .custom)
-        
         button.isEnabled = true
         button.setTitle("Done", for: .normal)
         button.setTitleColor(.orange, for: .normal)
         button.contentHorizontalAlignment = .trailing
 //        button.addTarget(self, action: #selector(didTapSaveButton), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
-        
         return button
     }()
     private lazy var scheduleItemsTableView: UITableView = {
         let tableView = UITableView()
-        
         tableView.allowsSelection = true
-        tableView.backgroundColor = Colors.background
+        tableView.backgroundColor = Colors.viewBackground
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.isScrollEnabled = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        
         return tableView
     }()
     private var mode: CreateMode
@@ -87,9 +78,16 @@ final class CreateScheduleViewController: UIViewController {
         resetAllFieldsToDefault()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        createScheduleDescriptionTextField.layer.borderWidth = 1
+        createScheduleDescriptionTextField.layer.cornerRadius = 10
+        createScheduleDescriptionTextField.layer.borderColor = Colors.createViewTextFieldBorder.cgColor
+    }
+    
     //MARK: - private methods
     private func setupUI() {
-        view.backgroundColor = Colors.background
+        view.backgroundColor = Colors.viewBackground
         
         createScheduleDescriptionTextField.delegate = self
         
@@ -158,7 +156,7 @@ final class CreateScheduleViewController: UIViewController {
                 guard let self = self else { return }
                 if text != "" {
                     self.createScheduleDescriptionTextField.text = text
-                    self.createScheduleDescriptionTextField.textColor = .black
+                    self.createScheduleDescriptionTextField.textColor = Colors.textColorMain
                 }
             })
             .disposed(by: bag)
@@ -267,7 +265,7 @@ extension CreateScheduleViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         if createScheduleDescriptionTextField.textColor == .lightGray {
             createScheduleDescriptionTextField.text = nil
-            createScheduleDescriptionTextField.textColor = .black
+            createScheduleDescriptionTextField.textColor = Colors.textColorMain
         }
     }
     

@@ -25,23 +25,19 @@ final class ScheduleViewController: UIViewController {
     
     private lazy var calendarCollectionView: JTAppleCalendarView = {
         let collection = JTAppleCalendarView()
-        
         collection.backgroundColor = .clear
         collection.scrollDirection = .horizontal
         collection.scrollingMode = .stopAtEachCalendarFrame
         collection.showsHorizontalScrollIndicator = false
         collection.translatesAutoresizingMaskIntoConstraints = false
-        
         return collection
     }()
     private lazy var scheduleTableView: UITableView = {
         let tableView = UITableView()
-        
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        
         return tableView
     }()
     private lazy var addNewEventButton: UIButton = {
@@ -52,16 +48,13 @@ final class ScheduleViewController: UIViewController {
         
         let button = UIButton(configuration: configuration, primaryAction: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
-        
         button.addTarget(self, action: #selector(didTapAddNewEventButton), for: .touchUpInside)
         
         return button
     }()
     private lazy var formatter: DateFormatter = {
         let formatter = DateFormatter()
-        
         formatter.dateFormat = "d MMMM yyyy"
-        
         return formatter
     }()
     private lazy var calendarSwitchRightBarButtonItem: UIBarButtonItem = {
@@ -87,7 +80,6 @@ final class ScheduleViewController: UIViewController {
         collection.backgroundColor = .clear
         collection.showsHorizontalScrollIndicator = false
         collection.translatesAutoresizingMaskIntoConstraints = false
-        
         return collection
     }()
     private lazy var emptyStateImageView: UIImageView = {
@@ -129,7 +121,7 @@ final class ScheduleViewController: UIViewController {
     
     //MARK: - private methods
     private func setupUI() {
-        self.view.backgroundColor = Colors.background
+        self.view.backgroundColor = Colors.viewBackground
         configureNavBar()
         
         calendarCollectionView.register(WeekCalendarCollectionViewCell.self, forCellWithReuseIdentifier: reuseId)
@@ -256,7 +248,10 @@ final class ScheduleViewController: UIViewController {
         if let navBar = navigationController?.navigationBar {
             navBar.prefersLargeTitles = false
             navigationItem.title = "\(startDate) - \(startDate)"
-            navBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .medium)]
+            navBar.titleTextAttributes = [
+                NSAttributedString.Key.font: UIFont.systemFont(ofSize: 16, weight: .medium),
+                NSAttributedString.Key.foregroundColor: Colors.textColorMain
+            ]
         }
     }
     
