@@ -12,7 +12,7 @@ class TaskEditorViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = Colors.background
+        self.view.backgroundColor = Colors.viewBackground
         
 //        navigationItem.leftBarButtonItem = leftBarButton
         navigationItem.title = L10n.Localizable.Tab.edit

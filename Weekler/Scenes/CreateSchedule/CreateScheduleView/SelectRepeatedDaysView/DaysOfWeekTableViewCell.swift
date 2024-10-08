@@ -12,15 +12,14 @@ final class DayOfWeekTableViewCell: UITableViewCell {
     // MARK: - private properties
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
-        
+        label.textColor = Colors.textColorMain
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     private lazy var selectedDayButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.image = UIImage(systemName: "square")?.withRenderingMode(.alwaysTemplate)
-        configuration.baseForegroundColor = .black
+        configuration.baseForegroundColor = Colors.textColorMain
         configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 16)
         
         let button = UIButton(configuration: configuration, primaryAction: nil)
@@ -49,7 +48,7 @@ final class DayOfWeekTableViewCell: UITableViewCell {
     }
     
     private func setupUI() {
-        contentView.backgroundColor = Colors.background
+        contentView.backgroundColor = Colors.viewBackground
         contentView.addSubview(titleLabel)
         contentView.addSubview(selectedDayButton)
         
@@ -68,7 +67,7 @@ final class DayOfWeekTableViewCell: UITableViewCell {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 16, height: 16))
         let image = UIImage(systemName: "checkmark")?.withRenderingMode(.alwaysTemplate)
         imageView.image = image
-        imageView.tintColor = .orange
+        imageView.tintColor = Colors.mainForeground
         UIView.animate(withDuration: 0.1) {
 
             self.selectedDayButton.addSubview(imageView)

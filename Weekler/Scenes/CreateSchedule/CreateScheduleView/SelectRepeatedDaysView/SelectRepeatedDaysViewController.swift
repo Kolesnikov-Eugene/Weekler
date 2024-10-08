@@ -14,30 +14,24 @@ final class SelectRepeatedDaysViewController: UIViewController {
     private let segmentedControlTitlesArray = ["По дням недели", "Выбрать числа"]
     private lazy var daysSegmentedControl: UISegmentedControl = {
         let control = UISegmentedControl(items: segmentedControlTitlesArray)
-        
         control.selectedSegmentIndex = 0
         control.translatesAutoresizingMaskIntoConstraints = false
         control.addTarget(self, action: #selector(didChangeControlValue), for: .valueChanged)
-        
         return control
     }()
     private lazy var daysTableView: UITableView = {
         let tableView = UITableView()
-        
-        tableView.backgroundColor = Colors.background
+        tableView.backgroundColor = Colors.viewBackground
         tableView.allowsSelection = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        
         return tableView
     }()
     private lazy var calendarView: UICalendarView = {
         let calendar = UICalendarView()
-        
-        calendar.tintColor = .orange
+        calendar.tintColor = Colors.mainForeground
         calendar.isHidden = true
         calendar.selectionBehavior = UICalendarSelectionMultiDate(delegate: self)
         calendar.translatesAutoresizingMaskIntoConstraints = false
-        
         return calendar
     }()
 
@@ -51,7 +45,7 @@ final class SelectRepeatedDaysViewController: UIViewController {
     
     // MARK: - private func
     private func setupUI() {
-        view.backgroundColor = Colors.background
+        view.backgroundColor = Colors.viewBackground
         addSubviews()
         applyConstraints()
     }

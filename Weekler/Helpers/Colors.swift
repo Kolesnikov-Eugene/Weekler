@@ -13,4 +13,26 @@ struct Colors {
     static let dateSelectedBackground = UIColor(resource: .dateSelectedBack)
     static let calendarCurrentDateBackground = UIColor(resource: .calendarCurrentDate)
     static let mainForeground = UIColor(resource: .mainForeground)
+    
+    static let viewBackground = UIColor { (traits: UITraitCollection) -> UIColor in
+        if traits.userInterfaceStyle == .dark {
+            return UIColor.systemBackground
+        } else {
+            return UIColor(resource: .background)
+        }
+    }
+    static let textColorMain = UIColor { (traits: UITraitCollection) -> UIColor in
+        if traits.userInterfaceStyle == .dark {
+            return .white
+        } else {
+            return .black
+        }
+    }
+    static let createViewTextFieldBorder = UIColor { (traits: UITraitCollection) -> UIColor in
+        if traits.userInterfaceStyle == .dark {
+            return .white
+        } else {
+            return .black
+        }
+    }
 }
