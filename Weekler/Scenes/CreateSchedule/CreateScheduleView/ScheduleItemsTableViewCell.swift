@@ -18,64 +18,54 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
     // Private properties
     private lazy var cellTypeImageView: UIImageView = {
         let view = UIImageView()
-        
         view.translatesAutoresizingMaskIntoConstraints = false
-        
         return view
     }()
     private lazy var descriptionLabel: UILabel = {
         let label = UILabel()
-        
+        label.textColor = Colors.textColorMain
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     private lazy var notificationSwitch: UISwitch = {
         let view = UISwitch()
-        
         view.tintColor = .lightGray
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addTarget(self, action: #selector(notificationSwitchDidChangeValue), for: .valueChanged)
-        
         return view
     }()
     private lazy var separatorString: UIView = {
         let view = UIView()
-        
         view.backgroundColor = .lightGray
         view.translatesAutoresizingMaskIntoConstraints = false
-        
         return view
     }()
     private lazy var datePicker: UIDatePicker = {
         let picker = UIDatePicker()
-        
         picker.minuteInterval = 5
+        picker.tintColor = Colors.mainForeground
         picker.datePickerMode = .date
         picker.preferredDatePickerStyle = .compact
         picker.translatesAutoresizingMaskIntoConstraints = false
         picker.addTarget(self, action: #selector(datePickerDidChangeValue), for: .valueChanged)
-        
         return picker
     }()
     private lazy var timePicker: UIDatePicker = {
         let picker = UIDatePicker()
-        
         picker.datePickerMode = .time
         picker.preferredDatePickerStyle = .compact
+        picker.tintColor = Colors.mainForeground
         picker.translatesAutoresizingMaskIntoConstraints = false
         picker.addTarget(self, action: #selector(timePickerDidChangeValue), for: .valueChanged)
         return picker
     }()
     private lazy var selectedDaysLabel: UILabel = {
         let label = UILabel()
-        
         label.text = "Выкл."
         label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         label.textAlignment = .right
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     private var datePickerPickedDate: Date? {
@@ -181,7 +171,7 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
     
     // MARK: - private methods
     private func setupUI() {
-        contentView.backgroundColor = Colors.background
+        contentView.backgroundColor = Colors.viewBackground
         addSubviews()
         applyConstraints()
     }

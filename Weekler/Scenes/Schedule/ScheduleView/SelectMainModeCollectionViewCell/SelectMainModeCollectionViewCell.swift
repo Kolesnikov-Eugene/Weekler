@@ -11,17 +11,15 @@ import SnapKit
 final class SelectMainModeCollectionViewCell: UICollectionViewCell {
     private lazy var textLabel: UILabel = {
         let label = UILabel()
-        
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        label.textColor = Colors.textColorMain
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupUI()
     }
     
@@ -31,7 +29,6 @@ final class SelectMainModeCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         textLabel.layer.masksToBounds = false
         textLabel.clipsToBounds = true
         textLabel.layer.cornerRadius = 5
@@ -45,7 +42,6 @@ final class SelectMainModeCollectionViewCell: UICollectionViewCell {
     //MARK: - public methods
     func configureCell(_ mode: String) {
         textLabel.text = mode
-        
         reconfigureState()
     }
     
@@ -57,7 +53,6 @@ final class SelectMainModeCollectionViewCell: UICollectionViewCell {
     //MARK: - private methods
     private func setupUI() {
         contentView.backgroundColor = .clear
-        
         addSubviews()
         applyConstraints()
     }

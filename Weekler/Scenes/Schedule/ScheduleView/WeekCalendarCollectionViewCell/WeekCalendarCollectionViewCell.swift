@@ -13,70 +13,59 @@ final class WeekCalendarCollectionViewCell: JTAppleCell {
     //MARK: - private properties
     private lazy var dayLabel: UILabel = {
         let label = UILabel()
-        
         label.textAlignment = .center
         label.backgroundColor = .clear
+        label.textColor = Colors.textColorMain
         label.font = UIFont.systemFont(ofSize: 14, weight: .light)
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
-        
         label.textAlignment = .center
+        label.textColor = Colors.textColorMain
         label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
-        
         return label
     }()
     private lazy var currentDayView: UIView = {
         let view = UIView()
-        
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.masksToBounds = false
         view.clipsToBounds = true
         view.isHidden = true
         view.backgroundColor = Colors.calendarCurrentDateBackground
-        
         return view
     }()
     private lazy var selectedStateView: UIView = {
         let view = UIView()
-        
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.masksToBounds = false
         view.clipsToBounds = true
         view.backgroundColor = .clear
-        
         return view
     }()
     private lazy var dateStackView: UIStackView = {
         let view = UIStackView()
-        
         view.axis = .vertical
         view.distribution = .fillEqually
         view.alignment = .center
         view.translatesAutoresizingMaskIntoConstraints = false
-        
         return view
     }()
     private lazy var plannedDayMarkerLabel: UIView = {
         let view = UIView()
-        
         view.layer.masksToBounds = false
         view.clipsToBounds = true
         view.backgroundColor = .red
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true
-        
         return view
     }()
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupUI()
     }
     
@@ -94,7 +83,6 @@ final class WeekCalendarCollectionViewCell: JTAppleCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         dayLabel.text = ""
-        dateLabel.textColor = .black
         selectedStateView.backgroundColor = .clear
         currentDayView.isHidden = true
     }
@@ -113,7 +101,6 @@ final class WeekCalendarCollectionViewCell: JTAppleCell {
     //MARK: - private methods
     private func setupUI() {
         contentView.backgroundColor = .clear
-        
         addSubviews()
         applyConstraints()
     }
