@@ -79,6 +79,8 @@ final class ScheduleTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        timeLabel.textColor = Colors.textColorMain
+        scheduleDescriptionlabel.textColor = Colors.textColorMain
         clearAllFields()
         completeTaskButton.configuration = uncompletedTaskButtonConfiguration
     }
@@ -93,6 +95,8 @@ final class ScheduleTableViewCell: UITableViewCell {
     
     func configureCell(text: String) {
         scheduleDescriptionlabel.text = text
+        timeLabel.textColor = Colors.textColorMain
+        scheduleDescriptionlabel.textColor = Colors.textColorMain
     }
     
     func configureCompletedTaskCell(with completedTask: ScheduleTask) {
