@@ -92,9 +92,11 @@ final class ScheduleViewController: UIViewController {
     }()
     private var viewModel: ScheduleViewViewModelProtocol
     private var bag = DisposeBag()
+    private var hapticManager: CoreHapticsManager?
     
     init(viewModel: ScheduleViewViewModelProtocol) {
         self.viewModel = viewModel
+        self.hapticManager = CoreHapticsManager()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -256,6 +258,8 @@ final class ScheduleViewController: UIViewController {
     }
     
     @objc private func didTapAddNewEventButton() {
+        hapticManager?.playTap()
+        
         let createDelegate = viewModel as? CreateScheduleDelegate
         let task: ScheduleTask? = nil
         let mode: CreateMode = .create

@@ -24,6 +24,7 @@
 		4442BA702BE4277B002DC469 /* TabBarFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA6F2BE4277B002DC469 /* TabBarFactoryProtocol.swift */; };
 		444B387F2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444B387E2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift */; };
 		444DAB862C655A8F005B8ABC /* SourceItemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DAB852C655A8F005B8ABC /* SourceItemProtocol.swift */; };
+		446C85612CB85B8700077CC5 /* CoreHapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446C85602CB85B8700077CC5 /* CoreHapticsManager.swift */; };
 		44727B392C486895007756A3 /* ScheduleViewModelAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44727B382C486895007756A3 /* ScheduleViewModelAssembly.swift */; };
 		44727B3B2C486918007756A3 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44727B3A2C486918007756A3 /* Priority.swift */; };
 		44727B3D2C48692E007756A3 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44727B3C2C48692E007756A3 /* Goal.swift */; };
@@ -84,6 +85,7 @@
 		4442BA6F2BE4277B002DC469 /* TabBarFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarFactoryProtocol.swift; sourceTree = "<group>"; };
 		444B387E2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 		444DAB852C655A8F005B8ABC /* SourceItemProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItemProtocol.swift; sourceTree = "<group>"; };
+		446C85602CB85B8700077CC5 /* CoreHapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreHapticsManager.swift; sourceTree = "<group>"; };
 		44727B382C486895007756A3 /* ScheduleViewModelAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModelAssembly.swift; sourceTree = "<group>"; };
 		44727B3A2C486918007756A3 /* Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
 		44727B3C2C48692E007756A3 /* Goal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 		449F18EE2BACD0A800F9640D /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				446C85602CB85B8700077CC5 /* CoreHapticsManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 				442256862C6BE82900172C0A /* ScheduleDataManagerAssembly.swift in Sources */,
 				440549E52BC5D7E400077C61 /* Strings.swift in Sources */,
 				44727B392C486895007756A3 /* ScheduleViewModelAssembly.swift in Sources */,
+				446C85612CB85B8700077CC5 /* CoreHapticsManager.swift in Sources */,
 				44727B3F2C48694E007756A3 /* SourceItem.swift in Sources */,
 				4442BA702BE4277B002DC469 /* TabBarFactoryProtocol.swift in Sources */,
 				4442BA6E2BE425F0002DC469 /* ConfigViewAssembly.swift in Sources */,
