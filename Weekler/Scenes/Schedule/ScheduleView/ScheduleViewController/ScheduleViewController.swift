@@ -173,6 +173,9 @@ final class ScheduleViewController: UIViewController {
                     cell.onTaskCompleted = { [weak self] in
                         self?.viewModel.completeTask(with: task.id)
                     }
+                    cell.onTaskButtonTapped = { [weak self] in
+                        self?.hapticManager?.playAddTask()
+                    }
                 case .completedTask(let completedTask):
                     cell.configureCompletedTaskCell(with: completedTask)
                     cell.onTaskCompleted = { [weak self] in
