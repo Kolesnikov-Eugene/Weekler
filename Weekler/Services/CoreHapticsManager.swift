@@ -10,6 +10,7 @@ import CoreHaptics
 
 final class CoreHapticsManager {
     private let hapticEngine: CHHapticEngine
+    private var doneAudio: CHHapticAudioResourceID?
     
     init?() {
         let hapticsCapability = CHHapticEngine.capabilitiesForHardware()
@@ -30,10 +31,33 @@ final class CoreHapticsManager {
             print(error.localizedDescription)
         }
         hapticEngine.isAutoShutdownEnabled = true
+        setUpResources()
+        hapticEngine.resetHandler = { [weak self] in
+            self?.handleEngineReset()
+        }
+    }
+    
+    private func setUpResources() {
+        do {
+            if let path = Bundle.main.url(forResource: "Done", withExtension: "caf") {
+                doneAudio = try hapticEngine.registerAudioResource(path)
+            }
+        } catch {
+            print("error \(error.localizedDescription)")
+        }
     }
 }
 
 extension CoreHapticsManager {
+    func handleEngineReset() {
+        do {
+            try hapticEngine.start()
+            setUpResources()
+        } catch {
+            print("Failed to restart the engine: \(error)")
+        }
+    }
+    
     func playTap() {
         do {
             let pattern = try tapPattern()
@@ -87,7 +111,16 @@ extension CoreHapticsManager {
             relativeTime: 0.4,
             duration: 0.2
         )
-        return try CHHapticPattern(events: [tapEvent, addEvent], parameters: [])
+        var events = [tapEvent, addEvent]
+        if let audioResourceId = doneAudio {
+            let audio = CHHapticEvent(
+                audioResourceID: audioResourceId,
+                parameters: [],
+                relativeTime: 0
+            )
+            events.append(audio)
+        }
+        return try CHHapticPattern(events: events, parameters: [])
     }
     
     private func playHapticFromPattern(_ pattern: CHHapticPattern) throws {

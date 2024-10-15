@@ -130,6 +130,7 @@ final class ScheduleViewController: UIViewController {
         super.viewDidLayoutSubviews()
         //        scheduleTableView.setContentOffset(CGPoint(x: 0, y: -100), animated: false)
         //TODO: - add dinamic content inset when table view will display the lsat cell
+        calendarCollectionView.layer.frame.size.height = calendarCollectionHeight
         scheduleTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 75, right: 0)
         emptyStateImageView.layer.cornerRadius = CGRectGetWidth(CGRect(origin: CGPoint.zero, size: emptyStateImageView.bounds.size)) / 2
     }
@@ -327,11 +328,19 @@ final class ScheduleViewController: UIViewController {
     }
     
     private func animateCalendartransiotion() {
+        //TODO: - Create stackview and animate its height
         calendarCollectionView.reloadData()
-        UIView.animate(withDuration: 1.5, delay: 0, options: .curveLinear) {
-            self.calendarCollectionView.snp.updateConstraints {
-                $0.height.equalTo(self.calendarCollectionHeight)
-            }
+        calendarCollectionView.snp.remakeConstraints {
+            $0.top.equalTo(weekDaysStackView.snp.bottom)
+            $0.leading.equalTo(weekDaysStackView.snp.leading)
+            $0.trailing.equalTo(weekDaysStackView.snp.trailing)
+            $0.height.equalTo(self.calendarCollectionHeight)
+        }
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
+            self.calendarCollectionView.layer.frame.size.height = self.calendarCollectionHeight
+//            self.calendarCollectionView.snp.updateConstraints {
+//                $0.height.equalTo(self.calendarCollectionHeight)
+//            }
         }
         calendarCollectionView.scrollToDate(Date(), animateScroll: false) {
             self.calendarCollectionView.selectDates([Date()])
