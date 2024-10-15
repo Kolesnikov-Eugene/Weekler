@@ -7,7 +7,6 @@
 
 import Foundation
 import CoreHaptics
-import AVFoundation
 
 final class CoreHapticsManager {
     private let hapticEngine: CHHapticEngine

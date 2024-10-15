@@ -50,6 +50,7 @@
 		44B06E142BECEE0E000C3CC6 /* ScheduleViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B06E132BECEE0E000C3CC6 /* ScheduleViewViewModel.swift */; };
 		44B06E162BECEE3C000C3CC6 /* ScheduleViewViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B06E152BECEE3C000C3CC6 /* ScheduleViewViewModelProtocol.swift */; };
 		44B06E192BECF08F000C3CC6 /* ScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B06E182BECF08F000C3CC6 /* ScheduleTableViewCell.swift */; };
+		44B562F82CBEE06F0071F691 /* WeekDayShortName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B562F72CBEE06F0071F691 /* WeekDayShortName.swift */; };
 		44C7148D2BD8465300C67B20 /* DaysOfWeek+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C7148C2BD8465300C67B20 /* DaysOfWeek+Extension.swift */; };
 		44CE3BBB2C0BA31C00719B84 /* CreateScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CE3BBA2C0BA31C00719B84 /* CreateScheduleViewController.swift */; };
 		44CE3BBD2C0BA38500719B84 /* CreateScheduleViewAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CE3BBC2C0BA38500719B84 /* CreateScheduleViewAssembly.swift */; };
@@ -113,6 +114,7 @@
 		44B06E132BECEE0E000C3CC6 /* ScheduleViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewViewModel.swift; sourceTree = "<group>"; };
 		44B06E152BECEE3C000C3CC6 /* ScheduleViewViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewViewModelProtocol.swift; sourceTree = "<group>"; };
 		44B06E182BECF08F000C3CC6 /* ScheduleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewCell.swift; sourceTree = "<group>"; };
+		44B562F72CBEE06F0071F691 /* WeekDayShortName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekDayShortName.swift; sourceTree = "<group>"; };
 		44C7148C2BD8465300C67B20 /* DaysOfWeek+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DaysOfWeek+Extension.swift"; sourceTree = "<group>"; };
 		44CE3BBA2C0BA31C00719B84 /* CreateScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewController.swift; sourceTree = "<group>"; };
 		44CE3BBC2C0BA38500719B84 /* CreateScheduleViewAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewAssembly.swift; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 				44727B442C486A68007756A3 /* UITableView+Extension.swift */,
 				44727B462C486AAC007756A3 /* ScheduleTableViewSectionItem.swift */,
 				440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */,
+				44B562F72CBEE06F0071F691 /* WeekDayShortName.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -622,6 +625,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44B562F82CBEE06F0071F691 /* WeekDayShortName.swift in Sources */,
 				44CE3BBD2C0BA38500719B84 /* CreateScheduleViewAssembly.swift in Sources */,
 				44FB46602C5E6959005731BC /* CreateScheduleViewModelAssembly.swift in Sources */,
 				44727B472C486AAC007756A3 /* ScheduleTableViewSectionItem.swift in Sources */,

@@ -23,6 +23,19 @@ final class ScheduleViewController: UIViewController {
     private var mainMode: ScheduleMode = .task
     private var tableDataSource: UITableViewDiffableDataSource<UITableView.Section, SourceItem>!
     
+    // FIXME: move to Constants
+    private var calendarCollectionViewRowsNumber = 1
+    private var calendarCollectionHeight = 45.0
+    
+    private lazy var weekDaysStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.distribution = .fillEqually
+        view.alignment = .center
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     private lazy var calendarCollectionView: JTAppleCalendarView = {
         let collection = JTAppleCalendarView()
         collection.backgroundColor = .clear
@@ -193,28 +206,46 @@ final class ScheduleViewController: UIViewController {
         snapshot.appendSections([.task])
         snapshot.appendItems(viewModel.data)
         tableDataSource.apply(snapshot, animatingDifferences: animated)
-//            .sorted { $0 < $1 }
     }
     
     private func addSubviews() {
+        for weekDay in 0...6 {
+            let label = createLabel(for: weekDay)
+            weekDaysStackView.addArrangedSubview(label)
+        }
         let subviews = [
+            emptyStateImageView,
+            weekDaysStackView,
             calendarCollectionView,
             selectMainModeCollectionView,
             scheduleTableView,
-            addNewEventButton,
-            emptyStateImageView
+            addNewEventButton
         ]
         subviews.forEach { view.addSubview($0) }
     }
     
     private func applyConstraints() {
-        //calendar collection view constraints
-        calendarCollectionView.snp.makeConstraints {
+        //weekDays stackview constraints
+        weekDaysStackView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
-            $0.height.equalTo(70)
+            $0.height.equalTo(25)
         }
+        
+        //calendar collection view constraints
+        calendarCollectionView.snp.makeConstraints {
+            $0.top.equalTo(weekDaysStackView.snp.bottom)
+            $0.leading.equalTo(weekDaysStackView.snp.leading)
+            $0.trailing.equalTo(weekDaysStackView.snp.trailing)
+            $0.height.equalTo(calendarCollectionHeight)
+        }
+//        calendarCollectionView.snp.makeConstraints {
+//            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+//            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
+//            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
+//            $0.height.equalTo(70)
+//        }
         
         //selectMainModeCollection constraints
         selectMainModeCollectionView.snp.makeConstraints {
@@ -260,6 +291,17 @@ final class ScheduleViewController: UIViewController {
         }
     }
     
+    private func createLabel(for weekDay: Int) -> UILabel {
+        let label = UILabel()
+        label.text = WeekDayShortName.allCases[weekDay].rawValue
+        label.textAlignment = .center
+        label.backgroundColor = .clear
+        label.textColor = Colors.textColorMain
+        label.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+    
     @objc private func didTapAddNewEventButton() {
         hapticManager?.playTap()
         
@@ -284,8 +326,22 @@ final class ScheduleViewController: UIViewController {
 //        navigationController?.pushViewController(createScheduleVC, animated: true)
     }
     
+    private func animateCalendartransiotion() {
+        calendarCollectionView.reloadData()
+        UIView.animate(withDuration: 1.5, delay: 0, options: .curveLinear) {
+            self.calendarCollectionView.snp.updateConstraints {
+                $0.height.equalTo(self.calendarCollectionHeight)
+            }
+        }
+        calendarCollectionView.scrollToDate(Date(), animateScroll: false) {
+            self.calendarCollectionView.selectDates([Date()])
+        }
+    }
+    
     @objc private func calendarSwitchRightBarButtonItemTapped() {
-        print("calendar")
+        calendarCollectionViewRowsNumber = calendarCollectionViewRowsNumber == 1 ? 5 : 1
+        calendarCollectionHeight = calendarCollectionHeight == 45 ? 200 : 45
+        animateCalendartransiotion()
     }
 }
 
@@ -297,7 +353,7 @@ extension ScheduleViewController: JTAppleCalendarViewDataSource {
         
         return ConfigurationParameters(startDate: startDate,
                                        endDate: endDate,
-                                       numberOfRows: 1,
+                                       numberOfRows: calendarCollectionViewRowsNumber,
                                        generateInDates: .forFirstMonthOnly,
                                        generateOutDates: .off,
                                        firstDayOfWeek: .monday,
