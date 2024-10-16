@@ -17,6 +17,7 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     var emptyStateIsActive: Driver<Bool>
     var currentDateChangesObserver = BehaviorRelay<Date>(value: Date())
     var mainMode: ScheduleMode = .task
+    var selectedDate: Date { currentDate }
     
     private var completedTasks: [ScheduleTask] = []
     
@@ -52,6 +53,9 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     }
     
     // MARK: - public methods
+//    func getSelectedDate() -> Date {
+//         currentDate
+//    }
     func task(at index: Int) -> ScheduleTask {
         tasks[index]
     }
