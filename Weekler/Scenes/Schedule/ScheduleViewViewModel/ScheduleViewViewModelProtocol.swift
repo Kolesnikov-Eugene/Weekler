@@ -9,6 +9,7 @@ import Foundation
 import RxCocoa
 
 protocol ScheduleViewViewModelProtocol: AnyObject {
+    var selectedDate: Date { get }
     var tasks: [ScheduleTask] { get set }
     var priorities: [Priority] { get set }
     var goals: [Goal] { get set }
@@ -21,4 +22,5 @@ protocol ScheduleViewViewModelProtocol: AnyObject {
     func task(at index: Int) -> ScheduleTask
     func completeTask(with id: UUID)
     func unCompleteTask(with id: UUID)
+//    func getSelectedDate() -> Date
 }

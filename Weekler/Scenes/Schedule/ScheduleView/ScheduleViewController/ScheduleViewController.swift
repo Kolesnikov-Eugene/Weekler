@@ -22,7 +22,18 @@ final class ScheduleViewController: UIViewController {
     private let collectionCellReuseId = "collectionCell"
     private var mainMode: ScheduleMode = .task
     private var tableDataSource: UITableViewDiffableDataSource<UITableView.Section, SourceItem>!
+    private var calendarCollectionHeight = Constants.calendarCollectionHeight
+    private var calendarCollectionViewRowsNumber = Constants.calendarCollectionViewRowsNumber
     
+    private lazy var weekDaysStackView: UIStackView = {
+        let view = UIStackView()
+        view.axis = .horizontal
+        view.distribution = .fillEqually
+        view.alignment = .center
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     private lazy var calendarCollectionView: JTAppleCalendarView = {
         let collection = JTAppleCalendarView()
         collection.backgroundColor = .clear
@@ -92,9 +103,11 @@ final class ScheduleViewController: UIViewController {
     }()
     private var viewModel: ScheduleViewViewModelProtocol
     private var bag = DisposeBag()
+    private var hapticManager: CoreHapticsManager?
     
     init(viewModel: ScheduleViewViewModelProtocol) {
         self.viewModel = viewModel
+        self.hapticManager = CoreHapticsManager()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -106,9 +119,7 @@ final class ScheduleViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         bind()
-        calendarCollectionView.scrollToDate(Date(), animateScroll: false) {
-            self.calendarCollectionView.selectDates([Date()])
-        }
+        selectCurrentDateToCalendar()
     }
     
     override func viewDidLayoutSubviews() {
@@ -171,6 +182,9 @@ final class ScheduleViewController: UIViewController {
                     cell.onTaskCompleted = { [weak self] in
                         self?.viewModel.completeTask(with: task.id)
                     }
+                    cell.onTaskButtonTapped = { [weak self] in
+                        self?.hapticManager?.playAddTask()
+                    }
                 case .completedTask(let completedTask):
                     cell.configureCompletedTaskCell(with: completedTask)
                     cell.onTaskCompleted = { [weak self] in
@@ -188,28 +202,46 @@ final class ScheduleViewController: UIViewController {
         snapshot.appendSections([.task])
         snapshot.appendItems(viewModel.data)
         tableDataSource.apply(snapshot, animatingDifferences: animated)
-//            .sorted { $0 < $1 }
     }
     
     private func addSubviews() {
+        for weekDay in 0...6 {
+            let label = createLabel(for: weekDay)
+            weekDaysStackView.addArrangedSubview(label)
+        }
         let subviews = [
+            emptyStateImageView,
+            weekDaysStackView,
             calendarCollectionView,
             selectMainModeCollectionView,
             scheduleTableView,
-            addNewEventButton,
-            emptyStateImageView
+            addNewEventButton
         ]
         subviews.forEach { view.addSubview($0) }
     }
     
     private func applyConstraints() {
-        //calendar collection view constraints
-        calendarCollectionView.snp.makeConstraints {
+        //weekDays stackview constraints
+        weekDaysStackView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
-            $0.height.equalTo(70)
+            $0.height.equalTo(25)
         }
+        
+        //calendar collection view constraints
+        calendarCollectionView.snp.makeConstraints {
+            $0.top.equalTo(weekDaysStackView.snp.bottom)
+            $0.leading.equalTo(weekDaysStackView.snp.leading)
+            $0.trailing.equalTo(weekDaysStackView.snp.trailing)
+            $0.height.equalTo(calendarCollectionHeight)
+        }
+//        calendarCollectionView.snp.makeConstraints {
+//            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+//            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
+//            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
+//            $0.height.equalTo(70)
+//        }
         
         //selectMainModeCollection constraints
         selectMainModeCollectionView.snp.makeConstraints {
@@ -233,6 +265,7 @@ final class ScheduleViewController: UIViewController {
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).inset(16)
         }
         
+        // FIXME: Reconfigure constraints to adapt to calendar switch
         //emptyStateImageView constraints
         emptyStateImageView.snp.makeConstraints {
             $0.centerX.equalTo(view.snp.centerX)
@@ -255,7 +288,20 @@ final class ScheduleViewController: UIViewController {
         }
     }
     
+    private func createLabel(for weekDay: Int) -> UILabel {
+        let label = UILabel()
+        label.text = WeekDayShortName.allCases[weekDay].rawValue
+        label.textAlignment = .center
+        label.backgroundColor = .clear
+        label.textColor = Colors.textColorMain
+        label.font = UIFont.systemFont(ofSize: 16, weight: .light)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }
+    
     @objc private func didTapAddNewEventButton() {
+        hapticManager?.playTap()
+        
         let createDelegate = viewModel as? CreateScheduleDelegate
         let task: ScheduleTask? = nil
         let mode: CreateMode = .create
@@ -263,22 +309,65 @@ final class ScheduleViewController: UIViewController {
         let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve(arguments: createViewModel, mode)
         
         if let sheet = createScheduleVC.sheetPresentationController {
-            sheet.detents = [.medium(), .large()]
-            sheet.largestUndimmedDetentIdentifier = .medium
+            sheet.detents = [.large(), .medium()]
+            sheet.largestUndimmedDetentIdentifier = .large
             sheet.prefersScrollingExpandsWhenScrolledToEdge = false
             sheet.prefersEdgeAttachedInCompactHeight = true
             sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
         }
-        
-//        createScheduleVC.modalPresentationStyle = .pageSheet
         createScheduleVC.hidesBottomBarWhenPushed = true
-        
         navigationController?.present(createScheduleVC, animated: true)
-//        navigationController?.pushViewController(createScheduleVC, animated: true)
+    }
+    
+    private func animateCalendartransiotion() {
+        if calendarCollectionViewRowsNumber == 1 {
+            self.calendarCollectionView.snp.updateConstraints {
+                $0.height.equalTo(self.calendarCollectionHeight)
+            }
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear) {
+                if !self.emptyStateImageView.isHidden {
+                    self.emptyStateImageView.snp.removeConstraints()
+                    self.emptyStateImageView.snp.remakeConstraints {
+                        $0.centerX.equalTo(self.view.snp.centerX)
+                        $0.centerY.equalTo(self.view.snp.centerY)
+                        $0.width.equalTo(250)
+                        $0.height.equalTo(250)
+                    }
+                }
+                self.view.layoutIfNeeded()
+            } completion: { _ in
+                self.calendarCollectionView.reloadData(withanchor: self.viewModel.selectedDate)
+            }
+        } else {
+            self.calendarCollectionView.snp.updateConstraints {
+                $0.height.equalTo(self.calendarCollectionHeight)
+            }
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn) {
+                if !self.emptyStateImageView.isHidden {
+                    self.emptyStateImageView.snp.removeConstraints()
+                    self.emptyStateImageView.snp.remakeConstraints {
+                        $0.centerX.equalTo(self.view.snp.centerX)
+                        $0.top.equalTo(self.selectMainModeCollectionView.snp.bottom).offset(10)
+                        $0.width.equalTo(250)
+                        $0.height.equalTo(250)
+                    }
+                }
+                self.view.layoutIfNeeded()
+                self.calendarCollectionView.reloadData(withanchor: self.viewModel.selectedDate)
+            }
+        }
+    }
+    
+    private func selectCurrentDateToCalendar() {
+        calendarCollectionView.scrollToDate(viewModel.selectedDate, animateScroll: false) {
+            self.calendarCollectionView.selectDates([self.viewModel.selectedDate])
+        }
     }
     
     @objc private func calendarSwitchRightBarButtonItemTapped() {
-        print("calendar")
+        calendarCollectionViewRowsNumber = calendarCollectionViewRowsNumber == 1 ? 5 : 1
+        calendarCollectionHeight = calendarCollectionHeight == 45 ? 200 : 45
+        animateCalendartransiotion()
     }
 }
 
@@ -288,13 +377,19 @@ extension ScheduleViewController: JTAppleCalendarViewDataSource {
         let startDate = Date(timeIntervalSince1970: 1577826000)
         let endDate = Date(timeIntervalSince1970: 4102434000)
         
-        return ConfigurationParameters(startDate: startDate,
-                                       endDate: endDate,
-                                       numberOfRows: 1,
-                                       generateInDates: .forFirstMonthOnly,
-                                       generateOutDates: .off,
-                                       firstDayOfWeek: .monday,
-                                       hasStrictBoundaries: false)
+        if calendarCollectionViewRowsNumber == 5 {
+            return ConfigurationParameters(startDate: startDate,
+                                           endDate: endDate,
+                                           numberOfRows: calendarCollectionViewRowsNumber)
+        } else {
+            return ConfigurationParameters(startDate: startDate,
+                                           endDate: endDate,
+                                           numberOfRows: calendarCollectionViewRowsNumber,
+                                           generateInDates: .forFirstMonthOnly,
+                                           generateOutDates: .off,
+                                           firstDayOfWeek: .monday,
+                                           hasStrictBoundaries: false)
+        }
     }
 }
 

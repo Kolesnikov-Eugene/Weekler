@@ -12,6 +12,7 @@ final class ScheduleTableViewCell: UITableViewCell {
     
     // MARK: - public properties
     var onTaskCompleted: (() -> ())?
+    var onTaskButtonTapped: (() -> ())?
     
     // MARK: - private properties
     private lazy var completeTaskButton: UIButton = {
@@ -79,8 +80,11 @@ final class ScheduleTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        timeLabel.textColor = Colors.textColorMain
+        scheduleDescriptionlabel.textColor = Colors.textColorMain
         clearAllFields()
         completeTaskButton.configuration = uncompletedTaskButtonConfiguration
+        mainMode = .task
     }
     
     // MARK: - public methods
@@ -93,6 +97,8 @@ final class ScheduleTableViewCell: UITableViewCell {
     
     func configureCell(text: String) {
         scheduleDescriptionlabel.text = text
+        timeLabel.textColor = Colors.textColorMain
+        scheduleDescriptionlabel.textColor = Colors.textColorMain
     }
     
     func configureCompletedTaskCell(with completedTask: ScheduleTask) {
@@ -172,6 +178,9 @@ final class ScheduleTableViewCell: UITableViewCell {
     }
     
     @objc private func didTapCheckmarkButton() {
+        if mainMode == .task {
+            onTaskButtonTapped?()
+        }
         UIView.animate(
             withDuration: 0.3) { [weak self] in
                 guard let self = self else { return }
