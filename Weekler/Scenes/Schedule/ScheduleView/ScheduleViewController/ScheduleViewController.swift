@@ -365,7 +365,7 @@ final class ScheduleViewController: UIViewController {
     }
     
     @objc private func calendarSwitchRightBarButtonItemTapped() {
-        calendarCollectionViewRowsNumber = calendarCollectionViewRowsNumber == 1 ? 5 : 1
+        calendarCollectionViewRowsNumber = calendarCollectionViewRowsNumber == 1 ? 6 : 1
         calendarCollectionHeight = calendarCollectionHeight == 45 ? 200 : 45
         animateCalendartransiotion()
     }
@@ -377,7 +377,7 @@ extension ScheduleViewController: JTAppleCalendarViewDataSource {
         let startDate = Date(timeIntervalSince1970: 1577826000)
         let endDate = Date(timeIntervalSince1970: 4102434000)
         
-        if calendarCollectionViewRowsNumber == 5 {
+        if calendarCollectionViewRowsNumber == 6 {
             return ConfigurationParameters(startDate: startDate,
                                            endDate: endDate,
                                            numberOfRows: calendarCollectionViewRowsNumber)
