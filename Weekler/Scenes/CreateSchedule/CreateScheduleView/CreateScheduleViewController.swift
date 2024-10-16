@@ -19,17 +19,19 @@ final class CreateScheduleViewController: UIViewController {
     
     //MARK: - private properties
     private let scheduleItemTableViewReuseId = "ScheduleItem"
+    private let placeholder = "Enter your task..."
     private lazy var createScheduleDescriptionTextField: UITextView = {
-        let textField = UITextView()
-        textField.backgroundColor = Colors.viewBackground
-        textField.font = UIFont.systemFont(ofSize: 14, weight: .medium)
-        textField.text = "Enter your task..."
-        textField.textColor = .lightGray
-        textField.tintColor = Colors.textColorMain
-        textField.sizeToFit()
-        textField.isScrollEnabled = false
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
+        let textView = UITextView()
+        textView.backgroundColor = Colors.viewBackground
+        textView.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        textView.text = placeholder
+        textView.textColor = .lightGray
+        textView.tintColor = Colors.textColorMain
+        textView.sizeToFit()
+        textView.isScrollEnabled = false
+        textView.selectedRange = NSRange(location: 0, length: 0)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
     }()
     private lazy var saveTaskButton: UIButton = {
         let button = UIButton(type: .custom)
@@ -76,6 +78,11 @@ final class CreateScheduleViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         resetAllFieldsToDefault()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        createScheduleDescriptionTextField.becomeFirstResponder()
     }
     
     override func viewDidLayoutSubviews() {
@@ -171,7 +178,7 @@ final class CreateScheduleViewController: UIViewController {
     }
     
     private func createPlaceholder() {
-        createScheduleDescriptionTextField.text = "Enter your task..."
+        createScheduleDescriptionTextField.text = placeholder
         createScheduleDescriptionTextField.textColor = .lightGray
     }
     
@@ -262,16 +269,38 @@ extension CreateScheduleViewController: UITableViewDelegate {
 
 // MARK: - UITextViewDelegate
 extension CreateScheduleViewController: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if createScheduleDescriptionTextField.textColor == .lightGray {
-            createScheduleDescriptionTextField.text = nil
-            createScheduleDescriptionTextField.textColor = Colors.textColorMain
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        if createScheduleDescriptionTextField.text == placeholder {
+            createScheduleDescriptionTextField.selectedRange = NSRange(location: 0, length: 0)
         }
     }
     
-    func textViewDidEndEditing(_ textView: UITextView) {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if createScheduleDescriptionTextField.text == placeholder && !text.isEmpty {
+            createScheduleDescriptionTextField.text = nil
+            createScheduleDescriptionTextField.textColor = Colors.textColorMain
+            createScheduleDescriptionTextField.selectedRange = NSRange(location: 0, length: 0)
+        }
+        return true
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
         if createScheduleDescriptionTextField.text.isEmpty {
             createPlaceholder()
         }
     }
+    
+    
+//    func textViewDidBeginEditing(_ textView: UITextView) {
+//        if createScheduleDescriptionTextField.textColor == .lightGray {
+//            createScheduleDescriptionTextField.text = nil
+//            createScheduleDescriptionTextField.textColor = Colors.textColorMain
+//        }
+//    }
+//    
+//    func textViewDidEndEditing(_ textView: UITextView) {
+//        if createScheduleDescriptionTextField.text.isEmpty {
+//            createPlaceholder()
+//        }
+//    }
 }
