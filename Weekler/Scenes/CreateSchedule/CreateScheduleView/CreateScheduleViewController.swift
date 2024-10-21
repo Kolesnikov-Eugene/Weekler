@@ -19,7 +19,7 @@ final class CreateScheduleViewController: UIViewController {
     
     //MARK: - private properties
     private let scheduleItemTableViewReuseId = "ScheduleItem"
-    private let placeholder = "Enter your task..."
+    private let placeholder = L10n.Localizable.CreateSchedule.placeholder
     private lazy var createScheduleDescriptionTextField: UITextView = {
         let textView = UITextView()
         textView.backgroundColor = Colors.viewBackground
@@ -36,7 +36,7 @@ final class CreateScheduleViewController: UIViewController {
     private lazy var saveTaskButton: UIButton = {
         let button = UIButton(type: .custom)
         button.isEnabled = true
-        button.setTitle("Done", for: .normal)
+        button.setTitle(L10n.Localizable.CreateSchedule.doneButtonText, for: .normal)
         button.setTitleColor(.orange, for: .normal)
         button.contentHorizontalAlignment = .trailing
 //        button.addTarget(self, action: #selector(didTapSaveButton), for: .touchUpInside)
@@ -289,18 +289,4 @@ extension CreateScheduleViewController: UITextViewDelegate {
             createPlaceholder()
         }
     }
-    
-    
-//    func textViewDidBeginEditing(_ textView: UITextView) {
-//        if createScheduleDescriptionTextField.textColor == .lightGray {
-//            createScheduleDescriptionTextField.text = nil
-//            createScheduleDescriptionTextField.textColor = Colors.textColorMain
-//        }
-//    }
-//    
-//    func textViewDidEndEditing(_ textView: UITextView) {
-//        if createScheduleDescriptionTextField.text.isEmpty {
-//            createPlaceholder()
-//        }
-//    }
 }

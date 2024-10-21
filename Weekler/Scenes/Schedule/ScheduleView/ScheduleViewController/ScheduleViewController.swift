@@ -22,8 +22,8 @@ final class ScheduleViewController: UIViewController {
     private let collectionCellReuseId = "collectionCell"
     private var mainMode: ScheduleMode = .task
     private var tableDataSource: UITableViewDiffableDataSource<UITableView.Section, SourceItem>!
-    private var calendarCollectionHeight = Constants.calendarCollectionHeight
-    private var calendarCollectionViewRowsNumber = Constants.calendarCollectionViewRowsNumber
+    private var calendarCollectionHeight = Constants.weekModeCalendarHeight
+    private var calendarCollectionViewRowsNumber = Constants.weekModeCalendarRowNumber
     
     private lazy var weekDaysStackView: UIStackView = {
         let view = UIStackView()
@@ -98,7 +98,6 @@ final class ScheduleViewController: UIViewController {
         view.image = UIImage(resource: .clock)
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
-//        view.clipsToBounds = true
         return view
     }()
     private var viewModel: ScheduleViewViewModelProtocol
@@ -301,12 +300,8 @@ final class ScheduleViewController: UIViewController {
     
     @objc private func didTapAddNewEventButton() {
         hapticManager?.playTap()
-        
-        let createDelegate = viewModel as? CreateScheduleDelegate
-        let task: ScheduleTask? = nil
-        let mode: CreateMode = .create
-        let createViewModel: CreateScheduleViewModelProtocol = DIContainer.shared.resolve(arguments: createDelegate, task)
-        let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve(arguments: createViewModel, mode)
+
+        let createScheduleVC = prepareCreateVC(for: .create)
         
         if let sheet = createScheduleVC.sheetPresentationController {
             sheet.detents = [.large(), .medium()]
@@ -320,7 +315,7 @@ final class ScheduleViewController: UIViewController {
     }
     
     private func animateCalendartransiotion() {
-        if calendarCollectionViewRowsNumber == 1 {
+        if calendarCollectionViewRowsNumber == Constants.weekModeCalendarRowNumber {
             self.calendarCollectionView.snp.updateConstraints {
                 $0.height.equalTo(self.calendarCollectionHeight)
             }
@@ -364,9 +359,26 @@ final class ScheduleViewController: UIViewController {
         }
     }
     
+    // TODO: Create Coordinator
+    private func prepareCreateVC(at index: Int? = nil, for mode: CreateMode) -> CreateScheduleViewController {
+        var task: ScheduleTask? = nil
+        if let index = index {
+            task = viewModel.task(at: index)
+            
+        }
+        let createDelegate = viewModel as? CreateScheduleDelegate
+        let createViewModel: CreateScheduleViewModelProtocol = DIContainer.shared.resolve(arguments: createDelegate, task)
+        let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve(arguments: createViewModel, mode)
+        return createScheduleVC
+    }
+    
     @objc private func calendarSwitchRightBarButtonItemTapped() {
-        calendarCollectionViewRowsNumber = calendarCollectionViewRowsNumber == 1 ? 6 : 1
-        calendarCollectionHeight = calendarCollectionHeight == 45 ? 200 : 45
+        calendarCollectionViewRowsNumber = calendarCollectionViewRowsNumber == Constants.weekModeCalendarRowNumber ?
+        Constants.monthModeCalendarRowNumber : Constants.weekModeCalendarRowNumber
+        
+        calendarCollectionHeight = calendarCollectionHeight == Constants.weekModeCalendarHeight ?
+        Constants.monthModeCalendarHeight : Constants.weekModeCalendarHeight
+        
         animateCalendartransiotion()
     }
 }
@@ -377,7 +389,7 @@ extension ScheduleViewController: JTAppleCalendarViewDataSource {
         let startDate = Date(timeIntervalSince1970: 1577826000)
         let endDate = Date(timeIntervalSince1970: 4102434000)
         
-        if calendarCollectionViewRowsNumber == 6 {
+        if calendarCollectionViewRowsNumber == Constants.monthModeCalendarRowNumber {
             return ConfigurationParameters(startDate: startDate,
                                            endDate: endDate,
                                            numberOfRows: calendarCollectionViewRowsNumber)
@@ -474,6 +486,7 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
         }
     }
     
+    // TODO: change interval dispay to current month
     func calendar(
         _ calendar: JTAppleCalendarView,
         didScrollToDateSegmentWith visibleDates: DateSegmentInfo
@@ -495,7 +508,6 @@ extension ScheduleViewController: UITableViewDelegate {
         return 50
     }
     
-    // TODO: - Implement swipe to edit action
     func tableView(
         _ tableView: UITableView,
         trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
@@ -506,18 +518,16 @@ extension ScheduleViewController: UITableViewDelegate {
                 guard let self = self else { return }
                 self.viewModel.deleteTask(at: indexPath.row)
             }
+        
         let editAction = UIContextualAction(
             style: .normal,
             title: "") { [weak self] contextualAction, view, boolValue  in
                 guard let self = self else { return }
                 tableView.isEditing = false
-                let task: ScheduleTask? = viewModel.task(at: indexPath.row)
-                let createDelegate = viewModel as? CreateScheduleDelegate
-                let mode: CreateMode = .edit
-                let createViewModel: CreateScheduleViewModelProtocol = DIContainer.shared.resolve(arguments: createDelegate, task)
-                let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve(arguments: createViewModel, mode)
+                let createScheduleVC = prepareCreateVC(at: indexPath.row, for: .edit)
                 navigationController?.present(createScheduleVC, animated: true)
             }
+        
         configure(editAction)
         let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
         return swipeActions
@@ -579,7 +589,6 @@ extension ScheduleViewController: UICollectionViewDelegateFlowLayout {
         }
         mainMode = ScheduleMode.allCases[indexPath.row]
         viewModel.reconfigureMode(mainMode)
-//        updateSnapshot(animated: false)
     }
     
     func collectionView(
@@ -591,4 +600,3 @@ extension ScheduleViewController: UICollectionViewDelegateFlowLayout {
         }
     }
 }
-

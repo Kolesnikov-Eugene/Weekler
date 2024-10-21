@@ -36,7 +36,7 @@ final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
     
     // MARK: - public methods
     func createTask() {
-        if taskDescription != "Enter your task..." && taskDescription != "" && taskDescription != " " {
+        if taskDescription != L10n.Localizable.CreateSchedule.placeholder && taskDescription != "" && taskDescription != " " {
             let date = dateAndTimeOfTask
             let notification = isNotificationEnabled
             let task = ScheduleTask(id: UUID(), date: date, description: taskDescription, isNotificationEnabled: notification, completed: false)
@@ -45,7 +45,7 @@ final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
     }
     
     func editTask() {
-        if taskDescription != "Enter your task...",
+        if taskDescription != L10n.Localizable.CreateSchedule.placeholder,
            taskDescription != "",
            taskDescription != " ",
            let taskToEdit = taskToEdit {

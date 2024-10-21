@@ -11,21 +11,19 @@ extension DaysOfWeek {
     static func getShortDayOfWeek(for day: DaysOfWeek) -> String {
         switch day {
         case .monday:
-            return "Пн"
+            return L10n.Localizable.Calendar.Short.monday
         case .tuesday:
-            return "Вт"
+            return L10n.Localizable.Calendar.Short.tuesday
         case .wednesday:
-            return "Ср"
+            return L10n.Localizable.Calendar.Short.wednesday
         case .thursday:
-            return "Чт"
+            return L10n.Localizable.Calendar.Short.thursday
         case .friday:
-            return "Пт"
+            return L10n.Localizable.Calendar.Short.friday
         case .saturday:
-            return "Cб"
+            return L10n.Localizable.Calendar.Short.saturday
         case .sunday:
-            return "Вс"
+            return L10n.Localizable.Calendar.Short.sunday
         }
     }
 }
-
-

@@ -8,6 +8,8 @@
 import Foundation
 
 struct Constants {
-    static let calendarCollectionViewRowsNumber = 1
-    static let calendarCollectionHeight = 45.0
+    static let weekModeCalendarRowNumber = 1
+    static let monthModeCalendarRowNumber = 6
+    static let weekModeCalendarHeight = 45.0
+    static let monthModeCalendarHeight = 200.0
 }

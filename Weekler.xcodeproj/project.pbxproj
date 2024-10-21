@@ -202,6 +202,20 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		444006A32CC6E1210058F601 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		444006A42CC6E12A0058F601 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
 		4442BA662BE41F18002DC469 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -351,6 +365,8 @@
 		449F18EC2BACD08900F9640D /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				444006A42CC6E12A0058F601 /* UseCase */,
+				444006A32CC6E1210058F601 /* Repository */,
 				449F18F12BACD18C00F9640D /* Model */,
 				442256832C6BE7B300172C0A /* ScheduleDataManager.swift */,
 			);

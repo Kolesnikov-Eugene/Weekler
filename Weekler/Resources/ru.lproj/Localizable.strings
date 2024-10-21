@@ -1,4 +1,35 @@
+// MARK: - Tab menu items
 "Tab.schedule" = "Расписание";
 "Tab.edit" = "Запланировать";
 "Tab.statistics" = "Статистика";
 "Tab.config" = "Настройки";
+
+// MARK: - Calendar days and dates
+"Calendar.full.monday" = "Понедельник";
+"Calendar.full.tuesday" = "Вторник";
+"Calendar.full.wednesday" = "Среда";
+"Calendar.full.thursday" = "Четверг";
+"Calendar.full.friday" = "Пятница";
+"Calendar.full.saturday" = "Суббота";
+"Calendar.full.sunday" = "Воскресенье";
+"Calendar.short.monday" = "Пн";
+"Calendar.short.tuesday" = "Вт";
+"Calendar.short.wednesday" = "Ср";
+"Calendar.short.thursday" = "Чт";
+"Calendar.short.friday" = "Пт";
+"Calendar.short.saturday" = "Сб";
+"Calendar.short.sunday" = "Вс";
+
+// MARK: - Schedule items
+"Schedule.date" = "Дата";
+"Schedule.time" = "Время";
+"Schedule.notification" = "Уведомление";
+"Schedule.repeat" = "Повтор";
+
+// MARK: - Create schedule view
+"CreateSchedule.placeholder" = "Введите Вашу задачу...";
+"CreateSchedule.doneButtonText" = "Готово";
+
+// MARK: - Repeated days VC
+"RepeatedDays.byDay" = "По дням недели";
+"RepeatedDays.byDate" = "Выбрать числа";
