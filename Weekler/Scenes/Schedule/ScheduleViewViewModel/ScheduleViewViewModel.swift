@@ -16,6 +16,8 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     var dataList = BehaviorRelay<[SourceItem]>(value: [])
     var emptyStateIsActive: Driver<Bool>
     var currentDateChangesObserver = BehaviorRelay<Date>(value: Date())
+    var setCreateViewNeedsToBePresented = BehaviorRelay<Bool>(value: false)
+    var presentCreateViewEditingAtIndex = BehaviorRelay<Int?>(value: nil)
     var mainMode: ScheduleMode = .task
     var selectedDate: Date { currentDate }
     
@@ -102,6 +104,14 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
                 await scheduleDataManager.unComplete(task)
             }
         }
+    }
+    
+    func prepareCreateView(at index: Int) {
+        presentCreateViewEditingAtIndex.accept(index)
+    }
+    
+    @objc func didTapAddNewEventButton() {
+        setCreateViewNeedsToBePresented.accept(true)
     }
     
     // MARK: - private methods

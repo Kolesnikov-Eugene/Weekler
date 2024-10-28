@@ -18,10 +18,8 @@ final class ScheduleViewController: UIViewController {
     private var startDate = ""
     private var endDate = ""
     private let reuseId = "calendarCell"
-    private let scheduleCellReuseId = "scheduleCell"
     private let collectionCellReuseId = "collectionCell"
     private var mainMode: ScheduleMode = .task
-    private var tableDataSource: UITableViewDiffableDataSource<UITableView.Section, SourceItem>!
     private var calendarCollectionHeight = Constants.weekModeCalendarHeight
     private var calendarCollectionViewRowsNumber = Constants.weekModeCalendarRowNumber
     
@@ -43,26 +41,7 @@ final class ScheduleViewController: UIViewController {
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
     }()
-    private lazy var scheduleTableView: UITableView = {
-        let tableView = UITableView()
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.allowsSelection = false
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
-    }()
-    private lazy var addNewEventButton: UIButton = {
-        var configuration = UIButton.Configuration.plain()
-        configuration.image = UIImage(systemName: "plus.circle.fill")?.withRenderingMode(.alwaysTemplate)
-        configuration.baseForegroundColor = Colors.mainForeground
-        configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 40)
-        
-        let button = UIButton(configuration: configuration, primaryAction: nil)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didTapAddNewEventButton), for: .touchUpInside)
-        
-        return button
-    }()
+    private let scheduleMainView: ScheduleMainView
     private lazy var formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "d MMMM yyyy"
@@ -93,13 +72,6 @@ final class ScheduleViewController: UIViewController {
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
     }()
-    private lazy var emptyStateImageView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(resource: .clock)
-        view.clipsToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
     private var viewModel: ScheduleViewViewModelProtocol
     private var bag = DisposeBag()
     private var hapticManager: CoreHapticsManager?
@@ -107,6 +79,7 @@ final class ScheduleViewController: UIViewController {
     init(viewModel: ScheduleViewViewModelProtocol) {
         self.viewModel = viewModel
         self.hapticManager = CoreHapticsManager()
+        scheduleMainView = ScheduleMainView(frame: .zero, viewModel: viewModel, hapticManager: hapticManager)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -125,8 +98,6 @@ final class ScheduleViewController: UIViewController {
         super.viewDidLayoutSubviews()
         //        scheduleTableView.setContentOffset(CGPoint(x: 0, y: -100), animated: false)
         //TODO: - add dinamic content inset when table view will display the lsat cell
-        scheduleTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 75, right: 0)
-        emptyStateImageView.layer.cornerRadius = CGRectGetWidth(CGRect(origin: CGPoint.zero, size: emptyStateImageView.bounds.size)) / 2
     }
     
     //MARK: - private methods
@@ -138,10 +109,6 @@ final class ScheduleViewController: UIViewController {
         calendarCollectionView.ibCalendarDelegate = self
         calendarCollectionView.ibCalendarDataSource = self
         
-        scheduleTableView.register(ScheduleTableViewCell.self, forCellReuseIdentifier: scheduleCellReuseId)
-        scheduleTableView.delegate = self
-        setupTableViewDataSource()
-        
         selectMainModeCollectionView.register(SelectMainModeCollectionViewCell.self, forCellWithReuseIdentifier: collectionCellReuseId)
         selectMainModeCollectionView.dataSource = self
         selectMainModeCollectionView.delegate = self
@@ -151,56 +118,24 @@ final class ScheduleViewController: UIViewController {
     }
     
     private func bind() {
-        viewModel.dataList
+        viewModel.setCreateViewNeedsToBePresented
             .observe(on: MainScheduler.instance)
             .skip(1)
             .subscribe(onNext: { [weak self] _ in
-                self?.updateSnapshot(animated: true)
+                self?.hapticManager?.playTap()
+                self?.presentCreateView(with: .create)
             })
             .disposed(by: bag)
         
-        viewModel.emptyStateIsActive
-            .drive(emptyStateImageView.rx.isHidden)
+        viewModel.presentCreateViewEditingAtIndex
+            .observe(on: MainScheduler.instance)
+            .skip(1)
+            .subscribe(onNext: { [weak self] index in
+                guard let self = self,
+                      let index = index else { return }
+                self.presentCreateView(with: .edit, and: index)
+            })
             .disposed(by: bag)
-    }
-    
-    // REFACTOR
-    private func setupTableViewDataSource() {
-        tableDataSource = UITableViewDiffableDataSource<UITableView.Section, SourceItem>(
-            tableView: scheduleTableView,
-            cellProvider: { tableView, indexPath, itemIdentifier in
-                guard let cell = tableView
-                    .dequeueReusableCell(withIdentifier: self.scheduleCellReuseId) as? ScheduleTableViewCell else { fatalError() }
-                switch itemIdentifier {
-                case .goal(let goal):
-                    cell.configureCell(text: goal.description)
-                case .priority(let priority):
-                    cell.configureCell(text: priority.description)
-                case .task(let task):
-                    cell.configureCell(with: task)
-                    cell.onTaskCompleted = { [weak self] in
-                        self?.viewModel.completeTask(with: task.id)
-                    }
-                    cell.onTaskButtonTapped = { [weak self] in
-                        self?.hapticManager?.playAddTask()
-                    }
-                case .completedTask(let completedTask):
-                    cell.configureCompletedTaskCell(with: completedTask)
-                    cell.onTaskCompleted = { [weak self] in
-                        self?.viewModel.unCompleteTask(with: completedTask.id)
-                    }
-                }
-                return cell
-        })
-        updateSnapshot(animated: false)
-    }
-    
-    private func updateSnapshot(animated: Bool) {
-        var snapshot = NSDiffableDataSourceSnapshot<UITableView.Section, SourceItem>()
-        snapshot.deleteAllItems()
-        snapshot.appendSections([.task])
-        snapshot.appendItems(viewModel.data)
-        tableDataSource.apply(snapshot, animatingDifferences: animated)
     }
     
     private func addSubviews() {
@@ -209,12 +144,10 @@ final class ScheduleViewController: UIViewController {
             weekDaysStackView.addArrangedSubview(label)
         }
         let subviews = [
-            emptyStateImageView,
             weekDaysStackView,
             calendarCollectionView,
             selectMainModeCollectionView,
-            scheduleTableView,
-            addNewEventButton
+            scheduleMainView
         ]
         subviews.forEach { view.addSubview($0) }
     }
@@ -250,27 +183,12 @@ final class ScheduleViewController: UIViewController {
             $0.height.equalTo(25)
         }
         
-        //scheduleTableView Constraints
-        scheduleTableView.snp.makeConstraints {
+        // scheduleMainView constraints
+        scheduleMainView.snp.makeConstraints {
             $0.top.equalTo(selectMainModeCollectionView.snp.bottom)
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing)
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-        }
-        
-        //addNewEventButton constraints
-        addNewEventButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).inset(16)
-        }
-        
-        // FIXME: Reconfigure constraints to adapt to calendar switch
-        //emptyStateImageView constraints
-        emptyStateImageView.snp.makeConstraints {
-            $0.centerX.equalTo(view.snp.centerX)
-            $0.centerY.equalTo(view.snp.centerY)
-            $0.width.equalTo(250)
-            $0.height.equalTo(250)
         }
     }
     
@@ -298,10 +216,8 @@ final class ScheduleViewController: UIViewController {
         return label
     }
     
-    @objc private func didTapAddNewEventButton() {
-        hapticManager?.playTap()
-
-        let createScheduleVC = prepareCreateVC(for: .create)
+    private func presentCreateView(with mode: CreateMode, and index: Int? = nil) {
+        let createScheduleVC = makeCreateView(at: index, for: mode)
         
         if let sheet = createScheduleVC.sheetPresentationController {
             sheet.detents = [.large(), .medium()]
@@ -320,15 +236,6 @@ final class ScheduleViewController: UIViewController {
                 $0.height.equalTo(self.calendarCollectionHeight)
             }
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear) {
-                if !self.emptyStateImageView.isHidden {
-                    self.emptyStateImageView.snp.removeConstraints()
-                    self.emptyStateImageView.snp.remakeConstraints {
-                        $0.centerX.equalTo(self.view.snp.centerX)
-                        $0.centerY.equalTo(self.view.snp.centerY)
-                        $0.width.equalTo(250)
-                        $0.height.equalTo(250)
-                    }
-                }
                 self.view.layoutIfNeeded()
             } completion: { _ in
                 self.calendarCollectionView.reloadData(withanchor: self.viewModel.selectedDate)
@@ -338,15 +245,6 @@ final class ScheduleViewController: UIViewController {
                 $0.height.equalTo(self.calendarCollectionHeight)
             }
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn) {
-                if !self.emptyStateImageView.isHidden {
-                    self.emptyStateImageView.snp.removeConstraints()
-                    self.emptyStateImageView.snp.remakeConstraints {
-                        $0.centerX.equalTo(self.view.snp.centerX)
-                        $0.top.equalTo(self.selectMainModeCollectionView.snp.bottom).offset(10)
-                        $0.width.equalTo(250)
-                        $0.height.equalTo(250)
-                    }
-                }
                 self.view.layoutIfNeeded()
                 self.calendarCollectionView.reloadData(withanchor: self.viewModel.selectedDate)
             }
@@ -360,7 +258,7 @@ final class ScheduleViewController: UIViewController {
     }
     
     // TODO: Create Coordinator
-    private func prepareCreateVC(at index: Int? = nil, for mode: CreateMode) -> CreateScheduleViewController {
+    private func makeCreateView(at index: Int? = nil, for mode: CreateMode) -> CreateScheduleViewController {
         var task: ScheduleTask? = nil
         if let index = index {
             task = viewModel.task(at: index)
@@ -499,43 +397,6 @@ extension ScheduleViewController: JTAppleCalendarViewDelegate {
         startDate = formatter.string(from: start)
         endDate = formatter.string(from: end)
         navigationItem.title = "\(startDate) - \(endDate)"
-    }
-}
-
-//MARK: - scheduleTableView delegate
-extension ScheduleViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
-    }
-    
-    func tableView(
-        _ tableView: UITableView,
-        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
-    ) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(
-            style: .destructive,
-            title: "Удалить") { [weak self] contextualAction, view, boolValue in
-                guard let self = self else { return }
-                self.viewModel.deleteTask(at: indexPath.row)
-            }
-        
-        let editAction = UIContextualAction(
-            style: .normal,
-            title: "") { [weak self] contextualAction, view, boolValue  in
-                guard let self = self else { return }
-                tableView.isEditing = false
-                let createScheduleVC = prepareCreateVC(at: indexPath.row, for: .edit)
-                navigationController?.present(createScheduleVC, animated: true)
-            }
-        
-        configure(editAction)
-        let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
-        return swipeActions
-    }
-    
-    private func configure(_ action: UIContextualAction) {
-        action.image = UIImage(systemName: "pencil")
-        action.backgroundColor = .lightGray
     }
 }
 

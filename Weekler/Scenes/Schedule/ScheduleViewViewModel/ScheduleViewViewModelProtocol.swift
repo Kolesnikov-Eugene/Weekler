@@ -17,10 +17,14 @@ protocol ScheduleViewViewModelProtocol: AnyObject {
     var dataList: BehaviorRelay<[SourceItem]> { get }
     var emptyStateIsActive: Driver<Bool> { get set }
     var currentDateChangesObserver: BehaviorRelay<Date> { get set }
+    var setCreateViewNeedsToBePresented: BehaviorRelay<Bool> { get set }
+    var presentCreateViewEditingAtIndex: BehaviorRelay<Int?> { get set }
     func reconfigureMode(_ mode: ScheduleMode)
     func deleteTask(at index: Int)
     func task(at index: Int) -> ScheduleTask
     func completeTask(with id: UUID)
     func unCompleteTask(with id: UUID)
+    func didTapAddNewEventButton()
+    func prepareCreateView(at index: Int)
 //    func getSelectedDate() -> Date
 }
