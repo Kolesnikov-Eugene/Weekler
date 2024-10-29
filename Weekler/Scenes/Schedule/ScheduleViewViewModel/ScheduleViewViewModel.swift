@@ -18,10 +18,17 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     var currentDateChangesObserver = BehaviorRelay<Date>(value: Date())
     var setCreateViewNeedsToBePresented = BehaviorRelay<Bool>(value: false)
     var presentCreateViewEditingAtIndex = BehaviorRelay<Int?>(value: nil)
+    var calendarHeightValue = BehaviorRelay<Double?>(value: nil)
+    var navigationTitle = BehaviorRelay<String>(value: "")
     var mainMode: ScheduleMode = .task
     var selectedDate: Date { currentDate }
     
     private var completedTasks: [ScheduleTask] = []
+    private lazy var formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMMM yyyy"
+        return formatter
+    }()
     
     var priorities: [Priority] = [
         Priority(id: UUID(), date: Date(), description: "Study"),
@@ -108,6 +115,15 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     
     func prepareCreateView(at index: Int) {
         presentCreateViewEditingAtIndex.accept(index)
+    }
+    
+    func setCalendarViewWith(_ height: Double) {
+        calendarHeightValue.accept(height)
+    }
+    
+    func updateNavTitle(with date: [Date]) {
+        let title = formatter.string(from: date[0])
+        navigationTitle.accept(title)
     }
     
     @objc func didTapAddNewEventButton() {

@@ -11,6 +11,8 @@
 		440549E52BC5D7E400077C61 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440549E42BC5D7E400077C61 /* Strings.swift */; };
 		440549EE2BC5DDBA00077C61 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 440549EC2BC5DDBA00077C61 /* Localizable.strings */; };
 		440770FD2BBB472900AD9C98 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440770FC2BBB472900AD9C98 /* Colors.swift */; };
+		44079C6B2CD163BA006D3A3D /* SelectTaskModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44079C6A2CD163BA006D3A3D /* SelectTaskModeView.swift */; };
+		44079C6E2CD169C5006D3A3D /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44079C6D2CD169C5006D3A3D /* CalendarView.swift */; };
 		440CF1F72C73CAE600FEFDE0 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */; };
 		441DECAE2CC0353A00B725B7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441DECAD2CC0353A00B725B7 /* Constants.swift */; };
 		442256822C6BE61500172C0A /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256812C6BE61500172C0A /* TaskItem.swift */; };
@@ -76,6 +78,8 @@
 		440549ED2BC5DDBA00077C61 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		440549EF2BC5DDF200077C61 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		440770FC2BBB472900AD9C98 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		44079C6A2CD163BA006D3A3D /* SelectTaskModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTaskModeView.swift; sourceTree = "<group>"; };
+		44079C6D2CD169C5006D3A3D /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
 		441DECAD2CC0353A00B725B7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		442256812C6BE61500172C0A /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
@@ -204,6 +208,23 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		44079C692CD16301006D3A3D /* SelectTaskModeView */ = {
+			isa = PBXGroup;
+			children = (
+				44A378DD2BFD2D4400E93B5F /* SelectMainModeCollectionViewCell */,
+				44079C6A2CD163BA006D3A3D /* SelectTaskModeView.swift */,
+			);
+			path = SelectTaskModeView;
+			sourceTree = "<group>";
+		};
+		44079C6C2CD16661006D3A3D /* CalendarView */ = {
+			isa = PBXGroup;
+			children = (
+				44079C6D2CD169C5006D3A3D /* CalendarView.swift */,
+			);
+			path = CalendarView;
+			sourceTree = "<group>";
+		};
 		444006A32CC6E1210058F601 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
@@ -255,11 +276,11 @@
 		447DBE562BC4A8EB00A99A38 /* ScheduleView */ = {
 			isa = PBXGroup;
 			children = (
+				44079C6C2CD16661006D3A3D /* CalendarView */,
+				44079C692CD16301006D3A3D /* SelectTaskModeView */,
 				447F920F2CD0161D00DDB846 /* ScheduleMainView */,
 				44D18C712C121D0E00F22CED /* ScheduleViewController */,
 				44F409132BCF0A2F0052ABE9 /* WeekCalendarCollectionViewCell */,
-				44A378DD2BFD2D4400E93B5F /* SelectMainModeCollectionViewCell */,
-				44B06E172BECF062000C3CC6 /* ScheduleTableViewCell */,
 			);
 			path = ScheduleView;
 			sourceTree = "<group>";
@@ -331,6 +352,7 @@
 		447F920F2CD0161D00DDB846 /* ScheduleMainView */ = {
 			isa = PBXGroup;
 			children = (
+				44B06E172BECF062000C3CC6 /* ScheduleTableViewCell */,
 				447F92102CD0165600DDB846 /* ScheduleMainView.swift */,
 			);
 			path = ScheduleMainView;
@@ -669,6 +691,7 @@
 			files = (
 				44B562F82CBEE06F0071F691 /* WeekDayShortName.swift in Sources */,
 				44CE3BBD2C0BA38500719B84 /* CreateScheduleViewAssembly.swift in Sources */,
+				44079C6B2CD163BA006D3A3D /* SelectTaskModeView.swift in Sources */,
 				44FB46602C5E6959005731BC /* CreateScheduleViewModelAssembly.swift in Sources */,
 				44727B472C486AAC007756A3 /* ScheduleTableViewSectionItem.swift in Sources */,
 				447DBE622BC4A8EB00A99A38 /* ScheduleViewController.swift in Sources */,
@@ -702,6 +725,7 @@
 				44DBD2AF2C8ED287006AE2F1 /* CompletedTask.swift in Sources */,
 				44727B432C486A48007756A3 /* DaysOfWeekEnum.swift in Sources */,
 				4442BA682BE41F38002DC469 /* TabBarFactoryAssembly.swift in Sources */,
+				44079C6E2CD169C5006D3A3D /* CalendarView.swift in Sources */,
 				449F18D82BACC4BF00F9640D /* AppDelegate.swift in Sources */,
 				44F116982BDC398E00134D5F /* ScheduleAssembly.swift in Sources */,
 				44727B412C486970007756A3 /* ScheduleMode.swift in Sources */,

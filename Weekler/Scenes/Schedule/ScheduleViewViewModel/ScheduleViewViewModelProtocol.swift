@@ -19,6 +19,8 @@ protocol ScheduleViewViewModelProtocol: AnyObject {
     var currentDateChangesObserver: BehaviorRelay<Date> { get set }
     var setCreateViewNeedsToBePresented: BehaviorRelay<Bool> { get set }
     var presentCreateViewEditingAtIndex: BehaviorRelay<Int?> { get set }
+    var calendarHeightValue: BehaviorRelay<Double?> { get set }
+    var navigationTitle: BehaviorRelay<String> { get set }
     func reconfigureMode(_ mode: ScheduleMode)
     func deleteTask(at index: Int)
     func task(at index: Int) -> ScheduleTask
@@ -26,5 +28,7 @@ protocol ScheduleViewViewModelProtocol: AnyObject {
     func unCompleteTask(with id: UUID)
     func didTapAddNewEventButton()
     func prepareCreateView(at index: Int)
+    func setCalendarViewWith(_ height: Double)
+    func updateNavTitle(with date: [Date])
 //    func getSelectedDate() -> Date
 }
