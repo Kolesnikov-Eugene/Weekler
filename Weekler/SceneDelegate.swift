@@ -16,6 +16,7 @@ enum MySchema: VersionedSchema {
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    let weeklerAppDI = WeeklerAppDIContainer(container: DIContainer())
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -23,8 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
             
             let window = UIWindow(windowScene: windowScene)
-            
-            let tabBarController: TabBarController = DIContainer.shared.resolve()
+            let tabBarController = weeklerAppDI.makeTabBarController()
             
             window.rootViewController = tabBarController
             window.makeKeyAndVisible()

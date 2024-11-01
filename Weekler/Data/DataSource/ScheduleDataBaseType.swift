@@ -8,7 +8,7 @@
 import Foundation
 import SwiftData
 
-protocol ScheduleDataBaseType: PersistentModel {
+protocol ScheduleDataBaseType: PersistentModel, Sendable {
     var id: UUID { get }
     var date: Date { get }
     var taskDescription: String { get }

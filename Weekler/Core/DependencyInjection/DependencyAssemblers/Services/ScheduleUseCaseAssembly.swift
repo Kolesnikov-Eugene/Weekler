@@ -7,10 +7,10 @@
 
 import Swinject
 
-final class ScheduleDataManagerAssembly: Assembly {
+final class ScheduleUseCaseAssembly: Assembly {
     func assemble(container: Swinject.Container) {
-        container.register(ScheduleDataManagerProtocol.self) { resolver in
-            ScheduleDataManager()
+        container.register(ScheduleUseCaseProtocol.self) { resolver in
+            ScheduleUseCase()
         }.inObjectScope(.container)
     }
 }

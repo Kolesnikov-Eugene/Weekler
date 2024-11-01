@@ -7,10 +7,10 @@
 
 import Swinject
 
-final class TabBarFactoryAssembly: Assembly {
+final class SceneFactoryAssembly: Assembly {
     func assemble(container: Swinject.Container) {
-        container.register(TabBarFactory.self) { _ in
-            TabBarFactory()
+        container.register(SceneFactoryProtocol.self) { resolver, container in
+            SceneFactoryDIContainer(container: container)
         }.inObjectScope(.container)
     }
 }

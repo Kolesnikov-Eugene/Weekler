@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum SourceItem: Hashable, Comparable {
+enum SourceItem: Hashable, Comparable, Sendable {
     case task(ScheduleTask)
     case priority(Priority)
     case goal(Goal)

@@ -27,11 +27,11 @@ final class ScheduleViewController: UIViewController {
         button.imageInsets = UIEdgeInsets(top: 0, left: -10, bottom: 0, right: 0)
         return button
     }()
-    private var viewModel: ScheduleViewViewModelProtocol
+    private var viewModel: ScheduleViewModelProtocol
     private var bag = DisposeBag()
     private var hapticManager: CoreHapticsManager?
     
-    init(viewModel: ScheduleViewViewModelProtocol) {
+    init(viewModel: ScheduleViewModelProtocol) {
         self.viewModel = viewModel
         self.hapticManager = CoreHapticsManager()
         calendarView = CalendarView(frame: .zero, viewModel: viewModel)

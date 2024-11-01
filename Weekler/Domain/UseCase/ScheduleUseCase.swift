@@ -8,16 +8,12 @@
 import Foundation
 import SwiftData
 
-final class ScheduleDataManager: ScheduleDataManagerProtocol {
-    private let provider: ScheduleStorageDataProviderProtocol = {
+final class ScheduleUseCase: ScheduleUseCaseProtocol {
+    private lazy var provider: ScheduleRepositoryProtocol = {
         do {
-            //            let configuration = ModelConfiguration(for: TaskItem.self, isStoredInMemoryOnly: true)
-            //
-            //            let schema = Schema(versionedSchema: MySchema.self)
-            //            let container = try ModelContainer(for: schema, configurations: configuration)
-            
             let container = try ModelContainer(for: TaskItem.self)
-            return ScheduleStorageDataProvider(container: container)
+            print("conteiner \(Thread.current)")
+            return ScheduleRepository(container: container)
         } catch {
             fatalError(error.localizedDescription)
         }
@@ -76,16 +72,4 @@ final class ScheduleDataManager: ScheduleDataManagerProtocol {
     func unComplete(_ task: ScheduleTask) async {
         await provider.unComplete(task)
     }
-}
-
-protocol ScheduleDataManagerProtocol {
-    func fetchTaskItems(
-        predicate: Predicate<TaskItem>,
-        sortDescriptor: SortDescriptor<TaskItem>,
-        _ completion: @escaping (Result<[ScheduleTask], Error>) -> Void) async
-    func insert(_ model: ScheduleTask) async
-    func delete(_ id: UUID, predicate: Predicate<TaskItem>) async
-    func edit(_ task: ScheduleTask) async
-    func complete(_ task: ScheduleTask) async
-    func unComplete(_ task: ScheduleTask) async
 }

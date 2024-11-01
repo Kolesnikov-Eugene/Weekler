@@ -9,10 +9,10 @@ import UIKit
 
 final class TabBarController: UITabBarController {
     
-    private let tabBarFactory: TabBarFactory
+    private let sceneFactory: SceneFactoryProtocol
 
-    init(tabBarFactory: TabBarFactory) {
-        self.tabBarFactory = tabBarFactory
+    init(sceneFactory: SceneFactoryProtocol) {
+        self.sceneFactory = sceneFactory
         super.init(nibName: nil, bundle: nil)
         setupView()
     }
@@ -39,7 +39,7 @@ final class TabBarController: UITabBarController {
     }
 
     private func setupScheduleViewController() -> UINavigationController {
-        let scheduleViewController = tabBarFactory.createScheduleViewController()
+        let scheduleViewController = sceneFactory.makeScheduleViewController()
         
         let image = UIImage(systemName: "list.bullet.clipboard")
 
@@ -56,7 +56,7 @@ final class TabBarController: UITabBarController {
     }
     
     private func setupTaskEditorViewController() -> UINavigationController {
-        let taskEditorViewController = TaskEditorViewController()
+        let taskEditorViewController = sceneFactory.makeTaskEditorViewController()
 
         taskEditorViewController.tabBarItem = UITabBarItem(
             title: L10n.Localizable.Tab.edit,
@@ -71,7 +71,7 @@ final class TabBarController: UITabBarController {
     }
     
     private func setupStatisticsViewController() -> UINavigationController {
-        let statisticsViewController = StatisticsViewController()
+        let statisticsViewController = sceneFactory.makeStatisticsView()
 
         statisticsViewController.tabBarItem = UITabBarItem(
             title: L10n.Localizable.Tab.statistics,
@@ -86,7 +86,7 @@ final class TabBarController: UITabBarController {
     }
     
     private func setupConfigViewController() -> UINavigationController {
-        let configViewController = ConfigViewController()
+        let configViewController = sceneFactory.makeConfigViewController()
 
         configViewController.tabBarItem = UITabBarItem(
             title: L10n.Localizable.Tab.config,

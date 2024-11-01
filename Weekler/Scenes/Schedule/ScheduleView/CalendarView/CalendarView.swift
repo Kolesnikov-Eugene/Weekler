@@ -38,10 +38,10 @@ final class CalendarView: UIView {
         formatter.dateFormat = "d MMMM yyyy"
         return formatter
     }()
-    private var viewModel: ScheduleViewViewModelProtocol
+    private var viewModel: ScheduleViewModelProtocol
     private var isInitialLayout = false
     
-    init(frame: CGRect, viewModel: ScheduleViewViewModelProtocol) {
+    init(frame: CGRect, viewModel: ScheduleViewModelProtocol) {
         self.viewModel = viewModel
         super.init(frame: frame)
         setupUI()

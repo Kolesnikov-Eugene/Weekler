@@ -22,9 +22,9 @@ final class SelectTaskModeView: UIView {
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
     }()
-    private var viewModel: ScheduleViewViewModelProtocol
+    private var viewModel: ScheduleViewModelProtocol
     
-    init(frame: CGRect, viewModel: ScheduleViewViewModelProtocol) {
+    init(frame: CGRect, viewModel: ScheduleViewModelProtocol) {
         self.viewModel = viewModel
         super.init(frame: frame)
         setupUI()

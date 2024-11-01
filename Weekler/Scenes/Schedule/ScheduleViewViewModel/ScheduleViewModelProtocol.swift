@@ -8,7 +8,7 @@
 import Foundation
 import RxCocoa
 
-protocol ScheduleViewViewModelProtocol: AnyObject {
+protocol ScheduleViewModelProtocol: AnyObject {
     var selectedDate: Date { get }
     var tasks: [ScheduleTask] { get set }
     var priorities: [Priority] { get set }

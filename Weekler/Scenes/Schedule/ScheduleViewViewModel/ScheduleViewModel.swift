@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
+final class ScheduleViewModel: ScheduleViewModelProtocol {
     //MARK: - public properties
     var tasks: [ScheduleTask] = []
     var data: [SourceItem]
@@ -43,11 +43,11 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     ]
     
     // MARK: - private properties
-    private var scheduleDataManager: ScheduleDataManagerProtocol
+    private var scheduleDataManager: ScheduleUseCaseProtocol
     private var currentDate: Date
     private var bag = DisposeBag()
     
-    init(scheduleDataManager: ScheduleDataManagerProtocol) {
+    init(scheduleDataManager: ScheduleUseCaseProtocol) {
         self.scheduleDataManager = scheduleDataManager
         currentDate = Date()
         data = []
@@ -57,7 +57,7 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
             })
             .asDriver(onErrorJustReturn: false)
         
-        fetchSchedule()
+//        fetchSchedule()
         bindToScheduleUpdates()
     }
     
@@ -75,6 +75,7 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     }
     
     func changeDate(for selectedDate: Date) {
+        print("changed")
         currentDate = selectedDate
         fetchSchedule()
     }
@@ -132,12 +133,11 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     
     // MARK: - private methods
     private func fetchSchedule() {
-        
+        print("fetch")
         let currentDateOnly = currentDate.onlyDate
         Task.detached {
             let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
             let predicate = #Predicate<TaskItem> { $0.onlyDate == currentDateOnly }
-            
             await self.scheduleDataManager.fetchTaskItems(
                 predicate: predicate,
                 sortDescriptor: sortDescriptor) { [weak self] (result: Result<[ScheduleTask], Error>) in
@@ -178,6 +178,7 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
         
         currentDateChangesObserver
             .observe(on: MainScheduler.instance)
+            .skip(1)
             .subscribe(onNext: { [weak self] selectedDateByUser in
                 guard let self = self else { return }
                 self.currentDate = selectedDateByUser
@@ -187,7 +188,7 @@ final class ScheduleViewViewModel: ScheduleViewViewModelProtocol {
     }
 }
 
-extension ScheduleViewViewModel: CreateScheduleDelegate {
+extension ScheduleViewModel: CreateScheduleDelegate {
     func didAddTask(_ task: ScheduleTask, mode: ScheduleMode) {
         Task.detached {
             await self.scheduleDataManager.insert(task)

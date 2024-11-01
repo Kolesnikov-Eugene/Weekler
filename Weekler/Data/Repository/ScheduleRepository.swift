@@ -9,14 +9,16 @@ import Foundation
 import SwiftData
 
 @ModelActor
-final actor ScheduleStorageDataProvider: ScheduleStorageDataProviderProtocol {
+final actor ScheduleRepository: ScheduleRepositoryProtocol {
     private var context: ModelContext { modelExecutor.modelContext }
     
     init(container: ModelContainer) {
+        print("init")
         self.modelContainer = container
         let context = ModelContext(container)
         modelExecutor = DefaultSerialModelExecutor(modelContext: context)
     }
+    deinit {print("deinit")}
     
     // MARK: - public methods
     func fetchTaskItems<T: ScheduleDataBaseType>(
@@ -25,7 +27,6 @@ final actor ScheduleStorageDataProvider: ScheduleStorageDataProviderProtocol {
         _ completion: (Result<[T], Error>
         ) -> Void) {
         let descriptor = FetchDescriptor<T>(predicate: predicate, sortBy: [sortDescriptor])
-        
         do {
             completion(.success(try context.fetch(descriptor)))
         } catch {
@@ -40,6 +41,7 @@ final actor ScheduleStorageDataProvider: ScheduleStorageDataProviderProtocol {
     
     func delete<T: ScheduleDataBaseType>(_ id: UUID, predicate: Predicate<T>) {
         try? self.context.delete(model: T.self, where: predicate)
+        try? context.save()
     }
     
     func edit(_ task: ScheduleTask) {
@@ -76,16 +78,4 @@ final actor ScheduleStorageDataProvider: ScheduleStorageDataProviderProtocol {
             try? context.save()
         }
     }
-}
-
-protocol ScheduleStorageDataProviderProtocol: ModelActor {
-    func fetchTaskItems<T: ScheduleDataBaseType>(
-        predicate: Predicate<T>,
-        sortDescriptor: SortDescriptor<T>,
-        _ completion: (Result<[T], Error>) -> Void)
-    func insert<T: ScheduleDataBaseType>(_ model: T)
-    func delete<T: ScheduleDataBaseType>(_ id: UUID, predicate: Predicate<T>)
-    func edit(_ task: ScheduleTask)
-    func complete(_ task: ScheduleTask)
-    func unComplete(_ task: ScheduleTask)
 }

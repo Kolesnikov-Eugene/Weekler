@@ -29,7 +29,7 @@ final class ScheduleMainView: UIView {
         
         let button = UIButton(configuration: configuration, primaryAction: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(viewModel, action: #selector(ScheduleViewViewModel.didTapAddNewEventButton), for: .touchUpInside)
+        button.addTarget(viewModel, action: #selector(ScheduleViewModel.didTapAddNewEventButton), for: .touchUpInside)
         
         return button
     }()
@@ -41,11 +41,11 @@ final class ScheduleMainView: UIView {
         return view
     }()
     private var tableDataSource: UITableViewDiffableDataSource<UITableView.Section, SourceItem>!
-    private var viewModel: ScheduleViewViewModelProtocol
+    private var viewModel: ScheduleViewModelProtocol
     private var bag = DisposeBag()
     private var hapticManager: CoreHapticsManager?
     
-    init(frame: CGRect, viewModel: ScheduleViewViewModelProtocol, hapticManager: CoreHapticsManager? = nil) {
+    init(frame: CGRect, viewModel: ScheduleViewModelProtocol, hapticManager: CoreHapticsManager? = nil) {
         self.viewModel = viewModel
         self.hapticManager = hapticManager
         super.init(frame: frame)

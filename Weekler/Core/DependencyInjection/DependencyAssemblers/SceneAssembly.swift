@@ -15,11 +15,11 @@ final class SceneAssembly: Assembly {
             StatisticsAssembly(),
             TaskEditorAssembly(),
             ConfigViewAssembly(),
-            TabBarFactoryAssembly(),
+            SceneFactoryAssembly(),
             CreateScheduleViewAssembly(),
             ScheduleViewModelAssembly(),
             CreateScheduleViewModelAssembly(),
-            ScheduleDataManagerAssembly()
+            ScheduleUseCaseAssembly()
         ]
         assemblies.forEach { $0.assemble(container: container) }
     }
