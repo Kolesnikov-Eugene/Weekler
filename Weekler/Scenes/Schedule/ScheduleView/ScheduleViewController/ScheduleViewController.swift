@@ -28,11 +28,15 @@ final class ScheduleViewController: UIViewController {
         return button
     }()
     private var viewModel: ScheduleViewModelProtocol
+    private let createScheduleSceneDIContainer: CreateScheduleSceneProtocol
     private var bag = DisposeBag()
     private var hapticManager: CoreHapticsManager?
     
-    init(viewModel: ScheduleViewModelProtocol) {
+    init(viewModel: ScheduleViewModelProtocol,
+         createScheduleSceneDIContainer: CreateScheduleSceneProtocol
+    ) {
         self.viewModel = viewModel
+        self.createScheduleSceneDIContainer = createScheduleSceneDIContainer
         self.hapticManager = CoreHapticsManager()
         calendarView = CalendarView(frame: .zero, viewModel: viewModel)
         scheduleMainView = ScheduleMainView(frame: .zero, viewModel: viewModel, hapticManager: hapticManager)
@@ -160,7 +164,7 @@ final class ScheduleViewController: UIViewController {
     }
     
     private func presentCreateView(with mode: CreateMode, and index: Int? = nil) {
-        let createScheduleVC = makeCreateView(at: index, for: mode)
+        let createScheduleVC = prepareCreateView(at: index, for: mode)
         
         if let sheet = createScheduleVC.sheetPresentationController {
             sheet.detents = [.large(), .medium()]
@@ -174,15 +178,13 @@ final class ScheduleViewController: UIViewController {
     }
     
     // TODO: Create Coordinator
-    private func makeCreateView(at index: Int? = nil, for mode: CreateMode) -> CreateScheduleViewController {
+    private func prepareCreateView(at index: Int? = nil, for mode: CreateMode) -> CreateScheduleViewController {
         var task: ScheduleTask? = nil
         if let index = index {
             task = viewModel.task(at: index)
             
         }
-        let createDelegate = viewModel as? CreateScheduleDelegate
-        let createViewModel: CreateScheduleViewModelProtocol = DIContainer.shared.resolve(arguments: createDelegate, task)
-        let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve(arguments: createViewModel, mode)
+        let createScheduleVC = createScheduleSceneDIContainer.makeCreateScheduleViewController(for: task, with: mode)
         return createScheduleVC
     }
 }

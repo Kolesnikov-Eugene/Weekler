@@ -9,8 +9,8 @@ import Swinject
 
 final class ScheduleAssembly: Assembly {
     func assemble(container: Swinject.Container) {
-        container.register(ScheduleViewController.self) { resolver, viewModel in
-            ScheduleViewController(viewModel: viewModel)
+        container.register(ScheduleViewController.self) { resolver, viewModel, container in
+            ScheduleViewController(viewModel: viewModel, createScheduleSceneDIContainer: container)
         }.inObjectScope(.container)
     }
 }

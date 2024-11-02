@@ -19,7 +19,8 @@ final class SceneAssembly: Assembly {
             CreateScheduleViewAssembly(),
             ScheduleViewModelAssembly(),
             CreateScheduleViewModelAssembly(),
-            ScheduleUseCaseAssembly()
+            ScheduleUseCaseAssembly(),
+            CreateScheduleSceneContainerAssembly()
         ]
         assemblies.forEach { $0.assemble(container: container) }
     }

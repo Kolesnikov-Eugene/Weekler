@@ -40,48 +40,32 @@ final class TabBarController: UITabBarController {
 
     private func setupScheduleViewController() -> UINavigationController {
         let scheduleViewController = sceneFactory.makeScheduleViewController()
-        
         let image = UIImage(systemName: "list.bullet.clipboard")
-
         scheduleViewController.tabBarItem = UITabBarItem(
             title: L10n.Localizable.Tab.schedule,
             image: image,
             selectedImage: nil)
-
         let scheduleNavigationController = UINavigationController(rootViewController: scheduleViewController)
-        
-        configureNavController(controller: scheduleNavigationController)
-
         return scheduleNavigationController
     }
     
     private func setupTaskEditorViewController() -> UINavigationController {
         let taskEditorViewController = sceneFactory.makeTaskEditorViewController()
-
         taskEditorViewController.tabBarItem = UITabBarItem(
             title: L10n.Localizable.Tab.edit,
             image: UIImage(systemName: "square.and.pencil"),
             selectedImage: nil)
-
         let taskEditorNavigationController = UINavigationController(rootViewController: taskEditorViewController)
-        
-        configureNavController(controller: taskEditorNavigationController)
-
         return taskEditorNavigationController
     }
     
     private func setupStatisticsViewController() -> UINavigationController {
         let statisticsViewController = sceneFactory.makeStatisticsView()
-
         statisticsViewController.tabBarItem = UITabBarItem(
             title: L10n.Localizable.Tab.statistics,
             image: UIImage(systemName: "chart.bar.xaxis"),
             selectedImage: nil)
-
         let statisticsNavigationController = UINavigationController(rootViewController: statisticsViewController)
-        
-        configureNavController(controller: statisticsNavigationController)
-
         return statisticsNavigationController
     }
     
@@ -92,19 +76,15 @@ final class TabBarController: UITabBarController {
             title: L10n.Localizable.Tab.config,
             image: UIImage(systemName: "gearshape"),
             selectedImage: nil)
-
         let configNavigationController = UINavigationController(rootViewController: configViewController)
-        
-        configureNavController(controller: configNavigationController)
-
         return configNavigationController
     }
     
-    private func configureNavController(controller: UINavigationController) {
-        controller.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        controller.navigationBar.shadowImage = UIImage()
-        controller.navigationBar.isTranslucent = true
-    }
+//    private func configureNavController(controller: UINavigationController) {
+//        controller.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        controller.navigationBar.shadowImage = UIImage()
+//        controller.navigationBar.isTranslucent = true
+//    }
 
     private func configureTabBar() {
         tabBar.tintColor = Colors.mainForeground

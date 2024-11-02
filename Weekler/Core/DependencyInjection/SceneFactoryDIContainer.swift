@@ -17,7 +17,8 @@ final class SceneFactoryDIContainer: SceneFactoryProtocol {
     func makeScheduleViewController() -> ScheduleViewController {
         let scheduleUseCase: ScheduleUseCaseProtocol = container.resolve()
         let scheduleViewModel: ScheduleViewModelProtocol = container.resolve(argument: scheduleUseCase)
-        let scheduleVC: ScheduleViewController = container.resolve(argument: scheduleViewModel)
+        let createScheduleSceneContainer = makeCreateScheduleSceneDIContainer(viewModel: scheduleViewModel as? CreateScheduleDelegate)
+        let scheduleVC: ScheduleViewController = container.resolve(arguments: scheduleViewModel, createScheduleSceneContainer)
         return scheduleVC
     }
     
@@ -34,5 +35,10 @@ final class SceneFactoryDIContainer: SceneFactoryProtocol {
     func makeStatisticsView() -> StatisticsViewController {
         let statisticsVC: StatisticsViewController = container.resolve()
         return statisticsVC
+    }
+    
+    func makeCreateScheduleSceneDIContainer(viewModel: CreateScheduleDelegate?) -> CreateScheduleSceneProtocol {
+        let createScheduleSceneContainer: CreateScheduleSceneProtocol = container.resolve(arguments: container, viewModel)
+        return createScheduleSceneContainer
     }
 }
