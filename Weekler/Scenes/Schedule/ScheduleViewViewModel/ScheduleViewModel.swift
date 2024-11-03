@@ -10,42 +10,34 @@ import RxSwift
 import RxCocoa
 
 final class ScheduleViewModel: ScheduleViewModelProtocol {
-    //MARK: - public properties
-    var tasks: [ScheduleTask] = []
-    var data: [SourceItem]
+
+    //MARK: - Output
     var dataList = BehaviorRelay<[SourceItem]>(value: [])
     var emptyStateIsActive: Driver<Bool>
-    var currentDateChangesObserver = BehaviorRelay<Date>(value: Date())
     var setCreateViewNeedsToBePresented = BehaviorRelay<Bool>(value: false)
     var presentCreateViewEditingAtIndex = BehaviorRelay<Int?>(value: nil)
     var calendarHeightValue = BehaviorRelay<Double?>(value: nil)
     var navigationTitle = BehaviorRelay<String>(value: "")
+    
+    // MARK: - Input
+    var currentDateChangesObserver = BehaviorRelay<Date>(value: Date())
+    
+    //MARK: - public properties
+    var tasks: [ScheduleTask] = []
+    var data: [SourceItem]
     var mainMode: ScheduleMode = .task
     var selectedDate: Date { currentDate }
     
+    //MARK: - Private properties
     private var completedTasks: [ScheduleTask] = []
+    private var scheduleDataManager: ScheduleUseCaseProtocol
+    private var currentDate: Date
+    private var bag = DisposeBag()
     private lazy var formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
         return formatter
     }()
-    
-    var priorities: [Priority] = [
-        Priority(id: UUID(), date: Date(), description: "Study"),
-        Priority(id: UUID(), date: Date(), description: "Sport"),
-        Priority(id: UUID(), date: Date(), description: "Relax")
-    ]
-    
-    var goals: [Goal] = [
-        Goal(id: UUID(), date: Date(), description: "Sport 3 times"),
-        Goal(id: UUID(), date: Date(), description: "Listen 5 lectures"),
-        Goal(id: UUID(), date: Date(), description: "10000 steps every day")
-    ]
-    
-    // MARK: - private properties
-    private var scheduleDataManager: ScheduleUseCaseProtocol
-    private var currentDate: Date
-    private var bag = DisposeBag()
     
     init(scheduleDataManager: ScheduleUseCaseProtocol) {
         self.scheduleDataManager = scheduleDataManager
@@ -62,9 +54,6 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     }
     
     // MARK: - public methods
-//    func getSelectedDate() -> Date {
-//         currentDate
-//    }
     func task(at index: Int) -> ScheduleTask {
         tasks[index]
     }
@@ -116,15 +105,6 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     
     func prepareCreateView(at index: Int) {
         presentCreateViewEditingAtIndex.accept(index)
-    }
-    
-    func setCalendarViewWith(_ height: Double) {
-        calendarHeightValue.accept(height)
-    }
-    
-    func updateNavTitle(with date: [Date]) {
-        let title = formatter.string(from: date[0])
-        navigationTitle.accept(title)
     }
     
     @objc func didTapAddNewEventButton() {
@@ -199,5 +179,18 @@ extension ScheduleViewModel: CreateScheduleDelegate {
         Task.detached {
             await self.scheduleDataManager.edit(task)
         }
+    }
+}
+
+//MARK: - CalendarViewModelProtocol
+extension ScheduleViewModel: CalendarViewModelProtocol {
+    
+    func setCalendarViewWith(_ height: Double) {
+        calendarHeightValue.accept(height)
+    }
+    
+    func updateNavTitle(with date: [Date]) {
+        let title = formatter.string(from: date[0])
+        navigationTitle.accept(title)
     }
 }

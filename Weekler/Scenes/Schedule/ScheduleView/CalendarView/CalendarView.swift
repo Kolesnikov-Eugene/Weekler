@@ -38,10 +38,10 @@ final class CalendarView: UIView {
         formatter.dateFormat = "d MMMM yyyy"
         return formatter
     }()
-    private var viewModel: ScheduleViewModelProtocol
+    private var viewModel: CalendarViewModelProtocol
     private var isInitialLayout = false
     
-    init(frame: CGRect, viewModel: ScheduleViewModelProtocol) {
+    init(frame: CGRect, viewModel: CalendarViewModelProtocol) {
         self.viewModel = viewModel
         super.init(frame: frame)
         setupUI()
@@ -253,7 +253,7 @@ extension CalendarView: JTAppleCalendarViewDelegate {
         }
     }
     
-    // TODO: change interval dispay to current month
+    // TODO: figure out hpw to display dates in nav
     func calendar(
         _ calendar: JTAppleCalendarView,
         didScrollToDateSegmentWith visibleDates: DateSegmentInfo

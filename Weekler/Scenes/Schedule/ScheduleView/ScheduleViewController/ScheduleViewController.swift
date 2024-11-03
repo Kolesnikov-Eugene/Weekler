@@ -38,7 +38,9 @@ final class ScheduleViewController: UIViewController {
         self.viewModel = viewModel
         self.createScheduleSceneDIContainer = createScheduleSceneDIContainer
         self.hapticManager = CoreHapticsManager()
-        calendarView = CalendarView(frame: .zero, viewModel: viewModel)
+        //FIXME: create DI method in container
+        let calendarViewModel = viewModel as! CalendarViewModelProtocol
+        calendarView = CalendarView(frame: .zero, viewModel: calendarViewModel)
         scheduleMainView = ScheduleMainView(frame: .zero, viewModel: viewModel, hapticManager: hapticManager)
         selectTaskModeView = SelectTaskModeView(frame: .zero, viewModel: viewModel)
         super.init(nibName: nil, bundle: nil)
@@ -97,12 +99,7 @@ final class ScheduleViewController: UIViewController {
             .subscribe(onNext: { [weak self] height in
                 guard let self = self,
                       let height = height else { return }
-                calendarView.snp.remakeConstraints {
-                    $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-                    $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading)
-                    $0.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing)
-                    $0.height.equalTo(height)
-                }
+                self.remakeCalendarConstraints(with: height)
                 self.view.layoutIfNeeded()
             })
             .disposed(by: bag)
@@ -150,6 +147,15 @@ final class ScheduleViewController: UIViewController {
         }
     }
     
+    private func remakeCalendarConstraints(with height: CGFloat) {
+        calendarView.snp.remakeConstraints {
+            $0.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            $0.leading.equalTo(self.view.safeAreaLayoutGuide.snp.leading)
+            $0.trailing.equalTo(self.view.safeAreaLayoutGuide.snp.trailing)
+            $0.height.equalTo(height)
+        }
+    }
+    
     private func configureNavBar() {
 //        startDate = formatter.string(from: Date())
         navigationItem.rightBarButtonItem = calendarSwitchRightBarButtonItem
@@ -184,7 +190,8 @@ final class ScheduleViewController: UIViewController {
             task = viewModel.task(at: index)
             
         }
-        let createScheduleVC = createScheduleSceneDIContainer.makeCreateScheduleViewController(for: task, with: mode)
+        let createScheduleVC = createScheduleSceneDIContainer
+            .makeCreateScheduleViewController(for: task, with: mode)
         return createScheduleVC
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ScheduleTask: Hashable, SourceItemProtocol, Sendable {
+struct ScheduleTask: Hashable, SourceItemProtocol {
     let id: UUID
     let date: Date
     let description: String

@@ -10,7 +10,7 @@ import SwiftData
 
 @Model
 final class TaskItem: ScheduleDataBaseType {
-    @Attribute(.unique) let id: UUID
+    @Attribute(.unique) private(set) var id: UUID
     var date: Date
     var taskDescription: String
     var isNotificationEnabled: Bool

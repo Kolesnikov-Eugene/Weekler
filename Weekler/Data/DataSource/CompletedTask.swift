@@ -10,7 +10,7 @@ import SwiftData
 
 @Model
 final class CompletedTask {
-    @Attribute(.unique) let id: UUID
+    @Attribute(.unique) private(set) var id: UUID
     @Relationship var task: TaskItem
     
     init(id: UUID, task: TaskItem) {

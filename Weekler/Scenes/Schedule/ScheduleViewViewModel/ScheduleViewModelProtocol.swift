@@ -9,14 +9,10 @@ import Foundation
 import RxCocoa
 
 protocol ScheduleViewModelProtocol: AnyObject {
-    var selectedDate: Date { get }
     var tasks: [ScheduleTask] { get set }
-    var priorities: [Priority] { get set }
-    var goals: [Goal] { get set }
     var data: [SourceItem] { get set }
     var dataList: BehaviorRelay<[SourceItem]> { get }
     var emptyStateIsActive: Driver<Bool> { get set }
-    var currentDateChangesObserver: BehaviorRelay<Date> { get set }
     var setCreateViewNeedsToBePresented: BehaviorRelay<Bool> { get set }
     var presentCreateViewEditingAtIndex: BehaviorRelay<Int?> { get set }
     var calendarHeightValue: BehaviorRelay<Double?> { get set }
@@ -28,7 +24,25 @@ protocol ScheduleViewModelProtocol: AnyObject {
     func unCompleteTask(with id: UUID)
     func didTapAddNewEventButton()
     func prepareCreateView(at index: Int)
-    func setCalendarViewWith(_ height: Double)
+}
+
+protocol ScheduleMainViewModelProtocol: AnyObject {
+    var data: [SourceItem] { get set }
+    var dataList: BehaviorRelay<[SourceItem]> { get }
+    var emptyStateIsActive: Driver<Bool> { get set }
+    func completeTask(with id: UUID)
+    func unCompleteTask(with id: UUID)
+    func deleteTask(at index: Int)
+    func prepareCreateView(at index: Int)
+}
+
+protocol CalendarViewModelProtocol: AnyObject {
+    var selectedDate: Date { get }
+    var currentDateChangesObserver: BehaviorRelay<Date> { get set }
     func updateNavTitle(with date: [Date])
-//    func getSelectedDate() -> Date
+    func setCalendarViewWith(_ height: Double)
+}
+
+protocol SelectTaskViewModelProtocol: AnyObject {
+    func reconfigureMode(_ mode: ScheduleMode)
 }
