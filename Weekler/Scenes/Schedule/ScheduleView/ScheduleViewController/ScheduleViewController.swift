@@ -40,9 +40,11 @@ final class ScheduleViewController: UIViewController {
         self.hapticManager = CoreHapticsManager()
         //FIXME: create DI method in container
         let calendarViewModel = viewModel as! CalendarViewModelProtocol
+        let selectTaskViewModel = viewModel as! SelectTaskViewModelProtocol
+        let scheduleMainViewModel = viewModel as! ScheduleMainViewModelProtocol
         calendarView = CalendarView(frame: .zero, viewModel: calendarViewModel)
-        scheduleMainView = ScheduleMainView(frame: .zero, viewModel: viewModel, hapticManager: hapticManager)
-        selectTaskModeView = SelectTaskModeView(frame: .zero, viewModel: viewModel)
+        scheduleMainView = ScheduleMainView(frame: .zero, viewModel: scheduleMainViewModel, hapticManager: hapticManager)
+        selectTaskModeView = SelectTaskModeView(frame: .zero, viewModel: selectTaskViewModel)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -76,7 +78,6 @@ final class ScheduleViewController: UIViewController {
     private func bind() {
         viewModel.setCreateViewNeedsToBePresented
             .observe(on: MainScheduler.instance)
-            .skip(1)
             .subscribe(onNext: { [weak self] _ in
                 self?.hapticManager?.playTap()
                 self?.presentCreateView(with: .create)
@@ -85,7 +86,6 @@ final class ScheduleViewController: UIViewController {
         
         viewModel.presentCreateViewEditingAtIndex
             .observe(on: MainScheduler.instance)
-            .skip(1)
             .subscribe(onNext: { [weak self] index in
                 guard let self = self,
                       let index = index else { return }
@@ -95,7 +95,6 @@ final class ScheduleViewController: UIViewController {
         
         viewModel.calendarHeightValue
             .observe(on: MainScheduler.instance)
-            .skip(1)
             .subscribe(onNext: { [weak self] height in
                 guard let self = self,
                       let height = height else { return }
@@ -157,7 +156,6 @@ final class ScheduleViewController: UIViewController {
     }
     
     private func configureNavBar() {
-//        startDate = formatter.string(from: Date())
         navigationItem.rightBarButtonItem = calendarSwitchRightBarButtonItem
         if let navBar = navigationController?.navigationBar {
             navBar.prefersLargeTitles = false

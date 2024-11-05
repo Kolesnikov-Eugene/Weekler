@@ -6,27 +6,20 @@
 //
 
 import Foundation
-import SwiftData
 
 final class ScheduleUseCase: ScheduleUseCaseProtocol {
-    private lazy var provider: ScheduleRepositoryProtocol = {
-        do {
-            let container = try ModelContainer(for: TaskItem.self)
-            print("conteiner \(Thread.current)")
-            return ScheduleRepository(container: container)
-        } catch {
-            fatalError(error.localizedDescription)
-        }
-    }()
+    private let repository: ScheduleRepositoryProtocol
     
-    init() {}
+    init(repository: ScheduleRepositoryProtocol) {
+        self.repository = repository
+    }
     
     // MARK: - public methods
     func fetchTaskItems(
         predicate: Predicate<TaskItem>,
         sortDescriptor: SortDescriptor<TaskItem>,
         _ completion: @escaping (Result<[ScheduleTask], Error>) -> Void) async {
-            await provider.fetchTaskItems(
+            await repository.fetchTaskItems(
                 predicate: predicate,
                 sortDescriptor: sortDescriptor) { (result: Result<[TaskItem], Error>) in
                     switch result {
@@ -54,22 +47,22 @@ final class ScheduleUseCase: ScheduleUseCaseProtocol {
             taskDescription: model.description,
             isNotificationEnabled: model.isNotificationEnabled
         )
-        await provider.insert(model)
+        await repository.insert(model)
     }
     
     func delete(_ id: UUID, predicate: Predicate<TaskItem>) async {
-        await provider.delete(id, predicate: predicate)
+        await repository.delete(id, predicate: predicate)
     }
     
     func edit(_ task: ScheduleTask) async {
-        await provider.edit(task)
+        await repository.edit(task)
     }
     
     func complete(_ task: ScheduleTask) async {
-        await provider.complete(task)
+        await repository.complete(task)
     }
     
     func unComplete(_ task: ScheduleTask) async {
-        await provider.unComplete(task)
+        await repository.unComplete(task)
     }
 }

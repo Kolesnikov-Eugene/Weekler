@@ -71,6 +71,7 @@
 		44F116952BDC394A00134D5F /* SceneAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F116942BDC394A00134D5F /* SceneAssembly.swift */; };
 		44F116982BDC398E00134D5F /* ScheduleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F116972BDC398E00134D5F /* ScheduleAssembly.swift */; };
 		44F1169A2BDC3A3200134D5F /* TabBarAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F116992BDC3A3200134D5F /* TabBarAssembly.swift */; };
+		44F9EA2B2CDAA597009AE5FD /* ScheduleRepositoryAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F9EA2A2CDAA597009AE5FD /* ScheduleRepositoryAssembly.swift */; };
 		44FB465C2C5E66BD005731BC /* CreateScheduleViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FB465B2C5E66BD005731BC /* CreateScheduleViewModelProtocol.swift */; };
 		44FB465E2C5E66D4005731BC /* CreateScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FB465D2C5E66D4005731BC /* CreateScheduleViewModel.swift */; };
 		44FB46602C5E6959005731BC /* CreateScheduleViewModelAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FB465F2C5E6959005731BC /* CreateScheduleViewModelAssembly.swift */; };
@@ -145,6 +146,7 @@
 		44F116942BDC394A00134D5F /* SceneAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneAssembly.swift; sourceTree = "<group>"; };
 		44F116972BDC398E00134D5F /* ScheduleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAssembly.swift; sourceTree = "<group>"; };
 		44F116992BDC3A3200134D5F /* TabBarAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarAssembly.swift; sourceTree = "<group>"; };
+		44F9EA2A2CDAA597009AE5FD /* ScheduleRepositoryAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRepositoryAssembly.swift; sourceTree = "<group>"; };
 		44FB465B2C5E66BD005731BC /* CreateScheduleViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewModelProtocol.swift; sourceTree = "<group>"; };
 		44FB465D2C5E66D4005731BC /* CreateScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewModel.swift; sourceTree = "<group>"; };
 		44FB465F2C5E6959005731BC /* CreateScheduleViewModelAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewModelAssembly.swift; sourceTree = "<group>"; };
@@ -170,7 +172,6 @@
 			children = (
 				4402A1BE2CAB287400CCE9D8 /* DataSource */,
 				4402A1BD2CAB273C00CCE9D8 /* Repository */,
-				4402A1BC2CAB25C100CCE9D8 /* Entity */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -178,6 +179,9 @@
 		4402A1BC2CAB25C100CCE9D8 /* Entity */ = {
 			isa = PBXGroup;
 			children = (
+				442256812C6BE61500172C0A /* TaskItem.swift */,
+				442256872C6BEB4400172C0A /* ScheduleDataBaseType.swift */,
+				44DBD2AE2C8ED287006AE2F1 /* CompletedTask.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -185,7 +189,6 @@
 		4402A1BD2CAB273C00CCE9D8 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
-				4402A1BF2CAB292100CCE9D8 /* ScheduleRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -193,9 +196,8 @@
 		4402A1BE2CAB287400CCE9D8 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
-				442256812C6BE61500172C0A /* TaskItem.swift */,
-				442256872C6BEB4400172C0A /* ScheduleDataBaseType.swift */,
-				44DBD2AE2C8ED287006AE2F1 /* CompletedTask.swift */,
+				4402A1BF2CAB292100CCE9D8 /* ScheduleRepository.swift */,
+				4402A1BC2CAB25C100CCE9D8 /* Entity */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -269,6 +271,7 @@
 				4442BA672BE41F38002DC469 /* SceneFactoryAssembly.swift */,
 				442256852C6BE82900172C0A /* ScheduleUseCaseAssembly.swift */,
 				44A88DE12CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift */,
+				44F9EA2A2CDAA597009AE5FD /* ScheduleRepositoryAssembly.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -728,6 +731,7 @@
 				44B06E142BECEE0E000C3CC6 /* ScheduleViewModel.swift in Sources */,
 				442256862C6BE82900172C0A /* ScheduleUseCaseAssembly.swift in Sources */,
 				440549E52BC5D7E400077C61 /* Strings.swift in Sources */,
+				44F9EA2B2CDAA597009AE5FD /* ScheduleRepositoryAssembly.swift in Sources */,
 				44727B392C486895007756A3 /* ScheduleViewModelAssembly.swift in Sources */,
 				446C85612CB85B8700077CC5 /* CoreHapticsManager.swift in Sources */,
 				44727B3F2C48694E007756A3 /* SourceItem.swift in Sources */,

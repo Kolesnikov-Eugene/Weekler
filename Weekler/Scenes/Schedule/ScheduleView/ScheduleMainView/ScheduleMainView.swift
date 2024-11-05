@@ -41,11 +41,11 @@ final class ScheduleMainView: UIView {
         return view
     }()
     private var tableDataSource: UITableViewDiffableDataSource<UITableView.Section, SourceItem>!
-    private var viewModel: ScheduleViewModelProtocol
+    private var viewModel: ScheduleMainViewModelProtocol
     private var bag = DisposeBag()
     private var hapticManager: CoreHapticsManager?
     
-    init(frame: CGRect, viewModel: ScheduleViewModelProtocol, hapticManager: CoreHapticsManager? = nil) {
+    init(frame: CGRect, viewModel: ScheduleMainViewModelProtocol, hapticManager: CoreHapticsManager? = nil) {
         self.viewModel = viewModel
         self.hapticManager = hapticManager
         super.init(frame: frame)
@@ -175,7 +175,8 @@ extension ScheduleMainView: UITableViewDelegate {
                 guard let self = self else { return }
                 self.viewModel.deleteTask(at: indexPath.row)
             }
-        
+        let config = UIImage.SymbolConfiguration(pointSize: 14)
+        deleteAction.image = UIImage(systemName: "trash")?.applyingSymbolConfiguration(config)
         let editAction = UIContextualAction(
             style: .normal,
             title: "") { [weak self] contextualAction, view, boolValue  in

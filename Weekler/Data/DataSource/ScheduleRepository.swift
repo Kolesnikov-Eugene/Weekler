@@ -12,11 +12,19 @@ import SwiftData
 final actor ScheduleRepository: ScheduleRepositoryProtocol {
     private var context: ModelContext { modelExecutor.modelContext }
     
-    init(container: ModelContainer) {
+    init() {
         print("init")
-        self.modelContainer = container
-        let context = ModelContext(container)
-        modelExecutor = DefaultSerialModelExecutor(modelContext: context)
+        do {
+            let container = try ModelContainer(for: TaskItem.self)
+            print("container \(Thread.current)")
+//            return ScheduleRepository(container: container)
+            self.modelContainer = container
+            let context = ModelContext(container)
+            modelExecutor = DefaultSerialModelExecutor(modelContext: context)
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+        
     }
     deinit {print("deinit")}
     

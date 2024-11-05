@@ -79,12 +79,6 @@ final class TabBarController: UITabBarController {
         let configNavigationController = UINavigationController(rootViewController: configViewController)
         return configNavigationController
     }
-    
-//    private func configureNavController(controller: UINavigationController) {
-//        controller.navigationBar.setBackgroundImage(UIImage(), for: .default)
-//        controller.navigationBar.shadowImage = UIImage()
-//        controller.navigationBar.isTranslucent = true
-//    }
 
     private func configureTabBar() {
         tabBar.tintColor = Colors.mainForeground

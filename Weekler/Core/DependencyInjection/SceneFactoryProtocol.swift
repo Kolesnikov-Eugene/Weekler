@@ -12,4 +12,5 @@ protocol SceneFactoryProtocol {
     func makeTaskEditorViewController() -> TaskEditorViewController
     func makeConfigViewController() -> ConfigViewController
     func makeStatisticsView() -> StatisticsViewController
+    func makeScheduleUseCase() -> ScheduleUseCaseProtocol
 }
