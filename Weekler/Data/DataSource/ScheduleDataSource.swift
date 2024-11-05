@@ -9,7 +9,7 @@ import Foundation
 import SwiftData
 
 @ModelActor
-final actor ScheduleRepository: ScheduleRepositoryProtocol {
+final actor ScheduleDataSource: ScheduleRepositoryProtocol {
     private var context: ModelContext { modelExecutor.modelContext }
     
     init() {
@@ -17,7 +17,7 @@ final actor ScheduleRepository: ScheduleRepositoryProtocol {
         do {
             let container = try ModelContainer(for: TaskItem.self)
             print("container \(Thread.current)")
-//            return ScheduleRepository(container: container)
+//            return ScheduleDataSource(container: container)
             self.modelContainer = container
             let context = ModelContext(container)
             modelExecutor = DefaultSerialModelExecutor(modelContext: context)

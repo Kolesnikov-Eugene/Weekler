@@ -9,6 +9,6 @@ import Swinject
 
 final class ScheduleRepositoryAssembly: Assembly {
     func assemble(container: Container) {
-        container.register(ScheduleRepositoryProtocol.self) { _ in ScheduleRepository() }
+        container.register(ScheduleRepositoryProtocol.self) { _ in ScheduleDataSource() }
     }
 }

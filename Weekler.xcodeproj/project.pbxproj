@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4402A1C02CAB292100CCE9D8 /* ScheduleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4402A1BF2CAB292100CCE9D8 /* ScheduleRepository.swift */; };
+		4402A1C02CAB292100CCE9D8 /* ScheduleDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4402A1BF2CAB292100CCE9D8 /* ScheduleDataSource.swift */; };
 		440549E52BC5D7E400077C61 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440549E42BC5D7E400077C61 /* Strings.swift */; };
 		440549EE2BC5DDBA00077C61 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 440549EC2BC5DDBA00077C61 /* Localizable.strings */; };
 		440770FD2BBB472900AD9C98 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440770FC2BBB472900AD9C98 /* Colors.swift */; };
@@ -72,6 +72,7 @@
 		44F116982BDC398E00134D5F /* ScheduleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F116972BDC398E00134D5F /* ScheduleAssembly.swift */; };
 		44F1169A2BDC3A3200134D5F /* TabBarAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F116992BDC3A3200134D5F /* TabBarAssembly.swift */; };
 		44F9EA2B2CDAA597009AE5FD /* ScheduleRepositoryAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F9EA2A2CDAA597009AE5FD /* ScheduleRepositoryAssembly.swift */; };
+		44F9EA2D2CDAB1A1009AE5FD /* ScheduleRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F9EA2C2CDAB1A1009AE5FD /* ScheduleRepository.swift */; };
 		44FB465C2C5E66BD005731BC /* CreateScheduleViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FB465B2C5E66BD005731BC /* CreateScheduleViewModelProtocol.swift */; };
 		44FB465E2C5E66D4005731BC /* CreateScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FB465D2C5E66D4005731BC /* CreateScheduleViewModel.swift */; };
 		44FB46602C5E6959005731BC /* CreateScheduleViewModelAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FB465F2C5E6959005731BC /* CreateScheduleViewModelAssembly.swift */; };
@@ -79,7 +80,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4402A1BF2CAB292100CCE9D8 /* ScheduleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRepository.swift; sourceTree = "<group>"; };
+		4402A1BF2CAB292100CCE9D8 /* ScheduleDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataSource.swift; sourceTree = "<group>"; };
 		440549E42BC5D7E400077C61 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		440549ED2BC5DDBA00077C61 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		440549EF2BC5DDF200077C61 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -147,6 +148,7 @@
 		44F116972BDC398E00134D5F /* ScheduleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAssembly.swift; sourceTree = "<group>"; };
 		44F116992BDC3A3200134D5F /* TabBarAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarAssembly.swift; sourceTree = "<group>"; };
 		44F9EA2A2CDAA597009AE5FD /* ScheduleRepositoryAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRepositoryAssembly.swift; sourceTree = "<group>"; };
+		44F9EA2C2CDAB1A1009AE5FD /* ScheduleRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRepository.swift; sourceTree = "<group>"; };
 		44FB465B2C5E66BD005731BC /* CreateScheduleViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewModelProtocol.swift; sourceTree = "<group>"; };
 		44FB465D2C5E66D4005731BC /* CreateScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewModel.swift; sourceTree = "<group>"; };
 		44FB465F2C5E6959005731BC /* CreateScheduleViewModelAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewModelAssembly.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 		4402A1BD2CAB273C00CCE9D8 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				44F9EA2C2CDAB1A1009AE5FD /* ScheduleRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -196,7 +199,7 @@
 		4402A1BE2CAB287400CCE9D8 /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
-				4402A1BF2CAB292100CCE9D8 /* ScheduleRepository.swift */,
+				4402A1BF2CAB292100CCE9D8 /* ScheduleDataSource.swift */,
 				4402A1BC2CAB25C100CCE9D8 /* Entity */,
 			);
 			path = DataSource;
@@ -739,7 +742,7 @@
 				4442BA6E2BE425F0002DC469 /* ConfigViewAssembly.swift in Sources */,
 				444DAB862C655A8F005B8ABC /* SourceItemProtocol.swift in Sources */,
 				4407E7D42CD5415C00CC1692 /* SceneFactoryDIContainer.swift in Sources */,
-				4402A1C02CAB292100CCE9D8 /* ScheduleRepository.swift in Sources */,
+				4402A1C02CAB292100CCE9D8 /* ScheduleDataSource.swift in Sources */,
 				4442BA6A2BE4243D002DC469 /* StatisticsAssembly.swift in Sources */,
 				44CE3BBB2C0BA31C00719B84 /* CreateScheduleViewController.swift in Sources */,
 				4407E7D22CD53BC400CC1692 /* WeeklerAppDIContainer.swift in Sources */,
@@ -769,6 +772,7 @@
 				44A378DF2BFD2D7000E93B5F /* SelectMainModeCollectionViewCell.swift in Sources */,
 				449EF5A32C52DE5900FD187B /* CreateScheduleDelegate.swift in Sources */,
 				441DECAE2CC0353A00B725B7 /* Constants.swift in Sources */,
+				44F9EA2D2CDAB1A1009AE5FD /* ScheduleRepository.swift in Sources */,
 				447DBE642BC4A8EB00A99A38 /* TabBarController.swift in Sources */,
 				44F116952BDC394A00134D5F /* SceneAssembly.swift in Sources */,
 				447DBE612BC4A8EB00A99A38 /* ConfigViewController.swift in Sources */,
