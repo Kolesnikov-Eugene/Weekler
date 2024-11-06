@@ -51,7 +51,6 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
                 !items.isEmpty
             })
             .asDriver(onErrorJustReturn: false)
-        
 //        fetchSchedule()
         bindToScheduleUpdates()
     }
@@ -76,23 +75,12 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
         print("fetch")
         let currentDateOnly = currentDate.onlyDate
         Task.detached {
-            let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
-            let predicate = #Predicate<TaskItem> { $0.onlyDate == currentDateOnly }
-            await self.scheduleUseCase.fetchTaskItems(
-                predicate: predicate,
-                sortDescriptor: sortDescriptor) { [weak self] (result: Result<[ScheduleTask], Error>) in
-                    guard let self = self else { return }
-                    switch result {
-                    case .success(let scheduleItems):
-                        DispatchQueue.main.async {
-                            self.tasks = scheduleItems.filter { !$0.completed }
-                            self.completedTasks = scheduleItems.filter { $0.completed }
-                            self.populateData()
-                        }
-                    case .failure(let error):
-                        fatalError(error.localizedDescription)
-                    }
-                }
+            let scheduleItems = await self.scheduleUseCase.fetchTaskItems(for: currentDateOnly)
+            DispatchQueue.main.async {
+                self.tasks = scheduleItems.filter { !$0.completed }
+                self.completedTasks = scheduleItems.filter { $0.completed }
+                self.populateData()
+            }
         }
     }
     
@@ -118,7 +106,6 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
         
         currentDateChangesObserver
             .observe(on: MainScheduler.instance)
-//            .skip(1)
             .subscribe(onNext: { [weak self] selectedDateByUser in
                 guard let self = self else { return }
                 self.currentDate = selectedDateByUser
@@ -145,36 +132,27 @@ extension ScheduleViewModel: CreateScheduleDelegate {
 //MARK: - ScheduleMainViewModelProtocol
 extension ScheduleViewModel: ScheduleMainViewModelProtocol {
     func deleteTask(at index: Int) {
-        Task.detached { [weak self] in
-            guard let self = self else { return }
-            var taskId = UUID()
-            switch mainMode {
+        Task.detached {
+            var id = UUID()
+            switch self.mainMode {
             case .task:
-                taskId = tasks[index].id
+                id = self.tasks[index].id
             case .completedTask:
-                taskId = completedTasks[index].id
+                id = self.completedTasks[index].id
             }
-            let predicate = #Predicate<TaskItem> { $0.id == taskId }
-            await scheduleUseCase.delete(taskId, predicate: predicate)
+            await self.scheduleUseCase.deleteTask(with: id)
         }
     }
     
     func completeTask(with id: UUID) {
         Task.detached {
-            let task = self.tasks.first(where: { $0.id == id })
-            if let task = task {
-                await self.scheduleUseCase.complete(task)
-            }
+            await self.scheduleUseCase.completeTask(with: id)
         }
     }
     
     func unCompleteTask(with id: UUID) {
-        Task.detached {[weak self] in
-            guard let self = self else { return }
-            let task = completedTasks.first(where: { $0.id == id })
-            if let task = task {
-                await scheduleUseCase.unComplete(task)
-            }
+        Task.detached {
+            await self.scheduleUseCase.unCompleteTask(with: id)
         }
     }
     

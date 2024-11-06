@@ -9,6 +9,11 @@ import Swinject
 
 final class ScheduleRepositoryAssembly: Assembly {
     func assemble(container: Container) {
-        container.register(ScheduleRepositoryProtocol.self) { _ in ScheduleDataSource() }
+        container.register(ScheduleRepositoryProtocol.self) { resolver in
+            guard let dataSource = resolver.resolve(ScheduleDataSourceProtocol.self) else {
+                fatalError("ScheduleDataSourceProtocol is not registered")
+            }
+            return ScheduleRepository(dataSource: dataSource)
+        }.inObjectScope(.container)
     }
 }

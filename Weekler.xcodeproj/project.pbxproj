@@ -17,6 +17,9 @@
 		4407E7D02CD5382900CC1692 /* ScheduleUseCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407E7CF2CD5382900CC1692 /* ScheduleUseCaseProtocol.swift */; };
 		4407E7D22CD53BC400CC1692 /* WeeklerAppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407E7D12CD53BC400CC1692 /* WeeklerAppDIContainer.swift */; };
 		4407E7D42CD5415C00CC1692 /* SceneFactoryDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407E7D32CD5415C00CC1692 /* SceneFactoryDIContainer.swift */; };
+		440B2DD12CDBEF5700BA728B /* ScheduleDataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440B2DD02CDBEF5700BA728B /* ScheduleDataSourceProtocol.swift */; };
+		440B2DD42CDBF07400BA728B /* TaskToEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440B2DD32CDBF07400BA728B /* TaskToEdit.swift */; };
+		440B2DD62CDBF93100BA728B /* ScheduleDataSourceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440B2DD52CDBF93100BA728B /* ScheduleDataSourceAssembly.swift */; };
 		440CF1F72C73CAE600FEFDE0 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */; };
 		441DECAE2CC0353A00B725B7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441DECAD2CC0353A00B725B7 /* Constants.swift */; };
 		442256822C6BE61500172C0A /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256812C6BE61500172C0A /* TaskItem.swift */; };
@@ -91,6 +94,9 @@
 		4407E7CF2CD5382900CC1692 /* ScheduleUseCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleUseCaseProtocol.swift; sourceTree = "<group>"; };
 		4407E7D12CD53BC400CC1692 /* WeeklerAppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklerAppDIContainer.swift; sourceTree = "<group>"; };
 		4407E7D32CD5415C00CC1692 /* SceneFactoryDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFactoryDIContainer.swift; sourceTree = "<group>"; };
+		440B2DD02CDBEF5700BA728B /* ScheduleDataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataSourceProtocol.swift; sourceTree = "<group>"; };
+		440B2DD32CDBF07400BA728B /* TaskToEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskToEdit.swift; sourceTree = "<group>"; };
+		440B2DD52CDBF93100BA728B /* ScheduleDataSourceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataSourceAssembly.swift; sourceTree = "<group>"; };
 		440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
 		441DECAD2CC0353A00B725B7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		442256812C6BE61500172C0A /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
@@ -200,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				4402A1BF2CAB292100CCE9D8 /* ScheduleDataSource.swift */,
+				440B2DD02CDBEF5700BA728B /* ScheduleDataSourceProtocol.swift */,
 				4402A1BC2CAB25C100CCE9D8 /* Entity */,
 			);
 			path = DataSource;
@@ -251,6 +258,14 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
+		440B2DD22CDBF06900BA728B /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				440B2DD32CDBF07400BA728B /* TaskToEdit.swift */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
 		444006A32CC6E1210058F601 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
@@ -275,6 +290,7 @@
 				442256852C6BE82900172C0A /* ScheduleUseCaseAssembly.swift */,
 				44A88DE12CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift */,
 				44F9EA2A2CDAA597009AE5FD /* ScheduleRepositoryAssembly.swift */,
+				440B2DD52CDBF93100BA728B /* ScheduleDataSourceAssembly.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -424,6 +440,7 @@
 		449F18EC2BACD08900F9640D /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				440B2DD22CDBF06900BA728B /* DTO */,
 				444006A42CC6E12A0058F601 /* UseCase */,
 				444006A32CC6E1210058F601 /* Repository */,
 				449F18F12BACD18C00F9640D /* Model */,
@@ -720,6 +737,7 @@
 			files = (
 				44B562F82CBEE06F0071F691 /* WeekDayShortName.swift in Sources */,
 				4407E7CC2CD5317800CC1692 /* ScheduleRepositoryProtocol.swift in Sources */,
+				440B2DD62CDBF93100BA728B /* ScheduleDataSourceAssembly.swift in Sources */,
 				44CE3BBD2C0BA38500719B84 /* CreateScheduleViewAssembly.swift in Sources */,
 				44079C6B2CD163BA006D3A3D /* SelectTaskModeView.swift in Sources */,
 				44FB46602C5E6959005731BC /* CreateScheduleViewModelAssembly.swift in Sources */,
@@ -730,6 +748,7 @@
 				44F1169A2BDC3A3200134D5F /* TabBarAssembly.swift in Sources */,
 				442256842C6BE7B300172C0A /* ScheduleUseCase.swift in Sources */,
 				44727B4C2C486B7B007756A3 /* DaysOfWeekTableViewCell.swift in Sources */,
+				440B2DD12CDBEF5700BA728B /* ScheduleDataSourceProtocol.swift in Sources */,
 				4498EAA22C2E019E0081E7EE /* ScheduleItems.swift in Sources */,
 				44B06E142BECEE0E000C3CC6 /* ScheduleViewModel.swift in Sources */,
 				442256862C6BE82900172C0A /* ScheduleUseCaseAssembly.swift in Sources */,
@@ -748,6 +767,7 @@
 				4407E7D22CD53BC400CC1692 /* WeeklerAppDIContainer.swift in Sources */,
 				44727B3B2C486918007756A3 /* Priority.swift in Sources */,
 				44FB465E2C5E66D4005731BC /* CreateScheduleViewModel.swift in Sources */,
+				440B2DD42CDBF07400BA728B /* TaskToEdit.swift in Sources */,
 				44D18C732C121EED00F22CED /* ScheduleTask.swift in Sources */,
 				44A88DE22CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift in Sources */,
 				44FB465C2C5E66BD005731BC /* CreateScheduleViewModelProtocol.swift in Sources */,

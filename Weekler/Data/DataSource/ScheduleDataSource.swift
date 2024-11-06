@@ -9,81 +9,90 @@ import Foundation
 import SwiftData
 
 @ModelActor
-final actor ScheduleDataSource: ScheduleRepositoryProtocol {
+final actor ScheduleDataSource: ScheduleDataSourceProtocol {
     private var context: ModelContext { modelExecutor.modelContext }
     
     init() {
-        print("init")
         do {
             let container = try ModelContainer(for: TaskItem.self)
-            print("container \(Thread.current)")
-//            return ScheduleDataSource(container: container)
             self.modelContainer = container
             let context = ModelContext(container)
             modelExecutor = DefaultSerialModelExecutor(modelContext: context)
         } catch {
             fatalError(error.localizedDescription)
         }
-        
     }
-    deinit {print("deinit")}
     
     // MARK: - public methods
-    func fetchTaskItems<T: ScheduleDataBaseType>(
-        predicate: Predicate<T>,
-        sortDescriptor: SortDescriptor<T>,
-        _ completion: (Result<[T], Error>
-        ) -> Void) {
-        let descriptor = FetchDescriptor<T>(predicate: predicate, sortBy: [sortDescriptor])
+    func fetchTaskItems(for date: String) -> [TaskItem] {
+        let predicate = #Predicate<TaskItem> { $0.onlyDate == date }
+        let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
+        let descriptor = FetchDescriptor<TaskItem>(predicate: predicate, sortBy: [sortDescriptor])
         do {
-            completion(.success(try context.fetch(descriptor)))
+            let scheduleForSelectedDate = try context.fetch(descriptor)
+            return scheduleForSelectedDate
         } catch {
-            completion(.failure(error))
+            fatalError("Error fetching schedule for selected date: \(error.localizedDescription)")
         }
     }
     
-    func insert<T: ScheduleDataBaseType>(_ model: T) {
+    func insert(_ model: TaskItem) {
         context.insert(model)
         try? context.save()
     }
     
-    func delete<T: ScheduleDataBaseType>(_ id: UUID, predicate: Predicate<T>) {
-        try? self.context.delete(model: T.self, where: predicate)
-        try? context.save()
-    }
-    
-    func edit(_ task: ScheduleTask) {
-        let id: UUID = task.id
+    func deleteTask(with id: UUID) {
         let predicate = #Predicate<TaskItem> { $0.id == id }
-        let descriptor = FetchDescriptor<TaskItem>(predicate: predicate)
-        let items = try? context.fetch(descriptor)
-        if let taskToEdit = items?.first {
-            taskToEdit.editWithNew(task)
-            try? context.save()
+        do {
+            try self.context.delete(model: TaskItem.self, where: predicate)
+            try context.save()
+        } catch {
+            fatalError("Error deleting task: \(error.localizedDescription)")
         }
     }
     
-    func complete(_ task: ScheduleTask) {
+    func edit(_ task: TaskToEdit) {
         let id: UUID = task.id
         let predicate = #Predicate<TaskItem> { $0.id == id }
         let descriptor = FetchDescriptor<TaskItem>(predicate: predicate)
-        let items = try? self.context.fetch(descriptor)
-        if let taskToEdit = items?.first {
-            let completedTask = CompletedTask(id: UUID(), task: taskToEdit)
-            taskToEdit.completed = completedTask
-            try? context.save()
+        do {
+            let items = try context.fetch(descriptor)
+            if let taskToEdit = items.first {
+                taskToEdit.editWithNew(task)
+                try context.save()
+            }
+        } catch {
+            fatalError("Error editing task: \(error.localizedDescription)")
+        }
+    }
+    
+    func completeTask(with id: UUID) {
+        let predicate = #Predicate<TaskItem> { $0.id == id }
+        let descriptor = FetchDescriptor<TaskItem>(predicate: predicate)
+        do {
+            let items = try self.context.fetch(descriptor)
+            if let taskToEdit = items.first {
+                let completedTask = CompletedTask(id: UUID(), task: taskToEdit)
+                taskToEdit.completed = completedTask
+                try context.save()
+            }
+        } catch {
+            fatalError("Error completing task: \(error.localizedDescription)")
         }
     }
     
     // TODO: - implement deletion from completed
-    func unComplete(_ task: ScheduleTask) {
-        let id: UUID = task.id
+    func unCompleteTask(with id: UUID) {
         let predicate = #Predicate<TaskItem> { $0.id == id }
         let descriptor = FetchDescriptor<TaskItem>(predicate: predicate)
-        let items = try? self.context.fetch(descriptor)
-        if let taskToEdit = items?.first {
-            taskToEdit.completed = nil
-            try? context.save()
+        do {
+            let items = try self.context.fetch(descriptor)
+            if let taskToEdit = items.first {
+                taskToEdit.completed = nil
+                try context.save()
+            }
+        } catch {
+            fatalError("Error uncompleting task: \(error.localizedDescription)")
         }
     }
 }

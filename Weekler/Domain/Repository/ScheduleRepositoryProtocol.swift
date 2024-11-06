@@ -8,13 +8,10 @@
 import Foundation
 
 protocol ScheduleRepositoryProtocol {
-    func fetchTaskItems<T: ScheduleDataBaseType>(
-        predicate: Predicate<T>,
-        sortDescriptor: SortDescriptor<T>,
-        _ completion: (Result<[T], Error>) -> Void) async
-    func insert<T: ScheduleDataBaseType>(_ model: T) async
-    func delete<T: ScheduleDataBaseType>(_ id: UUID, predicate: Predicate<T>) async
+    func fetchTaskItems(for date: String) async -> [ScheduleTask]
+    func insert(_ task: ScheduleTask) async
+    func deleteTask(with id: UUID) async
     func edit(_ task: ScheduleTask) async
-    func complete(_ task: ScheduleTask) async
-    func unComplete(_ task: ScheduleTask) async
+    func completeTask(with id: UUID) async
+    func unCompleteTask(with id: UUID) async
 }

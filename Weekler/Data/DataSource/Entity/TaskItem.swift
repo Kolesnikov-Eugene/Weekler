@@ -26,7 +26,7 @@ final class TaskItem: ScheduleDataBaseType {
         onlyDate = date.onlyDate
     }
     
-    func editWithNew(_ task: ScheduleTask) {
+    func editWithNew(_ task: TaskToEdit) {
         date = task.date
         taskDescription = task.description
         isNotificationEnabled = task.isNotificationEnabled
