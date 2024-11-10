@@ -21,6 +21,8 @@
 		440B2DD42CDBF07400BA728B /* TaskToEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440B2DD32CDBF07400BA728B /* TaskToEdit.swift */; };
 		440B2DD62CDBF93100BA728B /* ScheduleDataSourceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440B2DD52CDBF93100BA728B /* ScheduleDataSourceAssembly.swift */; };
 		440CF1F72C73CAE600FEFDE0 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */; };
+		441CAC742CE0DB7F00064348 /* WeeklerAppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441CAC732CE0DB7F00064348 /* WeeklerAppCoordinator.swift */; };
+		441CAC772CE0E1F300064348 /* ScheduleViewFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441CAC762CE0E1F300064348 /* ScheduleViewFlowCoordinator.swift */; };
 		441DECAE2CC0353A00B725B7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441DECAD2CC0353A00B725B7 /* Constants.swift */; };
 		442256822C6BE61500172C0A /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256812C6BE61500172C0A /* TaskItem.swift */; };
 		442256842C6BE7B300172C0A /* ScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256832C6BE7B300172C0A /* ScheduleUseCase.swift */; };
@@ -98,6 +100,8 @@
 		440B2DD32CDBF07400BA728B /* TaskToEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskToEdit.swift; sourceTree = "<group>"; };
 		440B2DD52CDBF93100BA728B /* ScheduleDataSourceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataSourceAssembly.swift; sourceTree = "<group>"; };
 		440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
+		441CAC732CE0DB7F00064348 /* WeeklerAppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklerAppCoordinator.swift; sourceTree = "<group>"; };
+		441CAC762CE0E1F300064348 /* ScheduleViewFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewFlowCoordinator.swift; sourceTree = "<group>"; };
 		441DECAD2CC0353A00B725B7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		442256812C6BE61500172C0A /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
 		442256832C6BE7B300172C0A /* ScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleUseCase.swift; sourceTree = "<group>"; };
@@ -266,6 +270,25 @@
 			path = DTO;
 			sourceTree = "<group>";
 		};
+		441CAC722CE0DAEC00064348 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				449F18D72BACC4BF00F9640D /* AppDelegate.swift */,
+				449F18D92BACC4BF00F9640D /* SceneDelegate.swift */,
+				441CAC732CE0DB7F00064348 /* WeeklerAppCoordinator.swift */,
+				449F18E52BACC4C000F9640D /* Info.plist */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		441CAC752CE0E1DE00064348 /* ScheduleViewFlow */ = {
+			isa = PBXGroup;
+			children = (
+				441CAC762CE0E1F300064348 /* ScheduleViewFlowCoordinator.swift */,
+			);
+			path = ScheduleViewFlow;
+			sourceTree = "<group>";
+		};
 		444006A32CC6E1210058F601 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +346,7 @@
 		447DBE562BC4A8EB00A99A38 /* ScheduleView */ = {
 			isa = PBXGroup;
 			children = (
+				441CAC752CE0E1DE00064348 /* ScheduleViewFlow */,
 				44079C6C2CD16661006D3A3D /* CalendarView */,
 				44079C692CD16301006D3A3D /* SelectTaskModeView */,
 				447F920F2CD0161D00DDB846 /* ScheduleMainView */,
@@ -424,15 +448,13 @@
 		449F18D62BACC4BF00F9640D /* Weekler */ = {
 			isa = PBXGroup;
 			children = (
+				441CAC722CE0DAEC00064348 /* Application */,
 				4407E7CA2CD5304600CC1692 /* Core */,
 				4402A1BB2CAB25AA00CCE9D8 /* Data */,
 				440549E62BC5D8A700077C61 /* Resources */,
 				440549E32BC5D7CF00077C61 /* Generated */,
 				449F18EC2BACD08900F9640D /* Domain */,
 				447DBE602BC4A8EB00A99A38 /* Scenes */,
-				449F18D72BACC4BF00F9640D /* AppDelegate.swift */,
-				449F18D92BACC4BF00F9640D /* SceneDelegate.swift */,
-				449F18E52BACC4C000F9640D /* Info.plist */,
 			);
 			path = Weekler;
 			sourceTree = "<group>";
@@ -751,6 +773,7 @@
 				440B2DD12CDBEF5700BA728B /* ScheduleDataSourceProtocol.swift in Sources */,
 				4498EAA22C2E019E0081E7EE /* ScheduleItems.swift in Sources */,
 				44B06E142BECEE0E000C3CC6 /* ScheduleViewModel.swift in Sources */,
+				441CAC772CE0E1F300064348 /* ScheduleViewFlowCoordinator.swift in Sources */,
 				442256862C6BE82900172C0A /* ScheduleUseCaseAssembly.swift in Sources */,
 				440549E52BC5D7E400077C61 /* Strings.swift in Sources */,
 				44F9EA2B2CDAA597009AE5FD /* ScheduleRepositoryAssembly.swift in Sources */,
@@ -760,6 +783,7 @@
 				4442BA702BE4277B002DC469 /* SceneFactoryProtocol.swift in Sources */,
 				4442BA6E2BE425F0002DC469 /* ConfigViewAssembly.swift in Sources */,
 				444DAB862C655A8F005B8ABC /* SourceItemProtocol.swift in Sources */,
+				441CAC742CE0DB7F00064348 /* WeeklerAppCoordinator.swift in Sources */,
 				4407E7D42CD5415C00CC1692 /* SceneFactoryDIContainer.swift in Sources */,
 				4402A1C02CAB292100CCE9D8 /* ScheduleDataSource.swift in Sources */,
 				4442BA6A2BE4243D002DC469 /* StatisticsAssembly.swift in Sources */,
@@ -960,7 +984,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NU9QMJ4324;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Weekler/Info.plist;
+				INFOPLIST_FILE = Weekler/Application/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -990,7 +1014,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = NU9QMJ4324;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Weekler/Info.plist;
+				INFOPLIST_FILE = Weekler/Application/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

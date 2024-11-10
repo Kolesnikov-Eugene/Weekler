@@ -9,8 +9,8 @@ import Swinject
 
 final class ScheduleViewModelAssembly: Assembly {
     func assemble(container: Swinject.Container) {
-        container.register(ScheduleViewModelProtocol.self) { resolver, dependencies in
-            ScheduleViewModel(dependencies: dependencies)
+        container.register(ScheduleViewModelProtocol.self) { resolver, dependencies, coordinator in
+            return ScheduleViewModel(dependencies: dependencies, scheduleFlowCoordinator: coordinator)
         }.inObjectScope(.container)
     }
 }

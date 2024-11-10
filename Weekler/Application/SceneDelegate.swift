@@ -16,19 +16,25 @@ enum MySchema: VersionedSchema {
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-    let weeklerAppDI = WeeklerAppDIContainer(container: DIContainer())
+//    var weeklerAppDI: WeeklerAppDIContainer?
+    private var weeklerAppCoordinator: WeeklerAppCoordinator?
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         if let windowScene = scene as? UIWindowScene {
-
             
             let window = UIWindow(windowScene: windowScene)
-            let tabBarController = weeklerAppDI.makeTabBarController()
-            
-            window.rootViewController = tabBarController
-            window.makeKeyAndVisible()
+            let weeklerAppDI = WeeklerAppDIContainer(container: DIContainer())
+            let coordinator = WeeklerAppCoordinator(window: window, weeklerAppDI: weeklerAppDI)
+            self.weeklerAppCoordinator = coordinator
             self.window = window
+            weeklerAppCoordinator?.start()
+            
+//            let tabBarController = weeklerAppDI.makeTabBarController()
+            
+//            window.rootViewController = tabBarController
+//            window.makeKeyAndVisible()
+            
         }
     }
 

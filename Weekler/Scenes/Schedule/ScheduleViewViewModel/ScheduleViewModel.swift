@@ -14,8 +14,6 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     //MARK: - Output
     var dataList = BehaviorRelay<[SourceItem]>(value: [])
     var emptyStateIsActive: Driver<Bool>
-    var setCreateViewNeedsToBePresented = PublishRelay<Bool>()
-    var presentCreateViewEditingAtIndex = PublishRelay<Int?>()
     var calendarHeightValue = PublishRelay<Double?>()
     var navigationTitle = BehaviorRelay<String>(value: "")
     
@@ -41,9 +39,16 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     private lazy var scheduleUseCase: ScheduleUseCaseProtocol = {
         dependencies.makeScheduleUseCase()
     }()
+    private var scheduleFlowCoordinator: ScheduleViewFlowCoordinator
+    private var hapticManager: CoreHapticsManager?
     
-    init(dependencies: SceneFactoryProtocol) {
+    init(dependencies: SceneFactoryProtocol,
+         scheduleFlowCoordinator: ScheduleViewFlowCoordinator,
+         hapticManager: CoreHapticsManager? = nil
+    ) {
         self.dependencies = dependencies
+        self.scheduleFlowCoordinator = scheduleFlowCoordinator
+        self.hapticManager = CoreHapticsManager()
         currentDate = Date()
         data = []
         emptyStateIsActive = dataList
@@ -67,7 +72,8 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     }
     
     @objc func didTapAddNewEventButton() {
-        setCreateViewNeedsToBePresented.accept(true)
+        hapticManager?.playTap()
+        scheduleFlowCoordinator.goToCreateScheduleView(for: nil, with: .create)
     }
     
     // MARK: - private methods
@@ -157,7 +163,8 @@ extension ScheduleViewModel: ScheduleMainViewModelProtocol {
     }
     
     func prepareCreateView(at index: Int) {
-        presentCreateViewEditingAtIndex.accept(index)
+        let task = task(at: index)
+        scheduleFlowCoordinator.goToCreateScheduleView(for: task, with: .edit)
     }
 }
 

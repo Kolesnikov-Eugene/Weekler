@@ -9,15 +9,16 @@ import Foundation
 
 final class SceneFactoryDIContainer: SceneFactoryProtocol {
     private let container: DIContainer
+    var createScheduleSceneContainer: CreateScheduleSceneProtocol?
     
     init(container: DIContainer) {
         self.container = container
     }
     
-    func makeScheduleViewController() -> ScheduleViewController {
-        let scheduleViewModel: ScheduleViewModelProtocol = container.resolve(argument: self as SceneFactoryProtocol)
-        let createScheduleSceneContainer = makeCreateScheduleSceneDIContainer(viewModel: scheduleViewModel as? CreateScheduleDelegate)
-        let scheduleVC: ScheduleViewController = container.resolve(arguments: scheduleViewModel, createScheduleSceneContainer)
+    func makeScheduleViewController(coor: ScheduleViewFlowCoordinator) -> ScheduleViewController {
+        let scheduleViewModel: ScheduleViewModelProtocol = container.resolve(arguments: self as SceneFactoryProtocol, coor)
+        createScheduleSceneContainer = makeCreateScheduleSceneDIContainer(viewModel: scheduleViewModel as? CreateScheduleDelegate)
+        let scheduleVC: ScheduleViewController = container.resolve(argument: scheduleViewModel)
         return scheduleVC
     }
     

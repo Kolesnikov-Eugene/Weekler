@@ -28,16 +28,18 @@ final class ScheduleViewController: UIViewController {
         return button
     }()
     private var viewModel: ScheduleViewModelProtocol
-    private let createScheduleSceneDIContainer: CreateScheduleSceneProtocol
+//    private let createScheduleSceneDIContainer: CreateScheduleSceneProtocol
     private var bag = DisposeBag()
     private var hapticManager: CoreHapticsManager?
     
-    init(viewModel: ScheduleViewModelProtocol,
-         createScheduleSceneDIContainer: CreateScheduleSceneProtocol
+    // TODO: Create DI method for creating hapticsManager
+    init(viewModel: ScheduleViewModelProtocol
+//         createScheduleSceneDIContainer: CreateScheduleSceneProtocol
     ) {
         self.viewModel = viewModel
-        self.createScheduleSceneDIContainer = createScheduleSceneDIContainer
         self.hapticManager = CoreHapticsManager()
+//        self.createScheduleSceneDIContainer = createScheduleSceneDIContainer
+        
         //FIXME: create DI method in container
         let calendarViewModel = viewModel as! CalendarViewModelProtocol
         let selectTaskViewModel = viewModel as! SelectTaskViewModelProtocol
@@ -73,25 +75,18 @@ final class ScheduleViewController: UIViewController {
         configureNavBar()
         addSubviews()
         applyConstraints()
+        configureTabBarAppearence()
+    }
+    
+    private func configureTabBarAppearence() {
+        let image = UIImage(systemName: "list.bullet.clipboard")
+        self.tabBarItem = UITabBarItem(
+            title: L10n.Localizable.Tab.schedule,
+            image: image,
+            selectedImage: nil)
     }
     
     private func bind() {
-        viewModel.setCreateViewNeedsToBePresented
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                self?.hapticManager?.playTap()
-                self?.presentCreateView(with: .create)
-            })
-            .disposed(by: bag)
-        
-        viewModel.presentCreateViewEditingAtIndex
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] index in
-                guard let self = self,
-                      let index = index else { return }
-                self.presentCreateView(with: .edit, and: index)
-            })
-            .disposed(by: bag)
         
         viewModel.calendarHeightValue
             .observe(on: MainScheduler.instance)
@@ -165,31 +160,5 @@ final class ScheduleViewController: UIViewController {
                 NSAttributedString.Key.foregroundColor: Colors.textColorMain
             ]
         }
-    }
-    
-    private func presentCreateView(with mode: CreateMode, and index: Int? = nil) {
-        let createScheduleVC = prepareCreateView(at: index, for: mode)
-        
-        if let sheet = createScheduleVC.sheetPresentationController {
-            sheet.detents = [.large(), .medium()]
-            sheet.largestUndimmedDetentIdentifier = .large
-            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            sheet.prefersEdgeAttachedInCompactHeight = true
-            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
-        }
-        createScheduleVC.hidesBottomBarWhenPushed = true
-        navigationController?.present(createScheduleVC, animated: true)
-    }
-    
-    // TODO: Create Coordinator
-    private func prepareCreateView(at index: Int? = nil, for mode: CreateMode) -> CreateScheduleViewController {
-        var task: ScheduleTask? = nil
-        if let index = index {
-            task = viewModel.task(at: index)
-            
-        }
-        let createScheduleVC = createScheduleSceneDIContainer
-            .makeCreateScheduleViewController(for: task, with: mode)
-        return createScheduleVC
     }
 }

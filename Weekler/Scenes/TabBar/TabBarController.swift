@@ -20,33 +20,25 @@ final class TabBarController: UITabBarController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.selectedIndex = 0
+    }
 
     private func setupView() {
         view.backgroundColor = Colors.viewBackground
-        configureTabBar()
-
-        let scheduleViewController = setupScheduleViewController()
+        
         let taskEditorViewController = setupTaskEditorViewController()
         let statisticsViewController = setupStatisticsViewController()
         let configViewController = setupConfigViewController()
 
         viewControllers = [
-            scheduleViewController,
             taskEditorViewController,
             statisticsViewController,
             configViewController
         ]
-    }
-
-    private func setupScheduleViewController() -> UINavigationController {
-        let scheduleViewController = sceneFactory.makeScheduleViewController()
-        let image = UIImage(systemName: "list.bullet.clipboard")
-        scheduleViewController.tabBarItem = UITabBarItem(
-            title: L10n.Localizable.Tab.schedule,
-            image: image,
-            selectedImage: nil)
-        let scheduleNavigationController = UINavigationController(rootViewController: scheduleViewController)
-        return scheduleNavigationController
+        configureTabBar()
     }
     
     private func setupTaskEditorViewController() -> UINavigationController {

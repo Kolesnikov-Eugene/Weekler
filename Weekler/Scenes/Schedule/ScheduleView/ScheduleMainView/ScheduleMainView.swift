@@ -45,7 +45,7 @@ final class ScheduleMainView: UIView {
     private var bag = DisposeBag()
     private var hapticManager: CoreHapticsManager?
     
-    init(frame: CGRect, viewModel: ScheduleMainViewModelProtocol, hapticManager: CoreHapticsManager? = nil) {
+    init(frame: CGRect, viewModel: ScheduleMainViewModelProtocol, hapticManager: CoreHapticsManager?) {
         self.viewModel = viewModel
         self.hapticManager = hapticManager
         super.init(frame: frame)

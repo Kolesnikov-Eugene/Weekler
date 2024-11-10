@@ -10,8 +10,6 @@ import RxCocoa
 
 protocol ScheduleViewModelProtocol: AnyObject {
     var tasks: [ScheduleTask] { get set }
-    var setCreateViewNeedsToBePresented: PublishRelay<Bool> { get set }
-    var presentCreateViewEditingAtIndex: PublishRelay<Int?> { get set }
     var calendarHeightValue: PublishRelay<Double?> { get set }
     var navigationTitle: BehaviorRelay<String> { get set }
     func task(at index: Int) -> ScheduleTask

@@ -8,7 +8,8 @@
 import Foundation
 
 protocol SceneFactoryProtocol {
-    func makeScheduleViewController() -> ScheduleViewController
+    var createScheduleSceneContainer: CreateScheduleSceneProtocol? { get }
+    func makeScheduleViewController(coor: ScheduleViewFlowCoordinator) -> ScheduleViewController
     func makeTaskEditorViewController() -> TaskEditorViewController
     func makeConfigViewController() -> ConfigViewController
     func makeStatisticsView() -> StatisticsViewController
