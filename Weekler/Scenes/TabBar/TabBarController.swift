@@ -8,11 +8,8 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    
-    private let tabBarFactory: TabBarFactory
 
-    init(tabBarFactory: TabBarFactory) {
-        self.tabBarFactory = tabBarFactory
+    init() {
         super.init(nibName: nil, bundle: nil)
         setupView()
     }
@@ -20,90 +17,15 @@ final class TabBarController: UITabBarController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.selectedIndex = 0
+    }
 
     private func setupView() {
         view.backgroundColor = Colors.viewBackground
         configureTabBar()
-
-        let scheduleViewController = setupScheduleViewController()
-        let taskEditorViewController = setupTaskEditorViewController()
-        let statisticsViewController = setupStatisticsViewController()
-        let configViewController = setupConfigViewController()
-
-        viewControllers = [
-            scheduleViewController,
-            taskEditorViewController,
-            statisticsViewController,
-            configViewController
-        ]
-    }
-
-    private func setupScheduleViewController() -> UINavigationController {
-        let scheduleViewController = tabBarFactory.createScheduleViewController()
-        
-        let image = UIImage(systemName: "list.bullet.clipboard")
-
-        scheduleViewController.tabBarItem = UITabBarItem(
-            title: L10n.Localizable.Tab.schedule,
-            image: image,
-            selectedImage: nil)
-
-        let scheduleNavigationController = UINavigationController(rootViewController: scheduleViewController)
-        
-        configureNavController(controller: scheduleNavigationController)
-
-        return scheduleNavigationController
-    }
-    
-    private func setupTaskEditorViewController() -> UINavigationController {
-        let taskEditorViewController = TaskEditorViewController()
-
-        taskEditorViewController.tabBarItem = UITabBarItem(
-            title: L10n.Localizable.Tab.edit,
-            image: UIImage(systemName: "square.and.pencil"),
-            selectedImage: nil)
-
-        let taskEditorNavigationController = UINavigationController(rootViewController: taskEditorViewController)
-        
-        configureNavController(controller: taskEditorNavigationController)
-
-        return taskEditorNavigationController
-    }
-    
-    private func setupStatisticsViewController() -> UINavigationController {
-        let statisticsViewController = StatisticsViewController()
-
-        statisticsViewController.tabBarItem = UITabBarItem(
-            title: L10n.Localizable.Tab.statistics,
-            image: UIImage(systemName: "chart.bar.xaxis"),
-            selectedImage: nil)
-
-        let statisticsNavigationController = UINavigationController(rootViewController: statisticsViewController)
-        
-        configureNavController(controller: statisticsNavigationController)
-
-        return statisticsNavigationController
-    }
-    
-    private func setupConfigViewController() -> UINavigationController {
-        let configViewController = ConfigViewController()
-
-        configViewController.tabBarItem = UITabBarItem(
-            title: L10n.Localizable.Tab.config,
-            image: UIImage(systemName: "gearshape"),
-            selectedImage: nil)
-
-        let configNavigationController = UINavigationController(rootViewController: configViewController)
-        
-        configureNavController(controller: configNavigationController)
-
-        return configNavigationController
-    }
-    
-    private func configureNavController(controller: UINavigationController) {
-        controller.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        controller.navigationBar.shadowImage = UIImage()
-        controller.navigationBar.isTranslucent = true
     }
 
     private func configureTabBar() {
