@@ -8,6 +8,11 @@
 import Foundation
 import CoreHaptics
 
+protocol CoreHapticsManagerProtocol {
+    func playTap()
+    func playAddTask()
+}
+
 final class CoreHapticsManager {
     private let hapticEngine: CHHapticEngine
     private var doneAudio: CHHapticAudioResourceID?
@@ -48,7 +53,7 @@ final class CoreHapticsManager {
     }
 }
 
-extension CoreHapticsManager {
+extension CoreHapticsManager: CoreHapticsManagerProtocol {
     func handleEngineReset() {
         do {
             try hapticEngine.start()

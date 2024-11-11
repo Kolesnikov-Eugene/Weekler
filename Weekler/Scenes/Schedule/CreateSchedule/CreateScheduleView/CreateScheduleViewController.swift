@@ -105,6 +105,17 @@ final class CreateScheduleViewController: UIViewController {
         addSubviews()
         applyConstraints()
         configureTapGesture()
+        configureAppearence()
+    }
+    
+    private func configureAppearence() {
+        if let sheet = self.sheetPresentationController {
+            sheet.detents = [.large(), .medium()]
+            sheet.largestUndimmedDetentIdentifier = .large
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.prefersEdgeAttachedInCompactHeight = true
+            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+        }
     }
     
     private func addSubviews() {

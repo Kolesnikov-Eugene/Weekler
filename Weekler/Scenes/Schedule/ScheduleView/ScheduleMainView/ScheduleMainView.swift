@@ -43,11 +43,9 @@ final class ScheduleMainView: UIView {
     private var tableDataSource: UITableViewDiffableDataSource<UITableView.Section, SourceItem>!
     private var viewModel: ScheduleMainViewModelProtocol
     private var bag = DisposeBag()
-    private var hapticManager: CoreHapticsManager?
     
-    init(frame: CGRect, viewModel: ScheduleMainViewModelProtocol, hapticManager: CoreHapticsManager?) {
+    init(frame: CGRect, viewModel: ScheduleMainViewModelProtocol) {
         self.viewModel = viewModel
-        self.hapticManager = hapticManager
         super.init(frame: frame)
         setupUI()
         bindToViewModel()
@@ -137,7 +135,7 @@ final class ScheduleMainView: UIView {
                         self?.viewModel.completeTask(with: task.id)
                     }
                     cell.onTaskButtonTapped = { [weak self] in
-                        self?.hapticManager?.playAddTask()
+                        self?.viewModel.playAddTask()
                     }
                 case .completedTask(let completedTask):
                     cell.configureCompletedTaskCell(with: completedTask)

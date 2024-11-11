@@ -24,6 +24,7 @@ protocol ScheduleMainViewModelProtocol: AnyObject {
     func unCompleteTask(with id: UUID)
     func deleteTask(at index: Int)
     func prepareCreateView(at index: Int)
+    func playAddTask()
 }
 
 protocol CalendarViewModelProtocol: AnyObject {

@@ -39,16 +39,16 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     private lazy var scheduleUseCase: ScheduleUseCaseProtocol = {
         dependencies.makeScheduleUseCase()
     }()
-    private var scheduleFlowCoordinator: ScheduleViewFlowCoordinator
-    private var hapticManager: CoreHapticsManager?
+    private var scheduleFlowCoordinator: ScheduleFlowCoordinator
+    private var hapticsManager: CoreHapticsManagerProtocol?
     
     init(dependencies: SceneFactoryProtocol,
-         scheduleFlowCoordinator: ScheduleViewFlowCoordinator,
-         hapticManager: CoreHapticsManager? = nil
+         scheduleFlowCoordinator: ScheduleFlowCoordinator,
+         hapticManager: CoreHapticsManagerProtocol? = nil
     ) {
         self.dependencies = dependencies
         self.scheduleFlowCoordinator = scheduleFlowCoordinator
-        self.hapticManager = CoreHapticsManager()
+        self.hapticsManager = hapticManager
         currentDate = Date()
         data = []
         emptyStateIsActive = dataList
@@ -72,7 +72,7 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     }
     
     @objc func didTapAddNewEventButton() {
-        hapticManager?.playTap()
+        hapticsManager?.playTap()
         scheduleFlowCoordinator.goToCreateScheduleView(for: nil, with: .create)
     }
     
@@ -165,6 +165,10 @@ extension ScheduleViewModel: ScheduleMainViewModelProtocol {
     func prepareCreateView(at index: Int) {
         let task = task(at: index)
         scheduleFlowCoordinator.goToCreateScheduleView(for: task, with: .edit)
+    }
+    
+    func playAddTask() {
+        hapticsManager?.playAddTask()
     }
 }
 

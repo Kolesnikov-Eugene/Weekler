@@ -8,11 +8,8 @@
 import UIKit
 
 final class TabBarController: UITabBarController {
-    
-    private let sceneFactory: SceneFactoryProtocol
 
-    init(sceneFactory: SceneFactoryProtocol) {
-        self.sceneFactory = sceneFactory
+    init() {
         super.init(nibName: nil, bundle: nil)
         setupView()
     }
@@ -28,48 +25,7 @@ final class TabBarController: UITabBarController {
 
     private func setupView() {
         view.backgroundColor = Colors.viewBackground
-        
-        let taskEditorViewController = setupTaskEditorViewController()
-        let statisticsViewController = setupStatisticsViewController()
-        let configViewController = setupConfigViewController()
-
-        viewControllers = [
-            taskEditorViewController,
-            statisticsViewController,
-            configViewController
-        ]
         configureTabBar()
-    }
-    
-    private func setupTaskEditorViewController() -> UINavigationController {
-        let taskEditorViewController = sceneFactory.makeTaskEditorViewController()
-        taskEditorViewController.tabBarItem = UITabBarItem(
-            title: L10n.Localizable.Tab.edit,
-            image: UIImage(systemName: "square.and.pencil"),
-            selectedImage: nil)
-        let taskEditorNavigationController = UINavigationController(rootViewController: taskEditorViewController)
-        return taskEditorNavigationController
-    }
-    
-    private func setupStatisticsViewController() -> UINavigationController {
-        let statisticsViewController = sceneFactory.makeStatisticsView()
-        statisticsViewController.tabBarItem = UITabBarItem(
-            title: L10n.Localizable.Tab.statistics,
-            image: UIImage(systemName: "chart.bar.xaxis"),
-            selectedImage: nil)
-        let statisticsNavigationController = UINavigationController(rootViewController: statisticsViewController)
-        return statisticsNavigationController
-    }
-    
-    private func setupConfigViewController() -> UINavigationController {
-        let configViewController = sceneFactory.makeConfigViewController()
-
-        configViewController.tabBarItem = UITabBarItem(
-            title: L10n.Localizable.Tab.config,
-            image: UIImage(systemName: "gearshape"),
-            selectedImage: nil)
-        let configNavigationController = UINavigationController(rootViewController: configViewController)
-        return configNavigationController
     }
 
     private func configureTabBar() {

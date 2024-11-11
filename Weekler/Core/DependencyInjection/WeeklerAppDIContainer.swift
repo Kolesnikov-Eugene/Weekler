@@ -15,8 +15,7 @@ final class WeeklerAppDIContainer {
     }
     
     func makeTabBarController() -> TabBarController {
-        let sceneFactory = makeSceneFactoryDIContainer()
-        let tabBarController: TabBarController = container.resolve(argument: sceneFactory)
+        let tabBarController: TabBarController = container.resolve()
         return tabBarController
     }
     

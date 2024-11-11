@@ -9,11 +9,8 @@ import Swinject
 
 final class TabBarAssembly: Assembly {
     func assemble(container: Swinject.Container) {
-        container.register(TabBarController.self) { resolver, sceneFactory in
-//            guard let sceneFactory = resolver.resolve(SceneFactoryDIContainer.self) else {
-//                fatalError("TabBarFactory could not be resolved")
-//            }
-            return TabBarController(sceneFactory: sceneFactory)
+        container.register(TabBarController.self) { _ in
+            TabBarController()
         }.inObjectScope(.container)
     }
 }

@@ -15,16 +15,14 @@ final class SceneFactoryDIContainer: SceneFactoryProtocol {
         self.container = container
     }
     
-    func makeScheduleViewController(coor: ScheduleViewFlowCoordinator) -> ScheduleViewController {
-        let scheduleViewModel: ScheduleViewModelProtocol = container.resolve(arguments: self as SceneFactoryProtocol, coor)
+    func makeScheduleViewController(coor: ScheduleFlowCoordinator) -> ScheduleViewController {
+        let hapticsManager = makeCoreHapticsManager()
+        let scheduleViewModel: ScheduleViewModelProtocol = container.resolve(
+            arguments: self as SceneFactoryProtocol, coor, hapticsManager
+        )
         createScheduleSceneContainer = makeCreateScheduleSceneDIContainer(viewModel: scheduleViewModel as? CreateScheduleDelegate)
         let scheduleVC: ScheduleViewController = container.resolve(argument: scheduleViewModel)
         return scheduleVC
-    }
-    
-    func makeTaskEditorViewController() -> TaskEditorViewController {
-        let taskEditorVC: TaskEditorViewController = container.resolve()
-        return taskEditorVC
     }
     
     func makeConfigViewController() -> ConfigViewController {
@@ -45,5 +43,10 @@ final class SceneFactoryDIContainer: SceneFactoryProtocol {
     func makeScheduleUseCase() -> ScheduleUseCaseProtocol {
         let scheduleUseCase: ScheduleUseCaseProtocol = container.resolve()
         return scheduleUseCase
+    }
+    
+    func makeCoreHapticsManager() -> CoreHapticsManagerProtocol? {
+        let hapticsManager: CoreHapticsManagerProtocol? = container.resolve()
+        return hapticsManager
     }
 }

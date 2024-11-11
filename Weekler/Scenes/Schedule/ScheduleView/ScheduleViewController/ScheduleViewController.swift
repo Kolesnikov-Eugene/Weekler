@@ -28,24 +28,19 @@ final class ScheduleViewController: UIViewController {
         return button
     }()
     private var viewModel: ScheduleViewModelProtocol
-//    private let createScheduleSceneDIContainer: CreateScheduleSceneProtocol
     private var bag = DisposeBag()
-    private var hapticManager: CoreHapticsManager?
     
     // TODO: Create DI method for creating hapticsManager
     init(viewModel: ScheduleViewModelProtocol
-//         createScheduleSceneDIContainer: CreateScheduleSceneProtocol
     ) {
         self.viewModel = viewModel
-        self.hapticManager = CoreHapticsManager()
-//        self.createScheduleSceneDIContainer = createScheduleSceneDIContainer
         
         //FIXME: create DI method in container
         let calendarViewModel = viewModel as! CalendarViewModelProtocol
         let selectTaskViewModel = viewModel as! SelectTaskViewModelProtocol
         let scheduleMainViewModel = viewModel as! ScheduleMainViewModelProtocol
         calendarView = CalendarView(frame: .zero, viewModel: calendarViewModel)
-        scheduleMainView = ScheduleMainView(frame: .zero, viewModel: scheduleMainViewModel, hapticManager: hapticManager)
+        scheduleMainView = ScheduleMainView(frame: .zero, viewModel: scheduleMainViewModel)
         selectTaskModeView = SelectTaskModeView(frame: .zero, viewModel: selectTaskViewModel)
         super.init(nibName: nil, bundle: nil)
     }

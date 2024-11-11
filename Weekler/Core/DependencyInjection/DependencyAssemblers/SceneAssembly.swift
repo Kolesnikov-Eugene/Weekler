@@ -13,7 +13,6 @@ final class SceneAssembly: Assembly {
             TabBarAssembly(),
             ScheduleAssembly(),
             StatisticsAssembly(),
-            TaskEditorAssembly(),
             ConfigViewAssembly(),
             SceneFactoryAssembly(),
             CreateScheduleViewAssembly(),
@@ -22,7 +21,8 @@ final class SceneAssembly: Assembly {
             ScheduleUseCaseAssembly(),
             CreateScheduleSceneContainerAssembly(),
             ScheduleRepositoryAssembly(),
-            ScheduleDataSourceAssembly()
+            ScheduleDataSourceAssembly(),
+            CoreHapticsManagerAssembly()
         ]
         assemblies.forEach { $0.assemble(container: container) }
     }

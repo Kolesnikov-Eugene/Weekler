@@ -14,19 +14,45 @@ protocol Coordinator {
 final class WeeklerAppCoordinator: Coordinator {
     private let window: UIWindow
     private let weeklerAppDI: WeeklerAppDIContainer
-    private var scheduleFlowCoordinator: ScheduleViewFlowCoordinator?
+    private var childCoordinators: [Coordinator?] = []
+    private let sceneFactoryDIContainer: SceneFactoryProtocol
+    private let tabBarController: UITabBarController
     
     init(window: UIWindow, weeklerAppDI: WeeklerAppDIContainer) {
         self.window = window
         self.weeklerAppDI = weeklerAppDI
-//        self.scheduleFlowCoordinator = ScheduleViewFlowCoordinator(dependencies: weeklerAppDI.makeSceneFactoryDIContainer())
+        sceneFactoryDIContainer = weeklerAppDI.makeSceneFactoryDIContainer()
+        tabBarController = weeklerAppDI.makeTabBarController()
     }
     
     func start() {
-        let tabBarController = weeklerAppDI.makeTabBarController()
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
-        scheduleFlowCoordinator = ScheduleViewFlowCoordinator(tabbar: tabBarController, dependencies: weeklerAppDI.makeSceneFactoryDIContainer())
-        scheduleFlowCoordinator?.start()
+        startFlows()
+    }
+    
+    private func startFlows() {
+        // MARK: Schedule Flow
+        let scheduleFlowCoordinator = ScheduleFlowCoordinator(
+            tabbar: tabBarController,
+            container: sceneFactoryDIContainer
+        )
+        childCoordinators.append(scheduleFlowCoordinator)
+        
+        // MARK: Statistics Flow
+        let statisticsFlowCoordinator = StatisticsFlowCoordinator(
+            sceneFactoryDIContainer: sceneFactoryDIContainer,
+            tabBar: tabBarController
+        )
+        childCoordinators.append(statisticsFlowCoordinator)
+        
+        // MARK: Config Flow
+        let configFlowCoordinator = ConfigFlowCoordinator(
+            tabBarController: tabBarController,
+            sceneFactoryDIContainer: sceneFactoryDIContainer
+        )
+        childCoordinators.append(configFlowCoordinator)
+        
+        childCoordinators.forEach { $0?.start() }
     }
 }
