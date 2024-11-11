@@ -1,4 +1,35 @@
+// MARK: - Tab menu items
 "Tab.schedule" = "Schedule";
 "Tab.edit" = "Edit";
 "Tab.statistics" = "Statistics";
 "Tab.config" = "Config";
+
+// MARK: - Calendar days and dates
+"Calendar.full.monday" = "Monday";
+"Calendar.full.tuesday" = "Tuesday";
+"Calendar.full.wednesday" = "Wednesday";
+"Calendar.full.thursday" = "Thursday";
+"Calendar.full.friday" = "Friday";
+"Calendar.full.saturday" = "Saturday";
+"Calendar.full.sunday" = "Sunday";
+"Calendar.short.monday" = "Mon";
+"Calendar.short.tuesday" = "Tue";
+"Calendar.short.wednesday" = "Wed";
+"Calendar.short.thursday" = "Thu";
+"Calendar.short.friday" = "Fri";
+"Calendar.short.saturday" = "Sat";
+"Calendar.short.sunday" = "Sun";
+
+// MARK: - Schedule items
+"Schedule.date" = "Date";
+"Schedule.time" = "Time";
+"Schedule.notification" = "Notification";
+"Schedule.repeat" = "Repeat";
+
+// MARK: - Create schedule view
+"CreateSchedule.placeholder" = "Enter your task...";
+"CreateSchedule.doneButtonText" = "Done";
+
+// MARK: - Repeated days VC
+"RepeatedDays.byDay" = "By day";
+"RepeatedDays.byDate" = "By date";

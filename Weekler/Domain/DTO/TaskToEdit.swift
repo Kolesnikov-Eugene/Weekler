@@ -1,13 +1,13 @@
 //
-//  ScheduleTask.swift
+//  TaskToEdit.swift
 //  Weekler
 //
-//  Created by Eugene Kolesnikov on 06.06.2024.
+//  Created by Eugene Kolesnikov on 06.11.2024.
 //
 
 import Foundation
 
-struct ScheduleTask: Hashable, SourceItemProtocol {
+struct TaskToEdit {
     let id: UUID
     let date: Date
     let description: String
