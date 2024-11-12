@@ -32,6 +32,10 @@
 		4442BA6A2BE4243D002DC469 /* StatisticsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA692BE4243D002DC469 /* StatisticsAssembly.swift */; };
 		4442BA6E2BE425F0002DC469 /* ConfigViewAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA6D2BE425F0002DC469 /* ConfigViewAssembly.swift */; };
 		4442BA702BE4277B002DC469 /* SceneFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA6F2BE4277B002DC469 /* SceneFactoryProtocol.swift */; };
+		444AC1262CE3D63A0032DA6F /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444AC1252CE3D63A0032DA6F /* StatisticsView.swift */; };
+		444AC1292CE3DEA20032DA6F /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444AC1282CE3DEA20032DA6F /* StatisticsViewModel.swift */; };
+		444AC12E2CE3E0E60032DA6F /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444AC12D2CE3E0E60032DA6F /* ServiceAssembly.swift */; };
+		444AC1302CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444AC12F2CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift */; };
 		444B387F2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444B387E2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift */; };
 		444DAB862C655A8F005B8ABC /* SourceItemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DAB852C655A8F005B8ABC /* SourceItemProtocol.swift */; };
 		446C85612CB85B8700077CC5 /* CoreHapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446C85602CB85B8700077CC5 /* CoreHapticsManager.swift */; };
@@ -112,6 +116,10 @@
 		4442BA692BE4243D002DC469 /* StatisticsAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsAssembly.swift; sourceTree = "<group>"; };
 		4442BA6D2BE425F0002DC469 /* ConfigViewAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigViewAssembly.swift; sourceTree = "<group>"; };
 		4442BA6F2BE4277B002DC469 /* SceneFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFactoryProtocol.swift; sourceTree = "<group>"; };
+		444AC1252CE3D63A0032DA6F /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
+		444AC1282CE3DEA20032DA6F /* StatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
+		444AC12D2CE3E0E60032DA6F /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
+		444AC12F2CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModelAssembly.swift; sourceTree = "<group>"; };
 		444B387E2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 		444DAB852C655A8F005B8ABC /* SourceItemProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItemProtocol.swift; sourceTree = "<group>"; };
 		446C85602CB85B8700077CC5 /* CoreHapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreHapticsManager.swift; sourceTree = "<group>"; };
@@ -321,6 +329,45 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		444AC1272CE3DE8B0032DA6F /* StatisticsViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				444AC1282CE3DEA20032DA6F /* StatisticsViewModel.swift */,
+			);
+			path = StatisticsViewModel;
+			sourceTree = "<group>";
+		};
+		444AC12A2CE3E04A0032DA6F /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				44F116972BDC398E00134D5F /* ScheduleAssembly.swift */,
+				44F116992BDC3A3200134D5F /* TabBarAssembly.swift */,
+				4442BA6D2BE425F0002DC469 /* ConfigViewAssembly.swift */,
+				44CE3BBC2C0BA38500719B84 /* CreateScheduleViewAssembly.swift */,
+				44727B382C486895007756A3 /* ScheduleViewModelAssembly.swift */,
+				44FB465F2C5E6959005731BC /* CreateScheduleViewModelAssembly.swift */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		444AC12B2CE3E0930032DA6F /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+				4442BA692BE4243D002DC469 /* StatisticsAssembly.swift */,
+				444AC12F2CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift */,
+			);
+			path = Statistics;
+			sourceTree = "<group>";
+		};
+		444AC12C2CE3E0CA0032DA6F /* Assamblies */ = {
+			isa = PBXGroup;
+			children = (
+				44F116942BDC394A00134D5F /* SceneAssembly.swift */,
+				444AC12D2CE3E0E60032DA6F /* ServiceAssembly.swift */,
+			);
+			path = Assamblies;
+			sourceTree = "<group>";
+		};
 		44727B482C486AE1007756A3 /* SelectRepeatedDaysView */ = {
 			isa = PBXGroup;
 			children = (
@@ -374,6 +421,7 @@
 			isa = PBXGroup;
 			children = (
 				447DBE582BC4A8EB00A99A38 /* StatisticsViewController.swift */,
+				444AC1252CE3D63A0032DA6F /* StatisticsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -381,6 +429,7 @@
 		447DBE5A2BC4A8EB00A99A38 /* StatisticsView */ = {
 			isa = PBXGroup;
 			children = (
+				444AC1272CE3DE8B0032DA6F /* StatisticsViewModel */,
 				44AE39A02CE28B3F00D89B23 /* StatisticsFlow */,
 				447DBE592BC4A8EB00A99A38 /* View */,
 			);
@@ -579,9 +628,9 @@
 		44F116912BDC383600134D5F /* DependencyAssemblers */ = {
 			isa = PBXGroup;
 			children = (
+				444AC12C2CE3E0CA0032DA6F /* Assamblies */,
 				4442BA662BE41F18002DC469 /* Services */,
 				44F116962BDC397D00134D5F /* Scenes */,
-				44F116942BDC394A00134D5F /* SceneAssembly.swift */,
 			);
 			path = DependencyAssemblers;
 			sourceTree = "<group>";
@@ -589,13 +638,8 @@
 		44F116962BDC397D00134D5F /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				44F116972BDC398E00134D5F /* ScheduleAssembly.swift */,
-				44F116992BDC3A3200134D5F /* TabBarAssembly.swift */,
-				4442BA692BE4243D002DC469 /* StatisticsAssembly.swift */,
-				4442BA6D2BE425F0002DC469 /* ConfigViewAssembly.swift */,
-				44CE3BBC2C0BA38500719B84 /* CreateScheduleViewAssembly.swift */,
-				44727B382C486895007756A3 /* ScheduleViewModelAssembly.swift */,
-				44FB465F2C5E6959005731BC /* CreateScheduleViewModelAssembly.swift */,
+				444AC12B2CE3E0930032DA6F /* Statistics */,
+				444AC12A2CE3E04A0032DA6F /* Schedule */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -773,6 +817,7 @@
 				44F1169A2BDC3A3200134D5F /* TabBarAssembly.swift in Sources */,
 				442256842C6BE7B300172C0A /* ScheduleUseCase.swift in Sources */,
 				44727B4C2C486B7B007756A3 /* DaysOfWeekTableViewCell.swift in Sources */,
+				444AC1262CE3D63A0032DA6F /* StatisticsView.swift in Sources */,
 				440B2DD12CDBEF5700BA728B /* ScheduleDataSourceProtocol.swift in Sources */,
 				4498EAA22C2E019E0081E7EE /* ScheduleItems.swift in Sources */,
 				44B06E142BECEE0E000C3CC6 /* ScheduleViewModel.swift in Sources */,
@@ -786,6 +831,7 @@
 				44AE39A52CE2908600D89B23 /* ConfigFlowCoordinator.swift in Sources */,
 				4442BA702BE4277B002DC469 /* SceneFactoryProtocol.swift in Sources */,
 				4442BA6E2BE425F0002DC469 /* ConfigViewAssembly.swift in Sources */,
+				444AC12E2CE3E0E60032DA6F /* ServiceAssembly.swift in Sources */,
 				444DAB862C655A8F005B8ABC /* SourceItemProtocol.swift in Sources */,
 				441CAC742CE0DB7F00064348 /* WeeklerAppCoordinator.swift in Sources */,
 				4407E7D42CD5415C00CC1692 /* SceneFactoryDIContainer.swift in Sources */,
@@ -818,7 +864,9 @@
 				447DBE632BC4A8EB00A99A38 /* StatisticsViewController.swift in Sources */,
 				44C7148D2BD8465300C67B20 /* DaysOfWeek+Extension.swift in Sources */,
 				44A378DF2BFD2D7000E93B5F /* SelectMainModeCollectionViewCell.swift in Sources */,
+				444AC1302CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift in Sources */,
 				449EF5A32C52DE5900FD187B /* CreateScheduleDelegate.swift in Sources */,
+				444AC1292CE3DEA20032DA6F /* StatisticsViewModel.swift in Sources */,
 				441DECAE2CC0353A00B725B7 /* Constants.swift in Sources */,
 				44F9EA2D2CDAB1A1009AE5FD /* ScheduleRepository.swift in Sources */,
 				447DBE642BC4A8EB00A99A38 /* TabBarController.swift in Sources */,

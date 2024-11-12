@@ -14,15 +14,10 @@ final class SceneAssembly: Assembly {
             ScheduleAssembly(),
             StatisticsAssembly(),
             ConfigViewAssembly(),
-            SceneFactoryAssembly(),
             CreateScheduleViewAssembly(),
             ScheduleViewModelAssembly(),
             CreateScheduleViewModelAssembly(),
-            ScheduleUseCaseAssembly(),
-            CreateScheduleSceneContainerAssembly(),
-            ScheduleRepositoryAssembly(),
-            ScheduleDataSourceAssembly(),
-            CoreHapticsManagerAssembly()
+            StatisticsViewModelAssembly()
         ]
         assemblies.forEach { $0.assemble(container: container) }
     }

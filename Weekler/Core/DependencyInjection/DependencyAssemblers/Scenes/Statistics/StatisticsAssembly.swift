@@ -9,8 +9,8 @@ import Swinject
 
 final class StatisticsAssembly: Assembly {
     func assemble(container: Swinject.Container) {
-        container.register(StatisticsViewController.self) { _ in
-            StatisticsViewController()
+        container.register(StatisticsViewController.self) { resolver, viewModel in
+            StatisticsViewController(viewModel: viewModel)
         }.inObjectScope(.container)
     }
 }

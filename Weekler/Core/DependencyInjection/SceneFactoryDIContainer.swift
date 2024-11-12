@@ -31,7 +31,8 @@ final class SceneFactoryDIContainer: SceneFactoryProtocol {
     }
     
     func makeStatisticsView() -> StatisticsViewController {
-        let statisticsVC: StatisticsViewController = container.resolve()
+        let statisticsViewModel: StatisticsViewModelProtocol = container.resolve()
+        let statisticsVC: StatisticsViewController = container.resolve(argument: statisticsViewModel)
         return statisticsVC
     }
     
