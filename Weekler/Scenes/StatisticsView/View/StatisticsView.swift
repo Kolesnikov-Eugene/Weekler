@@ -26,15 +26,22 @@ final class StatisticsView: UIView {
         control.tintColor = Colors.mainForeground
         control.selectedSegmentTintColor = Colors.mainForeground
         control.translatesAutoresizingMaskIntoConstraints = false
-//        control.addTarget(self, action: #selector(didChangeControlValue), for: .valueChanged)
+        control.addTarget(self, action: #selector(didChangeControlValue), for: .valueChanged)
         return control
     }()
-    private lazy var statisticsChartView = { view in
-        view.backgroundColor = .systemIndigo
-        view.clipsToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }(UIView(frame: .zero))
+    private var chartView = ChartView(frame: .zero){
+        didSet {
+            chartView.setProgressColor = UIColor(displayP3Red: 50.0/255.0, green: 168.0/255.0, blue: 82.0/255.0, alpha: 1.0)
+            chartView.setTrackColor = UIColor(displayP3Red: 205.0/255.0, green: 247.0/255.0, blue: 212.0/255.0, alpha: 1.0)
+            chartView.setProgressWithAnimation(duration: 2.0, value: 0.4)
+        }
+    }
+//    private lazy var statisticsChartView = { view in
+//        view.backgroundColor = .systemIndigo
+//        view.clipsToBounds = true
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        return view
+//    }(UIView(frame: .zero))
     private let viewModel: StatisticsViewModelProtocol
     private let bag = DisposeBag()
     
@@ -51,7 +58,7 @@ final class StatisticsView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        statisticsChartView.layer.cornerRadius = CGRectGetHeight(statisticsChartView.bounds) / 2
+//        statisticsChartView.layer.cornerRadius = CGRectGetHeight(statisticsChartView.bounds) / 2
     }
     
     private func setupUI() {
@@ -62,7 +69,8 @@ final class StatisticsView: UIView {
     
     private func addSubviews() {
         addSubview(statisticsIntervalSegmentedControl)
-        addSubview(statisticsChartView)
+        addSubview(chartView)
+//        addSubview(statisticsChartView)
     }
     
     private func applyConstraints() {
@@ -72,13 +80,20 @@ final class StatisticsView: UIView {
             $0.centerX.equalToSuperview()
         }
         
-        // statisticsChartView constraints
-        statisticsChartView.snp.makeConstraints {
+        chartView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview()
             $0.width.equalTo(200)
             $0.height.equalTo(200)
         }
+        
+        // statisticsChartView constraints
+//        statisticsChartView.snp.makeConstraints {
+//            $0.centerX.equalToSuperview()
+//            $0.centerY.equalToSuperview()
+//            $0.width.equalTo(200)
+//            $0.height.equalTo(200)
+//        }
     }
     
     private func bindToViewModel() {
@@ -92,7 +107,12 @@ final class StatisticsView: UIView {
         case 0:
             print("Week")
         case 1:
-            print("Month")
+//            chartView.setProgressColor(.red)
+            chartView.setProgressColor = UIColor(displayP3Red: 50.0/255.0, green: 168.0/255.0, blue: 82.0/255.0, alpha: 1.0)
+            chartView.setTrackColor = UIColor(displayP3Red: 205.0/255.0, green: 247.0/255.0, blue: 212.0/255.0, alpha: 1.0)
+            chartView.setProgressWithAnimation(duration: 2.0, value: 1.0)
+//            layoutIfNeeded()
+            break
         case 2:
             print("Year")
         default:
