@@ -7,80 +7,89 @@
 
 
 import UIKit
+import QuartzCore
 
 final class ChartView: UIView {
     
+    private var baseLayer = CAShapeLayer()
     private var progressLayer = CAShapeLayer()
-    private var tracklayer = CAShapeLayer()
+    
+    private struct Chart {
+        static var radius: CGFloat = 0.0                       // update in layout subviews
+        static var strokeWidth: CGFloat = 35.0                 // width of donut chart border
+        static let startPointMultiplier: CGFloat = -0.5        // start multiplier to draw circle (north point)
+        static let fullCirclePercent: CGFloat = 1.0            // percent of drawing (0.0 - zero point, 1.0 - full circle)
+        static let progressBasePercent: CGFloat = 0.0          // init progress layer, but do not draw it
+        static let endFullCircleMultiplier: CGFloat = 2.0      // multiplier by .pi to draw full circle (from -0.5 to 1.5)
+        static let baseStrokeColor: UIColor = .systemGray
+        static let progressStrokeColor: UIColor = .systemBlue
+        static var fillColor: UIColor = .clear
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        self.configureProgressViewToBeCircular()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-//        self.configureProgressViewToBeCircular()
-    }
-    
-    var setProgressColor: UIColor = UIColor.red {
-        didSet {
-            progressLayer.strokeColor = setProgressColor.cgColor
-        }
-    }
-    
-    var setTrackColor: UIColor = UIColor.white {
-        didSet {
-            tracklayer.strokeColor = setTrackColor.cgColor
-        }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.configureProgressViewToBeCircular()
-    }
-    /**
-     A path that consists of straight and curved line segments that you can render in your custom views.
-     Meaning our CAShapeLayer will now be drawn on the screen with the path we have specified here
-     */
-    private var viewCGPath: CGPath? {
-        return UIBezierPath(arcCenter: CGPoint(x: frame.size.width / 2.0, y: frame.size.height / 2.0),
-                            radius: (frame.size.width) / 2,
-                            startAngle: CGFloat(-0.5 * Double.pi),
-                            endAngle: CGFloat(1.5 * Double.pi), clockwise: true).cgPath
-//        return UIBezierPath(arcCenter: CGPoint(x: frame.size.width / 2.0, y: frame.size.height / 2.0),
-//                            radius: (frame.size.width) / 2,
-//                            startAngle: CGFloat(-0.5 * Double.pi),
-//                            endAngle: CGFloat(1.5 * Double.pi), clockwise: true).cgPath
+        Chart.radius = bounds.height / 2.0
+        configure(baseLayer, for: Chart.fullCirclePercent, and: Chart.baseStrokeColor)
+        configure(progressLayer, for: Chart.progressBasePercent, and: Chart.progressStrokeColor)
     }
     
-    private func configureProgressViewToBeCircular() {
-        self.drawsView(using: tracklayer, startingPoint: 30.0, ending: 1.0)
-        self.drawsView(using: progressLayer, startingPoint: 30.0, ending: 0.0)
-    }
     
-    private func drawsView(using shape: CAShapeLayer, startingPoint: CGFloat, ending: CGFloat) {
-        self.backgroundColor = UIColor.clear
-        self.layer.cornerRadius = self.frame.size.width / 2.0
+    private func configure(
+        _ sublayer: CAShapeLayer,
+        for percentage: CGFloat,
+        and strokeColor: UIColor
+    ) {
+        let angle = calculateAngleFromPercantage(percentage)
+        let path = drawCGPath(at: angle)
+        sublayer.path = path
+        sublayer.fillColor = Chart.fillColor.cgColor
+        sublayer.strokeColor = strokeColor.cgColor
+        sublayer.lineWidth = Chart.strokeWidth
+        sublayer.lineCap = .round
         
-        shape.path = self.viewCGPath
-        shape.fillColor = UIColor.clear.cgColor
-        shape.strokeColor = setProgressColor.cgColor
-        shape.lineWidth = startingPoint
-        shape.strokeEnd = ending
-//        shape.lineCap = .round
-        shape.lineJoin = .bevel
-        self.layer.addSublayer(shape)
+        layer.addSublayer(sublayer)
     }
     
-    func setProgressWithAnimation(duration: TimeInterval, value: Float) {
+    
+    private func drawCGPath(at angle: CGFloat) -> CGPath {
+        UIBezierPath(
+            arcCenter: CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0),
+            radius: Chart.radius,
+            startAngle: Chart.startPointMultiplier * .pi,
+            endAngle: angle,
+            clockwise: true
+        ).cgPath
+    }
+    
+    func setProgressWithAnimation(
+        duration: TimeInterval,
+        value: Float,
+        for percent: CGFloat
+    ) {
         let animation = CABasicAnimation(keyPath: "strokeEnd")
         animation.duration = duration
+        
+        let angle = calculateAngleFromPercantage(percent)
+        let path = drawCGPath(at: angle)
+        progressLayer.path = path
         
         animation.fromValue = 0 //start animation at point 0
         animation.toValue = value //end animation at point specified
         animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
         progressLayer.strokeEnd = CGFloat(value)
         progressLayer.add(animation, forKey: "animateCircle")
+    }
+    
+    private func calculateAngleFromPercantage(_ percentage: CGFloat) -> CGFloat {
+        let angle = Chart.startPointMultiplier + (percentage * Chart.endFullCircleMultiplier)
+        return angle * .pi
     }
 }

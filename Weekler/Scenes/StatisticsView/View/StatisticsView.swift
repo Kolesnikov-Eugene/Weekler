@@ -29,13 +29,7 @@ final class StatisticsView: UIView {
         control.addTarget(self, action: #selector(didChangeControlValue), for: .valueChanged)
         return control
     }()
-    private var chartView = ChartView(frame: .zero){
-        didSet {
-            chartView.setProgressColor = UIColor(displayP3Red: 50.0/255.0, green: 168.0/255.0, blue: 82.0/255.0, alpha: 1.0)
-            chartView.setTrackColor = UIColor(displayP3Red: 205.0/255.0, green: 247.0/255.0, blue: 212.0/255.0, alpha: 1.0)
-            chartView.setProgressWithAnimation(duration: 2.0, value: 0.4)
-        }
-    }
+    private var chartView = ChartView(frame: .zero)
 //    private lazy var statisticsChartView = { view in
 //        view.backgroundColor = .systemIndigo
 //        view.clipsToBounds = true
@@ -108,9 +102,7 @@ final class StatisticsView: UIView {
             print("Week")
         case 1:
 //            chartView.setProgressColor(.red)
-            chartView.setProgressColor = UIColor(displayP3Red: 50.0/255.0, green: 168.0/255.0, blue: 82.0/255.0, alpha: 1.0)
-            chartView.setTrackColor = UIColor(displayP3Red: 205.0/255.0, green: 247.0/255.0, blue: 212.0/255.0, alpha: 1.0)
-            chartView.setProgressWithAnimation(duration: 2.0, value: 1.0)
+            chartView.setProgressWithAnimation(duration: 1.0, value: 1.0, for: 0.5)
 //            layoutIfNeeded()
             break
         case 2:
