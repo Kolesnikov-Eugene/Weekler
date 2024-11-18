@@ -41,7 +41,10 @@ final class CalendarView: UIView {
     private var viewModel: CalendarViewModelProtocol
     private var isInitialLayout = false
     
-    init(frame: CGRect, viewModel: CalendarViewModelProtocol) {
+    init(
+        frame: CGRect,
+        viewModel: CalendarViewModelProtocol
+    ) {
         self.viewModel = viewModel
         super.init(frame: frame)
         setupUI()

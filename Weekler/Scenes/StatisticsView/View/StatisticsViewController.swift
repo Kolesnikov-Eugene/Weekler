@@ -12,7 +12,9 @@ final class StatisticsViewController: UIViewController {
     private var statisticsView: StatisticsView!
     private let viewModel: StatisticsViewModelProtocol
     
-    init(viewModel: StatisticsViewModelProtocol) {
+    init(
+        viewModel: StatisticsViewModelProtocol
+    ) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         setupUI()

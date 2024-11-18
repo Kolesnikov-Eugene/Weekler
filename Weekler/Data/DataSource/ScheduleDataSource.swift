@@ -24,10 +24,12 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
     }
     
     // MARK: - public methods
-    func fetchTaskItems(for date: String) -> [TaskItem] {
-        let predicate = #Predicate<TaskItem> { $0.onlyDate == date }
-        let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
-        let descriptor = FetchDescriptor<TaskItem>(predicate: predicate, sortBy: [sortDescriptor])
+    func fetchTaskItems<T: PersistentModel>(
+        for date: String,
+        predicate: Predicate<T>,
+        sortDescriptor: SortDescriptor<T>
+    ) -> [T] {
+        let descriptor = FetchDescriptor<T>(predicate: predicate, sortBy: [sortDescriptor])
         do {
             let scheduleForSelectedDate = try context.fetch(descriptor)
             return scheduleForSelectedDate
@@ -36,15 +38,14 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
         }
     }
     
-    func insert(_ model: TaskItem) {
+    func insert<T: PersistentModel>(_ model: T) {
         context.insert(model)
         try? context.save()
     }
     
-    func deleteTask(with id: UUID) {
-        let predicate = #Predicate<TaskItem> { $0.id == id }
+    func deleteTask<T: PersistentModel>(with predicate: Predicate<T>) {
         do {
-            try self.context.delete(model: TaskItem.self, where: predicate)
+            try self.context.delete(model: T.self, where: predicate)
             try context.save()
         } catch {
             fatalError("Error deleting task: \(error.localizedDescription)")
@@ -66,12 +67,11 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
         }
     }
     
-    func completeTask(with id: UUID) {
-        let predicate = #Predicate<TaskItem> { $0.id == id }
-        let descriptor = FetchDescriptor<TaskItem>(predicate: predicate)
+    func completeTask<T: PersistentModel>(with predicate: Predicate<T>) {
+        let descriptor = FetchDescriptor<T>(predicate: predicate)
         do {
             let items = try self.context.fetch(descriptor)
-            if let taskToEdit = items.first {
+            if let taskToEdit = items.first as? TaskItem {
                 let completedTask = CompletedTask(id: UUID(), task: taskToEdit)
                 taskToEdit.completed = completedTask
                 try context.save()
@@ -82,12 +82,11 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
     }
     
     // TODO: - implement deletion from completed
-    func unCompleteTask(with id: UUID) {
-        let predicate = #Predicate<TaskItem> { $0.id == id }
-        let descriptor = FetchDescriptor<TaskItem>(predicate: predicate)
+    func unCompleteTask<T: PersistentModel>(with predicate: Predicate<T>) {
+        let descriptor = FetchDescriptor<T>(predicate: predicate)
         do {
             let items = try self.context.fetch(descriptor)
-            if let taskToEdit = items.first {
+            if let taskToEdit = items.first as? TaskItem {
                 taskToEdit.completed = nil
                 try context.save()
             }

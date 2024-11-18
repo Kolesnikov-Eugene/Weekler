@@ -44,7 +44,10 @@ final class ScheduleMainView: UIView {
     private var viewModel: ScheduleMainViewModelProtocol
     private var bag = DisposeBag()
     
-    init(frame: CGRect, viewModel: ScheduleMainViewModelProtocol) {
+    init(
+        frame: CGRect,
+        viewModel: ScheduleMainViewModelProtocol
+    ) {
         self.viewModel = viewModel
         super.init(frame: frame)
         setupUI()

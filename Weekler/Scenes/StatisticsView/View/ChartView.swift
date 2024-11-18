@@ -13,8 +13,20 @@ final class ChartView: UIView {
     
     private var baseLayer = CAShapeLayer()
     private var progressLayer = CAShapeLayer()
+    private lazy var gradientLayer: CAGradientLayer = {
+        let gradientLayer = CAGradientLayer()
+        let startColor = UIColor.systemCyan.cgColor
+        let endColor = UIColor.systemTeal.cgColor
+        gradientLayer.colors = [startColor, endColor]
+        gradientLayer.locations = [0.7, 0.9]
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
+        gradientLayer.type = .radial
+        return gradientLayer
+    }()
     
     private struct Chart {
+        static let margin: CGFloat = 20.0
         static var radius: CGFloat = 0.0                       // update in layout subviews
         static var strokeWidth: CGFloat = 35.0                 // width of donut chart border
         static let startPointMultiplier: CGFloat = -0.5        // start multiplier to draw circle (north point)
@@ -34,11 +46,17 @@ final class ChartView: UIView {
         super.init(coder: aDecoder)
     }
     
+    func layoutSublayers() {
+        super.layoutSublayers(of: self.layer)
+        gradientLayer.frame = layer.bounds
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
-        Chart.radius = bounds.height / 2.0
+        Chart.radius = bounds.height / 2.0 - Chart.margin
         configure(baseLayer, for: Chart.fullCirclePercent, and: Chart.baseStrokeColor)
         configure(progressLayer, for: Chart.progressBasePercent, and: Chart.progressStrokeColor)
+        configureGradientLayer()
     }
     
     
@@ -67,6 +85,12 @@ final class ChartView: UIView {
             endAngle: angle,
             clockwise: true
         ).cgPath
+    }
+    
+    private func configureGradientLayer() {
+        gradientLayer.frame = layer.bounds
+        gradientLayer.mask = progressLayer
+        layer.addSublayer(gradientLayer)
     }
     
     func setProgressWithAnimation(

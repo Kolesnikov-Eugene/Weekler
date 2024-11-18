@@ -11,7 +11,9 @@ final class SceneFactoryDIContainer: SceneFactoryProtocol {
     private let container: DIContainer
     var createScheduleSceneContainer: CreateScheduleSceneProtocol?
     
-    init(container: DIContainer) {
+    init(
+        container: DIContainer
+    ) {
         self.container = container
     }
     

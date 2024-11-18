@@ -12,7 +12,10 @@ final class ScheduleFlowCoordinator: Coordinator {
     private let sceneFactoryDIContainer: SceneFactoryProtocol
     private let tabBar: UITabBarController
     
-    init(tabbar: UITabBarController, container: SceneFactoryProtocol) {
+    init(
+        tabbar: UITabBarController,
+        container: SceneFactoryProtocol
+    ) {
         self.tabBar = tabbar
         self.sceneFactoryDIContainer = container
     }

@@ -39,7 +39,10 @@ final class StatisticsView: UIView {
     private let viewModel: StatisticsViewModelProtocol
     private let bag = DisposeBag()
     
-    init(frame: CGRect, viewModel: StatisticsViewModelProtocol) {
+    init(
+        frame: CGRect,
+        viewModel: StatisticsViewModelProtocol
+    ) {
         self.viewModel = viewModel
         super.init(frame: frame)
         setupUI()
@@ -77,8 +80,8 @@ final class StatisticsView: UIView {
         chartView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview()
-            $0.width.equalTo(200)
-            $0.height.equalTo(200)
+            $0.width.equalTo(250)
+            $0.height.equalTo(250)
         }
         
         // statisticsChartView constraints
@@ -102,7 +105,7 @@ final class StatisticsView: UIView {
             print("Week")
         case 1:
 //            chartView.setProgressColor(.red)
-            chartView.setProgressWithAnimation(duration: 1.0, value: 1.0, for: 0.5)
+            chartView.setProgressWithAnimation(duration: 1.0, value: 1.0, for: 1.0)
 //            layoutIfNeeded()
             break
         case 2:

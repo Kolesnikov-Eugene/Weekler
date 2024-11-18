@@ -12,7 +12,10 @@ final class ConfigFlowCoordinator: Coordinator {
     private let tabBarController: UITabBarController
     private let sceneFactoryDIContainer: SceneFactoryProtocol
     
-    init(tabBarController: UITabBarController, sceneFactoryDIContainer: SceneFactoryProtocol) {
+    init(
+        tabBarController: UITabBarController,
+        sceneFactoryDIContainer: SceneFactoryProtocol
+    ) {
         self.tabBarController = tabBarController
         self.sceneFactoryDIContainer = sceneFactoryDIContainer
     }

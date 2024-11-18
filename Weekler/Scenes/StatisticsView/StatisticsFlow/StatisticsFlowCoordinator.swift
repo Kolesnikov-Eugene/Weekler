@@ -12,7 +12,10 @@ final class StatisticsFlowCoordinator: Coordinator {
     private let sceneFactoryDIContainer: SceneFactoryProtocol
     private let tabBar: UITabBarController
     
-    init(sceneFactoryDIContainer: SceneFactoryProtocol, tabBar: UITabBarController) {
+    init(
+        sceneFactoryDIContainer: SceneFactoryProtocol,
+        tabBar: UITabBarController
+    ) {
         self.sceneFactoryDIContainer = sceneFactoryDIContainer
         self.tabBar = tabBar
     }

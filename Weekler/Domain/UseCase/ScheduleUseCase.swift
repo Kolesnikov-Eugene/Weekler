@@ -10,7 +10,9 @@ import Foundation
 final class ScheduleUseCase: ScheduleUseCaseProtocol {
     private let repository: ScheduleRepositoryProtocol
     
-    init(repository: ScheduleRepositoryProtocol) {
+    init(
+        repository: ScheduleRepositoryProtocol
+    ) {
         self.repository = repository
     }
     

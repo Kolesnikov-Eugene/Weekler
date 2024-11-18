@@ -24,7 +24,10 @@ final class SelectTaskModeView: UIView {
     }()
     private var viewModel: SelectTaskViewModelProtocol
     
-    init(frame: CGRect, viewModel: SelectTaskViewModelProtocol) {
+    init(
+        frame: CGRect,
+        viewModel: SelectTaskViewModelProtocol
+    ) {
         self.viewModel = viewModel
         super.init(frame: frame)
         setupUI()
