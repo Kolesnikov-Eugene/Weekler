@@ -10,21 +10,55 @@ import RxSwift
 import RxCocoa
 
 protocol StatisticsViewModelProtocol: AnyObject {
+    var shouldAnimateStatistics: PublishRelay<Bool> { get set }
+    var shouldRemoveStatistics: PublishRelay<Bool> { get set }
     var selectedInterval: PublishRelay<Int> { get set }
+    func viewDidLoad()
+    func viewDidAppear()
+    func viewDidDisappear()
 }
 
 final class StatisticsViewModel: StatisticsViewModelProtocol {
     
+    // MARK: output
+    var shouldAnimateStatistics: PublishRelay<Bool> = .init()
+    var shouldRemoveStatistics: PublishRelay<Bool> = .init()
+    
+    
     // MARK: - Input
     var selectedInterval: PublishRelay<Int> = .init()
     
+    // MARK: private properties
+    private let statisticsService: StatisticsServiceProtocol
     private let bag = DisposeBag()
     
-    init() {
+    init(
+        statisticsService: StatisticsServiceProtocol
+    ) {
+        self.statisticsService = statisticsService
+        
         selectedInterval
             .subscribe(onNext: { [weak self] interval in
                 print(interval)
         })
             .disposed(by: bag)
+    }
+    
+    func viewDidLoad() {
+        fetch()
+    }
+    
+    func viewDidAppear() {
+        shouldAnimateStatistics.accept(true)
+    }
+    
+    func viewDidDisappear() {
+        shouldRemoveStatistics.accept(true)
+    }
+    
+    private func fetch() {
+        Task.detached {
+            await self.statisticsService.fetchCurrentWeekStatistics()
+        }
     }
 }

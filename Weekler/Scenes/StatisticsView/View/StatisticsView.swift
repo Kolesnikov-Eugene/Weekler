@@ -97,6 +97,20 @@ final class StatisticsView: UIView {
         statisticsIntervalSegmentedControl.rx.selectedSegmentIndex
             .bind(to: viewModel.selectedInterval)
             .disposed(by: bag)
+        
+        viewModel.shouldAnimateStatistics
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.chartView.setProgressWithAnimation(duration: 1.0, value: 1.0, for: 1.0)
+            })
+            .disposed(by: bag)
+        
+        viewModel.shouldRemoveStatistics
+            .observe(on: MainScheduler.instance)
+            .subscribe { [weak self] _ in
+                self?.chartView.setProgressWithAnimation(duration: 1.0, value: 1.0, for: 0.0)
+            }
+            .disposed(by: bag)
     }
     
     @objc private func didChangeControlValue(sender: UISegmentedControl) {

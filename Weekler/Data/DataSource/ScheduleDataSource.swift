@@ -30,6 +30,7 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
         sortDescriptor: SortDescriptor<T>
     ) -> [T] {
         let descriptor = FetchDescriptor<T>(predicate: predicate, sortBy: [sortDescriptor])
+        
         do {
             let scheduleForSelectedDate = try context.fetch(descriptor)
             return scheduleForSelectedDate
@@ -56,6 +57,7 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
         let id: UUID = task.id
         let predicate = #Predicate<TaskItem> { $0.id == id }
         let descriptor = FetchDescriptor<TaskItem>(predicate: predicate)
+        
         do {
             let items = try context.fetch(descriptor)
             if let taskToEdit = items.first {
@@ -69,6 +71,7 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
     
     func completeTask<T: PersistentModel>(with predicate: Predicate<T>) {
         let descriptor = FetchDescriptor<T>(predicate: predicate)
+        
         do {
             let items = try self.context.fetch(descriptor)
             if let taskToEdit = items.first as? TaskItem {
@@ -84,6 +87,7 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
     // TODO: - implement deletion from completed
     func unCompleteTask<T: PersistentModel>(with predicate: Predicate<T>) {
         let descriptor = FetchDescriptor<T>(predicate: predicate)
+        
         do {
             let items = try self.context.fetch(descriptor)
             if let taskToEdit = items.first as? TaskItem {
@@ -94,4 +98,11 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
             fatalError("Error uncompleting task: \(error.localizedDescription)")
         }
     }
+}
+
+extension ScheduleDataSource: StatisticsDataSourceProtocol {
+    func fetchStatistics() {
+        print("stat in data source")
+    }
+    
 }
