@@ -10,7 +10,6 @@ import SwiftData
 
 protocol ScheduleDataSourceProtocol {
     func fetchTaskItems<T: PersistentModel>(
-        for date: String,
         predicate: Predicate<T>,
         sortDescriptor: SortDescriptor<T>
     ) async -> [T]

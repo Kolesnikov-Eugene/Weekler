@@ -21,7 +21,6 @@ final class ScheduleRepository: ScheduleRepositoryProtocol {
         let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
         
         let taskItems = await dataSource.fetchTaskItems(
-            for: date,
             predicate: predicate,
             sortDescriptor: sortDescriptor
         )

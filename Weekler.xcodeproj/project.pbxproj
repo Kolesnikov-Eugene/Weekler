@@ -21,6 +21,7 @@
 		440B2DD42CDBF07400BA728B /* TaskToEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440B2DD32CDBF07400BA728B /* TaskToEdit.swift */; };
 		440B2DD62CDBF93100BA728B /* ScheduleDataSourceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440B2DD52CDBF93100BA728B /* ScheduleDataSourceAssembly.swift */; };
 		440CF1F72C73CAE600FEFDE0 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */; };
+		4415A1E72CEFBD390065B142 /* Calendar+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4415A1E62CEFBD390065B142 /* Calendar+extension.swift */; };
 		441CAC742CE0DB7F00064348 /* WeeklerAppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441CAC732CE0DB7F00064348 /* WeeklerAppCoordinator.swift */; };
 		441CAC772CE0E1F300064348 /* ScheduleFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441CAC762CE0E1F300064348 /* ScheduleFlowCoordinator.swift */; };
 		441DECAE2CC0353A00B725B7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441DECAD2CC0353A00B725B7 /* Constants.swift */; };
@@ -113,6 +114,7 @@
 		440B2DD32CDBF07400BA728B /* TaskToEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskToEdit.swift; sourceTree = "<group>"; };
 		440B2DD52CDBF93100BA728B /* ScheduleDataSourceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataSourceAssembly.swift; sourceTree = "<group>"; };
 		440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
+		4415A1E62CEFBD390065B142 /* Calendar+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+extension.swift"; sourceTree = "<group>"; };
 		441CAC732CE0DB7F00064348 /* WeeklerAppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklerAppCoordinator.swift; sourceTree = "<group>"; };
 		441CAC762CE0E1F300064348 /* ScheduleFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleFlowCoordinator.swift; sourceTree = "<group>"; };
 		441DECAD2CC0353A00B725B7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -538,6 +540,7 @@
 				440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */,
 				44B562F72CBEE06F0071F691 /* WeekDayShortName.swift */,
 				441DECAD2CC0353A00B725B7 /* Constants.swift */,
+				4415A1E62CEFBD390065B142 /* Calendar+extension.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -909,6 +912,7 @@
 				440CF1F72C73CAE600FEFDE0 /* Date+extension.swift in Sources */,
 				44E28EDC2CEE6E88001FA0CA /* StatisticsRepositoryProtocol.swift in Sources */,
 				44F116932BDC384B00134D5F /* DIContainer.swift in Sources */,
+				4415A1E72CEFBD390065B142 /* Calendar+extension.swift in Sources */,
 				44DBD2AF2C8ED287006AE2F1 /* CompletedTask.swift in Sources */,
 				44727B432C486A48007756A3 /* DaysOfWeekEnum.swift in Sources */,
 				44E28EDE2CEE6ED2001FA0CA /* StatisticsRepository.swift in Sources */,

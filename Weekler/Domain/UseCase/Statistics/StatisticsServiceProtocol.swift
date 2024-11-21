@@ -8,5 +8,5 @@
 import Foundation
 
 protocol StatisticsServiceProtocol {
-    func fetchCurrentWeekStatistics() async
+    func fetchCurrentWeekStatistics(for currentWeek: [String]) async -> [ScheduleTask]
 }

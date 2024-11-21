@@ -17,8 +17,9 @@ final class StatisticsService: StatisticsServiceProtocol {
         self.statisticsRepository = statisticsRepository
     }
     
-    func fetchCurrentWeekStatistics() async {
+    func fetchCurrentWeekStatistics(for currentWeek: [String]) async -> [ScheduleTask] {
         print("statistics service fecth")
-        await statisticsRepository.fetchStatistics()
+        let schedule = await statisticsRepository.fetchStatistics(for: currentWeek)
+        return schedule
     }
 }

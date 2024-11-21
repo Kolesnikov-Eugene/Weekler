@@ -8,5 +8,5 @@
 import Foundation
 
 protocol StatisticsRepositoryProtocol {
-    func fetchStatistics() async
+    func fetchStatistics(for currentWeek: [String]) async -> [ScheduleTask]
 }

@@ -6,7 +6,11 @@
 //
 
 import Foundation
+import SwiftData
 
 protocol StatisticsDataSourceProtocol {
-    func fetchStatistics() async
+    func fetchTaskItems<T: PersistentModel>(
+        predicate: Predicate<T>,
+        sortDescriptor: SortDescriptor<T>
+    ) async -> [T]
 }

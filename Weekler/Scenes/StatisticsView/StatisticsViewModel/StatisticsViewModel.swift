@@ -16,6 +16,7 @@ protocol StatisticsViewModelProtocol: AnyObject {
     func viewDidLoad()
     func viewDidAppear()
     func viewDidDisappear()
+    func viewWillAppear()
 }
 
 final class StatisticsViewModel: StatisticsViewModelProtocol {
@@ -31,12 +32,15 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
     // MARK: private properties
     private let statisticsService: StatisticsServiceProtocol
     private let bag = DisposeBag()
+    private var currentWeekDates = [String]()
+    private var currentWeekSchedule: [ScheduleTask]?
+    private var completedTasks: [ScheduleTask]?
     
     init(
         statisticsService: StatisticsServiceProtocol
     ) {
         self.statisticsService = statisticsService
-        
+        currentWeekDates = Calendar.getCurrentWeekDatesArray()
         selectedInterval
             .subscribe(onNext: { [weak self] interval in
                 print(interval)
@@ -45,6 +49,10 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
     }
     
     func viewDidLoad() {
+        fetch()
+    }
+    
+    func viewWillAppear() {
         fetch()
     }
     
@@ -58,7 +66,17 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
     
     private func fetch() {
         Task.detached {
-            await self.statisticsService.fetchCurrentWeekStatistics()
+            self.currentWeekSchedule = await self.statisticsService.fetchCurrentWeekStatistics(for: self.currentWeekDates)
+            if let curSchedule = self.currentWeekSchedule {
+                self.completedTasks = curSchedule.filter { $0.completed }
+            }
+            
+            self.printStat()
         }
+    }
+    
+    private func printStat() {
+        print("Current stat -> done: \(completedTasks?.count) / all: \(currentWeekSchedule?.count)")
+        
     }
 }

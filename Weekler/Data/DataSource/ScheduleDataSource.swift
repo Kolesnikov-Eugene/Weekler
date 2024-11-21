@@ -25,7 +25,6 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
     
     // MARK: - public methods
     func fetchTaskItems<T: PersistentModel>(
-        for date: String,
         predicate: Predicate<T>,
         sortDescriptor: SortDescriptor<T>
     ) -> [T] {
@@ -100,9 +99,4 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
     }
 }
 
-extension ScheduleDataSource: StatisticsDataSourceProtocol {
-    func fetchStatistics() {
-        print("stat in data source")
-    }
-    
-}
+extension ScheduleDataSource: StatisticsDataSourceProtocol {}
