@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 
 protocol StatisticsViewModelProtocol: AnyObject {
-    var shouldAnimateStatistics: PublishRelay<Bool> { get set }
+    var shouldAnimateStatistics: PublishRelay<CGFloat> { get set }
     var shouldRemoveStatistics: PublishRelay<Bool> { get set }
     var selectedInterval: PublishRelay<Int> { get set }
     func viewDidLoad()
@@ -22,7 +22,7 @@ protocol StatisticsViewModelProtocol: AnyObject {
 final class StatisticsViewModel: StatisticsViewModelProtocol {
     
     // MARK: output
-    var shouldAnimateStatistics: PublishRelay<Bool> = .init()
+    var shouldAnimateStatistics: PublishRelay<CGFloat> = .init()
     var shouldRemoveStatistics: PublishRelay<Bool> = .init()
     
     
@@ -33,8 +33,9 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
     private let statisticsService: StatisticsServiceProtocol
     private let bag = DisposeBag()
     private var currentWeekDates = [String]()
-    private var currentWeekSchedule: [ScheduleTask]?
+    private var currentWeekSchedule: [ScheduleTask]? // FIXME: store Int instead of tasks
     private var completedTasks: [ScheduleTask]?
+    private var progress: CGFloat = 0.0
     
     init(
         statisticsService: StatisticsServiceProtocol
@@ -49,34 +50,33 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
     }
     
     func viewDidLoad() {
-        fetch()
+        fetchScheduleProgress(for: currentWeekDates)
     }
     
     func viewWillAppear() {
-        fetch()
+        fetchScheduleProgress(for: currentWeekDates)
     }
     
     func viewDidAppear() {
-        shouldAnimateStatistics.accept(true)
+        shouldAnimateStatistics.accept(progress)
     }
     
     func viewDidDisappear() {
         shouldRemoveStatistics.accept(true)
     }
     
-    private func fetch() {
+    private func fetchScheduleProgress(for interval: [String]) {
         Task.detached {
-            self.currentWeekSchedule = await self.statisticsService.fetchCurrentWeekStatistics(for: self.currentWeekDates)
+            self.currentWeekSchedule = await self.statisticsService.fetchCurrentWeekStatistics(for: interval)
             if let curSchedule = self.currentWeekSchedule {
                 self.completedTasks = curSchedule.filter { $0.completed }
             }
-            
-            self.printStat()
+            self.calculateProgress()
         }
     }
     
-    private func printStat() {
-        print("Current stat -> done: \(completedTasks?.count) / all: \(currentWeekSchedule?.count)")
-        
+    private func calculateProgress() {
+        guard let completedTasks, let currentWeekSchedule else { return }
+        progress = CGFloat(completedTasks.count) / CGFloat(currentWeekSchedule.count)
     }
 }

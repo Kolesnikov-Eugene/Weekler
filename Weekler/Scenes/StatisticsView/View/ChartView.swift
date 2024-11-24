@@ -8,9 +8,21 @@
 
 import UIKit
 import QuartzCore
+import SnapKit
 
 final class ChartView: UIView {
     
+    private lazy var textLayer: CATextLayer = {
+        let layer = CATextLayer()
+        layer.fontSize = 30
+        layer.alignmentMode = .center
+//        layer.truncationMode = .middle
+//        layer.isWrapped = true
+        layer.string = "75%"
+//        layer.truncationMode = .end
+        layer.foregroundColor = UIColor.black.cgColor
+        return layer
+    }()
     private var baseLayer = CAShapeLayer()
     private var progressLayer = CAShapeLayer()
     private lazy var gradientLayer: CAGradientLayer = {
@@ -23,6 +35,15 @@ final class ChartView: UIView {
         gradientLayer.endPoint = CGPoint(x: 1, y: 1)
         gradientLayer.type = .radial
         return gradientLayer
+    }()
+    private lazy var progressLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = Colors.textColorMain
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 32, weight: .bold)
+        label.text = "0%"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     private struct Chart {
@@ -40,6 +61,7 @@ final class ChartView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        setupUI()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -48,7 +70,9 @@ final class ChartView: UIView {
     
     func layoutSublayers() {
         super.layoutSublayers(of: self.layer)
-        gradientLayer.frame = layer.bounds
+//        gradientLayer.frame = layer.bounds
+//        textLayer.frame = CGRect(x: Int(bounds.width / 2.0), y: Int(bounds.height/2.0), width: 40, height: 40)
+        
     }
     
     override func layoutSubviews() {
@@ -57,8 +81,19 @@ final class ChartView: UIView {
         configure(baseLayer, for: Chart.fullCirclePercent, and: Chart.baseStrokeColor)
         configure(progressLayer, for: Chart.progressBasePercent, and: Chart.progressStrokeColor)
         configureGradientLayer()
+        textLayer.frame = CGRect(
+            x: Int(bounds.width / 2.0 - Chart.margin),
+            y: Int(bounds.height / 2.0 - Chart.margin),
+            width: 60,
+            height: 60
+        )
+//        textLayer.frame = CGRect(x: Int(layer.frame.midX), y: Int(layer.frame.midY), width: 40, height: 40)
+        layer.insertSublayer(textLayer, at: 0)
+//        layer.addSublayer(textLayer)
     }
     
+    private func setupUI() {
+    }
     
     private func configure(
         _ sublayer: CAShapeLayer,
@@ -98,7 +133,11 @@ final class ChartView: UIView {
         value: Float,
         for percent: CGFloat
     ) {
+        //TODO: two animations inside UIView.animate
+        
         let animation = CABasicAnimation(keyPath: "strokeEnd")
+//        let animText = CABasicAnimation(keyPath: "transform")
+//        animText.beginTime = CACurrentMediaTime() + duration
         animation.duration = duration
         
         let angle = calculateAngleFromPercantage(percent)
@@ -110,6 +149,10 @@ final class ChartView: UIView {
         animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
         progressLayer.strokeEnd = CGFloat(value)
         progressLayer.add(animation, forKey: "animateCircle")
+        
+//        textLayer.string = "\(Int(percent * 100))%"
+        
+//        textLayer.add(animText, forKey: "animateText")
     }
     
     private func calculateAngleFromPercantage(_ percentage: CGFloat) -> CGFloat {

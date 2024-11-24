@@ -67,7 +67,6 @@ final class StatisticsView: UIView {
     private func addSubviews() {
         addSubview(statisticsIntervalSegmentedControl)
         addSubview(chartView)
-//        addSubview(statisticsChartView)
     }
     
     private func applyConstraints() {
@@ -100,8 +99,8 @@ final class StatisticsView: UIView {
         
         viewModel.shouldAnimateStatistics
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
-                self?.chartView.setProgressWithAnimation(duration: 1.0, value: 1.0, for: 1.0)
+            .subscribe(onNext: { [weak self] progress in
+                self?.chartView.setProgressWithAnimation(duration: 1.0, value: 1.0, for: progress)
             })
             .disposed(by: bag)
         
