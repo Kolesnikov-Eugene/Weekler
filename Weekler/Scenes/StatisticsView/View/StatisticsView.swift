@@ -30,12 +30,6 @@ final class StatisticsView: UIView {
         return control
     }()
     private var chartView = ChartView(frame: .zero)
-//    private lazy var statisticsChartView = { view in
-//        view.backgroundColor = .systemIndigo
-//        view.clipsToBounds = true
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
-//    }(UIView(frame: .zero))
     private let viewModel: StatisticsViewModelProtocol
     private let bag = DisposeBag()
     
@@ -76,20 +70,13 @@ final class StatisticsView: UIView {
             $0.centerX.equalToSuperview()
         }
         
+        // chartView constraints
         chartView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.centerY.equalToSuperview()
             $0.width.equalTo(250)
             $0.height.equalTo(250)
         }
-        
-        // statisticsChartView constraints
-//        statisticsChartView.snp.makeConstraints {
-//            $0.centerX.equalToSuperview()
-//            $0.centerY.equalToSuperview()
-//            $0.width.equalTo(200)
-//            $0.height.equalTo(200)
-//        }
     }
     
     private func bindToViewModel() {
@@ -100,14 +87,15 @@ final class StatisticsView: UIView {
         viewModel.shouldAnimateStatistics
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] progress in
-                self?.chartView.setProgressWithAnimation(duration: 1.0, value: 1.0, for: progress)
+                self?.chartView.progress = progress
             })
             .disposed(by: bag)
         
         viewModel.shouldRemoveStatistics
             .observe(on: MainScheduler.instance)
             .subscribe { [weak self] _ in
-                self?.chartView.setProgressWithAnimation(duration: 1.0, value: 1.0, for: 0.0)
+                
+//                self?.chartView.setProgressWithAnimation(duration: 1.0, value: 1.0, for: 0.0)
             }
             .disposed(by: bag)
     }
@@ -117,9 +105,9 @@ final class StatisticsView: UIView {
         case 0:
             print("Week")
         case 1:
+            print("month")
 //            chartView.setProgressColor(.red)
-            chartView.setProgressWithAnimation(duration: 1.0, value: 1.0, for: 1.0)
-//            layoutIfNeeded()
+//            chartView.setProgressWithAnimation(duration: 1.0, value: 1.0, for: 1.0)
             break
         case 2:
             print("Year")

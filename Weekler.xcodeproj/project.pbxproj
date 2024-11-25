@@ -69,6 +69,7 @@
 		44AE39A22CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AE39A12CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift */; };
 		44AE39A52CE2908600D89B23 /* ConfigFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AE39A42CE2908600D89B23 /* ConfigFlowCoordinator.swift */; };
 		44AE39A82CE2954500D89B23 /* CoreHapticsManagerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AE39A72CE2954500D89B23 /* CoreHapticsManagerAssembly.swift */; };
+		44AE982E2CF5058E00D685FD /* GradientLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AE982D2CF5058E00D685FD /* GradientLabel.swift */; };
 		44B06E142BECEE0E000C3CC6 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B06E132BECEE0E000C3CC6 /* ScheduleViewModel.swift */; };
 		44B06E162BECEE3C000C3CC6 /* ScheduleViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B06E152BECEE3C000C3CC6 /* ScheduleViewModelProtocol.swift */; };
 		44B06E192BECF08F000C3CC6 /* ScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B06E182BECF08F000C3CC6 /* ScheduleTableViewCell.swift */; };
@@ -165,6 +166,7 @@
 		44AE39A12CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsFlowCoordinator.swift; sourceTree = "<group>"; };
 		44AE39A42CE2908600D89B23 /* ConfigFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigFlowCoordinator.swift; sourceTree = "<group>"; };
 		44AE39A72CE2954500D89B23 /* CoreHapticsManagerAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreHapticsManagerAssembly.swift; sourceTree = "<group>"; };
+		44AE982D2CF5058E00D685FD /* GradientLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLabel.swift; sourceTree = "<group>"; };
 		44B06E132BECEE0E000C3CC6 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		44B06E152BECEE3C000C3CC6 /* ScheduleViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModelProtocol.swift; sourceTree = "<group>"; };
 		44B06E182BECF08F000C3CC6 /* ScheduleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewCell.swift; sourceTree = "<group>"; };
@@ -445,7 +447,6 @@
 				447DBE582BC4A8EB00A99A38 /* StatisticsViewController.swift */,
 				444AC1252CE3D63A0032DA6F /* StatisticsView.swift */,
 				4441EC762CE5303800AFB022 /* ChartView.swift */,
-				4481DB982CF3BB7F009BBB4C /* GradientTextLabel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -544,6 +545,8 @@
 				44B562F72CBEE06F0071F691 /* WeekDayShortName.swift */,
 				441DECAD2CC0353A00B725B7 /* Constants.swift */,
 				4415A1E62CEFBD390065B142 /* Calendar+extension.swift */,
+				44AE982D2CF5058E00D685FD /* GradientLabel.swift */,
+				4481DB982CF3BB7F009BBB4C /* GradientTextLabel.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -936,6 +939,7 @@
 				444AC1302CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift in Sources */,
 				449EF5A32C52DE5900FD187B /* CreateScheduleDelegate.swift in Sources */,
 				444AC1292CE3DEA20032DA6F /* StatisticsViewModel.swift in Sources */,
+				44AE982E2CF5058E00D685FD /* GradientLabel.swift in Sources */,
 				441DECAE2CC0353A00B725B7 /* Constants.swift in Sources */,
 				44F9EA2D2CDAB1A1009AE5FD /* ScheduleRepository.swift in Sources */,
 				447DBE642BC4A8EB00A99A38 /* TabBarController.swift in Sources */,

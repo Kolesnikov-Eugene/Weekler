@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import QuartzCore
 
-class GradientLabel: UILabel {
+class GradientTextLabel: UILabel {
 
     var gradientColors: [UIColor] = [.red, .orange, .yellow] {
         didSet {
@@ -16,8 +17,12 @@ class GradientLabel: UILabel {
     }
 
     override func draw(_ rect: CGRect) {
-        guard let context = UIGraphicsGetCurrentContext() else { return }
+        let currentContext = UIGraphicsGetCurrentContext()
+        currentContext?.saveGState()
+        defer { currentContext?.restoreGState() }
         guard let text = text else { return }
+        currentContext?.translateBy(x: 0, y: bounds.height)
+        currentContext?.scaleBy(x: 1, y: -1)
         
         // Create gradient
         let gradientLayer = CAGradientLayer()
@@ -33,10 +38,8 @@ class GradientLabel: UILabel {
         UIGraphicsEndImageContext()
         
         // Clip gradient to text
-        context.saveGState()
-        context.clip(to: rect, mask: createTextMask(rect: rect))
+        currentContext?.clip(to: rect, mask: createTextMask(rect: rect))
         gradientImage?.draw(in: rect)
-        context.restoreGState()
     }
     
     private func createTextMask(rect: CGRect) -> CGImage {
@@ -46,12 +49,12 @@ class GradientLabel: UILabel {
         (text! as NSString).draw(in: textRect, withAttributes: [
             .font: font as Any
         ])
-        let maskImage = UIGraphicsGetImageFromCurrentImageContext()?.cgImage
+        let maskImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return maskImage!
+        return maskImage!.cgImage!
     }
 }
-//
+
 //class ViewController: UIViewController {
 //
 //    override func viewDidLoad() {
@@ -61,7 +64,7 @@ class GradientLabel: UILabel {
 //        gradientLabel.text = "Gradient Text"
 //        gradientLabel.font = UIFont.systemFont(ofSize: 40, weight: .bold)
 //        gradientLabel.textAlignment = .center
-//        gradientLabel.gradientColors = [.blue, .purple, .cyan]
+////        gradientLabel.gradientColors = [.blue, .purple, .cyan]
 //        
 //        view.addSubview(gradientLabel)
 //    }

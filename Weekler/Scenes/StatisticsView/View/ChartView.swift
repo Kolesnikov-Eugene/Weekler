@@ -12,17 +12,13 @@ import SnapKit
 
 final class ChartView: UIView {
     
-    private lazy var textLayer: CATextLayer = {
-        let layer = CATextLayer()
-        layer.fontSize = 30
-        layer.alignmentMode = .center
-//        layer.truncationMode = .middle
-//        layer.isWrapped = true
-        layer.string = "75%"
-//        layer.truncationMode = .end
-        layer.foregroundColor = UIColor.black.cgColor
-        return layer
-    }()
+    // MARK: public properties
+    var progress: CGFloat = 0.0 {
+        didSet {
+            updateProgressAnimated()
+        }
+    }
+    
     private var baseLayer = CAShapeLayer()
     private var progressLayer = CAShapeLayer()
     private lazy var gradientLayer: CAGradientLayer = {
@@ -36,12 +32,12 @@ final class ChartView: UIView {
         gradientLayer.type = .radial
         return gradientLayer
     }()
-    private lazy var progressLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = Colors.textColorMain
+    private lazy var progressLabel: GradientLabel = {
+        let label = GradientLabel()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 32, weight: .bold)
-        label.text = "0%"
+//        label.gradientColors = [.blue, .purple, .cyan]  //for gradientTextLabel
+        label.gradientColors = [UIColor.blue.cgColor, UIColor.red.cgColor]
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -49,7 +45,7 @@ final class ChartView: UIView {
     private struct Chart {
         static let margin: CGFloat = 20.0
         static var radius: CGFloat = 0.0                       // update in layout subviews
-        static var strokeWidth: CGFloat = 35.0                 // width of donut chart border
+        static var strokeWidth: CGFloat = 25.0                 // width of donut chart border
         static let startPointMultiplier: CGFloat = -0.5        // start multiplier to draw circle (north point)
         static let fullCirclePercent: CGFloat = 1.0            // percent of drawing (0.0 - zero point, 1.0 - full circle)
         static let progressBasePercent: CGFloat = 0.0          // init progress layer, but do not draw it
@@ -70,8 +66,6 @@ final class ChartView: UIView {
     
     func layoutSublayers() {
         super.layoutSublayers(of: self.layer)
-//        gradientLayer.frame = layer.bounds
-//        textLayer.frame = CGRect(x: Int(bounds.width / 2.0), y: Int(bounds.height/2.0), width: 40, height: 40)
         
     }
     
@@ -79,20 +73,17 @@ final class ChartView: UIView {
         super.layoutSubviews()
         Chart.radius = bounds.height / 2.0 - Chart.margin
         configure(baseLayer, for: Chart.fullCirclePercent, and: Chart.baseStrokeColor)
-        configure(progressLayer, for: Chart.progressBasePercent, and: Chart.progressStrokeColor)
+        configure(progressLayer, for: Chart.fullCirclePercent, and: Chart.progressStrokeColor)
         configureGradientLayer()
-        textLayer.frame = CGRect(
-            x: Int(bounds.width / 2.0 - Chart.margin),
-            y: Int(bounds.height / 2.0 - Chart.margin),
-            width: 60,
-            height: 60
-        )
-//        textLayer.frame = CGRect(x: Int(layer.frame.midX), y: Int(layer.frame.midY), width: 40, height: 40)
-        layer.insertSublayer(textLayer, at: 0)
-//        layer.addSublayer(textLayer)
     }
     
     private func setupUI() {
+        addSubview(progressLabel)
+        progressLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview()
+        }
+        progressLayer.strokeEnd = 0
     }
     
     private func configure(
@@ -111,7 +102,7 @@ final class ChartView: UIView {
         layer.addSublayer(sublayer)
     }
     
-    
+    // flexible start and end for various draw
     private func drawCGPath(at angle: CGFloat) -> CGPath {
         UIBezierPath(
             arcCenter: CGPoint(x: bounds.width / 2.0, y: bounds.height / 2.0),
@@ -128,31 +119,17 @@ final class ChartView: UIView {
         layer.addSublayer(gradientLayer)
     }
     
-    func setProgressWithAnimation(
-        duration: TimeInterval,
-        value: Float,
-        for percent: CGFloat
-    ) {
-        //TODO: two animations inside UIView.animate
-        
-        let animation = CABasicAnimation(keyPath: "strokeEnd")
-//        let animText = CABasicAnimation(keyPath: "transform")
-//        animText.beginTime = CACurrentMediaTime() + duration
-        animation.duration = duration
-        
-        let angle = calculateAngleFromPercantage(percent)
-        let path = drawCGPath(at: angle)
-        progressLayer.path = path
-        
-        animation.fromValue = 0 //start animation at point 0
-        animation.toValue = value //end animation at point specified
-        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
-        progressLayer.strokeEnd = CGFloat(value)
-        progressLayer.add(animation, forKey: "animateCircle")
-        
-//        textLayer.string = "\(Int(percent * 100))%"
-        
-//        textLayer.add(animText, forKey: "animateText")
+    private func updateProgressAnimated() {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 2.0) {
+                let animation = CABasicAnimation(keyPath: "strokeEnd")
+                animation.duration = 2.0
+                animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+                self.progressLayer.strokeEnd = self.progress
+                self.progressLayer.add(animation, forKey: "animateCircle")
+                self.progressLabel.text = "\(Int(round(self.progress * 100)))%"
+            }
+        }
     }
     
     private func calculateAngleFromPercantage(_ percentage: CGFloat) -> CGFloat {
@@ -160,96 +137,3 @@ final class ChartView: UIView {
         return angle * .pi
     }
 }
-
-// chatgpt ver
-class DonutProgressView: UIView {
-    
-    private let progressLayer = CAShapeLayer()
-    private let trackLayer = CAShapeLayer()
-    private let percentageLabel = UILabel()
-    
-    var progress: CGFloat = 0.0 {
-        didSet {
-            updateProgress()
-        }
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupView()
-    }
-    
-    private func setupView() {
-        // Add track layer
-        trackLayer.path = createCircularPath().cgPath
-        trackLayer.fillColor = UIColor.clear.cgColor
-        trackLayer.strokeColor = UIColor.lightGray.cgColor
-        trackLayer.lineWidth = 10
-        trackLayer.lineCap = .round
-        layer.addSublayer(trackLayer)
-        
-        // Add progress layer
-        progressLayer.path = createCircularPath().cgPath
-        progressLayer.fillColor = UIColor.clear.cgColor
-        progressLayer.strokeColor = UIColor.systemBlue.cgColor
-        progressLayer.lineWidth = 10
-        progressLayer.lineCap = .round
-        progressLayer.strokeEnd = 0
-        layer.addSublayer(progressLayer)
-        
-        // Add percentage label
-        percentageLabel.textAlignment = .center
-        percentageLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        percentageLabel.textColor = .black
-        percentageLabel.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(percentageLabel)
-        
-        // Center the label
-        NSLayoutConstraint.activate([
-            percentageLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            percentageLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
-        
-        updateProgress()
-    }
-    
-    private func createCircularPath() -> UIBezierPath {
-        let center = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
-        let radius = min(bounds.width, bounds.height) / 2 - 10
-        return UIBezierPath(arcCenter: center, radius: radius, startAngle: -CGFloat.pi / 2, endAngle: 1.5 * CGFloat.pi, clockwise: true)
-    }
-    
-    private func updateProgress() {
-        progressLayer.strokeEnd = progress
-        percentageLabel.text = "\(Int(progress * 100))%"
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        // Update path if the view's bounds change
-        trackLayer.path = createCircularPath().cgPath
-        progressLayer.path = createCircularPath().cgPath
-    }
-}
-
-//class ViewController: UIViewController {
-//    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        
-//        let donutProgressView = DonutProgressView(frame: CGRect(x: 100, y: 200, width: 200, height: 200))
-//        view.addSubview(donutProgressView)
-//        
-//        // Animate progress
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-//            UIView.animate(withDuration: 2.0) {
-//                donutProgressView.progress = 0.75 // 75%
-//            }
-//        }
-//    }
-//}

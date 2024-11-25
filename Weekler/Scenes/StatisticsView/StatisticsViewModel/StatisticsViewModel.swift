@@ -76,7 +76,12 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
     }
     
     private func calculateProgress() {
-        guard let completedTasks, let currentWeekSchedule else { return }
+        guard let completedTasks,
+              let currentWeekSchedule,
+              !currentWeekSchedule.isEmpty else {
+            progress = 0.0
+            return
+        }
         progress = CGFloat(completedTasks.count) / CGFloat(currentWeekSchedule.count)
     }
 }
