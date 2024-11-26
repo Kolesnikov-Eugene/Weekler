@@ -16,8 +16,6 @@ final class StatisticsView: UIView {
         case month
         case year
     }
-    // MARK: - Output
-//    var statisticsControl: Driver<StatisticsControl>
     
     private let segmentedControlTitlesArray = ["Неделя", "Месяц", "Год"]
     private lazy var statisticsIntervalSegmentedControl: UISegmentedControl = {
@@ -26,7 +24,6 @@ final class StatisticsView: UIView {
         control.tintColor = Colors.mainForeground
         control.selectedSegmentTintColor = Colors.mainForeground
         control.translatesAutoresizingMaskIntoConstraints = false
-        control.addTarget(self, action: #selector(didChangeControlValue), for: .valueChanged)
         return control
     }()
     private var chartView = ChartView(frame: .zero)
@@ -49,7 +46,6 @@ final class StatisticsView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-//        statisticsChartView.layer.cornerRadius = CGRectGetHeight(statisticsChartView.bounds) / 2
     }
     
     private func setupUI() {
@@ -90,29 +86,5 @@ final class StatisticsView: UIView {
                 self?.chartView.progress = progress
             })
             .disposed(by: bag)
-        
-        viewModel.shouldRemoveStatistics
-            .observe(on: MainScheduler.instance)
-            .subscribe { [weak self] _ in
-                
-//                self?.chartView.setProgressWithAnimation(duration: 1.0, value: 1.0, for: 0.0)
-            }
-            .disposed(by: bag)
-    }
-    
-    @objc private func didChangeControlValue(sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 0:
-            print("Week")
-        case 1:
-            print("month")
-//            chartView.setProgressColor(.red)
-//            chartView.setProgressWithAnimation(duration: 1.0, value: 1.0, for: 1.0)
-            break
-        case 2:
-            print("Year")
-        default:
-            break
-        }
     }
 }
