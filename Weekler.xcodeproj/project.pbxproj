@@ -34,6 +34,7 @@
 		4442BA6A2BE4243D002DC469 /* StatisticsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA692BE4243D002DC469 /* StatisticsAssembly.swift */; };
 		4442BA6E2BE425F0002DC469 /* ConfigViewAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA6D2BE425F0002DC469 /* ConfigViewAssembly.swift */; };
 		4442BA702BE4277B002DC469 /* SceneFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA6F2BE4277B002DC469 /* SceneFactoryProtocol.swift */; };
+		44474BA72CF7A28500B03957 /* StatisticsViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44474BA62CF7A28500B03957 /* StatisticsViewModelProtocol.swift */; };
 		444AC1262CE3D63A0032DA6F /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444AC1252CE3D63A0032DA6F /* StatisticsView.swift */; };
 		444AC1292CE3DEA20032DA6F /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444AC1282CE3DEA20032DA6F /* StatisticsViewModel.swift */; };
 		444AC12E2CE3E0E60032DA6F /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444AC12D2CE3E0E60032DA6F /* ServiceAssembly.swift */; };
@@ -129,6 +130,7 @@
 		4442BA692BE4243D002DC469 /* StatisticsAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsAssembly.swift; sourceTree = "<group>"; };
 		4442BA6D2BE425F0002DC469 /* ConfigViewAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigViewAssembly.swift; sourceTree = "<group>"; };
 		4442BA6F2BE4277B002DC469 /* SceneFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFactoryProtocol.swift; sourceTree = "<group>"; };
+		44474BA62CF7A28500B03957 /* StatisticsViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModelProtocol.swift; sourceTree = "<group>"; };
 		444AC1252CE3D63A0032DA6F /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
 		444AC1282CE3DEA20032DA6F /* StatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
 		444AC12D2CE3E0E60032DA6F /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 		4407E7CA2CD5304600CC1692 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				44474BA82CF7A5D200B03957 /* Extensions */,
 				44B562FB2CBEFF890071F691 /* Sounds */,
 				449F18ED2BACD09A00F9640D /* Helpers */,
 				449F18EE2BACD0A800F9640D /* Services */,
@@ -353,10 +356,22 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
+		44474BA82CF7A5D200B03957 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				44C7148C2BD8465300C67B20 /* DaysOfWeek+Extension.swift */,
+				44727B442C486A68007756A3 /* UITableView+Extension.swift */,
+				440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */,
+				4415A1E62CEFBD390065B142 /* Calendar+extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		444AC1272CE3DE8B0032DA6F /* StatisticsViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				444AC1282CE3DEA20032DA6F /* StatisticsViewModel.swift */,
+				44474BA62CF7A28500B03957 /* StatisticsViewModelProtocol.swift */,
 			);
 			path = StatisticsViewModel;
 			sourceTree = "<group>";
@@ -536,15 +551,11 @@
 			isa = PBXGroup;
 			children = (
 				440770FC2BBB472900AD9C98 /* Colors.swift */,
-				44C7148C2BD8465300C67B20 /* DaysOfWeek+Extension.swift */,
 				4498EAA12C2E019E0081E7EE /* ScheduleItems.swift */,
 				44727B422C486A48007756A3 /* DaysOfWeekEnum.swift */,
-				44727B442C486A68007756A3 /* UITableView+Extension.swift */,
 				44727B462C486AAC007756A3 /* ScheduleTableViewSectionItem.swift */,
-				440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */,
 				44B562F72CBEE06F0071F691 /* WeekDayShortName.swift */,
 				441DECAD2CC0353A00B725B7 /* Constants.swift */,
-				4415A1E62CEFBD390065B142 /* Calendar+extension.swift */,
 				44AE982D2CF5058E00D685FD /* GradientLabel.swift */,
 				4481DB982CF3BB7F009BBB4C /* GradientTextLabel.swift */,
 			);
@@ -946,6 +957,7 @@
 				44F116952BDC394A00134D5F /* SceneAssembly.swift in Sources */,
 				4441EC772CE5303800AFB022 /* ChartView.swift in Sources */,
 				447DBE612BC4A8EB00A99A38 /* ConfigViewController.swift in Sources */,
+				44474BA72CF7A28500B03957 /* StatisticsViewModelProtocol.swift in Sources */,
 				44727B3D2C48692E007756A3 /* Goal.swift in Sources */,
 				44E28EDA2CEE6DA7001FA0CA /* StatisticsService.swift in Sources */,
 				444B387F2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift in Sources */,

@@ -11,12 +11,8 @@ import RxSwift
 import RxCocoa
 
 final class StatisticsView: UIView {
-    enum StatisticsControl {
-        case week
-        case month
-        case year
-    }
     
+    // MARK: private properties
     private let segmentedControlTitlesArray = ["Неделя", "Месяц", "Год"]
     private lazy var statisticsIntervalSegmentedControl: UISegmentedControl = {
         let control = UISegmentedControl(items: segmentedControlTitlesArray)
@@ -48,6 +44,7 @@ final class StatisticsView: UIView {
         super.layoutSubviews()
     }
     
+    // MARK: private methods
     private func setupUI() {
         backgroundColor = Colors.viewBackground
         addSubviews()

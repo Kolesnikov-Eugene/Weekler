@@ -9,34 +9,25 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-
-protocol StatisticsViewModelProtocol: AnyObject {
-    var shouldAnimateStatistics: PublishRelay<CGFloat> { get set }
-    var selectedInterval: PublishRelay<Int> { get set }
-    func viewDidAppear()
-    func viewWillAppear()
-}
-
 final class StatisticsViewModel: StatisticsViewModelProtocol {
     
     // MARK: output
     var shouldAnimateStatistics: PublishRelay<CGFloat> = .init()
     
-    
     // MARK: - Input
     var selectedInterval: PublishRelay<Int> = .init()
     
     // MARK: private properties
-    private let statisticsService: StatisticsServiceProtocol
     private var currentWeekDates = [String]()
     private var currentMonthDates = [String]()
-    private var currentWeekSchedule: [ScheduleTask]? // FIXME: store Int instead of tasks
-    private var currentMonthSchedule: [ScheduleTask]?
-    private var completedWeekTasks: [ScheduleTask]?
-    private var completedMonthTasks: [ScheduleTask]?
+    private var currentWeekScheduleItemsCount: Int?
+    private var currentMonthScheduleItemsCount: Int?
+    private var completedWeekTasksCount: Int?
+    private var completedMonthTasksCount: Int?
     private var progress: CGFloat = 0.0
-    private let bag = DisposeBag()
     private var currentInterval: StatisticsInterval = .week
+    private let bag = DisposeBag()
+    private let statisticsService: StatisticsServiceProtocol
     
     private enum StatisticsInterval {
         case week
@@ -52,6 +43,7 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
         bindToIntervalSegmentedControl()
     }
     
+    // MARK: public methods
     func viewWillAppear() {
         fetchScheduleProgress(for: currentWeekDates, with: .week)
         fetchScheduleProgress(for: currentMonthDates, with: .month)
@@ -61,6 +53,7 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
         shouldAnimateStatistics.accept(progress)
     }
     
+    // MARK: private methods
     private func bindToIntervalSegmentedControl() {
         selectedInterval
             .subscribe(onNext: { [weak self] interval in
@@ -68,16 +61,14 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
                 switch interval {
                 case 0:
                     self.currentInterval = .week
-                    self.calculateProgress()
-                    self.shouldAnimateStatistics.accept(self.progress)
                 case 1:
                     self.currentInterval = .month
-                    self.calculateProgress()
-                    self.shouldAnimateStatistics.accept(self.progress)
                 case 2:
                     print("2")
                 default: break
                 }
+                self.calculateProgress()
+                self.shouldAnimateStatistics.accept(self.progress)
             })
             .disposed(by: bag)
     }
@@ -86,15 +77,13 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
         Task.detached {
             switch mode {
             case .week:
-                self.currentWeekSchedule = await self.statisticsService.fetchCurrentWeekStatistics(for: interval)
-                if let curSchedule = self.currentWeekSchedule {
-                    self.completedWeekTasks = curSchedule.filter { $0.completed }
-                }
+                let currentWeekSchedule = await self.statisticsService.fetchCurrentWeekStatistics(for: interval)
+                self.currentWeekScheduleItemsCount = currentWeekSchedule.count
+                self.completedWeekTasksCount = currentWeekSchedule.filter { $0.completed }.count
             case .month:
-                self.currentMonthSchedule = await self.statisticsService.fetchCurrentWeekStatistics(for: interval)
-                if let curSchedule = self.currentMonthSchedule {
-                    self.completedMonthTasks = curSchedule.filter { $0.completed }
-                }
+                let currentMonthSchedule = await self.statisticsService.fetchCurrentWeekStatistics(for: interval)
+                self.currentMonthScheduleItemsCount = currentMonthSchedule.count
+                self.completedMonthTasksCount = currentMonthSchedule.filter { $0.completed }.count
             }
             self.calculateProgress()
         }
@@ -103,21 +92,21 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
     private func calculateProgress() {
         switch currentInterval {
         case .week:
-            guard let completedWeekTasks,
-                  let currentWeekSchedule,
-                  !currentWeekSchedule.isEmpty else {
+            guard let completedWeekTasksCount,
+                  let currentWeekScheduleItemsCount,
+                  currentWeekScheduleItemsCount != 0 else {
                 progress = 0.0
                 return
             }
-            progress = CGFloat(completedWeekTasks.count) / CGFloat(currentWeekSchedule.count)
+            progress = CGFloat(completedWeekTasksCount) / CGFloat(currentWeekScheduleItemsCount)
         case .month:
-            guard let completedMonthTasks,
-                  let currentMonthSchedule,
-                  !currentMonthSchedule.isEmpty else {
+            guard let completedMonthTasksCount,
+                  let currentMonthScheduleItemsCount,
+                  currentMonthScheduleItemsCount != 0 else {
                 progress = 0.0
                 return
             }
-            progress = CGFloat(completedMonthTasks.count) / CGFloat(currentMonthSchedule.count)
+            progress = CGFloat(completedMonthTasksCount) / CGFloat(currentMonthScheduleItemsCount)
         }
     }
 }

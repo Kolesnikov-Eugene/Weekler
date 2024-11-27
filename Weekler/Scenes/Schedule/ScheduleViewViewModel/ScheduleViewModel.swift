@@ -121,6 +121,7 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     }
 }
 
+// MARK: - CreateScheduleDelegate
 extension ScheduleViewModel: CreateScheduleDelegate {
     func didAddTask(_ task: ScheduleTask, mode: ScheduleMode) {
         Task.detached {

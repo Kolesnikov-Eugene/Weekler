@@ -19,6 +19,7 @@ final class ChartView: UIView {
         }
     }
     
+    // MARK: private properties
     private var baseLayer = CAShapeLayer()
     private var progressLayer = CAShapeLayer()
     private lazy var gradientLayer: CAGradientLayer = {
@@ -77,6 +78,7 @@ final class ChartView: UIView {
         configureGradientLayer()
     }
     
+    // MARK: private methods
     private func setupUI() {
         addSubview(progressLabel)
         progressLabel.snp.makeConstraints {
