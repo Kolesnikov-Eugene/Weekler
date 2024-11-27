@@ -10,7 +10,9 @@ import Foundation
 final class WeeklerAppDIContainer {
     private let container: DIContainer
     
-    init(container: DIContainer) {
+    init(
+        container: DIContainer
+    ) {
         self.container = container
     }
     

@@ -21,6 +21,7 @@
 		440B2DD42CDBF07400BA728B /* TaskToEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440B2DD32CDBF07400BA728B /* TaskToEdit.swift */; };
 		440B2DD62CDBF93100BA728B /* ScheduleDataSourceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440B2DD52CDBF93100BA728B /* ScheduleDataSourceAssembly.swift */; };
 		440CF1F72C73CAE600FEFDE0 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */; };
+		4415A1E72CEFBD390065B142 /* Calendar+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4415A1E62CEFBD390065B142 /* Calendar+extension.swift */; };
 		441CAC742CE0DB7F00064348 /* WeeklerAppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441CAC732CE0DB7F00064348 /* WeeklerAppCoordinator.swift */; };
 		441CAC772CE0E1F300064348 /* ScheduleFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441CAC762CE0E1F300064348 /* ScheduleFlowCoordinator.swift */; };
 		441DECAE2CC0353A00B725B7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441DECAD2CC0353A00B725B7 /* Constants.swift */; };
@@ -28,10 +29,16 @@
 		442256842C6BE7B300172C0A /* ScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256832C6BE7B300172C0A /* ScheduleUseCase.swift */; };
 		442256862C6BE82900172C0A /* ScheduleUseCaseAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256852C6BE82900172C0A /* ScheduleUseCaseAssembly.swift */; };
 		442256882C6BEB4400172C0A /* ScheduleDataBaseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256872C6BEB4400172C0A /* ScheduleDataBaseType.swift */; };
+		4441EC772CE5303800AFB022 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4441EC762CE5303800AFB022 /* ChartView.swift */; };
 		4442BA682BE41F38002DC469 /* SceneFactoryAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA672BE41F38002DC469 /* SceneFactoryAssembly.swift */; };
 		4442BA6A2BE4243D002DC469 /* StatisticsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA692BE4243D002DC469 /* StatisticsAssembly.swift */; };
 		4442BA6E2BE425F0002DC469 /* ConfigViewAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA6D2BE425F0002DC469 /* ConfigViewAssembly.swift */; };
 		4442BA702BE4277B002DC469 /* SceneFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA6F2BE4277B002DC469 /* SceneFactoryProtocol.swift */; };
+		44474BA72CF7A28500B03957 /* StatisticsViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44474BA62CF7A28500B03957 /* StatisticsViewModelProtocol.swift */; };
+		444AC1262CE3D63A0032DA6F /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444AC1252CE3D63A0032DA6F /* StatisticsView.swift */; };
+		444AC1292CE3DEA20032DA6F /* StatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444AC1282CE3DEA20032DA6F /* StatisticsViewModel.swift */; };
+		444AC12E2CE3E0E60032DA6F /* ServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444AC12D2CE3E0E60032DA6F /* ServiceAssembly.swift */; };
+		444AC1302CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444AC12F2CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift */; };
 		444B387F2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444B387E2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift */; };
 		444DAB862C655A8F005B8ABC /* SourceItemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DAB852C655A8F005B8ABC /* SourceItemProtocol.swift */; };
 		446C85612CB85B8700077CC5 /* CoreHapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446C85602CB85B8700077CC5 /* CoreHapticsManager.swift */; };
@@ -50,6 +57,7 @@
 		447DBE632BC4A8EB00A99A38 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447DBE582BC4A8EB00A99A38 /* StatisticsViewController.swift */; };
 		447DBE642BC4A8EB00A99A38 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447DBE5B2BC4A8EB00A99A38 /* TabBarController.swift */; };
 		447F92112CD0165600DDB846 /* ScheduleMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447F92102CD0165600DDB846 /* ScheduleMainView.swift */; };
+		4481DB992CF3BB7F009BBB4C /* GradientTextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4481DB982CF3BB7F009BBB4C /* GradientTextLabel.swift */; };
 		4498EAA22C2E019E0081E7EE /* ScheduleItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4498EAA12C2E019E0081E7EE /* ScheduleItems.swift */; };
 		449EF5A32C52DE5900FD187B /* CreateScheduleDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449EF5A22C52DE5900FD187B /* CreateScheduleDelegate.swift */; };
 		449F18D82BACC4BF00F9640D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449F18D72BACC4BF00F9640D /* AppDelegate.swift */; };
@@ -62,6 +70,7 @@
 		44AE39A22CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AE39A12CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift */; };
 		44AE39A52CE2908600D89B23 /* ConfigFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AE39A42CE2908600D89B23 /* ConfigFlowCoordinator.swift */; };
 		44AE39A82CE2954500D89B23 /* CoreHapticsManagerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AE39A72CE2954500D89B23 /* CoreHapticsManagerAssembly.swift */; };
+		44AE982E2CF5058E00D685FD /* GradientLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AE982D2CF5058E00D685FD /* GradientLabel.swift */; };
 		44B06E142BECEE0E000C3CC6 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B06E132BECEE0E000C3CC6 /* ScheduleViewModel.swift */; };
 		44B06E162BECEE3C000C3CC6 /* ScheduleViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B06E152BECEE3C000C3CC6 /* ScheduleViewModelProtocol.swift */; };
 		44B06E192BECF08F000C3CC6 /* ScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B06E182BECF08F000C3CC6 /* ScheduleTableViewCell.swift */; };
@@ -73,6 +82,13 @@
 		44D18C732C121EED00F22CED /* ScheduleTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D18C722C121EED00F22CED /* ScheduleTask.swift */; };
 		44DBAE572C13222400BF130E /* ScheduleItemsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DBAE562C13222400BF130E /* ScheduleItemsTableViewCell.swift */; };
 		44DBD2AF2C8ED287006AE2F1 /* CompletedTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DBD2AE2C8ED287006AE2F1 /* CompletedTask.swift */; };
+		44E28ED82CEE6D9C001FA0CA /* StatisticsServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E28ED72CEE6D9C001FA0CA /* StatisticsServiceProtocol.swift */; };
+		44E28EDA2CEE6DA7001FA0CA /* StatisticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E28ED92CEE6DA7001FA0CA /* StatisticsService.swift */; };
+		44E28EDC2CEE6E88001FA0CA /* StatisticsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E28EDB2CEE6E88001FA0CA /* StatisticsRepositoryProtocol.swift */; };
+		44E28EDE2CEE6ED2001FA0CA /* StatisticsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E28EDD2CEE6ED2001FA0CA /* StatisticsRepository.swift */; };
+		44E28EE02CEE6F55001FA0CA /* StatisticsDataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E28EDF2CEE6F55001FA0CA /* StatisticsDataSourceProtocol.swift */; };
+		44E28EE22CEE6FF0001FA0CA /* StatisticsServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E28EE12CEE6FF0001FA0CA /* StatisticsServiceAssembly.swift */; };
+		44E28EE62CEE70CA001FA0CA /* StatisticsRepositoryAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E28EE52CEE70CA001FA0CA /* StatisticsRepositoryAssembly.swift */; };
 		44F116932BDC384B00134D5F /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F116922BDC384B00134D5F /* DIContainer.swift */; };
 		44F116952BDC394A00134D5F /* SceneAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F116942BDC394A00134D5F /* SceneAssembly.swift */; };
 		44F116982BDC398E00134D5F /* ScheduleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F116972BDC398E00134D5F /* ScheduleAssembly.swift */; };
@@ -101,6 +117,7 @@
 		440B2DD32CDBF07400BA728B /* TaskToEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskToEdit.swift; sourceTree = "<group>"; };
 		440B2DD52CDBF93100BA728B /* ScheduleDataSourceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataSourceAssembly.swift; sourceTree = "<group>"; };
 		440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
+		4415A1E62CEFBD390065B142 /* Calendar+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+extension.swift"; sourceTree = "<group>"; };
 		441CAC732CE0DB7F00064348 /* WeeklerAppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklerAppCoordinator.swift; sourceTree = "<group>"; };
 		441CAC762CE0E1F300064348 /* ScheduleFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleFlowCoordinator.swift; sourceTree = "<group>"; };
 		441DECAD2CC0353A00B725B7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -108,10 +125,16 @@
 		442256832C6BE7B300172C0A /* ScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleUseCase.swift; sourceTree = "<group>"; };
 		442256852C6BE82900172C0A /* ScheduleUseCaseAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleUseCaseAssembly.swift; sourceTree = "<group>"; };
 		442256872C6BEB4400172C0A /* ScheduleDataBaseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataBaseType.swift; sourceTree = "<group>"; };
+		4441EC762CE5303800AFB022 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		4442BA672BE41F38002DC469 /* SceneFactoryAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFactoryAssembly.swift; sourceTree = "<group>"; };
 		4442BA692BE4243D002DC469 /* StatisticsAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsAssembly.swift; sourceTree = "<group>"; };
 		4442BA6D2BE425F0002DC469 /* ConfigViewAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigViewAssembly.swift; sourceTree = "<group>"; };
 		4442BA6F2BE4277B002DC469 /* SceneFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFactoryProtocol.swift; sourceTree = "<group>"; };
+		44474BA62CF7A28500B03957 /* StatisticsViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModelProtocol.swift; sourceTree = "<group>"; };
+		444AC1252CE3D63A0032DA6F /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
+		444AC1282CE3DEA20032DA6F /* StatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModel.swift; sourceTree = "<group>"; };
+		444AC12D2CE3E0E60032DA6F /* ServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAssembly.swift; sourceTree = "<group>"; };
+		444AC12F2CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModelAssembly.swift; sourceTree = "<group>"; };
 		444B387E2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 		444DAB852C655A8F005B8ABC /* SourceItemProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItemProtocol.swift; sourceTree = "<group>"; };
 		446C85602CB85B8700077CC5 /* CoreHapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreHapticsManager.swift; sourceTree = "<group>"; };
@@ -130,6 +153,7 @@
 		447DBE582BC4A8EB00A99A38 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		447DBE5B2BC4A8EB00A99A38 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		447F92102CD0165600DDB846 /* ScheduleMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleMainView.swift; sourceTree = "<group>"; };
+		4481DB982CF3BB7F009BBB4C /* GradientTextLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientTextLabel.swift; sourceTree = "<group>"; };
 		4498EAA12C2E019E0081E7EE /* ScheduleItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleItems.swift; sourceTree = "<group>"; };
 		449EF5A22C52DE5900FD187B /* CreateScheduleDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleDelegate.swift; sourceTree = "<group>"; };
 		449F18D42BACC4BF00F9640D /* Weekler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weekler.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,6 +168,7 @@
 		44AE39A12CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsFlowCoordinator.swift; sourceTree = "<group>"; };
 		44AE39A42CE2908600D89B23 /* ConfigFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigFlowCoordinator.swift; sourceTree = "<group>"; };
 		44AE39A72CE2954500D89B23 /* CoreHapticsManagerAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreHapticsManagerAssembly.swift; sourceTree = "<group>"; };
+		44AE982D2CF5058E00D685FD /* GradientLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLabel.swift; sourceTree = "<group>"; };
 		44B06E132BECEE0E000C3CC6 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		44B06E152BECEE3C000C3CC6 /* ScheduleViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModelProtocol.swift; sourceTree = "<group>"; };
 		44B06E182BECF08F000C3CC6 /* ScheduleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewCell.swift; sourceTree = "<group>"; };
@@ -155,6 +180,13 @@
 		44D18C722C121EED00F22CED /* ScheduleTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTask.swift; sourceTree = "<group>"; };
 		44DBAE562C13222400BF130E /* ScheduleItemsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleItemsTableViewCell.swift; sourceTree = "<group>"; };
 		44DBD2AE2C8ED287006AE2F1 /* CompletedTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTask.swift; sourceTree = "<group>"; };
+		44E28ED72CEE6D9C001FA0CA /* StatisticsServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsServiceProtocol.swift; sourceTree = "<group>"; };
+		44E28ED92CEE6DA7001FA0CA /* StatisticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsService.swift; sourceTree = "<group>"; };
+		44E28EDB2CEE6E88001FA0CA /* StatisticsRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsRepositoryProtocol.swift; sourceTree = "<group>"; };
+		44E28EDD2CEE6ED2001FA0CA /* StatisticsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsRepository.swift; sourceTree = "<group>"; };
+		44E28EDF2CEE6F55001FA0CA /* StatisticsDataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsDataSourceProtocol.swift; sourceTree = "<group>"; };
+		44E28EE12CEE6FF0001FA0CA /* StatisticsServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsServiceAssembly.swift; sourceTree = "<group>"; };
+		44E28EE52CEE70CA001FA0CA /* StatisticsRepositoryAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsRepositoryAssembly.swift; sourceTree = "<group>"; };
 		44F116922BDC384B00134D5F /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		44F116942BDC394A00134D5F /* SceneAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneAssembly.swift; sourceTree = "<group>"; };
 		44F116972BDC398E00134D5F /* ScheduleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAssembly.swift; sourceTree = "<group>"; };
@@ -204,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				44F9EA2C2CDAB1A1009AE5FD /* ScheduleRepository.swift */,
+				44E28EDD2CEE6ED2001FA0CA /* StatisticsRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -214,6 +247,7 @@
 				4402A1BF2CAB292100CCE9D8 /* ScheduleDataSource.swift */,
 				440B2DD02CDBEF5700BA728B /* ScheduleDataSourceProtocol.swift */,
 				4402A1BC2CAB25C100CCE9D8 /* Entity */,
+				44E28EDF2CEE6F55001FA0CA /* StatisticsDataSourceProtocol.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -256,6 +290,7 @@
 		4407E7CA2CD5304600CC1692 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				44474BA82CF7A5D200B03957 /* Extensions */,
 				44B562FB2CBEFF890071F691 /* Sounds */,
 				449F18ED2BACD09A00F9640D /* Helpers */,
 				449F18EE2BACD0A800F9640D /* Services */,
@@ -295,6 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				4407E7CB2CD5317800CC1692 /* ScheduleRepositoryProtocol.swift */,
+				44E28EDB2CEE6E88001FA0CA /* StatisticsRepositoryProtocol.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -302,8 +338,8 @@
 		444006A42CC6E12A0058F601 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				442256832C6BE7B300172C0A /* ScheduleUseCase.swift */,
-				4407E7CF2CD5382900CC1692 /* ScheduleUseCaseProtocol.swift */,
+				44E28ED52CEE6D5E001FA0CA /* Schedule */,
+				44E28ED62CEE6D76001FA0CA /* Statistics */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -311,14 +347,64 @@
 		4442BA662BE41F18002DC469 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				44E28EE42CEE70A6001FA0CA /* Statistics */,
+				44E28EE32CEE7092001FA0CA /* Schedule */,
 				4442BA672BE41F38002DC469 /* SceneFactoryAssembly.swift */,
-				442256852C6BE82900172C0A /* ScheduleUseCaseAssembly.swift */,
 				44A88DE12CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift */,
-				44F9EA2A2CDAA597009AE5FD /* ScheduleRepositoryAssembly.swift */,
-				440B2DD52CDBF93100BA728B /* ScheduleDataSourceAssembly.swift */,
 				44AE39A72CE2954500D89B23 /* CoreHapticsManagerAssembly.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		44474BA82CF7A5D200B03957 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				44C7148C2BD8465300C67B20 /* DaysOfWeek+Extension.swift */,
+				44727B442C486A68007756A3 /* UITableView+Extension.swift */,
+				440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */,
+				4415A1E62CEFBD390065B142 /* Calendar+extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		444AC1272CE3DE8B0032DA6F /* StatisticsViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				444AC1282CE3DEA20032DA6F /* StatisticsViewModel.swift */,
+				44474BA62CF7A28500B03957 /* StatisticsViewModelProtocol.swift */,
+			);
+			path = StatisticsViewModel;
+			sourceTree = "<group>";
+		};
+		444AC12A2CE3E04A0032DA6F /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				44F116972BDC398E00134D5F /* ScheduleAssembly.swift */,
+				44F116992BDC3A3200134D5F /* TabBarAssembly.swift */,
+				4442BA6D2BE425F0002DC469 /* ConfigViewAssembly.swift */,
+				44CE3BBC2C0BA38500719B84 /* CreateScheduleViewAssembly.swift */,
+				44727B382C486895007756A3 /* ScheduleViewModelAssembly.swift */,
+				44FB465F2C5E6959005731BC /* CreateScheduleViewModelAssembly.swift */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		444AC12B2CE3E0930032DA6F /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+				4442BA692BE4243D002DC469 /* StatisticsAssembly.swift */,
+				444AC12F2CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift */,
+			);
+			path = Statistics;
+			sourceTree = "<group>";
+		};
+		444AC12C2CE3E0CA0032DA6F /* Assamblies */ = {
+			isa = PBXGroup;
+			children = (
+				44F116942BDC394A00134D5F /* SceneAssembly.swift */,
+				444AC12D2CE3E0E60032DA6F /* ServiceAssembly.swift */,
+			);
+			path = Assamblies;
 			sourceTree = "<group>";
 		};
 		44727B482C486AE1007756A3 /* SelectRepeatedDaysView */ = {
@@ -374,6 +460,8 @@
 			isa = PBXGroup;
 			children = (
 				447DBE582BC4A8EB00A99A38 /* StatisticsViewController.swift */,
+				444AC1252CE3D63A0032DA6F /* StatisticsView.swift */,
+				4441EC762CE5303800AFB022 /* ChartView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -381,6 +469,7 @@
 		447DBE5A2BC4A8EB00A99A38 /* StatisticsView */ = {
 			isa = PBXGroup;
 			children = (
+				444AC1272CE3DE8B0032DA6F /* StatisticsViewModel */,
 				44AE39A02CE28B3F00D89B23 /* StatisticsFlow */,
 				447DBE592BC4A8EB00A99A38 /* View */,
 			);
@@ -462,14 +551,13 @@
 			isa = PBXGroup;
 			children = (
 				440770FC2BBB472900AD9C98 /* Colors.swift */,
-				44C7148C2BD8465300C67B20 /* DaysOfWeek+Extension.swift */,
 				4498EAA12C2E019E0081E7EE /* ScheduleItems.swift */,
 				44727B422C486A48007756A3 /* DaysOfWeekEnum.swift */,
-				44727B442C486A68007756A3 /* UITableView+Extension.swift */,
 				44727B462C486AAC007756A3 /* ScheduleTableViewSectionItem.swift */,
-				440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */,
 				44B562F72CBEE06F0071F691 /* WeekDayShortName.swift */,
 				441DECAD2CC0353A00B725B7 /* Constants.swift */,
+				44AE982D2CF5058E00D685FD /* GradientLabel.swift */,
+				4481DB982CF3BB7F009BBB4C /* GradientTextLabel.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -563,6 +651,43 @@
 			path = ScheduleViewController;
 			sourceTree = "<group>";
 		};
+		44E28ED52CEE6D5E001FA0CA /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				442256832C6BE7B300172C0A /* ScheduleUseCase.swift */,
+				4407E7CF2CD5382900CC1692 /* ScheduleUseCaseProtocol.swift */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		44E28ED62CEE6D76001FA0CA /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+				44E28ED72CEE6D9C001FA0CA /* StatisticsServiceProtocol.swift */,
+				44E28ED92CEE6DA7001FA0CA /* StatisticsService.swift */,
+			);
+			path = Statistics;
+			sourceTree = "<group>";
+		};
+		44E28EE32CEE7092001FA0CA /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				442256852C6BE82900172C0A /* ScheduleUseCaseAssembly.swift */,
+				44F9EA2A2CDAA597009AE5FD /* ScheduleRepositoryAssembly.swift */,
+				440B2DD52CDBF93100BA728B /* ScheduleDataSourceAssembly.swift */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
+		44E28EE42CEE70A6001FA0CA /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+				44E28EE12CEE6FF0001FA0CA /* StatisticsServiceAssembly.swift */,
+				44E28EE52CEE70CA001FA0CA /* StatisticsRepositoryAssembly.swift */,
+			);
+			path = Statistics;
+			sourceTree = "<group>";
+		};
 		44F116902BDC382700134D5F /* DependencyInjection */ = {
 			isa = PBXGroup;
 			children = (
@@ -579,9 +704,9 @@
 		44F116912BDC383600134D5F /* DependencyAssemblers */ = {
 			isa = PBXGroup;
 			children = (
+				444AC12C2CE3E0CA0032DA6F /* Assamblies */,
 				4442BA662BE41F18002DC469 /* Services */,
 				44F116962BDC397D00134D5F /* Scenes */,
-				44F116942BDC394A00134D5F /* SceneAssembly.swift */,
 			);
 			path = DependencyAssemblers;
 			sourceTree = "<group>";
@@ -589,13 +714,8 @@
 		44F116962BDC397D00134D5F /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				44F116972BDC398E00134D5F /* ScheduleAssembly.swift */,
-				44F116992BDC3A3200134D5F /* TabBarAssembly.swift */,
-				4442BA692BE4243D002DC469 /* StatisticsAssembly.swift */,
-				4442BA6D2BE425F0002DC469 /* ConfigViewAssembly.swift */,
-				44CE3BBC2C0BA38500719B84 /* CreateScheduleViewAssembly.swift */,
-				44727B382C486895007756A3 /* ScheduleViewModelAssembly.swift */,
-				44FB465F2C5E6959005731BC /* CreateScheduleViewModelAssembly.swift */,
+				444AC12B2CE3E0930032DA6F /* Statistics */,
+				444AC12A2CE3E04A0032DA6F /* Schedule */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -764,6 +884,7 @@
 				4407E7CC2CD5317800CC1692 /* ScheduleRepositoryProtocol.swift in Sources */,
 				440B2DD62CDBF93100BA728B /* ScheduleDataSourceAssembly.swift in Sources */,
 				44CE3BBD2C0BA38500719B84 /* CreateScheduleViewAssembly.swift in Sources */,
+				44E28EE62CEE70CA001FA0CA /* StatisticsRepositoryAssembly.swift in Sources */,
 				44079C6B2CD163BA006D3A3D /* SelectTaskModeView.swift in Sources */,
 				44FB46602C5E6959005731BC /* CreateScheduleViewModelAssembly.swift in Sources */,
 				44727B472C486AAC007756A3 /* ScheduleTableViewSectionItem.swift in Sources */,
@@ -773,6 +894,7 @@
 				44F1169A2BDC3A3200134D5F /* TabBarAssembly.swift in Sources */,
 				442256842C6BE7B300172C0A /* ScheduleUseCase.swift in Sources */,
 				44727B4C2C486B7B007756A3 /* DaysOfWeekTableViewCell.swift in Sources */,
+				444AC1262CE3D63A0032DA6F /* StatisticsView.swift in Sources */,
 				440B2DD12CDBEF5700BA728B /* ScheduleDataSourceProtocol.swift in Sources */,
 				4498EAA22C2E019E0081E7EE /* ScheduleItems.swift in Sources */,
 				44B06E142BECEE0E000C3CC6 /* ScheduleViewModel.swift in Sources */,
@@ -786,8 +908,10 @@
 				44AE39A52CE2908600D89B23 /* ConfigFlowCoordinator.swift in Sources */,
 				4442BA702BE4277B002DC469 /* SceneFactoryProtocol.swift in Sources */,
 				4442BA6E2BE425F0002DC469 /* ConfigViewAssembly.swift in Sources */,
+				444AC12E2CE3E0E60032DA6F /* ServiceAssembly.swift in Sources */,
 				444DAB862C655A8F005B8ABC /* SourceItemProtocol.swift in Sources */,
 				441CAC742CE0DB7F00064348 /* WeeklerAppCoordinator.swift in Sources */,
+				44E28EE22CEE6FF0001FA0CA /* StatisticsServiceAssembly.swift in Sources */,
 				4407E7D42CD5415C00CC1692 /* SceneFactoryDIContainer.swift in Sources */,
 				4402A1C02CAB292100CCE9D8 /* ScheduleDataSource.swift in Sources */,
 				4442BA6A2BE4243D002DC469 /* StatisticsAssembly.swift in Sources */,
@@ -799,13 +923,18 @@
 				44D18C732C121EED00F22CED /* ScheduleTask.swift in Sources */,
 				44A88DE22CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift in Sources */,
 				44FB465C2C5E66BD005731BC /* CreateScheduleViewModelProtocol.swift in Sources */,
+				44E28EE02CEE6F55001FA0CA /* StatisticsDataSourceProtocol.swift in Sources */,
 				44727B452C486A68007756A3 /* UITableView+Extension.swift in Sources */,
 				440770FD2BBB472900AD9C98 /* Colors.swift in Sources */,
 				440CF1F72C73CAE600FEFDE0 /* Date+extension.swift in Sources */,
+				44E28EDC2CEE6E88001FA0CA /* StatisticsRepositoryProtocol.swift in Sources */,
 				44F116932BDC384B00134D5F /* DIContainer.swift in Sources */,
+				4415A1E72CEFBD390065B142 /* Calendar+extension.swift in Sources */,
 				44DBD2AF2C8ED287006AE2F1 /* CompletedTask.swift in Sources */,
 				44727B432C486A48007756A3 /* DaysOfWeekEnum.swift in Sources */,
+				44E28EDE2CEE6ED2001FA0CA /* StatisticsRepository.swift in Sources */,
 				4442BA682BE41F38002DC469 /* SceneFactoryAssembly.swift in Sources */,
+				4481DB992CF3BB7F009BBB4C /* GradientTextLabel.swift in Sources */,
 				44079C6E2CD169C5006D3A3D /* CalendarView.swift in Sources */,
 				449F18D82BACC4BF00F9640D /* AppDelegate.swift in Sources */,
 				44A88DE02CD6646500D4A007 /* CreateSceneDIContainer.swift in Sources */,
@@ -818,16 +947,23 @@
 				447DBE632BC4A8EB00A99A38 /* StatisticsViewController.swift in Sources */,
 				44C7148D2BD8465300C67B20 /* DaysOfWeek+Extension.swift in Sources */,
 				44A378DF2BFD2D7000E93B5F /* SelectMainModeCollectionViewCell.swift in Sources */,
+				444AC1302CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift in Sources */,
 				449EF5A32C52DE5900FD187B /* CreateScheduleDelegate.swift in Sources */,
+				444AC1292CE3DEA20032DA6F /* StatisticsViewModel.swift in Sources */,
+				44AE982E2CF5058E00D685FD /* GradientLabel.swift in Sources */,
 				441DECAE2CC0353A00B725B7 /* Constants.swift in Sources */,
 				44F9EA2D2CDAB1A1009AE5FD /* ScheduleRepository.swift in Sources */,
 				447DBE642BC4A8EB00A99A38 /* TabBarController.swift in Sources */,
 				44F116952BDC394A00134D5F /* SceneAssembly.swift in Sources */,
+				4441EC772CE5303800AFB022 /* ChartView.swift in Sources */,
 				447DBE612BC4A8EB00A99A38 /* ConfigViewController.swift in Sources */,
+				44474BA72CF7A28500B03957 /* StatisticsViewModelProtocol.swift in Sources */,
 				44727B3D2C48692E007756A3 /* Goal.swift in Sources */,
+				44E28EDA2CEE6DA7001FA0CA /* StatisticsService.swift in Sources */,
 				444B387F2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift in Sources */,
 				44DBAE572C13222400BF130E /* ScheduleItemsTableViewCell.swift in Sources */,
 				44AE39A82CE2954500D89B23 /* CoreHapticsManagerAssembly.swift in Sources */,
+				44E28ED82CEE6D9C001FA0CA /* StatisticsServiceProtocol.swift in Sources */,
 				449F18DA2BACC4BF00F9640D /* SceneDelegate.swift in Sources */,
 				447F92112CD0165600DDB846 /* ScheduleMainView.swift in Sources */,
 				442256882C6BEB4400172C0A /* ScheduleDataBaseType.swift in Sources */,

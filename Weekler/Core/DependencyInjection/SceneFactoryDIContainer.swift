@@ -11,7 +11,9 @@ final class SceneFactoryDIContainer: SceneFactoryProtocol {
     private let container: DIContainer
     var createScheduleSceneContainer: CreateScheduleSceneProtocol?
     
-    init(container: DIContainer) {
+    init(
+        container: DIContainer
+    ) {
         self.container = container
     }
     
@@ -31,7 +33,9 @@ final class SceneFactoryDIContainer: SceneFactoryProtocol {
     }
     
     func makeStatisticsView() -> StatisticsViewController {
-        let statisticsVC: StatisticsViewController = container.resolve()
+        let statisticsService: StatisticsServiceProtocol = container.resolve()
+        let statisticsViewModel: StatisticsViewModelProtocol = container.resolve(argument: statisticsService)
+        let statisticsVC: StatisticsViewController = container.resolve(argument: statisticsViewModel)
         return statisticsVC
     }
     

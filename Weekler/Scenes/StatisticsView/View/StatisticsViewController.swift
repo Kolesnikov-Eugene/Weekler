@@ -9,7 +9,13 @@ import UIKit
 
 final class StatisticsViewController: UIViewController {
     
-    init() {
+    private var statisticsView: StatisticsView!
+    private let viewModel: StatisticsViewModelProtocol
+    
+    init(
+        viewModel: StatisticsViewModelProtocol
+    ) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         setupUI()
     }
@@ -20,6 +26,25 @@ final class StatisticsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.viewWillAppear()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel.viewDidAppear()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+    }
+    
+    override func loadView() {
+        super.loadView()
+        view = StatisticsView(frame: .zero, viewModel: viewModel)
     }
     
     private func setupUI() {

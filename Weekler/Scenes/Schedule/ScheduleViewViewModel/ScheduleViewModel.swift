@@ -42,9 +42,10 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     private var scheduleFlowCoordinator: ScheduleFlowCoordinator
     private var hapticsManager: CoreHapticsManagerProtocol?
     
-    init(dependencies: SceneFactoryProtocol,
-         scheduleFlowCoordinator: ScheduleFlowCoordinator,
-         hapticManager: CoreHapticsManagerProtocol? = nil
+    init(
+        dependencies: SceneFactoryProtocol,
+        scheduleFlowCoordinator: ScheduleFlowCoordinator,
+        hapticManager: CoreHapticsManagerProtocol? = nil
     ) {
         self.dependencies = dependencies
         self.scheduleFlowCoordinator = scheduleFlowCoordinator
@@ -56,7 +57,7 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
                 !items.isEmpty
             })
             .asDriver(onErrorJustReturn: false)
-//        fetchSchedule()
+        //        fetchSchedule()
         bindToScheduleUpdates()
     }
     
@@ -66,7 +67,6 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     }
     
     func changeDate(for selectedDate: Date) {
-        print("changed")
         currentDate = selectedDate
         fetchSchedule()
     }
@@ -121,6 +121,7 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     }
 }
 
+// MARK: - CreateScheduleDelegate
 extension ScheduleViewModel: CreateScheduleDelegate {
     func didAddTask(_ task: ScheduleTask, mode: ScheduleMode) {
         Task.detached {

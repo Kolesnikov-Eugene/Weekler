@@ -10,12 +10,20 @@ import Foundation
 final class ScheduleRepository: ScheduleRepositoryProtocol {
     private let dataSource: ScheduleDataSourceProtocol
     
-    init(dataSource: ScheduleDataSourceProtocol) {
+    init(
+        dataSource: ScheduleDataSourceProtocol
+    ) {
         self.dataSource = dataSource
     }
     
     func fetchTaskItems(for date: String) async -> [ScheduleTask] {
-        let taskItems = await dataSource.fetchTaskItems(for: date)
+        let predicate = #Predicate<TaskItem> { $0.onlyDate == date }
+        let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
+        
+        let taskItems = await dataSource.fetchTaskItems(
+            predicate: predicate,
+            sortDescriptor: sortDescriptor
+        )
         let currentScheduleTaskArray = taskItems.map {
             ScheduleTask(
                 id: $0.id,
@@ -39,7 +47,8 @@ final class ScheduleRepository: ScheduleRepositoryProtocol {
     }
     
     func deleteTask(with id: UUID) async {
-        await dataSource.deleteTask(with: id)
+        let predicate = #Predicate<TaskItem> { $0.id == id }
+        await dataSource.deleteTask(with: predicate)
     }
     
     func edit(_ task: ScheduleTask) async {
@@ -54,10 +63,12 @@ final class ScheduleRepository: ScheduleRepositoryProtocol {
     }
     
     func completeTask(with id: UUID) async {
-        await dataSource.completeTask(with: id)
+        let predicate = #Predicate<TaskItem> { $0.id == id }
+        await dataSource.completeTask(with: predicate)
     }
     
     func unCompleteTask(with id: UUID) async {
-        await dataSource.unCompleteTask(with: id)
+        let predicate = #Predicate<TaskItem> { $0.id == id }
+        await dataSource.unCompleteTask(with: predicate)
     }
 }
