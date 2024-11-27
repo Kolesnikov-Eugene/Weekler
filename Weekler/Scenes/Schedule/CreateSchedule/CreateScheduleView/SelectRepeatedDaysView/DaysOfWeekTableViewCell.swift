@@ -29,7 +29,6 @@ final class DayOfWeekTableViewCell: UITableViewCell {
         }
         
         button.addTarget(self, action: #selector(didTapSelectedDayButton), for: .touchUpInside)
-        
         return button
     }()
     

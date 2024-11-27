@@ -18,7 +18,10 @@ final class WeeklerAppCoordinator: Coordinator {
     private let sceneFactoryDIContainer: SceneFactoryProtocol
     private let tabBarController: UITabBarController
     
-    init(window: UIWindow, weeklerAppDI: WeeklerAppDIContainer) {
+    init(
+        window: UIWindow,
+        weeklerAppDI: WeeklerAppDIContainer
+    ) {
         self.window = window
         self.weeklerAppDI = weeklerAppDI
         sceneFactoryDIContainer = weeklerAppDI.makeSceneFactoryDIContainer()

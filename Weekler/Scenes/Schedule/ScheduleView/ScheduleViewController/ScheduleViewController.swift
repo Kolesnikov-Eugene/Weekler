@@ -31,7 +31,8 @@ final class ScheduleViewController: UIViewController {
     private var bag = DisposeBag()
     
     // TODO: Create DI method for creating hapticsManager
-    init(viewModel: ScheduleViewModelProtocol
+    init(
+        viewModel: ScheduleViewModelProtocol
     ) {
         self.viewModel = viewModel
         

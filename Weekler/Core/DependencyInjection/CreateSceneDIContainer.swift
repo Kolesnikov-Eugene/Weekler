@@ -11,7 +11,10 @@ final class CreateSceneDIContainer: CreateScheduleSceneProtocol {
     private let container: DIContainer
     private let createScheduleDelegate: CreateScheduleDelegate?
     
-    init(container: DIContainer, createScheduleDelegate: CreateScheduleDelegate?) {
+    init(
+        container: DIContainer,
+        createScheduleDelegate: CreateScheduleDelegate?
+    ) {
         self.container = container
         self.createScheduleDelegate = createScheduleDelegate
     }

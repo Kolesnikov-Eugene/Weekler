@@ -6,17 +6,10 @@
 //
 
 import UIKit
-import SwiftData
-
-enum MySchema: VersionedSchema {
-        static var versionIdentifier: SwiftData.Schema.Version = .init(1, 0, 0)
-        static var models: [any PersistentModel.Type] = [TaskItem.self]
-    }
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-//    var weeklerAppDI: WeeklerAppDIContainer?
     private var weeklerAppCoordinator: WeeklerAppCoordinator?
 
 
@@ -29,12 +22,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.weeklerAppCoordinator = coordinator
             self.window = window
             weeklerAppCoordinator?.start()
-            
-//            let tabBarController = weeklerAppDI.makeTabBarController()
-            
-//            window.rootViewController = tabBarController
-//            window.makeKeyAndVisible()
-            
         }
     }
 

@@ -22,7 +22,10 @@ final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
     private var isNotificationEnabled: Bool = false
     private var taskToEdit: ScheduleTask?
     
-    init(delegate: CreateScheduleDelegate?, taskToEdit: ScheduleTask?) {
+    init(
+        delegate: CreateScheduleDelegate?,
+        taskToEdit: ScheduleTask?
+    ) {
         self.delegate = delegate
         self.taskToEdit = taskToEdit
         if let task = taskToEdit {

@@ -57,8 +57,10 @@ final class CreateScheduleViewController: UIViewController {
     private var viewModel: CreateScheduleViewModelProtocol
     private var bag = DisposeBag()
     
-    // TODO: - Create init for delegate?
-    init(viewModel: CreateScheduleViewModelProtocol, mode: CreateMode) {
+    init(
+        viewModel: CreateScheduleViewModelProtocol,
+        mode: CreateMode
+    ) {
         self.viewModel = viewModel
         self.mode = mode
         super.init(nibName: nil, bundle: nil)
