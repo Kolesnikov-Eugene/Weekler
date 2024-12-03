@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ConfigFlowCoordinator: Coordinator {
+final class AppSettingsFlowCoordinator: Coordinator {
     private var navigationController: UINavigationController?
     private let tabBarController: UITabBarController
     private let sceneFactoryDIContainer: SceneFactoryProtocol

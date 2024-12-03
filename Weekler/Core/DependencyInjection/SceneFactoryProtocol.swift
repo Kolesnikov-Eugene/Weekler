@@ -10,7 +10,7 @@ import Foundation
 protocol SceneFactoryProtocol {
     var createScheduleSceneContainer: CreateScheduleSceneProtocol? { get }
     func makeScheduleViewController(coor: ScheduleFlowCoordinator) -> ScheduleViewController
-    func makeConfigViewController() -> ConfigViewController
+    func makeConfigViewController() -> AppSettingsViewController
     func makeStatisticsView() -> StatisticsViewController
     func makeScheduleUseCase() -> ScheduleUseCaseProtocol
     func makeCoreHapticsManager() -> CoreHapticsManagerProtocol?

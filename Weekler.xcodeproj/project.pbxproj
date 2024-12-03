@@ -29,6 +29,11 @@
 		442256842C6BE7B300172C0A /* ScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256832C6BE7B300172C0A /* ScheduleUseCase.swift */; };
 		442256862C6BE82900172C0A /* ScheduleUseCaseAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256852C6BE82900172C0A /* ScheduleUseCaseAssembly.swift */; };
 		442256882C6BEB4400172C0A /* ScheduleDataBaseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256872C6BEB4400172C0A /* ScheduleDataBaseType.swift */; };
+		444045DD2CFF8D0600559126 /* AppSettingsMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444045DC2CFF8D0600559126 /* AppSettingsMainView.swift */; };
+		444045E12CFF8DFE00559126 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444045E02CFF8DFE00559126 /* ProfileView.swift */; };
+		444045E42CFF8E2E00559126 /* AppSettingsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444045E32CFF8E2E00559126 /* AppSettingsCollectionViewController.swift */; };
+		444045E62CFF8EAD00559126 /* AppSettingsCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444045E52CFF8EAD00559126 /* AppSettingsCollectionCell.swift */; };
+		444045E82CFF8F7B00559126 /* AppSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444045E72CFF8F7B00559126 /* AppSettingsViewModel.swift */; };
 		4441EC772CE5303800AFB022 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4441EC762CE5303800AFB022 /* ChartView.swift */; };
 		4442BA682BE41F38002DC469 /* SceneFactoryAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA672BE41F38002DC469 /* SceneFactoryAssembly.swift */; };
 		4442BA6A2BE4243D002DC469 /* StatisticsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA692BE4243D002DC469 /* StatisticsAssembly.swift */; };
@@ -52,7 +57,7 @@
 		44727B472C486AAC007756A3 /* ScheduleTableViewSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44727B462C486AAC007756A3 /* ScheduleTableViewSectionItem.swift */; };
 		44727B4A2C486B29007756A3 /* SelectRepeatedDaysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44727B492C486B29007756A3 /* SelectRepeatedDaysViewController.swift */; };
 		44727B4C2C486B7B007756A3 /* DaysOfWeekTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44727B4B2C486B7B007756A3 /* DaysOfWeekTableViewCell.swift */; };
-		447DBE612BC4A8EB00A99A38 /* ConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447DBE522BC4A8EB00A99A38 /* ConfigViewController.swift */; };
+		447DBE612BC4A8EB00A99A38 /* AppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447DBE522BC4A8EB00A99A38 /* AppSettingsViewController.swift */; };
 		447DBE622BC4A8EB00A99A38 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447DBE552BC4A8EB00A99A38 /* ScheduleViewController.swift */; };
 		447DBE632BC4A8EB00A99A38 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447DBE582BC4A8EB00A99A38 /* StatisticsViewController.swift */; };
 		447DBE642BC4A8EB00A99A38 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447DBE5B2BC4A8EB00A99A38 /* TabBarController.swift */; };
@@ -68,7 +73,7 @@
 		44A88DE02CD6646500D4A007 /* CreateSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A88DDF2CD6646500D4A007 /* CreateSceneDIContainer.swift */; };
 		44A88DE22CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A88DE12CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift */; };
 		44AE39A22CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AE39A12CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift */; };
-		44AE39A52CE2908600D89B23 /* ConfigFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AE39A42CE2908600D89B23 /* ConfigFlowCoordinator.swift */; };
+		44AE39A52CE2908600D89B23 /* AppSettingsFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AE39A42CE2908600D89B23 /* AppSettingsFlowCoordinator.swift */; };
 		44AE39A82CE2954500D89B23 /* CoreHapticsManagerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AE39A72CE2954500D89B23 /* CoreHapticsManagerAssembly.swift */; };
 		44AE982E2CF5058E00D685FD /* GradientLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AE982D2CF5058E00D685FD /* GradientLabel.swift */; };
 		44B06E142BECEE0E000C3CC6 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B06E132BECEE0E000C3CC6 /* ScheduleViewModel.swift */; };
@@ -125,6 +130,11 @@
 		442256832C6BE7B300172C0A /* ScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleUseCase.swift; sourceTree = "<group>"; };
 		442256852C6BE82900172C0A /* ScheduleUseCaseAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleUseCaseAssembly.swift; sourceTree = "<group>"; };
 		442256872C6BEB4400172C0A /* ScheduleDataBaseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataBaseType.swift; sourceTree = "<group>"; };
+		444045DC2CFF8D0600559126 /* AppSettingsMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsMainView.swift; sourceTree = "<group>"; };
+		444045E02CFF8DFE00559126 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		444045E32CFF8E2E00559126 /* AppSettingsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsCollectionViewController.swift; sourceTree = "<group>"; };
+		444045E52CFF8EAD00559126 /* AppSettingsCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsCollectionCell.swift; sourceTree = "<group>"; };
+		444045E72CFF8F7B00559126 /* AppSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsViewModel.swift; sourceTree = "<group>"; };
 		4441EC762CE5303800AFB022 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		4442BA672BE41F38002DC469 /* SceneFactoryAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFactoryAssembly.swift; sourceTree = "<group>"; };
 		4442BA692BE4243D002DC469 /* StatisticsAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsAssembly.swift; sourceTree = "<group>"; };
@@ -148,7 +158,7 @@
 		44727B462C486AAC007756A3 /* ScheduleTableViewSectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewSectionItem.swift; sourceTree = "<group>"; };
 		44727B492C486B29007756A3 /* SelectRepeatedDaysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRepeatedDaysViewController.swift; sourceTree = "<group>"; };
 		44727B4B2C486B7B007756A3 /* DaysOfWeekTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysOfWeekTableViewCell.swift; sourceTree = "<group>"; };
-		447DBE522BC4A8EB00A99A38 /* ConfigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigViewController.swift; sourceTree = "<group>"; };
+		447DBE522BC4A8EB00A99A38 /* AppSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsViewController.swift; sourceTree = "<group>"; };
 		447DBE552BC4A8EB00A99A38 /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		447DBE582BC4A8EB00A99A38 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		447DBE5B2BC4A8EB00A99A38 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
@@ -166,7 +176,7 @@
 		44A88DDF2CD6646500D4A007 /* CreateSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSceneDIContainer.swift; sourceTree = "<group>"; };
 		44A88DE12CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleSceneContainerAssembly.swift; sourceTree = "<group>"; };
 		44AE39A12CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsFlowCoordinator.swift; sourceTree = "<group>"; };
-		44AE39A42CE2908600D89B23 /* ConfigFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigFlowCoordinator.swift; sourceTree = "<group>"; };
+		44AE39A42CE2908600D89B23 /* AppSettingsFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsFlowCoordinator.swift; sourceTree = "<group>"; };
 		44AE39A72CE2954500D89B23 /* CoreHapticsManagerAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreHapticsManagerAssembly.swift; sourceTree = "<group>"; };
 		44AE982D2CF5058E00D685FD /* GradientLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientLabel.swift; sourceTree = "<group>"; };
 		44B06E132BECEE0E000C3CC6 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
@@ -344,6 +354,31 @@
 			path = UseCase;
 			sourceTree = "<group>";
 		};
+		444045DE2CFF8DBD00559126 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				444045E72CFF8F7B00559126 /* AppSettingsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		444045DF2CFF8DEE00559126 /* ProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				444045E02CFF8DFE00559126 /* ProfileView.swift */,
+			);
+			path = ProfileView;
+			sourceTree = "<group>";
+		};
+		444045E22CFF8E0300559126 /* AppSettingsCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				444045E32CFF8E2E00559126 /* AppSettingsCollectionViewController.swift */,
+				444045E52CFF8EAD00559126 /* AppSettingsCollectionCell.swift */,
+			);
+			path = AppSettingsCollectionView;
+			sourceTree = "<group>";
+		};
 		4442BA662BE41F18002DC469 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -416,21 +451,25 @@
 			path = SelectRepeatedDaysView;
 			sourceTree = "<group>";
 		};
-		447DBE532BC4A8EB00A99A38 /* View */ = {
+		447DBE532BC4A8EB00A99A38 /* AppSettingsMainView */ = {
 			isa = PBXGroup;
 			children = (
-				447DBE522BC4A8EB00A99A38 /* ConfigViewController.swift */,
+				447DBE522BC4A8EB00A99A38 /* AppSettingsViewController.swift */,
+				444045DC2CFF8D0600559126 /* AppSettingsMainView.swift */,
 			);
-			path = View;
+			path = AppSettingsMainView;
 			sourceTree = "<group>";
 		};
-		447DBE542BC4A8EB00A99A38 /* ConfigView */ = {
+		447DBE542BC4A8EB00A99A38 /* AppSettingsView */ = {
 			isa = PBXGroup;
 			children = (
+				444045E22CFF8E0300559126 /* AppSettingsCollectionView */,
+				444045DF2CFF8DEE00559126 /* ProfileView */,
+				444045DE2CFF8DBD00559126 /* ViewModel */,
 				44AE39A32CE2907000D89B23 /* ConfigViewFlow */,
-				447DBE532BC4A8EB00A99A38 /* View */,
+				447DBE532BC4A8EB00A99A38 /* AppSettingsMainView */,
 			);
-			path = ConfigView;
+			path = AppSettingsView;
 			sourceTree = "<group>";
 		};
 		447DBE562BC4A8EB00A99A38 /* ScheduleView */ = {
@@ -487,7 +526,7 @@
 		447DBE602BC4A8EB00A99A38 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				447DBE542BC4A8EB00A99A38 /* ConfigView */,
+				447DBE542BC4A8EB00A99A38 /* AppSettingsView */,
 				447DBE572BC4A8EB00A99A38 /* Schedule */,
 				447DBE5A2BC4A8EB00A99A38 /* StatisticsView */,
 				447DBE5C2BC4A8EB00A99A38 /* TabBar */,
@@ -602,7 +641,7 @@
 		44AE39A32CE2907000D89B23 /* ConfigViewFlow */ = {
 			isa = PBXGroup;
 			children = (
-				44AE39A42CE2908600D89B23 /* ConfigFlowCoordinator.swift */,
+				44AE39A42CE2908600D89B23 /* AppSettingsFlowCoordinator.swift */,
 			);
 			path = ConfigViewFlow;
 			sourceTree = "<group>";
@@ -894,6 +933,7 @@
 				44F1169A2BDC3A3200134D5F /* TabBarAssembly.swift in Sources */,
 				442256842C6BE7B300172C0A /* ScheduleUseCase.swift in Sources */,
 				44727B4C2C486B7B007756A3 /* DaysOfWeekTableViewCell.swift in Sources */,
+				444045DD2CFF8D0600559126 /* AppSettingsMainView.swift in Sources */,
 				444AC1262CE3D63A0032DA6F /* StatisticsView.swift in Sources */,
 				440B2DD12CDBEF5700BA728B /* ScheduleDataSourceProtocol.swift in Sources */,
 				4498EAA22C2E019E0081E7EE /* ScheduleItems.swift in Sources */,
@@ -901,16 +941,19 @@
 				441CAC772CE0E1F300064348 /* ScheduleFlowCoordinator.swift in Sources */,
 				442256862C6BE82900172C0A /* ScheduleUseCaseAssembly.swift in Sources */,
 				440549E52BC5D7E400077C61 /* Strings.swift in Sources */,
+				444045E12CFF8DFE00559126 /* ProfileView.swift in Sources */,
 				44F9EA2B2CDAA597009AE5FD /* ScheduleRepositoryAssembly.swift in Sources */,
 				44727B392C486895007756A3 /* ScheduleViewModelAssembly.swift in Sources */,
 				446C85612CB85B8700077CC5 /* CoreHapticsManager.swift in Sources */,
 				44727B3F2C48694E007756A3 /* SourceItem.swift in Sources */,
-				44AE39A52CE2908600D89B23 /* ConfigFlowCoordinator.swift in Sources */,
+				44AE39A52CE2908600D89B23 /* AppSettingsFlowCoordinator.swift in Sources */,
 				4442BA702BE4277B002DC469 /* SceneFactoryProtocol.swift in Sources */,
 				4442BA6E2BE425F0002DC469 /* ConfigViewAssembly.swift in Sources */,
 				444AC12E2CE3E0E60032DA6F /* ServiceAssembly.swift in Sources */,
+				444045E82CFF8F7B00559126 /* AppSettingsViewModel.swift in Sources */,
 				444DAB862C655A8F005B8ABC /* SourceItemProtocol.swift in Sources */,
 				441CAC742CE0DB7F00064348 /* WeeklerAppCoordinator.swift in Sources */,
+				444045E62CFF8EAD00559126 /* AppSettingsCollectionCell.swift in Sources */,
 				44E28EE22CEE6FF0001FA0CA /* StatisticsServiceAssembly.swift in Sources */,
 				4407E7D42CD5415C00CC1692 /* SceneFactoryDIContainer.swift in Sources */,
 				4402A1C02CAB292100CCE9D8 /* ScheduleDataSource.swift in Sources */,
@@ -947,6 +990,7 @@
 				447DBE632BC4A8EB00A99A38 /* StatisticsViewController.swift in Sources */,
 				44C7148D2BD8465300C67B20 /* DaysOfWeek+Extension.swift in Sources */,
 				44A378DF2BFD2D7000E93B5F /* SelectMainModeCollectionViewCell.swift in Sources */,
+				444045E42CFF8E2E00559126 /* AppSettingsCollectionViewController.swift in Sources */,
 				444AC1302CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift in Sources */,
 				449EF5A32C52DE5900FD187B /* CreateScheduleDelegate.swift in Sources */,
 				444AC1292CE3DEA20032DA6F /* StatisticsViewModel.swift in Sources */,
@@ -956,7 +1000,7 @@
 				447DBE642BC4A8EB00A99A38 /* TabBarController.swift in Sources */,
 				44F116952BDC394A00134D5F /* SceneAssembly.swift in Sources */,
 				4441EC772CE5303800AFB022 /* ChartView.swift in Sources */,
-				447DBE612BC4A8EB00A99A38 /* ConfigViewController.swift in Sources */,
+				447DBE612BC4A8EB00A99A38 /* AppSettingsViewController.swift in Sources */,
 				44474BA72CF7A28500B03957 /* StatisticsViewModelProtocol.swift in Sources */,
 				44727B3D2C48692E007756A3 /* Goal.swift in Sources */,
 				44E28EDA2CEE6DA7001FA0CA /* StatisticsService.swift in Sources */,

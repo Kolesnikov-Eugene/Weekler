@@ -50,7 +50,7 @@ final class WeeklerAppCoordinator: Coordinator {
         childCoordinators.append(statisticsFlowCoordinator)
         
         // MARK: Config Flow
-        let configFlowCoordinator = ConfigFlowCoordinator(
+        let configFlowCoordinator = AppSettingsFlowCoordinator(
             tabBarController: tabBarController,
             sceneFactoryDIContainer: sceneFactoryDIContainer
         )

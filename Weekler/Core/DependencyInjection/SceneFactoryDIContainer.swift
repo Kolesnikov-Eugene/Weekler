@@ -27,8 +27,8 @@ final class SceneFactoryDIContainer: SceneFactoryProtocol {
         return scheduleVC
     }
     
-    func makeConfigViewController() -> ConfigViewController {
-        let configVC: ConfigViewController = container.resolve()
+    func makeConfigViewController() -> AppSettingsViewController {
+        let configVC: AppSettingsViewController = container.resolve()
         return configVC
     }
     

@@ -9,8 +9,8 @@ import Swinject
 
 final class ConfigViewAssembly: Assembly {
     func assemble(container: Swinject.Container) {
-        container.register(ConfigViewController.self) { _ in
-            ConfigViewController()
+        container.register(AppSettingsViewController.self) { _ in
+            AppSettingsViewController()
         }.inObjectScope(.container)
     }
 }

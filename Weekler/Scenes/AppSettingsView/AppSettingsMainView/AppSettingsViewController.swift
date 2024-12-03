@@ -7,9 +7,11 @@
 
 import UIKit
 
-final class ConfigViewController: UIViewController {
+final class AppSettingsViewController: UIViewController {
+    private var appSettingsMainView: AppSettingsMainView!
     
     init() {
+        appSettingsMainView = AppSettingsMainView(frame: .zero)
         super.init(nibName: nil, bundle: nil)
         setupUI()
     }
@@ -22,11 +24,14 @@ final class ConfigViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    override func loadView() {
+        self.view = appSettingsMainView
+    }
+    
     private func setupUI() {
-        self.view.backgroundColor = Colors.viewBackground
         navigationItem.title = L10n.Localizable.Tab.config
         self.tabBarItem = UITabBarItem(
-            title: L10n.Localizable.Tab.config,
+            title: L10n.Localizable.Tab.config,  // FIXME: rename tab title
             image: UIImage(systemName: "gearshape"),
             selectedImage: nil)
     }
