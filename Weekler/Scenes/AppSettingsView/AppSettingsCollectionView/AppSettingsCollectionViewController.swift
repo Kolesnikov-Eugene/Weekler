@@ -9,14 +9,37 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
+struct AppSettingsItem: Hashable {
+    let title: String
+}
+
+enum Section: Hashable {
+    case main
+}
+
 final class AppSettingsCollectionViewController: UICollectionViewController {
 //    private let viewModel: AppSettingsViewModel
+    private var dataSource: UICollectionViewDiffableDataSource<Section, AppSettingsItem>!
+    private var items: [AppSettingsItem] = [
+        AppSettingsItem(title: "New"),
+        AppSettingsItem(title: "Settings"),
+        AppSettingsItem(title: "Few")
+    ]
     
     init() {
-//        self.viewModel = viewModel
-        let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSizeMake(100, 100)
-        layout.scrollDirection = UICollectionView.ScrollDirection.vertical
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(1.0)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(44)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        
+        let layout = UICollectionViewCompositionalLayout(section: section)
         
         super.init(collectionViewLayout: layout)
     }
@@ -32,34 +55,54 @@ final class AppSettingsCollectionViewController: UICollectionViewController {
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
-        // Register cell classes
         self.collectionView.register(AppSettingsCollectionCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        // Do any additional setup after loading the view.
         collectionView.backgroundColor = .clear
+        configureDataSource()
+    }
+    
+    private func configureDataSource() {
+        dataSource = UICollectionViewDiffableDataSource(
+            collectionView: collectionView,
+            cellProvider: { collectionView, indexPath, itemIdentifier in
+                guard let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: reuseIdentifier,
+                        for: indexPath
+                    ) as? AppSettingsCollectionCell else { fatalError("Could not dequeue cell") }
+                cell.titleLabel.text = itemIdentifier.title
+                return cell
+        })
+        updateSnapshot()
+    }
+    
+    private func updateSnapshot() {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, AppSettingsItem>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(items)
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
 
     // MARK: UICollectionViewDataSource
 
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
-        // Configure the cell
-    
-        return cell
-    }
+//    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+//        // #warning Incomplete implementation, return the number of sections
+//        return 0
+//    }
+//
+//
+//    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        // #warning Incomplete implementation, return the number of items
+//        return 0
+//    }
+//
+//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+//    
+//        // Configure the cell
+//    
+//        return cell
+//    }
 
     // MARK: UICollectionViewDelegate
 
