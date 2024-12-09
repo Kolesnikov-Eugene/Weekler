@@ -9,21 +9,16 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-struct AppSettingsItem: Hashable {
-    let title: String
-}
-
-enum Section: Hashable {
-    case main
-}
-
 final class AppSettingsCollectionViewController: UICollectionViewController {
 //    private let viewModel: AppSettingsViewModel
-    private var dataSource: UICollectionViewDiffableDataSource<Section, AppSettingsItem>!
-    private var items: [AppSettingsItem] = [
-        AppSettingsItem(title: "New"),
-        AppSettingsItem(title: "Settings"),
-        AppSettingsItem(title: "Few")
+    private var dataSource: UICollectionViewDiffableDataSource<SettingsSection, AppSettingsItem>!
+    // FIXME: move to viewModel
+    private var settingsItems: [AppSettingsItem] = [
+        .main(MainSettingsItem(title: "Sounds")),
+        .main(MainSettingsItem(title: "Settings")),
+        .main(MainSettingsItem(title: "Notifications")),
+        .appearance(AppearanceSettingsItem(title: "Appearance")),
+        .appearance(AppearanceSettingsItem(title: "Theme")),
     ]
     
     init() {
@@ -38,6 +33,7 @@ final class AppSettingsCollectionViewController: UICollectionViewController {
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = .init(top: 20, leading: 20, bottom: 20, trailing: 20)
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         
@@ -50,16 +46,18 @@ final class AppSettingsCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("view did load in collection view controller")
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
         self.collectionView.register(AppSettingsCollectionCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
+        configureCollectionView()
+        configureDataSource()
+    }
+    
+    private func configureCollectionView() {
+        // Uncomment the following line to preserve selection between presentations
+//        self.clearsSelectionOnViewWillAppear = false
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .clear
-        configureDataSource()
+        collectionView.allowsSelection = true
+        collectionView.allowsMultipleSelection = false
     }
     
     private func configureDataSource() {
@@ -70,69 +68,30 @@ final class AppSettingsCollectionViewController: UICollectionViewController {
                         withReuseIdentifier: reuseIdentifier,
                         for: indexPath
                     ) as? AppSettingsCollectionCell else { fatalError("Could not dequeue cell") }
-                cell.titleLabel.text = itemIdentifier.title
+                switch itemIdentifier {
+                case .main(let mainItem):
+                    let title = mainItem.title
+                    cell.configureCell(with: title, isLast: false)
+                case .appearance(let appearanceItem):
+                    let title = appearanceItem.title
+                    cell.configureCell(with: title, isLast: false)
+                }
                 return cell
         })
         updateSnapshot()
     }
     
     private func updateSnapshot() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, AppSettingsItem>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(items)
+        var snapshot = NSDiffableDataSourceSnapshot<SettingsSection, AppSettingsItem>()
+        snapshot.appendSections([.main, .appearance])
+        for item in settingsItems {
+            switch item {
+            case .main(_):
+                snapshot.appendItems([item], toSection: .main)
+            case .appearance(_):
+                snapshot.appendItems([item], toSection: .appearance)
+            }
+        }
         dataSource.apply(snapshot, animatingDifferences: true)
     }
-
-    // MARK: UICollectionViewDataSource
-
-//    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        // #warning Incomplete implementation, return the number of sections
-//        return 0
-//    }
-//
-//
-//    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        // #warning Incomplete implementation, return the number of items
-//        return 0
-//    }
-//
-//    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-//    
-//        // Configure the cell
-//    
-//        return cell
-//    }
-
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
-
 }
