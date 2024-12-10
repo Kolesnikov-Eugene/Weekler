@@ -12,9 +12,12 @@ final class AppSettingsMainView: UIView {
     private var profileView: ProfileView!
     private var appSettingsCollectionVC: AppSettingsCollectionViewController!
 
-    override init(frame: CGRect) {
+    init(
+        viewModel: AppSettingsViewModelProtocol,
+        frame: CGRect
+    ) {
         profileView = ProfileView(frame: .zero)
-        appSettingsCollectionVC = AppSettingsCollectionViewController()
+        appSettingsCollectionVC = AppSettingsCollectionViewController(viewModel: viewModel)
         super.init(frame: frame)
         setupView()
     }

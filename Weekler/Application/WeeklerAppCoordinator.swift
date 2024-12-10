@@ -34,6 +34,7 @@ final class WeeklerAppCoordinator: Coordinator {
         startFlows()
     }
     
+    // FIXME: add coordinators to DI container
     private func startFlows() {
         // MARK: Schedule Flow
         let scheduleFlowCoordinator = ScheduleFlowCoordinator(

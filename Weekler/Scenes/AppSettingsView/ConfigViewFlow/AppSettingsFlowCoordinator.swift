@@ -26,5 +26,4 @@ final class AppSettingsFlowCoordinator: Coordinator {
         guard let navigationController else { return }
         tabBarController.viewControllers?.insert(navigationController, at: 2)
     }
-    
 }

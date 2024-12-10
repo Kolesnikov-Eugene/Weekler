@@ -10,18 +10,14 @@ import UIKit
 private let reuseIdentifier = "Cell"
 
 final class AppSettingsCollectionViewController: UICollectionViewController {
-//    private let viewModel: AppSettingsViewModel
+    private let viewModel: AppSettingsViewModelProtocol
     private var dataSource: UICollectionViewDiffableDataSource<SettingsSection, AppSettingsItem>!
-    // FIXME: move to viewModel
-    private var settingsItems: [AppSettingsItem] = [
-        .main(MainSettingsItem(title: "Sounds")),
-        .main(MainSettingsItem(title: "Settings")),
-        .main(MainSettingsItem(title: "Notifications")),
-        .appearance(AppearanceSettingsItem(title: "Appearance")),
-        .appearance(AppearanceSettingsItem(title: "Theme")),
-    ]
     
-    init() {
+    init(
+        viewModel: AppSettingsViewModelProtocol
+    ) {
+        self.viewModel = viewModel
+        
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalHeight(1.0)
@@ -68,13 +64,14 @@ final class AppSettingsCollectionViewController: UICollectionViewController {
                         withReuseIdentifier: reuseIdentifier,
                         for: indexPath
                     ) as? AppSettingsCollectionCell else { fatalError("Could not dequeue cell") }
+                let configuration = self.viewModel.makeCellConfiguration(for: indexPath)
                 switch itemIdentifier {
                 case .main(let mainItem):
                     let title = mainItem.title
-                    cell.configureCell(with: title, isLast: false)
+                    cell.configureCell(with: title, and: configuration)
                 case .appearance(let appearanceItem):
                     let title = appearanceItem.title
-                    cell.configureCell(with: title, isLast: false)
+                    cell.configureCell(with: title, and: configuration)
                 }
                 return cell
         })
@@ -84,7 +81,7 @@ final class AppSettingsCollectionViewController: UICollectionViewController {
     private func updateSnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<SettingsSection, AppSettingsItem>()
         snapshot.appendSections([.main, .appearance])
-        for item in settingsItems {
+        for item in viewModel.settingsItems {
             switch item {
             case .main(_):
                 snapshot.appendItems([item], toSection: .main)
@@ -93,5 +90,14 @@ final class AppSettingsCollectionViewController: UICollectionViewController {
             }
         }
         dataSource.apply(snapshot, animatingDifferences: true)
+    }
+    
+    // collectionView delegate
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) -> Void {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? AppSettingsCollectionCell else { return }
+        cell.animateCellSelection()
     }
 }

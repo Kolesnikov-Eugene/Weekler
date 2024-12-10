@@ -10,8 +10,10 @@ import UIKit
 final class AppSettingsViewController: UIViewController {
     private var appSettingsMainView: AppSettingsMainView!
     
-    init() {
-        appSettingsMainView = AppSettingsMainView(frame: .zero)
+    init(
+        viewModel: AppSettingsViewModelProtocol
+    ) {
+        appSettingsMainView = AppSettingsMainView(viewModel: viewModel, frame: .zero)
         super.init(nibName: nil, bundle: nil)
         setupUI()
     }

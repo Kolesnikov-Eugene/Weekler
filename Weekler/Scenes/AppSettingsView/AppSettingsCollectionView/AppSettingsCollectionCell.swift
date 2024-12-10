@@ -36,7 +36,6 @@ final class AppSettingsCollectionCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor(resource: .settingsCell)
         setupView()
     }
     
@@ -44,16 +43,44 @@ final class AppSettingsCollectionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // TODO: - implement logic of hiding separatorView an rounded corners
-    func configureCell(with title: String, isLast: Bool) {
+    func animateCellSelection() {
+        UIView.animate(withDuration: 0.1) {
+                self.contentView.backgroundColor = .lightGray
+            } completion: { _ in
+                self.setBackgroundColor()
+            }
+    }
+    
+    func configureCell(
+        with title: String,
+        and configuration: AppSettingsCellConfiguration
+    ) {
         titleLabel.text = title
-        separatorView.isHidden = isLast
+        reconfigureView(with: configuration)
+    }
+    
+    private func reconfigureView(with configuration: AppSettingsCellConfiguration) {
+        separatorView.isHidden = configuration.isLast
+        if configuration.roundedTopCorners {
+            contentView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        } else if configuration.roundedBottomCorners {
+            contentView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        } else {
+            contentView.layer.maskedCorners = []
+        }
     }
     
     private func setupView() {
         addSubviews()
         applyConstraints()
+        setBackgroundColor()
+        contentView.layer.cornerRadius = 12
     }
+    
+    private func setBackgroundColor() {
+        contentView.backgroundColor = UIColor(resource: .settingsCell)
+    }
+    
     private func addSubviews() {
         contentView.addSubview(titleLabel)
         contentView.addSubview(chevronImageView)

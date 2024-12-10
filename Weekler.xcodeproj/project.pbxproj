@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		4402A1C02CAB292100CCE9D8 /* ScheduleDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4402A1BF2CAB292100CCE9D8 /* ScheduleDataSource.swift */; };
+		44030B0B2D08C9D600A0FABF /* AppSettingsViewModelAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44030B0A2D08C9D600A0FABF /* AppSettingsViewModelAssembly.swift */; };
+		44030B0D2D08CBC200A0FABF /* AppSettingsCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44030B0C2D08CBC200A0FABF /* AppSettingsCellConfiguration.swift */; };
+		44030B0F2D08D61900A0FABF /* AppSettingsViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44030B0E2D08D61900A0FABF /* AppSettingsViewModelProtocol.swift */; };
 		440549E52BC5D7E400077C61 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440549E42BC5D7E400077C61 /* Strings.swift */; };
 		440549EE2BC5DDBA00077C61 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 440549EC2BC5DDBA00077C61 /* Localizable.strings */; };
 		440770FD2BBB472900AD9C98 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440770FC2BBB472900AD9C98 /* Colors.swift */; };
@@ -37,7 +40,7 @@
 		4441EC772CE5303800AFB022 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4441EC762CE5303800AFB022 /* ChartView.swift */; };
 		4442BA682BE41F38002DC469 /* SceneFactoryAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA672BE41F38002DC469 /* SceneFactoryAssembly.swift */; };
 		4442BA6A2BE4243D002DC469 /* StatisticsAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA692BE4243D002DC469 /* StatisticsAssembly.swift */; };
-		4442BA6E2BE425F0002DC469 /* ConfigViewAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA6D2BE425F0002DC469 /* ConfigViewAssembly.swift */; };
+		4442BA6E2BE425F0002DC469 /* AppSettingsVCAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA6D2BE425F0002DC469 /* AppSettingsVCAssembly.swift */; };
 		4442BA702BE4277B002DC469 /* SceneFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442BA6F2BE4277B002DC469 /* SceneFactoryProtocol.swift */; };
 		44474BA72CF7A28500B03957 /* StatisticsViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44474BA62CF7A28500B03957 /* StatisticsViewModelProtocol.swift */; };
 		444AC1262CE3D63A0032DA6F /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444AC1252CE3D63A0032DA6F /* StatisticsView.swift */; };
@@ -112,6 +115,9 @@
 
 /* Begin PBXFileReference section */
 		4402A1BF2CAB292100CCE9D8 /* ScheduleDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataSource.swift; sourceTree = "<group>"; };
+		44030B0A2D08C9D600A0FABF /* AppSettingsViewModelAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsViewModelAssembly.swift; sourceTree = "<group>"; };
+		44030B0C2D08CBC200A0FABF /* AppSettingsCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsCellConfiguration.swift; sourceTree = "<group>"; };
+		44030B0E2D08D61900A0FABF /* AppSettingsViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsViewModelProtocol.swift; sourceTree = "<group>"; };
 		440549E42BC5D7E400077C61 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		440549ED2BC5DDBA00077C61 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		440549EF2BC5DDF200077C61 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -142,7 +148,7 @@
 		4441EC762CE5303800AFB022 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		4442BA672BE41F38002DC469 /* SceneFactoryAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFactoryAssembly.swift; sourceTree = "<group>"; };
 		4442BA692BE4243D002DC469 /* StatisticsAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsAssembly.swift; sourceTree = "<group>"; };
-		4442BA6D2BE425F0002DC469 /* ConfigViewAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigViewAssembly.swift; sourceTree = "<group>"; };
+		4442BA6D2BE425F0002DC469 /* AppSettingsVCAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsVCAssembly.swift; sourceTree = "<group>"; };
 		4442BA6F2BE4277B002DC469 /* SceneFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneFactoryProtocol.swift; sourceTree = "<group>"; };
 		44474BA62CF7A28500B03957 /* StatisticsViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModelProtocol.swift; sourceTree = "<group>"; };
 		444AC1252CE3D63A0032DA6F /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
@@ -270,6 +276,15 @@
 			path = DataSource;
 			sourceTree = "<group>";
 		};
+		44030B092D08C81800A0FABF /* SettingsVIew */ = {
+			isa = PBXGroup;
+			children = (
+				4442BA6D2BE425F0002DC469 /* AppSettingsVCAssembly.swift */,
+				44030B0A2D08C9D600A0FABF /* AppSettingsViewModelAssembly.swift */,
+			);
+			path = SettingsVIew;
+			sourceTree = "<group>";
+		};
 		440549E32BC5D7CF00077C61 /* Generated */ = {
 			isa = PBXGroup;
 			children = (
@@ -366,6 +381,7 @@
 			isa = PBXGroup;
 			children = (
 				444045E72CFF8F7B00559126 /* AppSettingsViewModel.swift */,
+				44030B0E2D08D61900A0FABF /* AppSettingsViewModelProtocol.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -424,7 +440,6 @@
 			children = (
 				44F116972BDC398E00134D5F /* ScheduleAssembly.swift */,
 				44F116992BDC3A3200134D5F /* TabBarAssembly.swift */,
-				4442BA6D2BE425F0002DC469 /* ConfigViewAssembly.swift */,
 				44CE3BBC2C0BA38500719B84 /* CreateScheduleViewAssembly.swift */,
 				44727B382C486895007756A3 /* ScheduleViewModelAssembly.swift */,
 				44FB465F2C5E6959005731BC /* CreateScheduleViewModelAssembly.swift */,
@@ -687,6 +702,7 @@
 				44BF98912D077861008A2BA3 /* AppearanceSettingsItem.swift */,
 				44BF98932D077878008A2BA3 /* AppSettingsItem.swift */,
 				44BF98952D07789A008A2BA3 /* SettingsSection.swift */,
+				44030B0C2D08CBC200A0FABF /* AppSettingsCellConfiguration.swift */,
 			);
 			path = SettingsItems;
 			sourceTree = "<group>";
@@ -773,6 +789,7 @@
 		44F116962BDC397D00134D5F /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				44030B092D08C81800A0FABF /* SettingsVIew */,
 				444AC12B2CE3E0930032DA6F /* Statistics */,
 				444AC12A2CE3E04A0032DA6F /* Schedule */,
 			);
@@ -961,6 +978,7 @@
 				441CAC772CE0E1F300064348 /* ScheduleFlowCoordinator.swift in Sources */,
 				442256862C6BE82900172C0A /* ScheduleUseCaseAssembly.swift in Sources */,
 				440549E52BC5D7E400077C61 /* Strings.swift in Sources */,
+				44030B0F2D08D61900A0FABF /* AppSettingsViewModelProtocol.swift in Sources */,
 				444045E12CFF8DFE00559126 /* ProfileView.swift in Sources */,
 				44F9EA2B2CDAA597009AE5FD /* ScheduleRepositoryAssembly.swift in Sources */,
 				44727B392C486895007756A3 /* ScheduleViewModelAssembly.swift in Sources */,
@@ -968,12 +986,13 @@
 				44727B3F2C48694E007756A3 /* SourceItem.swift in Sources */,
 				44AE39A52CE2908600D89B23 /* AppSettingsFlowCoordinator.swift in Sources */,
 				4442BA702BE4277B002DC469 /* SceneFactoryProtocol.swift in Sources */,
-				4442BA6E2BE425F0002DC469 /* ConfigViewAssembly.swift in Sources */,
+				4442BA6E2BE425F0002DC469 /* AppSettingsVCAssembly.swift in Sources */,
 				444AC12E2CE3E0E60032DA6F /* ServiceAssembly.swift in Sources */,
 				444045E82CFF8F7B00559126 /* AppSettingsViewModel.swift in Sources */,
 				444DAB862C655A8F005B8ABC /* SourceItemProtocol.swift in Sources */,
 				441CAC742CE0DB7F00064348 /* WeeklerAppCoordinator.swift in Sources */,
 				444045E62CFF8EAD00559126 /* AppSettingsCollectionCell.swift in Sources */,
+				44030B0D2D08CBC200A0FABF /* AppSettingsCellConfiguration.swift in Sources */,
 				44E28EE22CEE6FF0001FA0CA /* StatisticsServiceAssembly.swift in Sources */,
 				4407E7D42CD5415C00CC1692 /* SceneFactoryDIContainer.swift in Sources */,
 				4402A1C02CAB292100CCE9D8 /* ScheduleDataSource.swift in Sources */,
@@ -999,6 +1018,7 @@
 				44DBD2AF2C8ED287006AE2F1 /* CompletedTask.swift in Sources */,
 				44727B432C486A48007756A3 /* DaysOfWeekEnum.swift in Sources */,
 				44E28EDE2CEE6ED2001FA0CA /* StatisticsRepository.swift in Sources */,
+				44030B0B2D08C9D600A0FABF /* AppSettingsViewModelAssembly.swift in Sources */,
 				4442BA682BE41F38002DC469 /* SceneFactoryAssembly.swift in Sources */,
 				4481DB992CF3BB7F009BBB4C /* GradientTextLabel.swift in Sources */,
 				44079C6E2CD169C5006D3A3D /* CalendarView.swift in Sources */,
