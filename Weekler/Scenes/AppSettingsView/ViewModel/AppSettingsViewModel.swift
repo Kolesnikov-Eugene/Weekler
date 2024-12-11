@@ -11,7 +11,30 @@ import RxCocoa
 
 final class AppSettingsViewModel: AppSettingsViewModelProtocol {
     
-    private(set) var settingsItems: [AppSettingsItem] = [
+    // MARK: - public properties
+    var mainSettingsItems: [AppSettingsItem] {
+        get {
+            settingsItems.filter {
+                switch $0 {
+                case .main: return true
+                case .appearance: return false
+                }
+            }
+        }
+    }
+    var appearanceSettingsItems: [AppSettingsItem] {
+        get {
+            settingsItems.filter {
+                switch $0 {
+                case .appearance: return true
+                case .main: return false
+                }
+            }
+        }
+    }
+    
+    // MARK: - private properties
+    private let settingsItems: [AppSettingsItem] = [
         .main(MainSettingsItem(title: "Sounds")),
         .main(MainSettingsItem(title: "Settings")),
         .main(MainSettingsItem(title: "Notifications")),
@@ -19,27 +42,14 @@ final class AppSettingsViewModel: AppSettingsViewModelProtocol {
         .appearance(AppearanceSettingsItem(title: "Theme")),
     ]
     private var mainSectionItemsCount: Int {
-        get {
-            settingsItems.filter {
-                switch $0 {
-                case .main: return true
-                case .appearance: return false
-                }
-            }.count
-        }
+        get { mainSettingsItems.count }
     }
     private var appearanceSectionItemsCount: Int {
-        get {
-            settingsItems.filter {
-                switch $0 {
-                case .main: return false
-                case .appearance: return true
-                }
-            }.count
-        }
+        get { appearanceSettingsItems.count }
     }
 //    private let settingsFlowCoordinator: AppSettingsFlowCoordinator
     
+    // MARK: - lifecycle
     init
     (
 //        settingsFlowCoordinator: AppSettingsFlowCoordinator
@@ -47,6 +57,7 @@ final class AppSettingsViewModel: AppSettingsViewModelProtocol {
 //        self.settingsFlowCoordinator = settingsFlowCoordinator
     }
     
+    // MARK: - public methods
     func makeCellConfiguration(for indexPath: IndexPath) -> AppSettingsCellConfiguration {
         if indexPath.row == 0 {
             return AppSettingsCellConfiguration(

@@ -177,7 +177,8 @@ final class ScheduleTableViewCell: UITableViewCell {
         }
     }
     
-    @objc private func didTapCheckmarkButton() {
+    @objc
+    private func didTapCheckmarkButton() {
         if mainMode == .task {
             onTaskButtonTapped?()
         }

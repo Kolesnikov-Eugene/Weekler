@@ -57,6 +57,7 @@ final class CreateScheduleViewController: UIViewController {
     private var viewModel: CreateScheduleViewModelProtocol
     private var bag = DisposeBag()
     
+    // MARK: - lifecycle
     init(
         viewModel: CreateScheduleViewModelProtocol,
         mode: CreateMode
@@ -74,7 +75,7 @@ final class CreateScheduleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        bind()
+        bindToViewModel()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -152,7 +153,7 @@ final class CreateScheduleViewController: UIViewController {
         }
     }
     
-    private func bind() {
+    private func bindToViewModel() {
         createScheduleDescriptionTextField.rx
             .text
             .orEmpty
@@ -218,7 +219,8 @@ final class CreateScheduleViewController: UIViewController {
         dismiss(animated: true)
     }
     
-    @objc private func createDescriptionTextViewDidEndEditing() {
+    @objc
+    private func createDescriptionTextViewDidEndEditing() {
         view.endEditing(true)
     }
 }

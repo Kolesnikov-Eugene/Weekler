@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 final class AppSettingsCollectionCell: UICollectionViewCell {
+    
+    // MARK: - private properties
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .headline)
@@ -33,7 +35,7 @@ final class AppSettingsCollectionCell: UICollectionViewCell {
         return view
     }()
     
-    
+    // MARK: - lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -43,6 +45,7 @@ final class AppSettingsCollectionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - public methods
     func animateCellSelection() {
         UIView.animate(withDuration: 0.1) {
                 self.contentView.backgroundColor = .lightGray
@@ -59,6 +62,7 @@ final class AppSettingsCollectionCell: UICollectionViewCell {
         reconfigureView(with: configuration)
     }
     
+    // MARK: - provate methods
     private func reconfigureView(with configuration: AppSettingsCellConfiguration) {
         separatorView.isHidden = configuration.isLast
         if configuration.roundedTopCorners {

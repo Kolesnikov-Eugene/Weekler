@@ -34,6 +34,7 @@ final class StatisticsViewModel: StatisticsViewModelProtocol {
         case month
     }
     
+    // MARK: - lifecycle
     init(
         statisticsService: StatisticsServiceProtocol
     ) {

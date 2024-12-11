@@ -8,15 +8,21 @@
 import Foundation
 
 final class SceneFactoryDIContainer: SceneFactoryProtocol {
-    private let container: DIContainer
+    
+    // MARK: - public properties
     var createScheduleSceneContainer: CreateScheduleSceneProtocol?
     
+    // MARK: - private properties
+    private let container: DIContainer
+    
+    // MARK: - lifecycle
     init(
         container: DIContainer
     ) {
         self.container = container
     }
     
+    // MARK: - public methods
     func makeScheduleViewController(coor: ScheduleFlowCoordinator) -> ScheduleViewController {
         let hapticsManager = makeCoreHapticsManager()
         let scheduleViewModel: ScheduleViewModelProtocol = container.resolve(

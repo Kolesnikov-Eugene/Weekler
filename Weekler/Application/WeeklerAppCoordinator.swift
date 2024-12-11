@@ -12,12 +12,15 @@ protocol Coordinator {
 }
 
 final class WeeklerAppCoordinator: Coordinator {
+    
+    // MARK: - private properties
     private let window: UIWindow
     private let weeklerAppDI: WeeklerAppDIContainer
     private var childCoordinators: [Coordinator?] = []
     private let sceneFactoryDIContainer: SceneFactoryProtocol
     private let tabBarController: UITabBarController
     
+    // MARK: - lifecycle
     init(
         window: UIWindow,
         weeklerAppDI: WeeklerAppDIContainer
@@ -28,6 +31,7 @@ final class WeeklerAppCoordinator: Coordinator {
         tabBarController = weeklerAppDI.makeTabBarController()
     }
     
+    // MARK: - publiv methods
     func start() {
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()

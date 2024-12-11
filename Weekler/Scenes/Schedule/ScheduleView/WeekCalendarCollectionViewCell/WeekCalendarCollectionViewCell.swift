@@ -11,15 +11,6 @@ import JTAppleCalendar
 final class WeekCalendarCollectionViewCell: JTAppleCell {
     
     //MARK: - private properties
-//    private lazy var dayLabel: UILabel = {
-//        let label = UILabel()
-//        label.textAlignment = .center
-//        label.backgroundColor = .clear
-//        label.textColor = Colors.textColorMain
-//        label.font = UIFont.systemFont(ofSize: 14, weight: .light)
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -63,7 +54,7 @@ final class WeekCalendarCollectionViewCell: JTAppleCell {
         return view
     }()
     
-    
+    // MARK: - lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -82,14 +73,12 @@ final class WeekCalendarCollectionViewCell: JTAppleCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-//        dayLabel.text = ""
         selectedStateView.backgroundColor = .clear
         currentDayView.isHidden = true
     }
     
     //MARK: - public methods
-    func configureCell(currentDate: String, day: String, isCurrent: Bool) {
-//        dayLabel.text = day
+    func configureCell(currentDate: String, isCurrent: Bool) {
         dateLabel.text = currentDate
         currentDayView.isHidden = !isCurrent
     }
@@ -110,7 +99,6 @@ final class WeekCalendarCollectionViewCell: JTAppleCell {
         contentView.addSubview(currentDayView)
         contentView.addSubview(selectedStateView)
         contentView.addSubview(dateStackView)
-//        dateStackView.addArrangedSubview(dayLabel)
         dateStackView.addArrangedSubview(dateLabel)
     }
     

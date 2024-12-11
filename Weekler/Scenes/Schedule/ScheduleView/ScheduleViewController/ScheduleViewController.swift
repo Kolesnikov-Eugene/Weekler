@@ -30,7 +30,7 @@ final class ScheduleViewController: UIViewController {
     private var viewModel: ScheduleViewModelProtocol
     private var bag = DisposeBag()
     
-    // TODO: Create DI method for creating hapticsManager
+    // MARK: - lifecycle
     init(
         viewModel: ScheduleViewModelProtocol
     ) {

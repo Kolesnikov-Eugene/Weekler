@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
+    
     // MARK: - public properties
     var textFieldValue = BehaviorRelay<String>(value: "")
     var datePickerValue = BehaviorRelay<Date>(value: Date())
@@ -22,6 +23,7 @@ final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
     private var isNotificationEnabled: Bool = false
     private var taskToEdit: ScheduleTask?
     
+    // MARK: - lifecycle
     init(
         delegate: CreateScheduleDelegate?,
         taskToEdit: ScheduleTask?

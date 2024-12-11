@@ -9,9 +9,11 @@ import UIKit
 
 final class StatisticsViewController: UIViewController {
     
+    // MARK: - private properties
     private var statisticsView: StatisticsView!
     private let viewModel: StatisticsViewModelProtocol
     
+    // MARK: - lifecycle
     init(
         viewModel: StatisticsViewModelProtocol
     ) {
@@ -38,15 +40,12 @@ final class StatisticsViewController: UIViewController {
         viewModel.viewDidAppear()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-    }
-    
     override func loadView() {
         super.loadView()
         view = StatisticsView(frame: .zero, viewModel: viewModel)
     }
     
+    // MARK: - provate methods
     private func setupUI() {
         self.view.backgroundColor = Colors.viewBackground
         navigationItem.title = L10n.Localizable.Tab.statistics

@@ -766,7 +766,7 @@
 		44F116902BDC382700134D5F /* DependencyInjection */ = {
 			isa = PBXGroup;
 			children = (
-				44F116912BDC383600134D5F /* DependencyAssemblers */,
+				44F116912BDC383600134D5F /* DependencyAssemblies */,
 				44F116922BDC384B00134D5F /* DIContainer.swift */,
 				4407E7D12CD53BC400CC1692 /* WeeklerAppDIContainer.swift */,
 				4407E7D32CD5415C00CC1692 /* SceneFactoryDIContainer.swift */,
@@ -776,14 +776,14 @@
 			path = DependencyInjection;
 			sourceTree = "<group>";
 		};
-		44F116912BDC383600134D5F /* DependencyAssemblers */ = {
+		44F116912BDC383600134D5F /* DependencyAssemblies */ = {
 			isa = PBXGroup;
 			children = (
 				444AC12C2CE3E0CA0032DA6F /* Assamblies */,
 				4442BA662BE41F18002DC469 /* Services */,
 				44F116962BDC397D00134D5F /* Scenes */,
 			);
-			path = DependencyAssemblers;
+			path = DependencyAssemblies;
 			sourceTree = "<group>";
 		};
 		44F116962BDC397D00134D5F /* Scenes */ = {

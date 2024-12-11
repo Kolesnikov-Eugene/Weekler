@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 final class ProfileView: UIView {
+    
+    // MARK: - private properties
     private lazy var profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "person.crop.circle")
@@ -26,6 +28,7 @@ final class ProfileView: UIView {
         return button
     }()
 
+    // MARK: - lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
@@ -40,6 +43,7 @@ final class ProfileView: UIView {
         profileImageView.layer.cornerRadius = profileImageView.bounds.height / 2
     }
     
+    // MARK: - private methods
     private func setupView() {
         backgroundColor = .clear
         

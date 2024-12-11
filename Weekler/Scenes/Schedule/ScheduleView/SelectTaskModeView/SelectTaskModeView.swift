@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 final class SelectTaskModeView: UIView {
+    
+    // MARK: - private properties
     private let collectionCellReuseId = "collectionCell"
     private lazy var selectMainModeCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -24,6 +26,7 @@ final class SelectTaskModeView: UIView {
     }()
     private var viewModel: SelectTaskViewModelProtocol
     
+    // MARK: - lifecycle
     init(
         frame: CGRect,
         viewModel: SelectTaskViewModelProtocol
@@ -37,6 +40,7 @@ final class SelectTaskModeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - private methods
     private func setupUI() {
         backgroundColor = Colors.viewBackground
         selectMainModeCollectionView.register(SelectMainModeCollectionViewCell.self, forCellWithReuseIdentifier: collectionCellReuseId)

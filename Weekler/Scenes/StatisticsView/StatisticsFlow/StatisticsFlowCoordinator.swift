@@ -8,10 +8,13 @@
 import UIKit
 
 final class StatisticsFlowCoordinator: Coordinator {
+    
+    // MARK: - private properties
     private var navigationController: UINavigationController?
     private let sceneFactoryDIContainer: SceneFactoryProtocol
     private let tabBar: UITabBarController
     
+    // MARK: - lifecycle
     init(
         sceneFactoryDIContainer: SceneFactoryProtocol,
         tabBar: UITabBarController
@@ -20,6 +23,7 @@ final class StatisticsFlowCoordinator: Coordinator {
         self.tabBar = tabBar
     }
     
+    // MARK: - public methods
     func start() {
         let statisticsViewController = sceneFactoryDIContainer.makeStatisticsView()
         navigationController = UINavigationController(rootViewController: statisticsViewController)

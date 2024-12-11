@@ -8,10 +8,13 @@
 import UIKit
 
 final class AppSettingsFlowCoordinator: Coordinator {
+    
+    // MARK: - private properties
     private var navigationController: UINavigationController?
     private let tabBarController: UITabBarController
     private let sceneFactoryDIContainer: SceneFactoryProtocol
     
+    // MARK: - lifecycle
     init(
         tabBarController: UITabBarController,
         sceneFactoryDIContainer: SceneFactoryProtocol
@@ -20,6 +23,7 @@ final class AppSettingsFlowCoordinator: Coordinator {
         self.sceneFactoryDIContainer = sceneFactoryDIContainer
     }
     
+    // MARK: - public methods
     func start() {
         let configViewController = sceneFactoryDIContainer.makeConfigViewController()
         navigationController = UINavigationController(rootViewController: configViewController)

@@ -9,6 +9,7 @@ import UIKit
 
 final class TabBarController: UITabBarController {
 
+    // MARK: - lifecycle
     init() {
         super.init(nibName: nil, bundle: nil)
         setupView()
@@ -23,6 +24,7 @@ final class TabBarController: UITabBarController {
         self.selectedIndex = 0
     }
 
+    // MARK: - private methods
     private func setupView() {
         view.backgroundColor = Colors.viewBackground
         configureTabBar()
@@ -31,17 +33,5 @@ final class TabBarController: UITabBarController {
     private func configureTabBar() {
         tabBar.tintColor = Colors.mainForeground
         tabBar.unselectedItemTintColor = .gray
-//        let myColor = UIColor(red: 0.255, green: 0.255, blue: 0.255, alpha: 1)
-//        let appearance = tabBar.standardAppearance
-//        appearance.shadowImage = nil
-//        appearance.shadowColor = nil
-//        appearance.backgroundEffect = nil
-//        appearance.backgroundColor = UIColor(resource: .background)
-//        appearance.stackedLayoutAppearance.normal.iconColor = .black
-//        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
-//            NSAttributedString.Key.foregroundColor: myColor,
-//            ]
-
-//        tabBar.standardAppearance = appearance
     }
 }

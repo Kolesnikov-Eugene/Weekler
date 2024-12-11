@@ -8,10 +8,13 @@
 import UIKit
 
 final class ScheduleFlowCoordinator: Coordinator {
+    
+    // MARK: - private properties
     private var navigationController: UINavigationController?
     private let sceneFactoryDIContainer: SceneFactoryProtocol
     private let tabBar: UITabBarController
     
+    // MARK: - lifecycle
     init(
         tabbar: UITabBarController,
         container: SceneFactoryProtocol
@@ -20,6 +23,7 @@ final class ScheduleFlowCoordinator: Coordinator {
         self.sceneFactoryDIContainer = container
     }
     
+    // MARK: - public methods
     func start() {
         let scheduleViewController = sceneFactoryDIContainer.makeScheduleViewController(coor: self as ScheduleFlowCoordinator)
         navigationController = UINavigationController(rootViewController: scheduleViewController)
@@ -27,7 +31,7 @@ final class ScheduleFlowCoordinator: Coordinator {
         tabBar.setViewControllers([navigationController], animated: false)
     }
     
-    func goToCreateScheduleView(for task: ScheduleTask?, with mode: CreateMode) {
+    func navigateToCreateScheduleView(for task: ScheduleTask?, with mode: CreateMode) {
         guard let factory = sceneFactoryDIContainer.createScheduleSceneContainer else {
             fatalError("Dependency createScheduleSceneContainer is nil")
         }

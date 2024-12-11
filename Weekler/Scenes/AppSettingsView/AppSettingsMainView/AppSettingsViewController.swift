@@ -8,8 +8,11 @@
 import UIKit
 
 final class AppSettingsViewController: UIViewController {
+    
+    // MARK: - private properties
     private var appSettingsMainView: AppSettingsMainView!
     
+    // MARK: - lifecycle
     init(
         viewModel: AppSettingsViewModelProtocol
     ) {
@@ -30,6 +33,7 @@ final class AppSettingsViewController: UIViewController {
         self.view = appSettingsMainView
     }
     
+    // MARK: - private methods
     private func setupUI() {
         navigationItem.title = L10n.Localizable.Tab.config
         self.tabBarItem = UITabBarItem(

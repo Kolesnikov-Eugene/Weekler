@@ -10,14 +10,32 @@ import UIKit
 private let reuseIdentifier = "Cell"
 
 final class AppSettingsCollectionViewController: UICollectionViewController {
+    
+    // MARK: - private properties
     private let viewModel: AppSettingsViewModelProtocol
     private var dataSource: UICollectionViewDiffableDataSource<SettingsSection, AppSettingsItem>!
     
+    // MARK: - lifecycle
     init(
         viewModel: AppSettingsViewModelProtocol
     ) {
         self.viewModel = viewModel
-        
+        super.init(collectionViewLayout: AppSettingsCollectionViewController.createLayout())
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.collectionView.register(AppSettingsCollectionCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        configureCollectionView()
+        configureDataSource()
+    }
+    
+    // MARK: - Layout
+    static func createLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .fractionalHeight(1.0)
@@ -32,21 +50,10 @@ final class AppSettingsCollectionViewController: UICollectionViewController {
         section.contentInsets = .init(top: 20, leading: 20, bottom: 20, trailing: 20)
         
         let layout = UICollectionViewCompositionalLayout(section: section)
-        
-        super.init(collectionViewLayout: layout)
+        return layout
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.collectionView.register(AppSettingsCollectionCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        configureCollectionView()
-        configureDataSource()
-    }
-    
+    // MARK: - private methods
     private func configureCollectionView() {
         // Uncomment the following line to preserve selection between presentations
 //        self.clearsSelectionOnViewWillAppear = false
@@ -63,7 +70,9 @@ final class AppSettingsCollectionViewController: UICollectionViewController {
                 guard let cell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: reuseIdentifier,
                         for: indexPath
-                    ) as? AppSettingsCollectionCell else { fatalError("Could not dequeue cell") }
+                ) as? AppSettingsCollectionCell else {
+                    fatalError("Could not dequeue cell")
+                }
                 let configuration = self.viewModel.makeCellConfiguration(for: indexPath)
                 switch itemIdentifier {
                 case .main(let mainItem):
@@ -81,18 +90,12 @@ final class AppSettingsCollectionViewController: UICollectionViewController {
     private func updateSnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<SettingsSection, AppSettingsItem>()
         snapshot.appendSections([.main, .appearance])
-        for item in viewModel.settingsItems {
-            switch item {
-            case .main(_):
-                snapshot.appendItems([item], toSection: .main)
-            case .appearance(_):
-                snapshot.appendItems([item], toSection: .appearance)
-            }
-        }
+        snapshot.appendItems(viewModel.mainSettingsItems, toSection: .main)
+        snapshot.appendItems(viewModel.appearanceSettingsItems, toSection: .appearance)
         dataSource.apply(snapshot, animatingDifferences: true)
     }
     
-    // collectionView delegate
+    // MARK: - collectionView delegate
     override func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath

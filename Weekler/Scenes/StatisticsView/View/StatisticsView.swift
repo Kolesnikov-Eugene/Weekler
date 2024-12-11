@@ -26,6 +26,7 @@ final class StatisticsView: UIView {
     private let viewModel: StatisticsViewModelProtocol
     private let bag = DisposeBag()
     
+    // MARK: - lifecycle
     init(
         frame: CGRect,
         viewModel: StatisticsViewModelProtocol

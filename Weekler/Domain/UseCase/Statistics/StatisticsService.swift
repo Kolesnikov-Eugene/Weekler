@@ -9,16 +9,18 @@ import Foundation
 
 final class StatisticsService: StatisticsServiceProtocol {
     
+    // MARK: - private properties
     private let statisticsRepository: StatisticsRepositoryProtocol
     
+    // MARK: - lifecycle
     init(
         statisticsRepository: StatisticsRepositoryProtocol
     ) {
         self.statisticsRepository = statisticsRepository
     }
     
+    // MARK: - public methods
     func fetchCurrentWeekStatistics(for currentWeek: [String]) async -> [ScheduleTask] {
-        print("statistics service fecth")
         let schedule = await statisticsRepository.fetchStatistics(for: currentWeek)
         return schedule
     }

@@ -10,11 +10,8 @@ import SnapKit
 import JTAppleCalendar
 
 final class CalendarView: UIView {
-    private let reuseId = "calendarCell"
-    private var calendarCollectionHeight = Constants.weekModeCalendarHeight
-    private var calendarCollectionViewRowsNumber = Constants.weekModeCalendarRowNumber
-    private let weekDaysLabelHeight = Constants.weekDaysLabelHeight
     
+    // MARK: - UI
     private lazy var weekDaysStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
@@ -38,9 +35,16 @@ final class CalendarView: UIView {
         formatter.dateFormat = "d MMMM yyyy"
         return formatter
     }()
+    
+    // MARK: - private properties
+    private let reuseId = "calendarCell"
+    private var calendarCollectionHeight = Constants.weekModeCalendarHeight
+    private var calendarCollectionViewRowsNumber = Constants.weekModeCalendarRowNumber
+    private let weekDaysLabelHeight = Constants.weekDaysLabelHeight
     private var viewModel: CalendarViewModelProtocol
     private var isInitialLayout = false
     
+    // MARK: - lifecycle
     init(
         frame: CGRect,
         viewModel: CalendarViewModelProtocol
@@ -64,6 +68,7 @@ final class CalendarView: UIView {
         }
     }
     
+    // MARK: - private properties
     private func setupUI() {
         backgroundColor = Colors.viewBackground
         calendarCollectionView.register(WeekCalendarCollectionViewCell.self, forCellWithReuseIdentifier: reuseId)
@@ -140,7 +145,8 @@ final class CalendarView: UIView {
         }
     }
     
-    @objc func calendarSwitchRightBarButtonItemTapped() {
+    @objc
+    func calendarSwitchRightBarButtonItemTapped() {
         calendarCollectionViewRowsNumber = calendarCollectionViewRowsNumber == Constants.weekModeCalendarRowNumber ?
         Constants.monthModeCalendarRowNumber : Constants.weekModeCalendarRowNumber
         
@@ -190,10 +196,9 @@ extension CalendarView: JTAppleCalendarViewDelegate {
         }
         
         let isCurrent = formatter.string(from: date) == formatter.string(from: Date())
-        let day = DaysOfWeek.getShortDayOfWeek(for: cellState.day)
         let currentDate = cellState.text
         
-        cell.configureCell(currentDate: currentDate, day: day, isCurrent: isCurrent)
+        cell.configureCell(currentDate: currentDate, isCurrent: isCurrent)
         cell.changeSelectionState(isSelected: cellState.isSelected)
         
         return cell
@@ -210,10 +215,9 @@ extension CalendarView: JTAppleCalendarViewDelegate {
         }
         
         let isCurrent = formatter.string(from: date) == formatter.string(from: Date())
-        let day = DaysOfWeek.getShortDayOfWeek(for: cellState.day)
         let currentDate = cellState.text
         
-        cell.configureCell(currentDate: currentDate, day: day, isCurrent: isCurrent)
+        cell.configureCell(currentDate: currentDate, isCurrent: isCurrent)
         cell.changeSelectionState(isSelected: cellState.isSelected)
     }
     
@@ -262,8 +266,6 @@ extension CalendarView: JTAppleCalendarViewDelegate {
         didScrollToDateSegmentWith visibleDates: DateSegmentInfo
     ) -> Void {
         let dates: [Date] = visibleDates.monthDates.map { $0.date }
-//        let d = dates[0]
-//        let components = Calendar.current.dateComponents(in: .current, from: d)
         viewModel.updateNavTitle(with: dates)
     }
 }

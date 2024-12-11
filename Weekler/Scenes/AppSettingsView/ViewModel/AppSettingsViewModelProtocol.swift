@@ -8,6 +8,7 @@
 import Foundation
 
 protocol AppSettingsViewModelProtocol: AnyObject {
-    var settingsItems: [AppSettingsItem] { get }
+    var mainSettingsItems: [AppSettingsItem] { get }
+    var appearanceSettingsItems: [AppSettingsItem] { get }
     func makeCellConfiguration(for indexPath: IndexPath) -> AppSettingsCellConfiguration
 }

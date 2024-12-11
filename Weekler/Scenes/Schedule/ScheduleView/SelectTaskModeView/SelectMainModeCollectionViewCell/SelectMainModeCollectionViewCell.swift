@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 final class SelectMainModeCollectionViewCell: UICollectionViewCell {
+    
+    // MARK: - private propertes
     private lazy var textLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
@@ -18,6 +20,7 @@ final class SelectMainModeCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    // MARK: - lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
