@@ -27,6 +27,13 @@ final class ScheduleFlowCoordinator: Coordinator {
     func start() {
         let scheduleViewController = sceneFactoryDIContainer.makeScheduleViewController(coor: self as ScheduleFlowCoordinator)
         navigationController = UINavigationController(rootViewController: scheduleViewController)
+        
+        let image = UIImage(systemName: "list.bullet.clipboard")
+        navigationController?.tabBarItem = UITabBarItem(
+            title: L10n.Localizable.Tab.schedule,
+            image: image,
+            selectedImage: nil)
+        
         guard let navigationController else { return }
         tabBar.setViewControllers([navigationController], animated: false)
     }

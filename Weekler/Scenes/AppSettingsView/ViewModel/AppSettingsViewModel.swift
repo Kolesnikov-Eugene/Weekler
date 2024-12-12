@@ -16,8 +16,8 @@ final class AppSettingsViewModel: AppSettingsViewModelProtocol {
         get {
             settingsItems.filter {
                 switch $0 {
-                case .main: return true
-                case .appearance: return false
+                case .general: return true
+                case .application: return false
                 }
             }
         }
@@ -26,8 +26,8 @@ final class AppSettingsViewModel: AppSettingsViewModelProtocol {
         get {
             settingsItems.filter {
                 switch $0 {
-                case .appearance: return true
-                case .main: return false
+                case .application: return true
+                case .general: return false
                 }
             }
         }
@@ -35,11 +35,12 @@ final class AppSettingsViewModel: AppSettingsViewModelProtocol {
     
     // MARK: - private properties
     private let settingsItems: [AppSettingsItem] = [
-        .main(MainSettingsItem(title: "Sounds")),
-        .main(MainSettingsItem(title: "Settings")),
-        .main(MainSettingsItem(title: "Notifications")),
-        .appearance(AppearanceSettingsItem(title: "Appearance")),
-        .appearance(AppearanceSettingsItem(title: "Theme")),
+        .general(GeneralSettingsItem(title: "General")),
+        .general(GeneralSettingsItem(title: "Appearence")),
+        .general(GeneralSettingsItem(title: "Notifications")),
+        .general(GeneralSettingsItem(title: "Date and time")),
+        .application(ApplicationSettingsItem(title: "Help")),
+        .application(ApplicationSettingsItem(title: "About")),
     ]
     private var mainSectionItemsCount: Int {
         get { mainSettingsItems.count }
@@ -47,14 +48,14 @@ final class AppSettingsViewModel: AppSettingsViewModelProtocol {
     private var appearanceSectionItemsCount: Int {
         get { appearanceSettingsItems.count }
     }
-//    private let settingsFlowCoordinator: AppSettingsFlowCoordinator
+    private let settingsFlowCoordinator: SettingsFlowCoordinator
     
     // MARK: - lifecycle
     init
     (
-//        settingsFlowCoordinator: AppSettingsFlowCoordinator
+        settingsFlowCoordinator: SettingsFlowCoordinator
     ) {
-//        self.settingsFlowCoordinator = settingsFlowCoordinator
+        self.settingsFlowCoordinator = settingsFlowCoordinator
     }
     
     // MARK: - public methods
@@ -78,5 +79,10 @@ final class AppSettingsViewModel: AppSettingsViewModelProtocol {
             roundedTopCorners: false,
             roundedBottomCorners: false
         )
+    }
+    
+    func didSelectItem(at indexPath: IndexPath) {
+        let action = SettingsItem.allCases[indexPath.row]
+        settingsFlowCoordinator.navigate(to: action)
     }
 }

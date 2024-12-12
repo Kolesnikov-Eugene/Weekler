@@ -18,7 +18,13 @@ final class SceneAssembly: Assembly {
             CreateScheduleViewAssembly(),
             ScheduleViewModelAssembly(),
             CreateScheduleViewModelAssembly(),
-            StatisticsViewModelAssembly()
+            StatisticsViewModelAssembly(),
+            GeneralSettingsViewAssembly(),
+            NotificationSettingsViewAssembly(),
+            AppearanceSettingsViewAssembly(),
+            DateSettingsViewAssembly(),
+            HelpViewAssembly(),
+            AboutViewAssembly()
         ]
         assemblies.forEach { $0.assemble(container: container) }
     }

@@ -18,11 +18,6 @@ final class TabBarController: UITabBarController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.selectedIndex = 0
-    }
 
     // MARK: - private methods
     private func setupView() {

@@ -65,21 +65,16 @@ final class ScheduleViewController: UIViewController {
         print("controller")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     //MARK: - private methods
     private func setupUI() {
         self.view.backgroundColor = Colors.viewBackground
         configureNavBar()
         addSubviews()
         applyConstraints()
-        configureTabBarAppearence()
-    }
-    
-    private func configureTabBarAppearence() {
-        let image = UIImage(systemName: "list.bullet.clipboard")
-        self.tabBarItem = UITabBarItem(
-            title: L10n.Localizable.Tab.schedule,
-            image: image,
-            selectedImage: nil)
     }
     
     private func bind() {

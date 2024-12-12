@@ -75,10 +75,10 @@ final class AppSettingsCollectionViewController: UICollectionViewController {
                 }
                 let configuration = self.viewModel.makeCellConfiguration(for: indexPath)
                 switch itemIdentifier {
-                case .main(let mainItem):
+                case .general(let mainItem):
                     let title = mainItem.title
                     cell.configureCell(with: title, and: configuration)
-                case .appearance(let appearanceItem):
+                case .application(let appearanceItem):
                     let title = appearanceItem.title
                     cell.configureCell(with: title, and: configuration)
                 }
@@ -102,5 +102,6 @@ final class AppSettingsCollectionViewController: UICollectionViewController {
     ) -> Void {
         guard let cell = collectionView.cellForItem(at: indexPath) as? AppSettingsCollectionCell else { return }
         cell.animateCellSelection()
+        viewModel.didSelectItem(at: indexPath)
     }
 }

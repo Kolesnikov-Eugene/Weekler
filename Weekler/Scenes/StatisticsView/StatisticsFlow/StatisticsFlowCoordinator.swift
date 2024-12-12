@@ -27,7 +27,14 @@ final class StatisticsFlowCoordinator: Coordinator {
     func start() {
         let statisticsViewController = sceneFactoryDIContainer.makeStatisticsView()
         navigationController = UINavigationController(rootViewController: statisticsViewController)
+        
+        navigationController?.tabBarItem = UITabBarItem(
+            title: L10n.Localizable.Tab.statistics,
+            image: UIImage(systemName: "chart.bar.xaxis"),
+            selectedImage: nil)
+        
         guard let navigationController else { return }
         tabBar.viewControllers?.insert(navigationController, at: 1)
+//        tabBar.viewControllers?.append(navigationController)
     }
 }

@@ -36,9 +36,9 @@ final class AppSettingsViewController: UIViewController {
     // MARK: - private methods
     private func setupUI() {
         navigationItem.title = L10n.Localizable.Tab.config
-        self.tabBarItem = UITabBarItem(
-            title: L10n.Localizable.Tab.config,  // FIXME: rename tab title
-            image: UIImage(systemName: "gearshape"),
-            selectedImage: nil)
+//        self.tabBarItem = UITabBarItem(
+//            title: L10n.Localizable.Tab.config,  // FIXME: rename tab title
+//            image: UIImage(systemName: "gearshape"),
+//            selectedImage: nil)
     }
 }

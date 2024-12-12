@@ -9,7 +9,8 @@ import Swinject
 
 final class AppSettingsViewModelAssembly: Assembly {
     func assemble(container: Container) {
-        container.register(AppSettingsViewModelProtocol.self) { _ in AppSettingsViewModel() }
-            .inObjectScope(.container)
+        container.register(AppSettingsViewModelProtocol.self) { resolver, coordinator in
+            AppSettingsViewModel(settingsFlowCoordinator: coordinator)
+        }.inObjectScope(.container)
     }
 }

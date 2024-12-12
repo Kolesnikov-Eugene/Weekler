@@ -11,4 +11,5 @@ protocol AppSettingsViewModelProtocol: AnyObject {
     var mainSettingsItems: [AppSettingsItem] { get }
     var appearanceSettingsItems: [AppSettingsItem] { get }
     func makeCellConfiguration(for indexPath: IndexPath) -> AppSettingsCellConfiguration
+    func didSelectItem(at indexPath: IndexPath)
 }

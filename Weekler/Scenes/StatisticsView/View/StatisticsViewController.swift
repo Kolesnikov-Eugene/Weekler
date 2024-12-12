@@ -49,9 +49,9 @@ final class StatisticsViewController: UIViewController {
     private func setupUI() {
         self.view.backgroundColor = Colors.viewBackground
         navigationItem.title = L10n.Localizable.Tab.statistics
-        self.tabBarItem = UITabBarItem(
-            title: L10n.Localizable.Tab.statistics,
-            image: UIImage(systemName: "chart.bar.xaxis"),
-            selectedImage: nil)
+//        self.tabBarItem = UITabBarItem(
+//            title: L10n.Localizable.Tab.statistics,
+//            image: UIImage(systemName: "chart.bar.xaxis"),
+//            selectedImage: nil)
     }
 }

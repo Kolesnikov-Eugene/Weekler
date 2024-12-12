@@ -8,6 +8,6 @@
 import Foundation
 
 enum AppSettingsItem: Hashable, Equatable {
-    case main(MainSettingsItem)
-    case appearance(AppearanceSettingsItem)
+    case general(GeneralSettingsItem)
+    case application(ApplicationSettingsItem)
 }

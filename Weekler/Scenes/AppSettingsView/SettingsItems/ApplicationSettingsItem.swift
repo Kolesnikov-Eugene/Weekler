@@ -1,5 +1,5 @@
 //
-//  AppearanceSettingsItem.swift
+//  ApplicationSettingsItem.swift
 //  Weekler
 //
 //  Created by Eugene Kolesnikov on 09.12.2024.
@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct AppearanceSettingsItem: Hashable {
+struct ApplicationSettingsItem: Hashable {
     let title: String
 }

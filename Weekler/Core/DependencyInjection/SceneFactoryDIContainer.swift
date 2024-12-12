@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 final class SceneFactoryDIContainer: SceneFactoryProtocol {
     
@@ -33,8 +34,9 @@ final class SceneFactoryDIContainer: SceneFactoryProtocol {
         return scheduleVC
     }
     
-    func makeConfigViewController() -> AppSettingsViewController {
-        let configVC: AppSettingsViewController = container.resolve()
+    func makeConfigViewController(coordinator: SettingsFlowCoordinator) -> AppSettingsViewController {
+        let viewModel: AppSettingsViewModelProtocol = container.resolve(argument: coordinator)
+        let configVC: AppSettingsViewController = container.resolve(argument: viewModel)
         return configVC
     }
     
@@ -58,5 +60,28 @@ final class SceneFactoryDIContainer: SceneFactoryProtocol {
     func makeCoreHapticsManager() -> CoreHapticsManagerProtocol? {
         let hapticsManager: CoreHapticsManagerProtocol? = container.resolve()
         return hapticsManager
+    }
+    
+    func makeSettingsScreen(_ screen: SettingsItem) -> UIViewController {
+        switch screen {
+        case .general:
+            let generalVC: GeneralSettingsViewController = container.resolve()
+            return generalVC
+        case .notification:
+            let notificationVC: NotificationSettingsViewController = container.resolve()
+            return notificationVC
+        case .appearance:
+            let appearanceVC: AppearanceSettingsViewController = container.resolve()
+            return appearanceVC
+        case .date:
+            let dateVC: DateSettingsViewController = container.resolve()
+            return dateVC
+        case .help:
+            let helpVC: HelpViewController = container.resolve()
+            return helpVC
+        case .about:
+            let aboutVC: AboutViewController = container.resolve()
+            return aboutVC
+        }
     }
 }
