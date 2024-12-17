@@ -51,8 +51,7 @@ final class AppSettingsViewModel: AppSettingsViewModelProtocol {
     private let settingsFlowCoordinator: SettingsFlowCoordinator
     
     // MARK: - lifecycle
-    init
-    (
+    init(
         settingsFlowCoordinator: SettingsFlowCoordinator
     ) {
         self.settingsFlowCoordinator = settingsFlowCoordinator
@@ -82,7 +81,12 @@ final class AppSettingsViewModel: AppSettingsViewModelProtocol {
     }
     
     func didSelectItem(at indexPath: IndexPath) {
-        let action = SettingsItem.allCases[indexPath.row]
-        settingsFlowCoordinator.navigate(to: action)
+        var scene = SettingsItem.about
+        switch indexPath.section {
+        case 0: scene = SettingsItem.allCases[indexPath.row]
+        case 1: scene = SettingsItem.allCases[indexPath.row + mainSectionItemsCount]
+        default: break
+        }
+        settingsFlowCoordinator.navigate(to: scene)
     }
 }

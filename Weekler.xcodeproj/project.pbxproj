@@ -61,6 +61,11 @@
 		444AC1302CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444AC12F2CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift */; };
 		444B387F2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444B387E2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift */; };
 		444DAB862C655A8F005B8ABC /* SourceItemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DAB852C655A8F005B8ABC /* SourceItemProtocol.swift */; };
+		446778872D1204D000B5DEA3 /* AppearanceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446778862D1204D000B5DEA3 /* AppearanceSettingsView.swift */; };
+		446778892D1204FB00B5DEA3 /* AppearanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446778882D1204FB00B5DEA3 /* AppearanceViewModel.swift */; };
+		4467788B2D12113A00B5DEA3 /* ThemeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4467788A2D12113A00B5DEA3 /* ThemeCollectionViewController.swift */; };
+		446778932D12167B00B5DEA3 /* ThemeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446778922D12167B00B5DEA3 /* ThemeCollectionViewCell.swift */; };
+		446778952D1216CC00B5DEA3 /* DarkModeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446778942D1216CC00B5DEA3 /* DarkModeCollectionViewCell.swift */; };
 		446C85612CB85B8700077CC5 /* CoreHapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446C85602CB85B8700077CC5 /* CoreHapticsManager.swift */; };
 		44727B392C486895007756A3 /* ScheduleViewModelAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44727B382C486895007756A3 /* ScheduleViewModelAssembly.swift */; };
 		44727B3B2C486918007756A3 /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44727B3A2C486918007756A3 /* Priority.swift */; };
@@ -181,6 +186,11 @@
 		444AC12F2CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModelAssembly.swift; sourceTree = "<group>"; };
 		444B387E2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 		444DAB852C655A8F005B8ABC /* SourceItemProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItemProtocol.swift; sourceTree = "<group>"; };
+		446778862D1204D000B5DEA3 /* AppearanceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsView.swift; sourceTree = "<group>"; };
+		446778882D1204FB00B5DEA3 /* AppearanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewModel.swift; sourceTree = "<group>"; };
+		4467788A2D12113A00B5DEA3 /* ThemeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCollectionViewController.swift; sourceTree = "<group>"; };
+		446778922D12167B00B5DEA3 /* ThemeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCollectionViewCell.swift; sourceTree = "<group>"; };
+		446778942D1216CC00B5DEA3 /* DarkModeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkModeCollectionViewCell.swift; sourceTree = "<group>"; };
 		446C85602CB85B8700077CC5 /* CoreHapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreHapticsManager.swift; sourceTree = "<group>"; };
 		44727B382C486895007756A3 /* ScheduleViewModelAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModelAssembly.swift; sourceTree = "<group>"; };
 		44727B3A2C486918007756A3 /* Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
@@ -373,12 +383,12 @@
 		4418D5CA2D0B7436003664E6 /* SettingsView */ = {
 			isa = PBXGroup;
 			children = (
-				4418D5CB2D0B7487003664E6 /* GeneralSettingsViewController.swift */,
-				4418D5CD2D0B74F0003664E6 /* NotificationSettingsViewController.swift */,
-				4418D5CF2D0B7512003664E6 /* AppearanceSettingsViewController.swift */,
-				4418D5D12D0B7544003664E6 /* DateSettingsViewController.swift */,
-				4418D5D32D0B7564003664E6 /* HelpViewController.swift */,
-				4418D5D52D0B7586003664E6 /* AboutViewController.swift */,
+				446778902D1212BA00B5DEA3 /* About */,
+				446778852D1204A100B5DEA3 /* Appearance */,
+				4467788E2D1212A300B5DEA3 /* DateAndTime */,
+				4467788C2D12126C00B5DEA3 /* General */,
+				4467788F2D1212B200B5DEA3 /* Help */,
+				4467788D2D12128600B5DEA3 /* Notifications */,
 			);
 			path = SettingsView;
 			sourceTree = "<group>";
@@ -506,6 +516,67 @@
 				444AC12D2CE3E0E60032DA6F /* ServiceAssembly.swift */,
 			);
 			path = Assamblies;
+			sourceTree = "<group>";
+		};
+		446778852D1204A100B5DEA3 /* Appearance */ = {
+			isa = PBXGroup;
+			children = (
+				446778912D12166200B5DEA3 /* ThemeCollectionView */,
+				4418D5CF2D0B7512003664E6 /* AppearanceSettingsViewController.swift */,
+				446778862D1204D000B5DEA3 /* AppearanceSettingsView.swift */,
+				446778882D1204FB00B5DEA3 /* AppearanceViewModel.swift */,
+			);
+			path = Appearance;
+			sourceTree = "<group>";
+		};
+		4467788C2D12126C00B5DEA3 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				4418D5CB2D0B7487003664E6 /* GeneralSettingsViewController.swift */,
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
+		4467788D2D12128600B5DEA3 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				4418D5CD2D0B74F0003664E6 /* NotificationSettingsViewController.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
+		4467788E2D1212A300B5DEA3 /* DateAndTime */ = {
+			isa = PBXGroup;
+			children = (
+				4418D5D12D0B7544003664E6 /* DateSettingsViewController.swift */,
+			);
+			path = DateAndTime;
+			sourceTree = "<group>";
+		};
+		4467788F2D1212B200B5DEA3 /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				4418D5D32D0B7564003664E6 /* HelpViewController.swift */,
+			);
+			path = Help;
+			sourceTree = "<group>";
+		};
+		446778902D1212BA00B5DEA3 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				4418D5D52D0B7586003664E6 /* AboutViewController.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
+		446778912D12166200B5DEA3 /* ThemeCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				4467788A2D12113A00B5DEA3 /* ThemeCollectionViewController.swift */,
+				446778922D12167B00B5DEA3 /* ThemeCollectionViewCell.swift */,
+				446778942D1216CC00B5DEA3 /* DarkModeCollectionViewCell.swift */,
+			);
+			path = ThemeCollectionView;
 			sourceTree = "<group>";
 		};
 		44727B482C486AE1007756A3 /* SelectRepeatedDaysView */ = {
@@ -1033,6 +1104,7 @@
 				44F9EA2B2CDAA597009AE5FD /* ScheduleRepositoryAssembly.swift in Sources */,
 				44727B392C486895007756A3 /* ScheduleViewModelAssembly.swift in Sources */,
 				446C85612CB85B8700077CC5 /* CoreHapticsManager.swift in Sources */,
+				446778932D12167B00B5DEA3 /* ThemeCollectionViewCell.swift in Sources */,
 				44727B3F2C48694E007756A3 /* SourceItem.swift in Sources */,
 				4418D5CC2D0B7487003664E6 /* GeneralSettingsViewController.swift in Sources */,
 				4418D5E02D0B7845003664E6 /* HelpViewAssembly.swift in Sources */,
@@ -1041,7 +1113,9 @@
 				4442BA6E2BE425F0002DC469 /* AppSettingsVCAssembly.swift in Sources */,
 				444AC12E2CE3E0E60032DA6F /* ServiceAssembly.swift in Sources */,
 				444045E82CFF8F7B00559126 /* AppSettingsViewModel.swift in Sources */,
+				446778952D1216CC00B5DEA3 /* DarkModeCollectionViewCell.swift in Sources */,
 				444DAB862C655A8F005B8ABC /* SourceItemProtocol.swift in Sources */,
+				446778892D1204FB00B5DEA3 /* AppearanceViewModel.swift in Sources */,
 				441CAC742CE0DB7F00064348 /* WeeklerAppCoordinator.swift in Sources */,
 				4418D5E22D0B7870003664E6 /* AboutViewAssembly.swift in Sources */,
 				444045E62CFF8EAD00559126 /* AppSettingsCollectionCell.swift in Sources */,
@@ -1078,6 +1152,8 @@
 				449F18D82BACC4BF00F9640D /* AppDelegate.swift in Sources */,
 				44A88DE02CD6646500D4A007 /* CreateSceneDIContainer.swift in Sources */,
 				44BF98942D077878008A2BA3 /* AppSettingsItem.swift in Sources */,
+				446778872D1204D000B5DEA3 /* AppearanceSettingsView.swift in Sources */,
+				4467788B2D12113A00B5DEA3 /* ThemeCollectionViewController.swift in Sources */,
 				44F116982BDC398E00134D5F /* ScheduleAssembly.swift in Sources */,
 				44727B412C486970007756A3 /* ScheduleMode.swift in Sources */,
 				442256822C6BE61500172C0A /* TaskItem.swift in Sources */,
