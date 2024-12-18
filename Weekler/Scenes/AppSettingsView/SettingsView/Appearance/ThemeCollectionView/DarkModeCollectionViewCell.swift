@@ -16,13 +16,14 @@ final class DarkModeCollectionViewCell: UICollectionViewCell {
         label.font = .systemFont(ofSize: 16, weight: .regular)
         label.textColor = Colors.textColorMain
         label.textAlignment = .left
+        label.text = "System theme"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     private lazy var switchControl: UISwitch = {
         let switchControl = UISwitch()
         switchControl.isOn = false
-        switchControl.tintColor = Colors.mainForeground
+        switchControl.onTintColor = Colors.mainForeground
         switchControl.translatesAutoresizingMaskIntoConstraints = false
         return switchControl
     }()
@@ -36,8 +37,13 @@ final class DarkModeCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func configure(with text: String) {
+        textLabel.text = text
+    }
+    
     private func setupView() {
-        contentView.backgroundColor = Colors.viewBackground // Change
+//        contentView.backgroundColor = .white
+//        contentView.layer.cornerRadius = 8
         addSubviews()
         applyConstrtaitns()
     }
@@ -56,8 +62,8 @@ final class DarkModeCollectionViewCell: UICollectionViewCell {
         // switch constraints
         switchControl.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(16)
-            $0.centerY.equalToSuperview()
-            $0.height.equalTo(20)
+            $0.centerY.equalTo(textLabel.snp.centerY)
+//            $0.height.equalTo(20)
         }
     }
 }

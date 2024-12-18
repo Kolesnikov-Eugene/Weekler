@@ -15,20 +15,24 @@ final class AppSettingsViewModel: AppSettingsViewModelProtocol {
     var mainSettingsItems: [AppSettingsItem] {
         get {
             settingsItems.filter {
-                switch $0 {
-                case .general: return true
-                case .application: return false
-                }
+                if case .general = $0 { return true }
+                return false
+//                switch $0 {
+//                case .general: return true
+//                case .application: return false
+//                }
             }
         }
     }
     var appearanceSettingsItems: [AppSettingsItem] {
         get {
             settingsItems.filter {
-                switch $0 {
-                case .application: return true
-                case .general: return false
-                }
+                if case .application = $0 { return true }
+                return false
+//                switch $0 {
+//                case .application: return true
+//                case .general: return false
+//                }
             }
         }
     }

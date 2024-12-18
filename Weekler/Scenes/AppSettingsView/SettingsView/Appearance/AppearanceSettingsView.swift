@@ -39,7 +39,10 @@ final class AppearanceSettingsView: UIView {
     private func applyConstraints() {
         if let collectionView = themeCollectionViewController.view {
             collectionView.snp.makeConstraints {
-                $0.trailing.leading.top.bottom.equalToSuperview()
+                $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+                $0.leading.equalTo(safeAreaLayoutGuide.snp.leading)
+                $0.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
+                $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
             }
         }
     }
