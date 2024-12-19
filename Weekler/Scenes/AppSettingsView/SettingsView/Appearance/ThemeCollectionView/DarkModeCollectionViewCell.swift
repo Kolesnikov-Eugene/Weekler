@@ -42,8 +42,6 @@ final class DarkModeCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupView() {
-//        contentView.backgroundColor = .white
-//        contentView.layer.cornerRadius = 8
         addSubviews()
         applyConstrtaitns()
     }
@@ -56,7 +54,7 @@ final class DarkModeCollectionViewCell: UICollectionViewCell {
     private func applyConstrtaitns() {
         // textLabel constraints
         textLabel.snp.makeConstraints {
-            $0.leading.top.trailing.bottom.equalToSuperview()
+            $0.leading.top.trailing.bottom.equalToSuperview().inset(4)
         }
         
         // switch constraints

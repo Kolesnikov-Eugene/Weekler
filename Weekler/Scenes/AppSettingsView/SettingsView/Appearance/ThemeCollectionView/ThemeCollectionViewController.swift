@@ -14,7 +14,7 @@ enum ThemeSection: Int, Hashable, CaseIterable {
     var columnCount: Int {
         switch self {
         case .darkMode: return 1
-        case .theme: return 5
+        case .theme: return 3
         }
     }
 }
@@ -97,11 +97,11 @@ final class ThemeCollectionViewController: UICollectionViewController {
             
             let width = columnsCount == 1 ?
             NSCollectionLayoutDimension.fractionalWidth(1.0) :
-            NSCollectionLayoutDimension.fractionalWidth(0.2)
+            NSCollectionLayoutDimension.fractionalWidth(1.0 / CGFloat(columnsCount))
             
             let groupHeight = columnsCount == 1 ?
             NSCollectionLayoutDimension.absolute(44) :
-            NSCollectionLayoutDimension.absolute(80)
+            NSCollectionLayoutDimension.absolute(150)
             
             let groupSize = NSCollectionLayoutSize(
                 widthDimension: width,
@@ -113,30 +113,24 @@ final class ThemeCollectionViewController: UICollectionViewController {
                 count: columnsCount
             )
 //            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: columnsCount)
-//            let group = NSCollectionLayoutGroup.horizontal(
-//                            layoutSize: groupSize,
-//                            subitem: item,
-//                            count: 5 // Number of columns
-//                        )
-            var config = UICollectionLayoutListConfiguration(appearance: .insetGrouped)
-            
-//            let section = NSCollectionLayoutSection.list(
-//                using: config,
-//                layoutEnvironment: layoutEnvironment
-//            )
             let section = NSCollectionLayoutSection(group: group)
             section.contentInsetsReference = .readableContent
             section.contentInsets = NSDirectionalEdgeInsets(
-                top: 40,
-                leading: 16,
+                top: 20,
+                leading: 10,
                 bottom: 20,
-                trailing: 16
+                trailing: 10
             )
-//            section.interGroupSpacing = 10
             
-            section.decorationItems = [
-                NSCollectionLayoutDecorationItem.background(elementKind: ThemeReuseIdentifiers.backgroundViewId),
-            ]
+            let decorationItem = NSCollectionLayoutDecorationItem
+                .background(elementKind: ThemeReuseIdentifiers.backgroundViewId)
+            decorationItem.contentInsets = NSDirectionalEdgeInsets(
+                top: 10,
+                leading: 10,
+                bottom: 10,
+                trailing: 10
+            )
+            section.decorationItems = [decorationItem]
             return section
         }
         return layout
@@ -145,6 +139,9 @@ final class ThemeCollectionViewController: UICollectionViewController {
     private func configureCollectionView() {
         collectionView.backgroundColor = Colors.viewBackground
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.isScrollEnabled = false
+        collectionView.allowsMultipleSelection = false
+        collectionView.allowsSelection = true
     }
     
     private func configureDataSource() {
@@ -183,5 +180,21 @@ final class ThemeCollectionViewController: UICollectionViewController {
         snapshot.appendItems(darkModeItems, toSection: .darkMode)
         snapshot.appendItems(themeItems, toSection: .theme)
         dataSource.apply(snapshot)
+    }
+    
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ThemeCollectionViewCell else { return }
+        cell.selectCell()
+    }
+    
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didDeselectItemAt indexPath: IndexPath
+    ) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ThemeCollectionViewCell else { return }
+        cell.deselectCell()
     }
 }
