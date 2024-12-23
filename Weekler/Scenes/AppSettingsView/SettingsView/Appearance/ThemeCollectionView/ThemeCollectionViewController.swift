@@ -60,6 +60,9 @@ final class ThemeCollectionViewController: UICollectionViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,6 +84,18 @@ final class ThemeCollectionViewController: UICollectionViewController {
         }
         configureCollectionView()
         configureDataSource()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateBackgroundColor),
+            name: .colorDidChange,
+            object: nil
+        )
+//        NotificationCenter.default.addObserver(forName: .colorDidChange, object: nil, queue: .main) { [weak self] notification in
+//            if let color = notification.object as? UIColor {
+//                self?.collectionView.backgroundColor = color
+//            }
+//        }
     }
     
     // MARK: - Layout
@@ -137,7 +152,8 @@ final class ThemeCollectionViewController: UICollectionViewController {
     }
     
     private func configureCollectionView() {
-        collectionView.backgroundColor = Colors.viewBackground
+//        collectionView.backgroundColor = Colors.viewBackground
+        collectionView.backgroundColor = WeeklerUIManager.shared.selectedColor
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.isScrollEnabled = false
         collectionView.allowsMultipleSelection = false
@@ -182,12 +198,18 @@ final class ThemeCollectionViewController: UICollectionViewController {
         dataSource.apply(snapshot)
     }
     
+    @objc
+    func updateBackgroundColor() {
+        collectionView.backgroundColor = WeeklerUIManager.shared.selectedColor
+    }
+    
     override func collectionView(
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? ThemeCollectionViewCell else { return }
         cell.selectCell()
+        WeeklerUIManager.shared.selectedColor = .darkGray
     }
     
     override func collectionView(

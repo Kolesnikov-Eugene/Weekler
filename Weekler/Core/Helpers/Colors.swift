@@ -14,7 +14,7 @@ struct Colors {
     static let calendarCurrentDateBackground = UIColor(resource: .calendarCurrentDate)
     static let mainForeground = UIColor(resource: .mainForeground)
     
-    static let viewBackground = UIColor { (traits: UITraitCollection) -> UIColor in
+    static var viewBackground = UIColor { (traits: UITraitCollection) -> UIColor in
         if traits.userInterfaceStyle == .dark {
             return UIColor.systemBackground
         } else {
