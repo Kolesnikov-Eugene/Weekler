@@ -35,4 +35,11 @@ struct Colors {
             return .black
         }
     }
+    
+    // TODO: - Create color set for settings
+    static let green = UIColor.green
+    static let red = UIColor.red
+    static let yellow = UIColor.yellow
+    static let blue = UIColor.blue
+    static let purple = UIColor.purple
 }

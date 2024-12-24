@@ -61,6 +61,9 @@
 		444AC1302CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444AC12F2CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift */; };
 		444B387F2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444B387E2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift */; };
 		444DAB862C655A8F005B8ABC /* SourceItemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DAB852C655A8F005B8ABC /* SourceItemProtocol.swift */; };
+		445F823B2D1B370F00F001DE /* ThemeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F823A2D1B370F00F001DE /* ThemeSection.swift */; };
+		445F823D2D1B372B00F001DE /* ThemeCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F823C2D1B372B00F001DE /* ThemeCellType.swift */; };
+		445F823F2D1B400100F001DE /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F823E2D1B400100F001DE /* UIColor+Extension.swift */; };
 		446778872D1204D000B5DEA3 /* AppearanceSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446778862D1204D000B5DEA3 /* AppearanceSettingsView.swift */; };
 		446778892D1204FB00B5DEA3 /* AppearanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446778882D1204FB00B5DEA3 /* AppearanceViewModel.swift */; };
 		4467788B2D12113A00B5DEA3 /* ThemeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4467788A2D12113A00B5DEA3 /* ThemeCollectionViewController.swift */; };
@@ -188,6 +191,9 @@
 		444AC12F2CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModelAssembly.swift; sourceTree = "<group>"; };
 		444B387E2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 		444DAB852C655A8F005B8ABC /* SourceItemProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItemProtocol.swift; sourceTree = "<group>"; };
+		445F823A2D1B370F00F001DE /* ThemeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSection.swift; sourceTree = "<group>"; };
+		445F823C2D1B372B00F001DE /* ThemeCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCellType.swift; sourceTree = "<group>"; };
+		445F823E2D1B400100F001DE /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		446778862D1204D000B5DEA3 /* AppearanceSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceSettingsView.swift; sourceTree = "<group>"; };
 		446778882D1204FB00B5DEA3 /* AppearanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewModel.swift; sourceTree = "<group>"; };
 		4467788A2D12113A00B5DEA3 /* ThemeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCollectionViewController.swift; sourceTree = "<group>"; };
@@ -479,6 +485,7 @@
 				44727B442C486A68007756A3 /* UITableView+Extension.swift */,
 				440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */,
 				4415A1E62CEFBD390065B142 /* Calendar+extension.swift */,
+				445F823E2D1B400100F001DE /* UIColor+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -520,6 +527,15 @@
 				444AC12D2CE3E0E60032DA6F /* ServiceAssembly.swift */,
 			);
 			path = Assamblies;
+			sourceTree = "<group>";
+		};
+		445F82392D1B36EC00F001DE /* Items */ = {
+			isa = PBXGroup;
+			children = (
+				445F823A2D1B370F00F001DE /* ThemeSection.swift */,
+				445F823C2D1B372B00F001DE /* ThemeCellType.swift */,
+			);
+			path = Items;
 			sourceTree = "<group>";
 		};
 		446778852D1204A100B5DEA3 /* Appearance */ = {
@@ -576,6 +592,7 @@
 		446778912D12166200B5DEA3 /* ThemeCollectionView */ = {
 			isa = PBXGroup;
 			children = (
+				445F82392D1B36EC00F001DE /* Items */,
 				4467788A2D12113A00B5DEA3 /* ThemeCollectionViewController.swift */,
 				446778922D12167B00B5DEA3 /* ThemeCollectionViewCell.swift */,
 				446778942D1216CC00B5DEA3 /* DarkModeCollectionViewCell.swift */,
@@ -1146,6 +1163,7 @@
 				44727B452C486A68007756A3 /* UITableView+Extension.swift in Sources */,
 				440770FD2BBB472900AD9C98 /* Colors.swift in Sources */,
 				440CF1F72C73CAE600FEFDE0 /* Date+extension.swift in Sources */,
+				445F823F2D1B400100F001DE /* UIColor+Extension.swift in Sources */,
 				44E28EDC2CEE6E88001FA0CA /* StatisticsRepositoryProtocol.swift in Sources */,
 				44BF98962D07789A008A2BA3 /* SettingsSection.swift in Sources */,
 				44F116932BDC384B00134D5F /* DIContainer.swift in Sources */,
@@ -1157,6 +1175,7 @@
 				4442BA682BE41F38002DC469 /* SceneFactoryAssembly.swift in Sources */,
 				4481DB992CF3BB7F009BBB4C /* GradientTextLabel.swift in Sources */,
 				44079C6E2CD169C5006D3A3D /* CalendarView.swift in Sources */,
+				445F823B2D1B370F00F001DE /* ThemeSection.swift in Sources */,
 				449F18D82BACC4BF00F9640D /* AppDelegate.swift in Sources */,
 				44A88DE02CD6646500D4A007 /* CreateSceneDIContainer.swift in Sources */,
 				44BF98942D077878008A2BA3 /* AppSettingsItem.swift in Sources */,
@@ -1191,6 +1210,7 @@
 				44DBAE572C13222400BF130E /* ScheduleItemsTableViewCell.swift in Sources */,
 				44AE39A82CE2954500D89B23 /* CoreHapticsManagerAssembly.swift in Sources */,
 				44E28ED82CEE6D9C001FA0CA /* StatisticsServiceProtocol.swift in Sources */,
+				445F823D2D1B372B00F001DE /* ThemeCellType.swift in Sources */,
 				449F18DA2BACC4BF00F9640D /* SceneDelegate.swift in Sources */,
 				447F92112CD0165600DDB846 /* ScheduleMainView.swift in Sources */,
 				442256882C6BEB4400172C0A /* ScheduleDataBaseType.swift in Sources */,

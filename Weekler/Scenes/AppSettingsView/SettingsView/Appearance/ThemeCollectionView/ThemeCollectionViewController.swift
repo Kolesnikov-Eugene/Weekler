@@ -7,32 +7,6 @@
 
 import UIKit
 
-enum ThemeSection: Int, Hashable, CaseIterable {
-    case darkMode
-    case theme
-    
-    var columnCount: Int {
-        switch self {
-        case .darkMode: return 1
-        case .theme: return 3
-        }
-    }
-}
-
-enum ThemeCellType: Hashable, Equatable {
-    case darkMode(DarkModeItem)
-    case theme(ThemeItem)
-}
-
-struct DarkModeItem: Hashable {
-    let title: String
-}
-
-struct ThemeItem: Hashable {
-    let title: String
-    let color: UIColor
-}
-
 final class ThemeCollectionViewController: UICollectionViewController {
     
     private enum ThemeReuseIdentifiers {
@@ -41,18 +15,13 @@ final class ThemeCollectionViewController: UICollectionViewController {
         static let backgroundViewId = "backgroundViewId"
     }
     private var dataSource: UICollectionViewDiffableDataSource<ThemeSection, ThemeCellType>!
-    
-    private let data: [ThemeCellType] = [
-        .darkMode(DarkModeItem(title: "System theme")),
-        .theme(ThemeItem(title: "1", color: .red)),
-        .theme(ThemeItem(title: "2", color: .blue)),
-        .theme(ThemeItem(title: "3", color: .green)),
-        .theme(ThemeItem(title: "4", color: .yellow)),
-        .theme(ThemeItem(title: "5", color: .purple)),
-    ]
+    private let viewModel: AppearanceViewModelProtocol
     
     // MARK: - Lifecycle
-    init() {
+    init(
+        viewModel: AppearanceViewModelProtocol
+    ) {
+        self.viewModel = viewModel
         super.init(collectionViewLayout: ThemeCollectionViewController.createLayout())
     }
     
@@ -185,21 +154,13 @@ final class ThemeCollectionViewController: UICollectionViewController {
     private func updateSnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<ThemeSection, ThemeCellType>()
         snapshot.appendSections([.darkMode, .theme])
-        let darkModeItems = data.filter {
-            if case .darkMode = $0 { return true }
-            return false
-        }
-        let themeItems = data.filter {
-            if case .theme = $0 { return true }
-            return false
-        }
-        snapshot.appendItems(darkModeItems, toSection: .darkMode)
-        snapshot.appendItems(themeItems, toSection: .theme)
+        snapshot.appendItems(viewModel.darkModeItems, toSection: .darkMode)
+        snapshot.appendItems(viewModel.themeItems, toSection: .theme)
         dataSource.apply(snapshot)
     }
     
     @objc
-    func updateBackgroundColor() {
+    private func updateBackgroundColor() {
         collectionView.backgroundColor = WeeklerUIManager.shared.selectedColor
     }
     
@@ -208,8 +169,7 @@ final class ThemeCollectionViewController: UICollectionViewController {
         didSelectItemAt indexPath: IndexPath
     ) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? ThemeCollectionViewCell else { return }
-        cell.selectCell()
-        WeeklerUIManager.shared.selectedColor = .darkGray
+        viewModel.changeAppAppearence(for: cell, at: indexPath)
     }
     
     override func collectionView(

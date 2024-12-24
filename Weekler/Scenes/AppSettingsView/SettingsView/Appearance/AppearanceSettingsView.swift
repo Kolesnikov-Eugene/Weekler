@@ -15,7 +15,8 @@ final class AppearanceSettingsView: UIView {
     private let themeCollectionViewController: ThemeCollectionViewController!
     
     override init(frame: CGRect) {
-        self.themeCollectionViewController = ThemeCollectionViewController()
+        let viewModel = AppearanceViewModel()
+        self.themeCollectionViewController = ThemeCollectionViewController(viewModel: viewModel)
         super.init(frame: frame)
         setupView()
     }
