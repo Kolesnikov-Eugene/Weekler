@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class ThemeCollectionViewController: UICollectionViewController {
     
@@ -16,6 +18,7 @@ final class ThemeCollectionViewController: UICollectionViewController {
     }
     private var dataSource: UICollectionViewDiffableDataSource<ThemeSection, ThemeCellType>!
     private let viewModel: AppearanceViewModelProtocol
+    private var bag = DisposeBag()
     
     // MARK: - Lifecycle
     init(
@@ -139,6 +142,16 @@ final class ThemeCollectionViewController: UICollectionViewController {
                         withReuseIdentifier: ThemeReuseIdentifiers.darkModeIdentifier,
                         for: indexPath) as? DarkModeCollectionViewCell else { fatalError() }
                     cell.configure(with: darkModeItem.title)
+                    
+                    cell.switchControl.rx
+                        .isOn
+                        .skip(1)
+                        .filter { $0 == true }
+                        .subscribe(onNext: { [weak self] isOn in
+                            guard let self = self else { return }
+                            self.viewModel.enableDarkMode()
+                        })
+                        .disposed(by: self.bag)
                     return cell
                 case .theme(let themeItem):
                     guard let cell = collectionView.dequeueReusableCell(
@@ -168,8 +181,9 @@ final class ThemeCollectionViewController: UICollectionViewController {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? ThemeCollectionViewCell else { return }
-        viewModel.changeAppAppearence(for: cell, at: indexPath)
+        if let cell = collectionView.cellForItem(at: indexPath) as? ThemeCollectionViewCell {
+            viewModel.changeAppAppearence(for: cell, at: indexPath)
+        }
     }
     
     override func collectionView(

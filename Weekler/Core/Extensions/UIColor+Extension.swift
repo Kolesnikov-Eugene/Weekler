@@ -15,6 +15,7 @@ extension UIColor {
         case .blue: return "blue"
         case .yellow: return "yellow"
         case .purple: return "purple"
+        case Colors.viewBackground: return "system"
         default: return ""
         }
     }

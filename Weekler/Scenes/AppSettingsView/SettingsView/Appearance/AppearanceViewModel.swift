@@ -11,6 +11,7 @@ protocol AppearanceViewModelProtocol: AnyObject {
     var darkModeItems: [ThemeCellType] { get }
     var themeItems: [ThemeCellType] { get }
     func changeAppAppearence(for cell: ThemeCollectionViewCell, at indexPath: IndexPath)
+    func enableDarkMode()
 }
 
 final class AppearanceViewModel: AppearanceViewModelProtocol {
@@ -58,5 +59,9 @@ final class AppearanceViewModel: AppearanceViewModelProtocol {
             WeeklerUIManager.shared.currentAppBackgroundColor = pickedColor.color
         default: break
         }
+    }
+    
+    func enableDarkMode() {
+        WeeklerUIManager.shared.currentAppBackgroundColor = Colors.viewBackground
     }
 }

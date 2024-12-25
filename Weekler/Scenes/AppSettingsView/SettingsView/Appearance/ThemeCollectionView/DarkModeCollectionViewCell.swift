@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 final class DarkModeCollectionViewCell: UICollectionViewCell {
     
@@ -20,9 +22,9 @@ final class DarkModeCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    private lazy var switchControl: UISwitch = {
+    lazy var switchControl: UISwitch = {
         let switchControl = UISwitch()
-        switchControl.isOn = false
+        switchControl.isOn = WeeklerUIManager.shared.selectedColor == Colors.viewBackground ? true : false
         switchControl.onTintColor = Colors.mainForeground
         switchControl.translatesAutoresizingMaskIntoConstraints = false
         return switchControl
@@ -31,11 +33,20 @@ final class DarkModeCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(deactivateSwitch),
+            name: .colorDidChange,
+            object: nil
+        )
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit { NotificationCenter.default.removeObserver(self) }
     
     func configure(with text: String) {
         textLabel.text = text
@@ -61,7 +72,13 @@ final class DarkModeCollectionViewCell: UICollectionViewCell {
         switchControl.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(16)
             $0.centerY.equalTo(textLabel.snp.centerY)
-//            $0.height.equalTo(20)
+        }
+    }
+    
+    @objc
+    private func deactivateSwitch() {
+        if WeeklerUIManager.shared.selectedColor != Colors.viewBackground {
+            switchControl.isOn = false
         }
     }
 }
