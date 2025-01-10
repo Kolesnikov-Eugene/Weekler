@@ -9,8 +9,8 @@ import Swinject
 
 final class AppearanceSettingsViewAssembly: Assembly {
     func assemble(container: Container) {
-        container.register(AppearanceSettingsViewController.self) { _ in
-            AppearanceSettingsViewController()
+        container.register(AppearanceSettingsViewController.self) { resolver, viewModel in
+            AppearanceSettingsViewController(viewModel: viewModel)
         }.inObjectScope(.container)
     }
 }

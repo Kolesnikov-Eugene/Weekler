@@ -71,7 +71,8 @@ final class SceneFactoryDIContainer: SceneFactoryProtocol {
             let notificationVC: NotificationSettingsViewController = container.resolve()
             return notificationVC
         case .appearance:
-            let appearanceVC: AppearanceSettingsViewController = container.resolve()
+            let viewModel: AppearanceViewModelProtocol = container.resolve()
+            let appearanceVC: AppearanceSettingsViewController = container.resolve(argument: viewModel)
             return appearanceVC
         case .date:
             let dateVC: DateSettingsViewController = container.resolve()

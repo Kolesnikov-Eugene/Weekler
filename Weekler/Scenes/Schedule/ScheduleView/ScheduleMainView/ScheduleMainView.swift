@@ -28,9 +28,11 @@ final class ScheduleMainView: UIView {
         configuration.baseForegroundColor = Colors.mainForeground
         configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 40)
         
-        let button = UIButton(configuration: configuration, primaryAction: nil)
+        let action = UIAction { [weak self] _ in
+            self?.viewModel.didTapAddNewEventButton()
+        }
+        let button = UIButton(configuration: configuration, primaryAction: action)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(viewModel, action: #selector(ScheduleViewModel.didTapAddNewEventButton), for: .touchUpInside)
         
         return button
     }()

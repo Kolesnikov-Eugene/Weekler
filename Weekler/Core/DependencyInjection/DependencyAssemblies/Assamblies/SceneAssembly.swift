@@ -24,7 +24,8 @@ final class SceneAssembly: Assembly {
             AppearanceSettingsViewAssembly(),
             DateSettingsViewAssembly(),
             HelpViewAssembly(),
-            AboutViewAssembly()
+            AboutViewAssembly(),
+            AppearanceViewModelAssembly()
         ]
         assemblies.forEach { $0.assemble(container: container) }
     }

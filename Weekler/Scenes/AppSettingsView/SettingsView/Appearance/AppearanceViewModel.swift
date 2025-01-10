@@ -12,6 +12,7 @@ protocol AppearanceViewModelProtocol: AnyObject {
     var themeItems: [ThemeCellType] { get }
     func changeAppAppearence(for cell: ThemeCollectionViewCell, at indexPath: IndexPath)
     func enableDarkMode()
+    func didTapConfirmButton()
 }
 
 final class AppearanceViewModel: AppearanceViewModelProtocol {
@@ -44,6 +45,8 @@ final class AppearanceViewModel: AppearanceViewModelProtocol {
         .theme(ThemeItem(title: "5", color: .purple)),
     ]
     
+    private var currentColorSelected: ThemeItem?
+    
     // MARK: - Lifecycle
     init() {}
     
@@ -56,12 +59,18 @@ final class AppearanceViewModel: AppearanceViewModelProtocol {
         let color = data[indexPath.row + 1]
         switch color {
         case .theme(let pickedColor):
-            WeeklerUIManager.shared.currentAppBackgroundColor = pickedColor.color
+//            WeeklerUIManager.shared.currentAppBackgroundColor = pickedColor.color
+            currentColorSelected = pickedColor
         default: break
         }
     }
     
     func enableDarkMode() {
-        WeeklerUIManager.shared.currentAppBackgroundColor = Colors.viewBackground
+//        WeeklerUIManager.shared.currentAppBackgroundColor = Colors.viewBackground
+        currentColorSelected = ThemeItem(title: "", color: Colors.viewBackground)
+    }
+    
+    func didTapConfirmButton() {
+        WeeklerUIManager.shared.currentAppBackgroundColor = currentColorSelected?.color
     }
 }

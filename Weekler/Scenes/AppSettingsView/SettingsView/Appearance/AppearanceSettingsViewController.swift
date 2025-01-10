@@ -23,10 +23,14 @@ final class AppearanceSettingsViewController: UIViewController {
         return item
     }()
     private let appearanceSettingsView: AppearanceSettingsView!
+    private let viewModel: AppearanceViewModelProtocol
     
     // TODO: - pass DIContainter to inject instances of views
-    init() {
-        self.appearanceSettingsView = AppearanceSettingsView()
+    init(
+        viewModel: AppearanceViewModelProtocol
+    ) {
+        self.viewModel = viewModel
+        self.appearanceSettingsView = AppearanceSettingsView(viewModel: viewModel, frame: .zero)
         super.init(nibName: nil, bundle: nil)
         setupView()
     }

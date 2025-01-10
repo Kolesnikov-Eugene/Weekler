@@ -16,6 +16,8 @@
 		440770FD2BBB472900AD9C98 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440770FC2BBB472900AD9C98 /* Colors.swift */; };
 		44079C6B2CD163BA006D3A3D /* SelectTaskModeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44079C6A2CD163BA006D3A3D /* SelectTaskModeView.swift */; };
 		44079C6E2CD169C5006D3A3D /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44079C6D2CD169C5006D3A3D /* CalendarView.swift */; };
+		4407C0B82D31A85E00780990 /* ConfirmButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407C0B72D31A85E00780990 /* ConfirmButton.swift */; };
+		4407C0BA2D31B5C700780990 /* AppearanceViewModelAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407C0B92D31B5C700780990 /* AppearanceViewModelAssembly.swift */; };
 		4407E7CC2CD5317800CC1692 /* ScheduleRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407E7CB2CD5317800CC1692 /* ScheduleRepositoryProtocol.swift */; };
 		4407E7D02CD5382900CC1692 /* ScheduleUseCaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407E7CF2CD5382900CC1692 /* ScheduleUseCaseProtocol.swift */; };
 		4407E7D22CD53BC400CC1692 /* WeeklerAppDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4407E7D12CD53BC400CC1692 /* WeeklerAppDIContainer.swift */; };
@@ -146,6 +148,8 @@
 		440770FC2BBB472900AD9C98 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		44079C6A2CD163BA006D3A3D /* SelectTaskModeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTaskModeView.swift; sourceTree = "<group>"; };
 		44079C6D2CD169C5006D3A3D /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		4407C0B72D31A85E00780990 /* ConfirmButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmButton.swift; sourceTree = "<group>"; };
+		4407C0B92D31B5C700780990 /* AppearanceViewModelAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceViewModelAssembly.swift; sourceTree = "<group>"; };
 		4407E7CB2CD5317800CC1692 /* ScheduleRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleRepositoryProtocol.swift; sourceTree = "<group>"; };
 		4407E7CF2CD5382900CC1692 /* ScheduleUseCaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleUseCaseProtocol.swift; sourceTree = "<group>"; };
 		4407E7D12CD53BC400CC1692 /* WeeklerAppDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklerAppDIContainer.swift; sourceTree = "<group>"; };
@@ -331,6 +335,7 @@
 				4418D5DD2D0B781D003664E6 /* DateSettingsViewAssembly.swift */,
 				4418D5DF2D0B7845003664E6 /* HelpViewAssembly.swift */,
 				4418D5E12D0B7870003664E6 /* AboutViewAssembly.swift */,
+				4407C0B92D31B5C700780990 /* AppearanceViewModelAssembly.swift */,
 			);
 			path = SettingsVIew;
 			sourceTree = "<group>";
@@ -545,6 +550,7 @@
 				4418D5CF2D0B7512003664E6 /* AppearanceSettingsViewController.swift */,
 				446778862D1204D000B5DEA3 /* AppearanceSettingsView.swift */,
 				446778882D1204FB00B5DEA3 /* AppearanceViewModel.swift */,
+				4407C0B72D31A85E00780990 /* ConfirmButton.swift */,
 			);
 			path = Appearance;
 			sourceTree = "<group>";
@@ -1101,6 +1107,7 @@
 				4418D5D42D0B7564003664E6 /* HelpViewController.swift in Sources */,
 				44CE3BBD2C0BA38500719B84 /* CreateScheduleViewAssembly.swift in Sources */,
 				44E28EE62CEE70CA001FA0CA /* StatisticsRepositoryAssembly.swift in Sources */,
+				4407C0BA2D31B5C700780990 /* AppearanceViewModelAssembly.swift in Sources */,
 				44079C6B2CD163BA006D3A3D /* SelectTaskModeView.swift in Sources */,
 				44FB46602C5E6959005731BC /* CreateScheduleViewModelAssembly.swift in Sources */,
 				44727B472C486AAC007756A3 /* ScheduleTableViewSectionItem.swift in Sources */,
@@ -1186,6 +1193,7 @@
 				442256822C6BE61500172C0A /* TaskItem.swift in Sources */,
 				44B06E192BECF08F000C3CC6 /* ScheduleTableViewCell.swift in Sources */,
 				4418D5D82D0B7707003664E6 /* GeneralSettingsViewAssembly.swift in Sources */,
+				4407C0B82D31A85E00780990 /* ConfirmButton.swift in Sources */,
 				44AE39A22CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift in Sources */,
 				44B06E162BECEE3C000C3CC6 /* ScheduleViewModelProtocol.swift in Sources */,
 				447DBE632BC4A8EB00A99A38 /* StatisticsViewController.swift in Sources */,
