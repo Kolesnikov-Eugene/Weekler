@@ -63,6 +63,17 @@ final class ThemeCollectionViewController: UICollectionViewController {
             name: .colorDidChange,
             object: nil
         )
+        
+        viewModel.viewNeedsUpdate
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] value in
+                if let cell = self?.collectionView
+                    .cellForItem(at: IndexPath(row: 0, section: 0)) as? DarkModeCollectionViewCell {
+                    cell.update()
+                }
+                self?.updateSnapshot()
+            })
+            .disposed(by: bag)
 //        NotificationCenter.default.addObserver(forName: .colorDidChange, object: nil, queue: .main) { [weak self] notification in
 //            if let color = notification.object as? UIColor {
 //                self?.collectionView.backgroundColor = color

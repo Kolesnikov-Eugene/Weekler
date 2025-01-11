@@ -43,6 +43,11 @@ final class AppearanceSettingsViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.viewWillAppear()
+    }
+    
     private func setupView() {
         configureNavController()
     }

@@ -6,16 +6,23 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 protocol AppearanceViewModelProtocol: AnyObject {
     var darkModeItems: [ThemeCellType] { get }
     var themeItems: [ThemeCellType] { get }
+    var viewNeedsUpdate: PublishRelay<Bool> { get set }
     func changeAppAppearence(for cell: ThemeCollectionViewCell, at indexPath: IndexPath)
     func enableDarkMode()
     func didTapConfirmButton()
+    func viewWillAppear()
 }
 
 final class AppearanceViewModel: AppearanceViewModelProtocol {
+    
+    // MARK: - output
+    var viewNeedsUpdate = PublishRelay<Bool>()
     
     // MARK: - public properties
     var darkModeItems: [ThemeCellType] {
@@ -51,6 +58,10 @@ final class AppearanceViewModel: AppearanceViewModelProtocol {
     init() {}
     
     // MARK: - public properties
+    func viewWillAppear() {
+        viewNeedsUpdate.accept(true)
+    }
+    
     func changeAppAppearence(
         for cell: ThemeCollectionViewCell,
         at indexPath: IndexPath

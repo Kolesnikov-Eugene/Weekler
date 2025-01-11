@@ -24,7 +24,6 @@ final class DarkModeCollectionViewCell: UICollectionViewCell {
     }()
     lazy var switchControl: UISwitch = {
         let switchControl = UISwitch()
-        switchControl.isOn = WeeklerUIManager.shared.selectedColor == Colors.viewBackground ? true : false
         switchControl.onTintColor = Colors.mainForeground
         switchControl.translatesAutoresizingMaskIntoConstraints = false
         return switchControl
@@ -48,8 +47,17 @@ final class DarkModeCollectionViewCell: UICollectionViewCell {
     
     deinit { NotificationCenter.default.removeObserver(self) }
     
+    func update() {
+        configureSwitchState()
+    }
+    
     func configure(with text: String) {
         textLabel.text = text
+        configureSwitchState()
+    }
+    
+    private func configureSwitchState() {
+        switchControl.isOn = WeeklerUIManager.shared.selectedColor == Colors.viewBackground ? true : false
     }
     
     private func setupView() {
