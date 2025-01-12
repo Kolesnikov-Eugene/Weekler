@@ -151,7 +151,9 @@ final class ThemeCollectionViewController: UICollectionViewController {
                 case .darkMode(let darkModeItem):
                     guard let cell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: ThemeReuseIdentifiers.darkModeIdentifier,
-                        for: indexPath) as? DarkModeCollectionViewCell else { fatalError() }
+                        for: indexPath) as? DarkModeCollectionViewCell else {
+                        fatalError("Error when dequeuing DarkModeCollectionViewCell")
+                    }
                     cell.configure(with: darkModeItem.title)
                     
                     cell.switchControl.rx
@@ -167,8 +169,18 @@ final class ThemeCollectionViewController: UICollectionViewController {
                 case .theme(let themeItem):
                     guard let cell = collectionView.dequeueReusableCell(
                         withReuseIdentifier: ThemeReuseIdentifiers.themeIdentifier,
-                        for: indexPath) as? ThemeCollectionViewCell else { fatalError() }
+                        for: indexPath) as? ThemeCollectionViewCell else {
+                        fatalError("Error when dequeuing ThemeCollectionViewCell")
+                    }
                     cell.configure(with: themeItem.color)
+                    
+                    if themeItem.color == WeeklerUIManager.shared.selectedColor {
+                        collectionView.selectItem(
+                            at: indexPath,
+                            animated: true,
+                            scrollPosition: .centeredHorizontally
+                        )
+                    }
                     return cell
                 }
         })

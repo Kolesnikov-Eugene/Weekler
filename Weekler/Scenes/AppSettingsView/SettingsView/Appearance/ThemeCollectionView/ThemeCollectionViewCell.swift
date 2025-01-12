@@ -15,6 +15,7 @@ final class ThemeCollectionViewCell: UICollectionViewCell {
         let view = UIView()
         view.layer.cornerRadius = 8
         view.clipsToBounds = true
+        view.layer.borderColor = UIColor.black.cgColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -33,14 +34,14 @@ final class ThemeCollectionViewCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    private lazy var checkmarkImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "checkmark")
-        imageView.clipsToBounds = true
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.isHidden = true
-        return imageView
-    }()
+//    private lazy var checkmarkImageView: UIImageView = {
+//        let imageView = UIImageView()
+//        imageView.image = UIImage(systemName: "checkmark")
+//        imageView.clipsToBounds = true
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
+//        imageView.isHidden = true
+//        return imageView
+//    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -65,23 +66,33 @@ final class ThemeCollectionViewCell: UICollectionViewCell {
         buttonPatternView.layer.cornerRadius = buttonPatternView.frame.height / 2
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        isSelected = false
+        themeBackgroundView.layer.borderWidth = 0
+    }
+    
     func selectCell() {
-        checkmarkImageView.isHidden = false
+        switchBorderState()
     }
     
     func deselectCell() {
-        checkmarkImageView.isHidden = true
+        switchBorderState()
+//        themeBackgroundView.layer.borderWidth = 0
     }
     
     @objc
     func hideCheckmark() {
         if WeeklerUIManager.shared.selectedColor == Colors.viewBackground {
-            checkmarkImageView.isHidden = true
+            isSelected = false
+            switchBorderState()
         }
     }
     
     func configure(with color: UIColor) {
         themeBackgroundView.backgroundColor = color
+        isSelected = color == WeeklerUIManager.shared.selectedColor
+        switchBorderState()
     }
     
     private func setupView() {
@@ -91,7 +102,8 @@ final class ThemeCollectionViewCell: UICollectionViewCell {
     
     private func addSubviews() {
         addSubview(themeBackgroundView)
-        addSubview(checkmarkImageView)
+//        addSubview(checkmarkImageView)
+//        addSubview(checkmarkView)
         addSubview(collectionPatternView)
         addSubview(buttonPatternView)
     }
@@ -115,9 +127,56 @@ final class ThemeCollectionViewCell: UICollectionViewCell {
         }
         
         // checkmarkImageView constraitns
-        checkmarkImageView.snp.makeConstraints {
-            $0.trailing.top.equalTo(themeBackgroundView)
-            $0.width.height.equalTo(16)
-        }
+//        checkmarkImageView.snp.makeConstraints {
+//            $0.trailing.top.equalTo(themeBackgroundView)
+//            $0.width.height.equalTo(16)
+//        }
+//        checkmarkView.snp.makeConstraints {
+//            $0.trailing.top.equalTo(themeBackgroundView)
+//            $0.width.height.equalTo(18)
+//        }
+    }
+    
+    private func switchBorderState() {
+        themeBackgroundView.layer.borderWidth = isSelected ? 2 : 0
+//        checkmarkImageView.isHidden = !isSelected
+//        checkmarkView.isHidden = color != WeeklerUIManager.shared.selectedColor
     }
 }
+
+//final class CheckmarkView: UIView {
+//    
+//    private lazy var checkmarkImageView: UIImageView = {
+//        let imageView = UIImageView()
+//        imageView.image = UIImage(systemName: "checkmark")
+//        imageView.clipsToBounds = true
+//        imageView.translatesAutoresizingMaskIntoConstraints = false
+////        imageView.isHidden = true
+//        imageView.backgroundColor = WeeklerUIManager.shared.selectedColor
+//        return imageView
+//    }()
+//    
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//        setupView()
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//    
+//    private func setupView() {
+//        backgroundColor = .white
+//        addSubview(checkmarkImageView)
+//        
+//        checkmarkImageView.snp.makeConstraints {
+//            $0.top.bottom.trailing.leading.equalToSuperview().inset(1)
+//        }
+//    }
+//    
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        self.layer.cornerRadius = bounds.height / 2
+//        checkmarkImageView.layer.cornerRadius = checkmarkImageView.bounds.height / 2
+//    }
+//}
