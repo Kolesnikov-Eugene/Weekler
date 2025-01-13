@@ -31,10 +31,6 @@ final class ThemeCollectionViewController: UICollectionViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,13 +52,6 @@ final class ThemeCollectionViewController: UICollectionViewController {
         }
         configureCollectionView()
         configureDataSource()
-        
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(updateBackgroundColor),
-            name: .colorDidChange,
-            object: nil
-        )
         
         viewModel.viewNeedsUpdate
             .observe(on: MainScheduler.instance)
@@ -135,9 +124,7 @@ final class ThemeCollectionViewController: UICollectionViewController {
     }
     
     private func configureCollectionView() {
-//        collectionView.backgroundColor = Colors.viewBackground
-        collectionView.backgroundColor = WeeklerUIManager.shared.selectedColor
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = false
         collectionView.allowsMultipleSelection = false
         collectionView.allowsSelection = true
@@ -193,11 +180,6 @@ final class ThemeCollectionViewController: UICollectionViewController {
         snapshot.appendItems(viewModel.darkModeItems, toSection: .darkMode)
         snapshot.appendItems(viewModel.themeItems, toSection: .theme)
         dataSource.apply(snapshot)
-    }
-    
-    @objc
-    private func updateBackgroundColor() {
-        collectionView.backgroundColor = WeeklerUIManager.shared.selectedColor
     }
     
     override func collectionView(

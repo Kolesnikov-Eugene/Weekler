@@ -47,7 +47,7 @@ final class StatisticsView: UIView {
     
     // MARK: private methods
     private func setupUI() {
-        backgroundColor = Colors.viewBackground
+        backgroundColor = .clear
         addSubviews()
         applyConstraints()
     }

@@ -32,15 +32,22 @@ final class AppearanceSettingsView: UIView {
         )
         super.init(frame: frame)
         setupView()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateBackground),
+            name: .colorDidChange,
+            object: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit { NotificationCenter.default.removeObserver(self) }
+    
     // MARK: - private methods
     private func setupView() {
-        backgroundColor = Colors.viewBackground
+        updateBackground()
         addSubviews()
         applyConstraints()
         
@@ -49,11 +56,6 @@ final class AppearanceSettingsView: UIView {
                 self?.viewModel.didTapConfirmButton()
             })
             .disposed(by: bag)
-        
-        //        let confirmButtonTapped = UIAction { [weak self] _ in
-        //            self?.viewModel.didTapConfirmButton()
-        //        }
-        //        confirmButton.addAction(confirmButtonTapped, for: .primaryActionTriggered)
     }
     
     private func addSubviews() {
@@ -81,5 +83,11 @@ final class AppearanceSettingsView: UIView {
             $0.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).inset(20)
             $0.height.equalTo(50)
         }
+    }
+    
+    @objc
+    private func updateBackground() {
+        let color = WeeklerUIManager.shared.selectedColor
+        backgroundColor = color
     }
 }

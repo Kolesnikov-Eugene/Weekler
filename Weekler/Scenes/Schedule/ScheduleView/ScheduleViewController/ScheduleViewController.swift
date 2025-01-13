@@ -71,7 +71,8 @@ final class ScheduleViewController: UIViewController {
     
     //MARK: - private methods
     private func setupUI() {
-        self.view.backgroundColor = Colors.viewBackground
+//        self.view.backgroundColor = Colors.viewBackground
+        self.view.backgroundColor = .clear
         configureNavBar()
         addSubviews()
         applyConstraints()

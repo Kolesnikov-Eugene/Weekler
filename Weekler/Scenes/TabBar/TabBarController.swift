@@ -18,15 +18,30 @@ final class TabBarController: UITabBarController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit { NotificationCenter.default.removeObserver(self) }
 
     // MARK: - private methods
     private func setupView() {
-        view.backgroundColor = Colors.viewBackground
+        updateBackgroundColor()
         configureTabBar()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateBackgroundColor),
+            name: .colorDidChange,
+            object: nil
+        )
     }
 
     private func configureTabBar() {
         tabBar.tintColor = Colors.mainForeground
         tabBar.unselectedItemTintColor = .gray
+    }
+    
+    @objc
+    private func updateBackgroundColor() {
+        let color = WeeklerUIManager.shared.selectedColor
+        view.backgroundColor = color
     }
 }

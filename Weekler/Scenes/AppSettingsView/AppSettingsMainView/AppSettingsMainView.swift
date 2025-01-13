@@ -27,7 +27,7 @@ final class AppSettingsMainView: UIView {
     }
     
     private func setupView() {
-        backgroundColor = Colors.viewBackground
+        backgroundColor = .clear
         addSubviews()
         setupConstraints()
     }

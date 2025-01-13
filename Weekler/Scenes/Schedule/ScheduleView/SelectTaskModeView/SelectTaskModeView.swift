@@ -42,7 +42,7 @@ final class SelectTaskModeView: UIView {
     
     // MARK: - private methods
     private func setupUI() {
-        backgroundColor = Colors.viewBackground
+        backgroundColor = .clear
         selectMainModeCollectionView.register(SelectMainModeCollectionViewCell.self, forCellWithReuseIdentifier: collectionCellReuseId)
         selectMainModeCollectionView.dataSource = self
         selectMainModeCollectionView.delegate = self

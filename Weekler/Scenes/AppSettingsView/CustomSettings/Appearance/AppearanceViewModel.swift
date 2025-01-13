@@ -72,7 +72,6 @@ final class AppearanceViewModel: AppearanceViewModelProtocol {
         case .theme(let pickedColor):
 //            WeeklerUIManager.shared.currentAppBackgroundColor = pickedColor.color
             currentColorSelected = pickedColor
-            
         default: break
         }
     }

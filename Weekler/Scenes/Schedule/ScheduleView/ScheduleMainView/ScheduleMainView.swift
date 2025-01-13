@@ -70,7 +70,8 @@ final class ScheduleMainView: UIView {
     
     // MARK: - private methods
     private func setupUI() {
-        backgroundColor = Colors.viewBackground
+//        backgroundColor = Colors.viewBackground
+        backgroundColor = .clear
         scheduleTableView.register(ScheduleTableViewCell.self, forCellReuseIdentifier: scheduleCellReuseId)
         scheduleTableView.delegate = self
         setupTableViewDataSource()

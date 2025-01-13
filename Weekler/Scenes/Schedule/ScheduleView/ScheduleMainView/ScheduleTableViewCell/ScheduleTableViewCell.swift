@@ -68,11 +68,19 @@ final class ScheduleTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateBackgroundColor),
+            name: .colorDidChange,
+            object: nil
+        )
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit { NotificationCenter.default.removeObserver(self) }
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -114,7 +122,7 @@ final class ScheduleTableViewCell: UITableViewCell {
     
     // MARK: - private methods
     private func setupUI() {
-        contentView.backgroundColor = Colors.viewBackground
+        updateBackgroundColor()
         addSubviews()
         applyConstraints()
     }
@@ -189,5 +197,11 @@ final class ScheduleTableViewCell: UITableViewCell {
             } completion: { [weak self] _ in
                 self?.onTaskCompleted?()
             }
+    }
+    
+    @objc
+    private func updateBackgroundColor() {
+        let color = WeeklerUIManager.shared.selectedColor
+        contentView.backgroundColor = WeeklerUIManager.shared.selectedColor
     }
 }

@@ -395,7 +395,7 @@
 			path = DTO;
 			sourceTree = "<group>";
 		};
-		4418D5CA2D0B7436003664E6 /* SettingsView */ = {
+		4418D5CA2D0B7436003664E6 /* CustomSettings */ = {
 			isa = PBXGroup;
 			children = (
 				446778902D1212BA00B5DEA3 /* About */,
@@ -405,7 +405,7 @@
 				4467788F2D1212B200B5DEA3 /* Help */,
 				4467788D2D12128600B5DEA3 /* Notifications */,
 			);
-			path = SettingsView;
+			path = CustomSettings;
 			sourceTree = "<group>";
 		};
 		441CAC722CE0DAEC00064348 /* Application */ = {
@@ -628,12 +628,12 @@
 		447DBE542BC4A8EB00A99A38 /* AppSettingsView */ = {
 			isa = PBXGroup;
 			children = (
-				4418D5CA2D0B7436003664E6 /* SettingsView */,
+				4418D5CA2D0B7436003664E6 /* CustomSettings */,
 				44BF988E2D077818008A2BA3 /* SettingsItems */,
 				444045E22CFF8E0300559126 /* AppSettingsCollectionView */,
 				444045DF2CFF8DEE00559126 /* ProfileView */,
 				444045DE2CFF8DBD00559126 /* ViewModel */,
-				44AE39A32CE2907000D89B23 /* ConfigViewFlow */,
+				44AE39A32CE2907000D89B23 /* AppSettingsViewFlow */,
 				447DBE532BC4A8EB00A99A38 /* AppSettingsMainView */,
 			);
 			path = AppSettingsView;
@@ -642,6 +642,7 @@
 		447DBE562BC4A8EB00A99A38 /* ScheduleView */ = {
 			isa = PBXGroup;
 			children = (
+				44B06E122BECEDE7000C3CC6 /* ScheduleViewViewModel */,
 				441CAC752CE0E1DE00064348 /* ScheduleViewFlow */,
 				44079C6C2CD16661006D3A3D /* CalendarView */,
 				44079C692CD16301006D3A3D /* SelectTaskModeView */,
@@ -656,7 +657,6 @@
 			isa = PBXGroup;
 			children = (
 				44FB46612C5E72F4005731BC /* CreateSchedule */,
-				44B06E122BECEDE7000C3CC6 /* ScheduleViewViewModel */,
 				447DBE562BC4A8EB00A99A38 /* ScheduleView */,
 			);
 			path = Schedule;
@@ -764,7 +764,6 @@
 				441DECAD2CC0353A00B725B7 /* Constants.swift */,
 				44AE982D2CF5058E00D685FD /* GradientLabel.swift */,
 				4481DB982CF3BB7F009BBB4C /* GradientTextLabel.swift */,
-				44F305722D19EC5F005B32E1 /* WeeklerUIManager.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -772,6 +771,7 @@
 		449F18EE2BACD0A800F9640D /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				44F305722D19EC5F005B32E1 /* WeeklerUIManager.swift */,
 				446C85602CB85B8700077CC5 /* CoreHapticsManager.swift */,
 			);
 			path = Services;
@@ -806,12 +806,12 @@
 			path = StatisticsFlow;
 			sourceTree = "<group>";
 		};
-		44AE39A32CE2907000D89B23 /* ConfigViewFlow */ = {
+		44AE39A32CE2907000D89B23 /* AppSettingsViewFlow */ = {
 			isa = PBXGroup;
 			children = (
 				44AE39A42CE2908600D89B23 /* AppSettingsFlowCoordinator.swift */,
 			);
-			path = ConfigViewFlow;
+			path = AppSettingsViewFlow;
 			sourceTree = "<group>";
 		};
 		44B06E122BECEDE7000C3CC6 /* ScheduleViewViewModel */ = {

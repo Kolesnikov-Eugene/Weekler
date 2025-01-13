@@ -70,7 +70,8 @@ final class CalendarView: UIView {
     
     // MARK: - private properties
     private func setupUI() {
-        backgroundColor = Colors.viewBackground
+//        backgroundColor = Colors.viewBackground
+        backgroundColor = .clear
         calendarCollectionView.register(WeekCalendarCollectionViewCell.self, forCellWithReuseIdentifier: reuseId)
         calendarCollectionView.ibCalendarDelegate = self
         calendarCollectionView.ibCalendarDataSource = self

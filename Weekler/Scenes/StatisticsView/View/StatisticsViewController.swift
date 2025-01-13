@@ -47,7 +47,7 @@ final class StatisticsViewController: UIViewController {
     
     // MARK: - provate methods
     private func setupUI() {
-        self.view.backgroundColor = Colors.viewBackground
+        self.view.backgroundColor = .clear
         navigationItem.title = L10n.Localizable.Tab.statistics
 //        self.tabBarItem = UITabBarItem(
 //            title: L10n.Localizable.Tab.statistics,
