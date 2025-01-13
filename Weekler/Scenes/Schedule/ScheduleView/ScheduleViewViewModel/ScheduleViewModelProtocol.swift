@@ -13,7 +13,7 @@ protocol ScheduleViewModelProtocol: AnyObject {
     var calendarHeightValue: PublishRelay<Double?> { get set }
     var navigationTitle: BehaviorRelay<String> { get set }
     func task(at index: Int) -> ScheduleTask
-    func didTapAddNewEventButton()
+    func didTapAddNewEventButton() // delete
 }
 
 protocol ScheduleMainViewModelProtocol: AnyObject {
@@ -25,6 +25,7 @@ protocol ScheduleMainViewModelProtocol: AnyObject {
     func deleteTask(at index: Int)
     func prepareCreateView(at index: Int)
     func playAddTask()
+    func didTapAddNewEventButton()
 }
 
 protocol CalendarViewModelProtocol: AnyObject {

@@ -8,14 +8,18 @@
 import Foundation
 
 final class ScheduleRepository: ScheduleRepositoryProtocol {
+    
+    // MARK: - private properties
     private let dataSource: ScheduleDataSourceProtocol
     
+    // MARK: - lifecycle
     init(
         dataSource: ScheduleDataSourceProtocol
     ) {
         self.dataSource = dataSource
     }
     
+    // MARK: - public methods
     func fetchTaskItems(for date: String) async -> [ScheduleTask] {
         let predicate = #Predicate<TaskItem> { $0.onlyDate == date }
         let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)

@@ -22,26 +22,27 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     
     //MARK: - public properties
     var tasks: [ScheduleTask] = []
-    var data: [SourceItem]
+    var data: [SourceItem] = []
     var mainMode: ScheduleMode = .task
     var selectedDate: Date { currentDate }
     
     //MARK: - Private properties
     private var completedTasks: [ScheduleTask] = []
-    private var currentDate: Date
+    private var currentDate: Date = Date()
     private var bag = DisposeBag()
+    private let dependencies: SceneFactoryProtocol
+    private var scheduleFlowCoordinator: ScheduleFlowCoordinator
+    private var hapticsManager: CoreHapticsManagerProtocol?
+    private lazy var scheduleUseCase: ScheduleUseCaseProtocol = {
+        dependencies.makeScheduleUseCase()
+    }()
     private lazy var formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
         return formatter
     }()
-    private let dependencies: SceneFactoryProtocol
-    private lazy var scheduleUseCase: ScheduleUseCaseProtocol = {
-        dependencies.makeScheduleUseCase()
-    }()
-    private var scheduleFlowCoordinator: ScheduleFlowCoordinator
-    private var hapticsManager: CoreHapticsManagerProtocol?
     
+    // MARK: - lifecycle
     init(
         dependencies: SceneFactoryProtocol,
         scheduleFlowCoordinator: ScheduleFlowCoordinator,
@@ -50,14 +51,13 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
         self.dependencies = dependencies
         self.scheduleFlowCoordinator = scheduleFlowCoordinator
         self.hapticsManager = hapticManager
-        currentDate = Date()
-        data = []
+        
         emptyStateIsActive = dataList
             .map({ items in
                 !items.isEmpty
             })
             .asDriver(onErrorJustReturn: false)
-        //        fetchSchedule()
+        
         bindToScheduleUpdates()
     }
     
@@ -71,9 +71,10 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
         fetchSchedule()
     }
     
-    @objc func didTapAddNewEventButton() {
+    @objc
+    func didTapAddNewEventButton() {
         hapticsManager?.playTap()
-        scheduleFlowCoordinator.goToCreateScheduleView(for: nil, with: .create)
+        scheduleFlowCoordinator.navigateToCreateScheduleView(for: nil, with: .create)
     }
     
     // MARK: - private methods
@@ -103,8 +104,7 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     private func bindToScheduleUpdates() {
         NotificationCenter.default
             .addObserver(
-                //                forName: .NSManagedObjectContextObjectsDidChange,
-                forName: .NSPersistentStoreRemoteChange,
+                forName: .NSPersistentStoreRemoteChange, // .NSManagedObjectContextObjectsDidChange
                 object: nil,
                 queue: .main) { [weak self] _ in
                     self?.fetchSchedule()
@@ -165,7 +165,7 @@ extension ScheduleViewModel: ScheduleMainViewModelProtocol {
     
     func prepareCreateView(at index: Int) {
         let task = task(at: index)
-        scheduleFlowCoordinator.goToCreateScheduleView(for: task, with: .edit)
+        scheduleFlowCoordinator.navigateToCreateScheduleView(for: task, with: .edit)
     }
     
     func playAddTask() {

@@ -6,17 +6,24 @@
 //
 
 import Foundation
+import UIKit
 
 final class SceneFactoryDIContainer: SceneFactoryProtocol {
-    private let container: DIContainer
+    
+    // MARK: - public properties
     var createScheduleSceneContainer: CreateScheduleSceneProtocol?
     
+    // MARK: - private properties
+    private let container: DIContainer
+    
+    // MARK: - lifecycle
     init(
         container: DIContainer
     ) {
         self.container = container
     }
     
+    // MARK: - public methods
     func makeScheduleViewController(coor: ScheduleFlowCoordinator) -> ScheduleViewController {
         let hapticsManager = makeCoreHapticsManager()
         let scheduleViewModel: ScheduleViewModelProtocol = container.resolve(
@@ -27,8 +34,9 @@ final class SceneFactoryDIContainer: SceneFactoryProtocol {
         return scheduleVC
     }
     
-    func makeConfigViewController() -> ConfigViewController {
-        let configVC: ConfigViewController = container.resolve()
+    func makeConfigViewController(coordinator: SettingsFlowCoordinator) -> AppSettingsViewController {
+        let viewModel: AppSettingsViewModelProtocol = container.resolve(argument: coordinator)
+        let configVC: AppSettingsViewController = container.resolve(argument: viewModel)
         return configVC
     }
     
@@ -52,5 +60,29 @@ final class SceneFactoryDIContainer: SceneFactoryProtocol {
     func makeCoreHapticsManager() -> CoreHapticsManagerProtocol? {
         let hapticsManager: CoreHapticsManagerProtocol? = container.resolve()
         return hapticsManager
+    }
+    
+    func makeSettingsScreen(_ screen: SettingsItem) -> UIViewController {
+        switch screen {
+        case .general:
+            let generalVC: GeneralSettingsViewController = container.resolve()
+            return generalVC
+        case .notification:
+            let notificationVC: NotificationSettingsViewController = container.resolve()
+            return notificationVC
+        case .appearance:
+            let viewModel: AppearanceViewModelProtocol = container.resolve()
+            let appearanceVC: AppearanceSettingsViewController = container.resolve(argument: viewModel)
+            return appearanceVC
+        case .date:
+            let dateVC: DateSettingsViewController = container.resolve()
+            return dateVC
+        case .help:
+            let helpVC: HelpViewController = container.resolve()
+            return helpVC
+        case .about:
+            let aboutVC: AboutViewController = container.resolve()
+            return aboutVC
+        }
     }
 }

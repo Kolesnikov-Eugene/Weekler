@@ -10,8 +10,11 @@ import SwiftData
 
 @ModelActor
 final actor ScheduleDataSource: ScheduleDataSourceProtocol {
+    
+    // MARK: - private properties
     private var context: ModelContext { modelExecutor.modelContext }
     
+    // MARK: - lifecycle
     init() {
         do {
             let container = try ModelContainer(for: TaskItem.self)
@@ -99,4 +102,5 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
     }
 }
 
+// MARK: - StatisticsDataSourceProtocol
 extension ScheduleDataSource: StatisticsDataSourceProtocol {}

@@ -12,12 +12,15 @@ protocol Coordinator {
 }
 
 final class WeeklerAppCoordinator: Coordinator {
+    
+    // MARK: - private properties
     private let window: UIWindow
     private let weeklerAppDI: WeeklerAppDIContainer
     private var childCoordinators: [Coordinator?] = []
     private let sceneFactoryDIContainer: SceneFactoryProtocol
     private let tabBarController: UITabBarController
     
+    // MARK: - lifecycle
     init(
         window: UIWindow,
         weeklerAppDI: WeeklerAppDIContainer
@@ -28,12 +31,14 @@ final class WeeklerAppCoordinator: Coordinator {
         tabBarController = weeklerAppDI.makeTabBarController()
     }
     
+    // MARK: - publiv methods
     func start() {
         window.rootViewController = tabBarController
         window.makeKeyAndVisible()
         startFlows()
     }
     
+    // FIXME: add coordinators to DI container
     private func startFlows() {
         // MARK: Schedule Flow
         let scheduleFlowCoordinator = ScheduleFlowCoordinator(
@@ -50,7 +55,7 @@ final class WeeklerAppCoordinator: Coordinator {
         childCoordinators.append(statisticsFlowCoordinator)
         
         // MARK: Config Flow
-        let configFlowCoordinator = ConfigFlowCoordinator(
+        let configFlowCoordinator = AppSettingsFlowCoordinator(
             tabBarController: tabBarController,
             sceneFactoryDIContainer: sceneFactoryDIContainer
         )

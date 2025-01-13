@@ -12,6 +12,7 @@ import RxCocoa
 
 final class ScheduleMainView: UIView {
     
+    // MARK: - private properties
     private let scheduleCellReuseId = "scheduleCell"
     private lazy var scheduleTableView: UITableView = {
         let tableView = UITableView()
@@ -27,9 +28,11 @@ final class ScheduleMainView: UIView {
         configuration.baseForegroundColor = Colors.mainForeground
         configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 40)
         
-        let button = UIButton(configuration: configuration, primaryAction: nil)
+        let action = UIAction { [weak self] _ in
+            self?.viewModel.didTapAddNewEventButton()
+        }
+        let button = UIButton(configuration: configuration, primaryAction: action)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(viewModel, action: #selector(ScheduleViewModel.didTapAddNewEventButton), for: .touchUpInside)
         
         return button
     }()
@@ -44,6 +47,7 @@ final class ScheduleMainView: UIView {
     private var viewModel: ScheduleMainViewModelProtocol
     private var bag = DisposeBag()
     
+    // MARK: - lifecycle
     init(
         frame: CGRect,
         viewModel: ScheduleMainViewModelProtocol
@@ -64,8 +68,10 @@ final class ScheduleMainView: UIView {
         emptyStateImageView.layer.cornerRadius = CGRectGetWidth(CGRect(origin: CGPoint.zero, size: emptyStateImageView.bounds.size)) / 2
     }
     
+    // MARK: - private methods
     private func setupUI() {
-        backgroundColor = Colors.viewBackground
+//        backgroundColor = Colors.viewBackground
+        backgroundColor = .clear
         scheduleTableView.register(ScheduleTableViewCell.self, forCellReuseIdentifier: scheduleCellReuseId)
         scheduleTableView.delegate = self
         setupTableViewDataSource()
@@ -97,7 +103,6 @@ final class ScheduleMainView: UIView {
             $0.trailing.equalTo(snp.trailing).inset(16)
         }
         
-        // FIXME: Reconfigure constraints to adapt to calendar switch
         //emptyStateImageView constraints
         emptyStateImageView.snp.makeConstraints {
             $0.centerX.equalTo(snp.centerX)
@@ -126,7 +131,11 @@ final class ScheduleMainView: UIView {
             tableView: scheduleTableView,
             cellProvider: { tableView, indexPath, itemIdentifier in
                 guard let cell = tableView
-                    .dequeueReusableCell(withIdentifier: self.scheduleCellReuseId) as? ScheduleTableViewCell else { fatalError() }
+                    .dequeueReusableCell(
+                        withIdentifier: self.scheduleCellReuseId
+                    ) as? ScheduleTableViewCell else {
+                    fatalError()
+                }
                 switch itemIdentifier {
                 case .goal(let goal):
                     cell.configureCell(text: goal.description)

@@ -26,6 +26,7 @@ final class StatisticsView: UIView {
     private let viewModel: StatisticsViewModelProtocol
     private let bag = DisposeBag()
     
+    // MARK: - lifecycle
     init(
         frame: CGRect,
         viewModel: StatisticsViewModelProtocol
@@ -46,7 +47,7 @@ final class StatisticsView: UIView {
     
     // MARK: private methods
     private func setupUI() {
-        backgroundColor = Colors.viewBackground
+        backgroundColor = .clear
         addSubviews()
         applyConstraints()
     }
