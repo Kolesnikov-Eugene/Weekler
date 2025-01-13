@@ -15,7 +15,7 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
     var onSwitchChangedValue: ((Bool) -> (Void))?
     var onDatePickerChangedValue: ((Date) -> (Void))?
     
-    // Private properties
+    // MARK: - Private properties
     private lazy var cellTypeImageView: UIImageView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -101,6 +101,7 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         }
     }
 
+    // MARK: - lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
@@ -246,17 +247,20 @@ final class ScheduleItemsTableViewCell: UITableViewCell {
         }
     }
     
-    @objc private func datePickerDidChangeValue(_ sender: UIDatePicker) {
+    @objc
+    private func datePickerDidChangeValue(_ sender: UIDatePicker) {
         datePickerPickedDate = sender.date
         let pickedDateAndTime = calculateDateAndTime()
         onDatePickerChangedValue?(pickedDateAndTime)
     }
     
-    @objc private func notificationSwitchDidChangeValue(_ sender: UISwitch) {
+    @objc
+    private func notificationSwitchDidChangeValue(_ sender: UISwitch) {
         onSwitchChangedValue?(sender.isOn)
     }
     
-    @objc private func timePickerDidChangeValue(_ sender: UIDatePicker) {
+    @objc
+    private func timePickerDidChangeValue(_ sender: UIDatePicker) {
         timePickerPickedTime = sender.date
         let pickedDateAndTime = calculateDateAndTime()
         onDatePickerChangedValue?(pickedDateAndTime)

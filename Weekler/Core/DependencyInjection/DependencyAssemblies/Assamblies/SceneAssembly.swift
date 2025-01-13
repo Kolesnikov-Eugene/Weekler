@@ -13,11 +13,19 @@ final class SceneAssembly: Assembly {
             TabBarAssembly(),
             ScheduleAssembly(),
             StatisticsAssembly(),
-            ConfigViewAssembly(),
+            AppSettingsVCAssembly(),
+            AppSettingsViewModelAssembly(),
             CreateScheduleViewAssembly(),
             ScheduleViewModelAssembly(),
             CreateScheduleViewModelAssembly(),
-            StatisticsViewModelAssembly()
+            StatisticsViewModelAssembly(),
+            GeneralSettingsViewAssembly(),
+            NotificationSettingsViewAssembly(),
+            AppearanceSettingsViewAssembly(),
+            DateSettingsViewAssembly(),
+            HelpViewAssembly(),
+            AboutViewAssembly(),
+            AppearanceViewModelAssembly()
         ]
         assemblies.forEach { $0.assemble(container: container) }
     }

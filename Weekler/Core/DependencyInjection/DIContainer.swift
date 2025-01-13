@@ -11,16 +11,19 @@ final class DIContainer {
     
     static let shared = DIContainer()
     
+    // MARK: - private properties
     private let container = Container()
     private let assembler: Assembler
     
-    init() {
+    // MARK: - lifecycle
+    private init() {
         assembler = Assembler([
             SceneAssembly(),
             ServiceAssembly()
         ], container: container)
     }
     
+    // MARK: - public methods
     func resolve<T>() -> T {
         guard let resolvedType = container.resolve(T.self) else {
             fatalError()

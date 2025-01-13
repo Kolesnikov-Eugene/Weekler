@@ -9,17 +9,18 @@ import Foundation
 
 final class StatisticsRepository: StatisticsRepositoryProtocol {
     
+    // MARK: - private methods
     private let dataSource: StatisticsDataSourceProtocol
     
+    // MARK: - lifecycle
     init(
         dataSource: StatisticsDataSourceProtocol
     ) {
         self.dataSource = dataSource
     }
     
+    // MARK: - public methods
     func fetchStatistics(for currentWeek: [String]) async -> [ScheduleTask] {
-        print("Fetching statistics in repository...")
-        
         let predicate = #Predicate<TaskItem> { currentWeek.contains($0.onlyDate) }
         let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
         

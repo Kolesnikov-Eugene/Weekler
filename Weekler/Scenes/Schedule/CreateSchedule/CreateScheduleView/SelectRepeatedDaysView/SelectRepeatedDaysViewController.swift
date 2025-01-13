@@ -77,7 +77,8 @@ final class SelectRepeatedDaysViewController: UIViewController {
         }
     }
     
-    @objc private func didChangeControlValue(sender: UISegmentedControl) {
+    @objc
+    private func didChangeControlValue(sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
             daysTableView.isHidden = false

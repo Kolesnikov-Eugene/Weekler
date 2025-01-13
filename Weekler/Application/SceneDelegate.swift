@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             
             let window = UIWindow(windowScene: windowScene)
-            let weeklerAppDI = WeeklerAppDIContainer(container: DIContainer())
+            let weeklerAppDI = WeeklerAppDIContainer(container: DIContainer.shared)
             let coordinator = WeeklerAppCoordinator(window: window, weeklerAppDI: weeklerAppDI)
             self.weeklerAppCoordinator = coordinator
             self.window = window

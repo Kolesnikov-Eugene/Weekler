@@ -56,6 +56,7 @@ final class ChartView: UIView {
         static var fillColor: UIColor = .clear
     }
     
+    // MARK: - lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
@@ -67,7 +68,6 @@ final class ChartView: UIView {
     
     func layoutSublayers() {
         super.layoutSublayers(of: self.layer)
-        
     }
     
     override func layoutSubviews() {

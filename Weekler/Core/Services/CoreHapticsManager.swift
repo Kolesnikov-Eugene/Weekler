@@ -14,9 +14,12 @@ protocol CoreHapticsManagerProtocol {
 }
 
 final class CoreHapticsManager {
+    
+    // MARK: - private properties
     private let hapticEngine: CHHapticEngine
     private var doneAudio: CHHapticAudioResourceID?
     
+    // MARK: - lifecycle
     init?() {
         let hapticsCapability = CHHapticEngine.capabilitiesForHardware()
         guard hapticsCapability.supportsHaptics else {
@@ -42,6 +45,7 @@ final class CoreHapticsManager {
         }
     }
     
+    // MARK: - private methods
     private func setUpResources() {
         do {
             if let path = Bundle.main.url(forResource: "Done", withExtension: "caf") {
@@ -53,7 +57,9 @@ final class CoreHapticsManager {
     }
 }
 
+// MARK: - CoreHapticsManagerProtocol
 extension CoreHapticsManager: CoreHapticsManagerProtocol {
+    
     func handleEngineReset() {
         do {
             try hapticEngine.start()

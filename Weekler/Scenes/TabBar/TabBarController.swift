@@ -9,6 +9,7 @@ import UIKit
 
 final class TabBarController: UITabBarController {
 
+    // MARK: - lifecycle
     init() {
         super.init(nibName: nil, bundle: nil)
         setupView()
@@ -18,30 +19,29 @@ final class TabBarController: UITabBarController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.selectedIndex = 0
-    }
+    deinit { NotificationCenter.default.removeObserver(self) }
 
+    // MARK: - private methods
     private func setupView() {
-        view.backgroundColor = Colors.viewBackground
+        updateBackgroundColor()
         configureTabBar()
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateBackgroundColor),
+            name: .colorDidChange,
+            object: nil
+        )
     }
 
     private func configureTabBar() {
         tabBar.tintColor = Colors.mainForeground
         tabBar.unselectedItemTintColor = .gray
-//        let myColor = UIColor(red: 0.255, green: 0.255, blue: 0.255, alpha: 1)
-//        let appearance = tabBar.standardAppearance
-//        appearance.shadowImage = nil
-//        appearance.shadowColor = nil
-//        appearance.backgroundEffect = nil
-//        appearance.backgroundColor = UIColor(resource: .background)
-//        appearance.stackedLayoutAppearance.normal.iconColor = .black
-//        appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
-//            NSAttributedString.Key.foregroundColor: myColor,
-//            ]
-
-//        tabBar.standardAppearance = appearance
+    }
+    
+    @objc
+    private func updateBackgroundColor() {
+        let color = WeeklerUIManager.shared.selectedColor
+        view.backgroundColor = color
     }
 }

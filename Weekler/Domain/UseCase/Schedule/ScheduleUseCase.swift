@@ -8,8 +8,11 @@
 import Foundation
 
 final class ScheduleUseCase: ScheduleUseCaseProtocol {
+    
+    // MARK: - private properties
     private let repository: ScheduleRepositoryProtocol
     
+    // MARK: - lifecycle
     init(
         repository: ScheduleRepositoryProtocol
     ) {

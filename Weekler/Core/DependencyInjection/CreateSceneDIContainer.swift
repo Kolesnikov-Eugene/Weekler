@@ -8,9 +8,12 @@
 import Foundation
 
 final class CreateSceneDIContainer: CreateScheduleSceneProtocol {
+    
+    // MARK: - private properties
     private let container: DIContainer
     private let createScheduleDelegate: CreateScheduleDelegate?
     
+    // MARK: - lifecycle
     init(
         container: DIContainer,
         createScheduleDelegate: CreateScheduleDelegate?
@@ -19,6 +22,7 @@ final class CreateSceneDIContainer: CreateScheduleSceneProtocol {
         self.createScheduleDelegate = createScheduleDelegate
     }
     
+    // MARK: - public methods
     func makeCreateScheduleViewController(for task: ScheduleTask?, with mode: CreateMode) -> CreateScheduleViewController {
         let createViewModel: CreateScheduleViewModelProtocol = DIContainer.shared.resolve(arguments: createScheduleDelegate, task)
         let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve(arguments: createViewModel, mode)

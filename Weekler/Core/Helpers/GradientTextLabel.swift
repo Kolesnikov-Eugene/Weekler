@@ -20,7 +20,7 @@ class GradientTextLabel: UILabel {
         let currentContext = UIGraphicsGetCurrentContext()
         currentContext?.saveGState()
         defer { currentContext?.restoreGState() }
-        guard let text = text else { return }
+//        guard let text = text else { return }
         currentContext?.translateBy(x: 0, y: bounds.height)
         currentContext?.scaleBy(x: 1, y: -1)
         

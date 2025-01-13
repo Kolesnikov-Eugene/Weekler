@@ -8,14 +8,18 @@
 import Foundation
 
 final class WeeklerAppDIContainer {
+    
+    // MARK: - private properties
     private let container: DIContainer
     
+    // MARK: - lifecycle
     init(
         container: DIContainer
     ) {
         self.container = container
     }
     
+    // MARK: - public methods
     func makeTabBarController() -> TabBarController {
         let tabBarController: TabBarController = container.resolve()
         return tabBarController
