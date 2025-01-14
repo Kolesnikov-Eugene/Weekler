@@ -20,6 +20,8 @@ final class ScheduleRepository: ScheduleRepositoryProtocol {
     }
     
     // MARK: - public methods
+    
+    // MARK: - Working
     func fetchTaskItems(for date: String) async -> [ScheduleTask] {
 //        let predicate = #Predicate<TaskItem> { $0.onlyDate == date }
 //        let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
@@ -31,16 +33,27 @@ final class ScheduleRepository: ScheduleRepositoryProtocol {
             sortDescriptor: sortDescriptor
         )
         
-        let scheduleItems = scheduleDatesItems.map { $0.taskItem }
-        let dates = scheduleDatesItems.map { $0.date }
+        let ids = scheduleDatesItems.map(\.taskId)
         
-        let currentScheduleTaskArray = scheduleItems.map {
-            ScheduleTask(
-                id: $0.id,
-                dates: dates,
-                description: $0.taskDescription,
-                isNotificationEnabled: $0.isNotificationEnabled,
-                completed: $0.completed != nil
+        let predicate1 = #Predicate<TaskItem> { ids.contains($0.id) }
+        let sort = SortDescriptor<TaskItem>(\.id, order: .forward)
+        
+        let scheduleItems = await dataSource.fetchTaskItems(
+            predicate: predicate1,
+            sortDescriptor: sort
+        )
+        
+//        let scheduleItems = scheduleDatesItems.map { $0.taskItem }
+//        let dates = scheduleDatesItems.map { $0.date }
+        
+        let currentScheduleTaskArray = scheduleItems.map { task in
+            let dates = task.dates?.map { $0.date }
+            return ScheduleTask(
+                id: task.id,
+                dates: dates!,
+                description: task.taskDescription,
+                isNotificationEnabled: task.isNotificationEnabled,
+                completed: task.completed != nil
             )
         }
         return currentScheduleTaskArray

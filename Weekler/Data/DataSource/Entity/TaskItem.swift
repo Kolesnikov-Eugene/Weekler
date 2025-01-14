@@ -51,10 +51,13 @@ final class TaskItem: ScheduleDataBaseType {
         //                dates?.append(scheduleDate)
         //            }
         //        }
+        var d: [ScheduleDate] = []
         plannedDates.forEach { date in
-            print("appending", date)
-            let scheduleDate = ScheduleDate(taskItem: self, date: date)
-            dates?.append(scheduleDate)
+            print("appending", date, id)
+            let scheduleDate = ScheduleDate(taskId: id, date: date)
+//            let scheduleDate = ScheduleDate(taskItem: self, date: date)
+            d.append(scheduleDate)
         }
+        dates = d
     }
 }

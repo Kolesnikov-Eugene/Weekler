@@ -42,15 +42,12 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
     }
     
     func insert<T: PersistentModel>(_ model: T) {
-        
         do {
-            print(model)
-            try context.insert(model)
+            context.insert(model)
             try context.save()
         } catch {
             print(error)
         }
-        
     }
     
     func deleteTask<T: PersistentModel>(with predicate: Predicate<T>) {
