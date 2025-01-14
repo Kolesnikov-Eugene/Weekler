@@ -21,17 +21,23 @@ final class ScheduleRepository: ScheduleRepositoryProtocol {
     
     // MARK: - public methods
     func fetchTaskItems(for date: String) async -> [ScheduleTask] {
-        let predicate = #Predicate<TaskItem> { $0.onlyDate == date }
-        let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
+//        let predicate = #Predicate<TaskItem> { $0.onlyDate == date }
+//        let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
+        let predicate = #Predicate<ScheduleDate> { $0.onlyDate == date }
+        let sortDescriptor = SortDescriptor<ScheduleDate>(\.date, order: .forward)
         
-        let taskItems = await dataSource.fetchTaskItems(
+        let scheduleDatesItems = await dataSource.fetchTaskItems(
             predicate: predicate,
             sortDescriptor: sortDescriptor
         )
-        let currentScheduleTaskArray = taskItems.map {
+        
+        let scheduleItems = scheduleDatesItems.map { $0.taskItem }
+        let dates = scheduleDatesItems.map { $0.date }
+        
+        let currentScheduleTaskArray = scheduleItems.map {
             ScheduleTask(
                 id: $0.id,
-                date: $0.date,
+                dates: dates,
                 description: $0.taskDescription,
                 isNotificationEnabled: $0.isNotificationEnabled,
                 completed: $0.completed != nil
@@ -43,10 +49,12 @@ final class ScheduleRepository: ScheduleRepositoryProtocol {
     func insert(_ task: ScheduleTask) async {
         let model = TaskItem(
             id: task.id,
-            date: task.date,
             taskDescription: task.description,
-            isNotificationEnabled: task.isNotificationEnabled
+            isNotificationEnabled: task.isNotificationEnabled,
+            plannedDates: task.dates
         )
+        print(task.dates)
+        
         await dataSource.insert(model)
     }
     
@@ -58,7 +66,7 @@ final class ScheduleRepository: ScheduleRepositoryProtocol {
     func edit(_ task: ScheduleTask) async {
         let taskToEdit = TaskToEdit(
             id: task.id,
-            date: task.date,
+            dates: task.dates,
             description: task.description,
             isNotificationEnabled: task.isNotificationEnabled,
             completed: task.completed

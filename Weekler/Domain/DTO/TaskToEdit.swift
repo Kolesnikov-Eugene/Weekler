@@ -9,7 +9,7 @@ import Foundation
 
 struct TaskToEdit {
     let id: UUID
-    let date: Date
+    let dates: [Date]
     let description: String
     let isNotificationEnabled: Bool
     let completed: Bool

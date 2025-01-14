@@ -17,7 +17,7 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
     // MARK: - lifecycle
     init() {
         do {
-            let container = try ModelContainer(for: TaskItem.self)
+            let container = try ModelContainer(for: TaskItem.self, ScheduleDate.self)
             self.modelContainer = container
             let context = ModelContext(container)
             modelExecutor = DefaultSerialModelExecutor(modelContext: context)
@@ -42,8 +42,15 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
     }
     
     func insert<T: PersistentModel>(_ model: T) {
-        context.insert(model)
-        try? context.save()
+        
+        do {
+            print(model)
+            try context.insert(model)
+            try context.save()
+        } catch {
+            print(error)
+        }
+        
     }
     
     func deleteTask<T: PersistentModel>(with predicate: Predicate<T>) {

@@ -9,6 +9,6 @@ import Foundation
 
 struct Goal: Hashable, SourceItemProtocol {
     let id: UUID
-    let date: Date
+    let dates: [Date]
     let description: String
 }

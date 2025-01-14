@@ -17,6 +17,7 @@ protocol ScheduleViewModelProtocol: AnyObject {
 }
 
 protocol ScheduleMainViewModelProtocol: AnyObject {
+    var selectedDate: Date { get }
     var data: [SourceItem] { get set }
     var dataList: BehaviorRelay<[SourceItem]> { get }
     var emptyStateIsActive: Driver<Bool> { get set }

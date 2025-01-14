@@ -10,7 +10,7 @@ import SwiftData
 
 protocol ScheduleDataBaseType: PersistentModel {
     var id: UUID { get }
-    var date: Date { get }
+//    var date: Date { get }
     var taskDescription: String { get }
     var isNotificationEnabled: Bool { get }
 }

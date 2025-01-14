@@ -26,6 +26,7 @@
 		440B2DD42CDBF07400BA728B /* TaskToEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440B2DD32CDBF07400BA728B /* TaskToEdit.swift */; };
 		440B2DD62CDBF93100BA728B /* ScheduleDataSourceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440B2DD52CDBF93100BA728B /* ScheduleDataSourceAssembly.swift */; };
 		440CF1F72C73CAE600FEFDE0 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */; };
+		4412BFB72D36EEBF000E931F /* ScheduleDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4412BFB62D36EEBF000E931F /* ScheduleDate.swift */; };
 		4415A1E72CEFBD390065B142 /* Calendar+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4415A1E62CEFBD390065B142 /* Calendar+extension.swift */; };
 		4418D5CC2D0B7487003664E6 /* GeneralSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4418D5CB2D0B7487003664E6 /* GeneralSettingsViewController.swift */; };
 		4418D5CE2D0B74F0003664E6 /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4418D5CD2D0B74F0003664E6 /* NotificationSettingsViewController.swift */; };
@@ -158,6 +159,7 @@
 		440B2DD32CDBF07400BA728B /* TaskToEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskToEdit.swift; sourceTree = "<group>"; };
 		440B2DD52CDBF93100BA728B /* ScheduleDataSourceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataSourceAssembly.swift; sourceTree = "<group>"; };
 		440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
+		4412BFB62D36EEBF000E931F /* ScheduleDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDate.swift; sourceTree = "<group>"; };
 		4415A1E62CEFBD390065B142 /* Calendar+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+extension.swift"; sourceTree = "<group>"; };
 		4418D5CB2D0B7487003664E6 /* GeneralSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsViewController.swift; sourceTree = "<group>"; };
 		4418D5CD2D0B74F0003664E6 /* NotificationSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewController.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				442256812C6BE61500172C0A /* TaskItem.swift */,
 				442256872C6BEB4400172C0A /* ScheduleDataBaseType.swift */,
 				44DBD2AE2C8ED287006AE2F1 /* CompletedTask.swift */,
+				4412BFB62D36EEBF000E931F /* ScheduleDate.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1184,6 +1187,7 @@
 				44079C6E2CD169C5006D3A3D /* CalendarView.swift in Sources */,
 				445F823B2D1B370F00F001DE /* ThemeSection.swift in Sources */,
 				449F18D82BACC4BF00F9640D /* AppDelegate.swift in Sources */,
+				4412BFB72D36EEBF000E931F /* ScheduleDate.swift in Sources */,
 				44A88DE02CD6646500D4A007 /* CreateSceneDIContainer.swift in Sources */,
 				44BF98942D077878008A2BA3 /* AppSettingsItem.swift in Sources */,
 				446778872D1204D000B5DEA3 /* AppearanceSettingsView.swift in Sources */,

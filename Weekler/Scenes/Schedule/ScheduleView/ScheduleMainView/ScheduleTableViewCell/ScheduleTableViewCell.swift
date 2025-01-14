@@ -96,8 +96,12 @@ final class ScheduleTableViewCell: UITableViewCell {
     }
     
     // MARK: - public methods
-    func configureCell(with model: ScheduleTask) {
-        let time = dateFormatter.string(from: model.date)
+    func configureCell(
+        with model: ScheduleTask,
+        and selectedDate: Date
+    ) {
+        let date = model.dates.first { $0.onlyDate == selectedDate.onlyDate } ?? Date()
+        let time = dateFormatter.string(from: date)
         timeLabel.text = time
         scheduleDescriptionlabel.text = model.description
         mainMode = .task
@@ -109,8 +113,12 @@ final class ScheduleTableViewCell: UITableViewCell {
         scheduleDescriptionlabel.textColor = Colors.textColorMain
     }
     
-    func configureCompletedTaskCell(with completedTask: ScheduleTask) {
-        let time = dateFormatter.string(from: completedTask.date)
+    func configureCompletedTaskCell(
+        with completedTask: ScheduleTask,
+        and selectedDate: Date
+    ) {
+        let date = completedTask.dates.first { $0.onlyDate == selectedDate.onlyDate } ?? Date()
+        let time = dateFormatter.string(from: date)
         timeLabel.text = time
         scheduleDescriptionlabel.text = completedTask.description
         

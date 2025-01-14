@@ -142,7 +142,7 @@ final class ScheduleMainView: UIView {
                 case .priority(let priority):
                     cell.configureCell(text: priority.description)
                 case .task(let task):
-                    cell.configureCell(with: task)
+                    cell.configureCell(with: task, and: self.viewModel.selectedDate)
                     cell.onTaskCompleted = { [weak self] in
                         self?.viewModel.completeTask(with: task.id)
                     }
@@ -150,7 +150,7 @@ final class ScheduleMainView: UIView {
                         self?.viewModel.playAddTask()
                     }
                 case .completedTask(let completedTask):
-                    cell.configureCompletedTaskCell(with: completedTask)
+                    cell.configureCompletedTaskCell(with: completedTask, and: self.viewModel.selectedDate)
                     cell.onTaskCompleted = { [weak self] in
                         self?.viewModel.unCompleteTask(with: completedTask.id)
                     }
