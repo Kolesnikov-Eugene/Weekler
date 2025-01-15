@@ -11,53 +11,39 @@ import SwiftData
 @Model
 final class TaskItem: ScheduleDataBaseType {
     @Attribute(.unique) private(set) var id: UUID
-//    var date: Date
     var taskDescription: String
     var isNotificationEnabled: Bool
     @Relationship(deleteRule: .cascade) var completed: CompletedTask?
     @Relationship(deleteRule: .cascade) var dates: [ScheduleDate]?
     
-//    var onlyDate: String
+    var time: Date? // TODO: - ?
     
     init(
         id: UUID = UUID(),
-//        date: Date,
         taskDescription: String,
         isNotificationEnabled: Bool,
         plannedDates: [Date]
     ) {
         self.id = id
-//        self.date = date
         self.taskDescription = taskDescription
         self.isNotificationEnabled = isNotificationEnabled
-//        onlyDate = date.onlyDate
+        self.time = plannedDates.first
         
         insert(plannedDates)
     }
     
     func editWithNew(_ task: TaskToEdit) {
-//        date = task.date
         taskDescription = task.description
         isNotificationEnabled = task.isNotificationEnabled
         insert(task.dates)
-//        onlyDate = date.onlyDate
     }
     
     private func insert(_ plannedDates: [Date]) {
-        //        let alreadyAddedDates = dates ?? []
-        //        plannedDates.forEach { date in
-        //            if !(alreadyAddedDates.map { $0.date }.contains(date)) {
-        //                let scheduleDate = ScheduleDate(taskItem: self, date: date)
-        //                dates?.append(scheduleDate)
-        //            }
-        //        }
-        var d: [ScheduleDate] = []
+        var plannedDatesForCurrentTask: [ScheduleDate] = []
         plannedDates.forEach { date in
-            print("appending", date, id)
             let scheduleDate = ScheduleDate(taskId: id, date: date)
-//            let scheduleDate = ScheduleDate(taskItem: self, date: date)
-            d.append(scheduleDate)
+            plannedDatesForCurrentTask.append(scheduleDate)
         }
-        dates = d
+        dates = plannedDatesForCurrentTask
     }
 }

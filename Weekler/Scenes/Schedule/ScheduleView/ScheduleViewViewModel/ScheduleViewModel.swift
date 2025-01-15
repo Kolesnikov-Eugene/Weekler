@@ -81,9 +81,11 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     private func fetchSchedule() {
         print("fetch")
         let currentDateOnly = currentDate.onlyDate
-        Task.detached {
+        Task.detached { [weak self] in
+            guard let self = self else { return }
             let scheduleItems = await self.scheduleUseCase.fetchTaskItems(for: currentDateOnly)
-            DispatchQueue.main.async {
+            
+            await MainActor.run {
                 self.tasks = scheduleItems.filter { !$0.completed }
                 self.completedTasks = scheduleItems.filter { $0.completed }
                 self.populateData()

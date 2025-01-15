@@ -23,8 +23,6 @@ final class ScheduleRepository: ScheduleRepositoryProtocol {
     
     // MARK: - Working
     func fetchTaskItems(for date: String) async -> [ScheduleTask] {
-//        let predicate = #Predicate<TaskItem> { $0.onlyDate == date }
-//        let sortDescriptor = SortDescriptor<TaskItem>(\.date, order: .forward)
         let predicate = #Predicate<ScheduleDate> { $0.onlyDate == date }
         let sortDescriptor = SortDescriptor<ScheduleDate>(\.date, order: .forward)
         
@@ -35,16 +33,23 @@ final class ScheduleRepository: ScheduleRepositoryProtocol {
         
         let ids = scheduleDatesItems.map(\.taskId)
         
-        let predicate1 = #Predicate<TaskItem> { ids.contains($0.id) }
+        let taskPredicate = #Predicate<TaskItem> { ids.contains($0.id) }
         let sort = SortDescriptor<TaskItem>(\.id, order: .forward)
         
-        let scheduleItems = await dataSource.fetchTaskItems(
-            predicate: predicate1,
+        var scheduleItems = await dataSource.fetchTaskItems(
+            predicate: taskPredicate,
             sortDescriptor: sort
         )
         
-//        let scheduleItems = scheduleDatesItems.map { $0.taskItem }
-//        let dates = scheduleDatesItems.map { $0.date }
+//        scheduleItems.forEach { item in
+//            print(item.time?.onlyTime)
+//        }
+        
+        scheduleItems.sort { $0.time!.onlyTime < $1.time!.onlyTime }
+        
+        scheduleItems.forEach { item in
+            let dates = item.dates?.map { $0.date }
+        }
         
         let currentScheduleTaskArray = scheduleItems.map { task in
             let dates = task.dates?.map { $0.date }

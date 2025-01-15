@@ -19,9 +19,10 @@ final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
     var taskDescription: String = ""
     
     // MARK: - private properties
-    private var dateAndTimeOfTask: [Date] = [Date()]
+    private var dateAndTimeOfTask: Date = Date()
     private var isNotificationEnabled: Bool = false
     private var taskToEdit: ScheduleTask?
+    private var plannedDatesArray: [Date] = []
     
     // MARK: - lifecycle
     init(
@@ -38,9 +39,7 @@ final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
             isNotificationEnabled = task.isNotificationEnabled
             
             datePickerValue.accept(date)
-            dateAndTimeOfTask = task.dates
-//            datePickerValue.accept(task.date)
-//            dateAndTimeOfTask = task.date
+            plannedDatesArray = task.dates
         }
     }
     
@@ -48,26 +47,31 @@ final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
     func createTask() {
         if taskDescription != L10n.Localizable.CreateSchedule.placeholder && taskDescription != "" && taskDescription != " " {
             let notification = isNotificationEnabled
+            plannedDatesArray.append(dateAndTimeOfTask)
             let task = ScheduleTask(
                 id: UUID(),
-                dates: dateAndTimeOfTask,
+                dates: plannedDatesArray,
                 description: taskDescription,
                 isNotificationEnabled: notification,
                 completed: false
             )
-            print("create", task.dates, task.description)
             delegate?.didAddTask(task, mode: .task)
         }
     }
     
+    /// Method called when Save button tapped after editing task.
+    /// Creates array of current planned dates of task
     func editTask() {
+        plannedDatesArray = []
+        plannedDatesArray.append(dateAndTimeOfTask)
+        print(plannedDatesArray)
         if taskDescription != L10n.Localizable.CreateSchedule.placeholder,
            taskDescription != "",
            taskDescription != " ",
            let taskToEdit = taskToEdit {
             let task = ScheduleTask(
                 id: taskToEdit.id,
-                dates: dateAndTimeOfTask,
+                dates: plannedDatesArray,
                 description: taskDescription,
                 isNotificationEnabled: isNotificationEnabled,
                 completed: taskToEdit.completed
@@ -77,7 +81,7 @@ final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
     }
     
     func set(_ date: Date) {
-        dateAndTimeOfTask.append(date)
+        dateAndTimeOfTask = date
     }
     
     func set(_ notification: Bool) {
