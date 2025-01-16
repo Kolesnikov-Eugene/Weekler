@@ -64,7 +64,6 @@
 		444AC1302CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444AC12F2CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift */; };
 		444B387F2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444B387E2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift */; };
 		444DAB862C655A8F005B8ABC /* SourceItemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DAB852C655A8F005B8ABC /* SourceItemProtocol.swift */; };
-		4454D3482D39977B0066D45D /* Transformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4454D3472D39977B0066D45D /* Transformer.swift */; };
 		445F823B2D1B370F00F001DE /* ThemeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F823A2D1B370F00F001DE /* ThemeSection.swift */; };
 		445F823D2D1B372B00F001DE /* ThemeCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F823C2D1B372B00F001DE /* ThemeCellType.swift */; };
 		445F823F2D1B400100F001DE /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F823E2D1B400100F001DE /* UIColor+Extension.swift */; };
@@ -199,7 +198,6 @@
 		444AC12F2CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModelAssembly.swift; sourceTree = "<group>"; };
 		444B387E2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 		444DAB852C655A8F005B8ABC /* SourceItemProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItemProtocol.swift; sourceTree = "<group>"; };
-		4454D3472D39977B0066D45D /* Transformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transformer.swift; sourceTree = "<group>"; };
 		445F823A2D1B370F00F001DE /* ThemeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSection.swift; sourceTree = "<group>"; };
 		445F823C2D1B372B00F001DE /* ThemeCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCellType.swift; sourceTree = "<group>"; };
 		445F823E2D1B400100F001DE /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -307,7 +305,6 @@
 				442256872C6BEB4400172C0A /* ScheduleDataBaseType.swift */,
 				44DBD2AE2C8ED287006AE2F1 /* CompletedTask.swift */,
 				4412BFB62D36EEBF000E931F /* ScheduleDate.swift */,
-				4454D3472D39977B0066D45D /* Transformer.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -1182,7 +1179,6 @@
 				440CF1F72C73CAE600FEFDE0 /* Date+extension.swift in Sources */,
 				445F823F2D1B400100F001DE /* UIColor+Extension.swift in Sources */,
 				44E28EDC2CEE6E88001FA0CA /* StatisticsRepositoryProtocol.swift in Sources */,
-				4454D3482D39977B0066D45D /* Transformer.swift in Sources */,
 				44BF98962D07789A008A2BA3 /* SettingsSection.swift in Sources */,
 				44F116932BDC384B00134D5F /* DIContainer.swift in Sources */,
 				4415A1E72CEFBD390065B142 /* Calendar+extension.swift in Sources */,

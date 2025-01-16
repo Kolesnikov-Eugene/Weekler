@@ -12,11 +12,9 @@ import SwiftData
 final class CompletedTask {
     @Attribute(.unique) private(set) var id: UUID
     @Relationship var task: TaskItem
-    var dateCompleted: Date
     
-    init(id: UUID, task: TaskItem, dateCompleted: Date) {
+    init(id: UUID, task: TaskItem) {
         self.id = id
         self.task = task
-        self.dateCompleted = dateCompleted
     }
 }

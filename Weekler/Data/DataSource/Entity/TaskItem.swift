@@ -14,24 +14,7 @@ final class TaskItem: ScheduleDataBaseType {
     var taskDescription: String
     var isNotificationEnabled: Bool
     @Relationship(deleteRule: .cascade) var completed: CompletedTask?
-    
-//    var datesToCompleteRaw: String
-//    
-//    var datesToComplete: [String] {
-//        get {
-//            (try? JSONDecoder().decode([String].self, from: datesToCompleteRaw.data(using: .utf8)!)) ?? []
-//        }
-//        set {
-//            datesToCompleteRaw = (try? JSONEncoder().encode(newValue).flatMap { String($0) }) ?? "[]"
-//        }
-//    }
-    
-    
-//    @Relationship(deleteRule: .cascade) var dates: [ScheduleDate]?
-//    @Attribute(.transformable(by: "ArrayStringTransformer"))
-//    var datesToComplete: [String]?
-//    @Attribute(.transformable(by: "NSSecureUnarchiveFromData"))
-//    var datesToComplete: [String]?
+    @Relationship(deleteRule: .cascade) var dates: [ScheduleDate]?
     
     var time: Date? // TODO: - ?
     
@@ -45,24 +28,22 @@ final class TaskItem: ScheduleDataBaseType {
         self.taskDescription = taskDescription
         self.isNotificationEnabled = isNotificationEnabled
         self.time = plannedDates.first
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        self.datesToComplete = plannedDates.map { formatter.string(from: $0) }
-//        insert(plannedDates)
+        
+        insert(plannedDates)
     }
     
     func editWithNew(_ task: TaskToEdit) {
         taskDescription = task.description
         isNotificationEnabled = task.isNotificationEnabled
-//        insert(task.dates)
+        insert(task.dates)
     }
     
-//    private func insert(_ plannedDates: [Date]) {
-//        var plannedDatesForCurrentTask: [ScheduleDate] = []
-//        plannedDates.forEach { date in
-//            let scheduleDate = ScheduleDate(taskId: id, date: date)
-//            plannedDatesForCurrentTask.append(scheduleDate)
-//        }
-//        dates = plannedDatesForCurrentTask
-//    }
+    private func insert(_ plannedDates: [Date]) {
+        var plannedDatesForCurrentTask: [ScheduleDate] = []
+        plannedDates.forEach { date in
+            let scheduleDate = ScheduleDate(taskId: id, date: date)
+            plannedDatesForCurrentTask.append(scheduleDate)
+        }
+        dates = plannedDatesForCurrentTask
+    }
 }
