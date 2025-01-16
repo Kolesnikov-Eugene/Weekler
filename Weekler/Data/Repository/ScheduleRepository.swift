@@ -23,45 +23,25 @@ final class ScheduleRepository: ScheduleRepositoryProtocol {
     
     // MARK: - Working
     func fetchTaskItems(for date: String) async -> [ScheduleTask] {
-        let predicate = #Predicate<ScheduleDate> { $0.onlyDate == date }
-        let sortDescriptor = SortDescriptor<ScheduleDate>(\.date, order: .forward)
-        
-        let scheduleDatesItems = await dataSource.fetchTaskItems(
-            predicate: predicate,
-            sortDescriptor: sortDescriptor
-        )
-        
-        let ids = scheduleDatesItems.map(\.taskId)
-        
-        let taskPredicate = #Predicate<TaskItem> { ids.contains($0.id) }
-        let sort = SortDescriptor<TaskItem>(\.id, order: .forward)
-        
-        var scheduleItems = await dataSource.fetchTaskItems(
-            predicate: taskPredicate,
-            sortDescriptor: sort
-        )
-        
-//        scheduleItems.forEach { item in
-//            print(item.time?.onlyTime)
-//        }
-        
-        scheduleItems.sort { $0.time!.onlyTime < $1.time!.onlyTime }
-        
-        scheduleItems.forEach { item in
-            let dates = item.dates?.map { $0.date }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        let predicate = #Predicate<TaskItem> { item in
+            return item.datesToComplete?.contains(date) ?? false
         }
-        
-        let currentScheduleTaskArray = scheduleItems.map { task in
-            let dates = task.dates?.map { $0.date }
+        let sortDescriptor = SortDescriptor<TaskItem>(\.id)
+        var items = await dataSource.fetchTaskItems(predicate: predicate, sortDescriptor: sortDescriptor)
+        items.sort { $0.time!.onlyTime < $1.time!.onlyTime }
+        let i = items.map { item in
             return ScheduleTask(
-                id: task.id,
-                dates: dates!,
-                description: task.taskDescription,
-                isNotificationEnabled: task.isNotificationEnabled,
-                completed: task.completed != nil
+                id: item.id,
+                dates: [Date()],
+                description: item.taskDescription,
+                isNotificationEnabled: item.isNotificationEnabled,
+                completed: item.completed != nil
             )
         }
-        return currentScheduleTaskArray
+        return i
+        
     }
     
     func insert(_ task: ScheduleTask) async {
@@ -82,6 +62,19 @@ final class ScheduleRepository: ScheduleRepositoryProtocol {
     }
     
     func edit(_ task: ScheduleTask) async {
+//        let id: UUID = task.id
+//        let predicate = #Predicate<TaskItem> { $0.id == id }
+//        let sortDescriptor = SortDescriptor<TaskItem>(\.id)
+//        let items = await dataSource.fetchTaskItems(predicate: predicate, sortDescriptor: sortDescriptor)
+//        let itemToEdit = items.first!
+//        
+//        
+//        
+//        let datesPredicate = #Predicate<ScheduleDate> { $0.taskId == id }
+//        let sortDates = SortDescriptor<ScheduleDate>(\.date)
+//        let dates = await dataSource.fetchTaskItems(predicate: datesPredicate, sortDescriptor: sortDates)
+//        await dataSource.deleteItems(dates)
+        
         let taskToEdit = TaskToEdit(
             id: task.id,
             dates: task.dates,
@@ -89,7 +82,8 @@ final class ScheduleRepository: ScheduleRepositoryProtocol {
             isNotificationEnabled: task.isNotificationEnabled,
             completed: task.completed
         )
-        await dataSource.edit(taskToEdit)
+//        itemToEdit.editWithNew(taskToEdit)
+//        await dataSource.edit(taskToEdit)
     }
     
     func completeTask(with id: UUID) async {

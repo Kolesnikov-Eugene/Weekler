@@ -18,4 +18,5 @@ protocol ScheduleDataSourceProtocol {
     func edit(_ task: TaskToEdit) async
     func completeTask<T: PersistentModel>(with predicate: Predicate<T>) async
     func unCompleteTask<T: PersistentModel>(with predicate: Predicate<T>) async
+    func deleteItems<T: PersistentModel>(_ items: [T]) async
 }

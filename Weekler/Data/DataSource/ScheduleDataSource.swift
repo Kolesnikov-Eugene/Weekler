@@ -17,7 +17,7 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
     // MARK: - lifecycle
     init() {
         do {
-            let container = try ModelContainer(for: TaskItem.self, ScheduleDate.self)
+            let container = try ModelContainer(for: ScheduleDate.self, TaskItem.self)
             self.modelContainer = container
             let context = ModelContext(container)
             modelExecutor = DefaultSerialModelExecutor(modelContext: context)
@@ -59,20 +59,43 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
         }
     }
     
-    func edit(_ task: TaskToEdit) {
-        let id: UUID = task.id
-        let predicate = #Predicate<TaskItem> { $0.id == id }
-        let descriptor = FetchDescriptor<TaskItem>(predicate: predicate)
-        
+    func deleteItems<T: PersistentModel>(_ items: [T]) {
         do {
-            let items = try context.fetch(descriptor)
-            if let taskToEdit = items.first {
-                taskToEdit.editWithNew(task)
-                try context.save()
-            }
+            items.forEach { self.context.delete($0) }
+            try context.save()
         } catch {
-            fatalError("Error editing task: \(error.localizedDescription)")
+            fatalError("Error deleting items: \(error.localizedDescription)")
         }
+    }
+    
+//    func edit<T: PersistentModel>(with predicate: Predicate<T>) {
+//        let descriptor = FetchDescriptor<T>(predicate: predicate)
+//        
+//        do {
+//            let items = try context.fetch(descriptor)
+//            if let taskToEdit = items.first {
+//                taskToEdit.editWithNew(task)
+//                try context.save()
+//            }
+//        } catch {
+//            fatalError("Error editing task: \(error.localizedDescription)")
+//        }
+//    }
+    
+    func edit(_ task: TaskToEdit) {
+//        let id: UUID = task.id
+//        let predicate = #Predicate<TaskItem> { $0.id == id }
+//        let descriptor = FetchDescriptor<TaskItem>(predicate: predicate)
+//        
+//        do {
+//            let items = try context.fetch(descriptor)
+//            if let taskToEdit = items.first {
+//                taskToEdit.editWithNew(task)
+//                try context.save()
+//            }
+//        } catch {
+//            fatalError("Error editing task: \(error.localizedDescription)")
+//        }
     }
     
     func completeTask<T: PersistentModel>(with predicate: Predicate<T>) {
@@ -81,7 +104,11 @@ final actor ScheduleDataSource: ScheduleDataSourceProtocol {
         do {
             let items = try self.context.fetch(descriptor)
             if let taskToEdit = items.first as? TaskItem {
-                let completedTask = CompletedTask(id: UUID(), task: taskToEdit)
+                let completedTask = CompletedTask(
+                    id: UUID(),
+                    task: taskToEdit,
+                    dateCompleted: Date()
+                ) // TODO: - insert date from app
                 taskToEdit.completed = completedTask
                 try context.save()
             }

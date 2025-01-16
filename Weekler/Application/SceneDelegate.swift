@@ -16,6 +16,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         if let windowScene = scene as? UIWindowScene {
             
+            //Register the transformer
+//            ValueTransformer.setValueTransformer(
+//                ArrayStringTransformer(),
+//                forName: NSValueTransformerName("ArrayStringTransformer")
+//            )
+            
             let window = UIWindow(windowScene: windowScene)
             let weeklerAppDI = WeeklerAppDIContainer(container: DIContainer.shared)
             let coordinator = WeeklerAppCoordinator(window: window, weeklerAppDI: weeklerAppDI)
