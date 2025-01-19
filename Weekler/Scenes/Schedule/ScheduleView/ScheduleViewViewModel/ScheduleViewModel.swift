@@ -80,10 +80,19 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     // MARK: - private methods
     private func fetchSchedule() {
         print("fetch")
-        let currentDateOnly = currentDate.onlyDate
+        var query: Query?
+        switch mainMode {
+        case .task:
+            query = .init(date: currentDate, taskIsCompleted: false)
+        case .completedTask:
+            query = .init(date: currentDate, taskIsCompleted: true)
+        }
         Task.detached { [weak self] in
-            guard let self = self else { return }
-            let scheduleItems = await self.scheduleUseCase.fetchTaskItems(for: currentDateOnly)
+            guard let self = self,
+                  let query = query else {
+                return
+            }
+            let scheduleItems = await self.scheduleUseCase.fetchTaskItems(with: query)
             
             await MainActor.run {
                 self.tasks = scheduleItems.filter { !$0.completed }
@@ -155,13 +164,13 @@ extension ScheduleViewModel: ScheduleMainViewModelProtocol {
     
     func completeTask(with id: UUID) {
         Task.detached {
-            await self.scheduleUseCase.completeTask(with: id)
+            await self.scheduleUseCase.toggleTaskCompletion(with: id, isCompleted: true)
         }
     }
     
     func unCompleteTask(with id: UUID) {
         Task.detached {
-            await self.scheduleUseCase.unCompleteTask(with: id)
+            await self.scheduleUseCase.toggleTaskCompletion(with: id, isCompleted: false)
         }
     }
     
@@ -191,6 +200,7 @@ extension ScheduleViewModel: CalendarViewModelProtocol {
 extension ScheduleViewModel: SelectTaskViewModelProtocol {
     func reconfigureMode(_ mode: ScheduleMode) {
         mainMode = mode
-        populateData()
+        fetchSchedule()
+//        populateData()
     }
 }

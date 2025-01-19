@@ -15,16 +15,17 @@ final class ScheduleDate: Hashable, Identifiable {
 //    @Relationship var taskItem: TaskItem
     var taskId: UUID
     var date: Date
+    var isCompleted: Bool
     
     var onlyDate: String
     
-    init(/*taskItem: TaskItem,*/ taskId: UUID, date: Date) {
+    init(/*taskItem: TaskItem,*/ taskId: UUID, date: Date, isCompleted: Bool) {
         self.id = UUID()
 //        self.taskItem = taskItem
         self.taskId = taskId
         self.date = date
-        onlyDate = date.onlyDate
+        self.isCompleted = isCompleted
         
-        print("create dateItem", taskId)
+        onlyDate = date.onlyDate
     }
 }

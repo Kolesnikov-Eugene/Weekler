@@ -13,7 +13,7 @@ final class TaskItem: ScheduleDataBaseType {
     @Attribute(.unique) private(set) var id: UUID
     var taskDescription: String
     var isNotificationEnabled: Bool
-    @Relationship(deleteRule: .cascade) var completed: CompletedTask?
+//    @Relationship(deleteRule: .cascade) var completed: CompletedTask?
     @Relationship(deleteRule: .cascade) var dates: [ScheduleDate]?
     
     var time: Date? // TODO: - ?
@@ -41,7 +41,8 @@ final class TaskItem: ScheduleDataBaseType {
     private func insert(_ plannedDates: [Date]) {
         var plannedDatesForCurrentTask: [ScheduleDate] = []
         plannedDates.forEach { date in
-            let scheduleDate = ScheduleDate(taskId: id, date: date)
+            let isCompleted = false // when create task it is not completed, value is always false
+            let scheduleDate = ScheduleDate(taskId: id, date: date, isCompleted: isCompleted)
             plannedDatesForCurrentTask.append(scheduleDate)
         }
         dates = plannedDatesForCurrentTask
