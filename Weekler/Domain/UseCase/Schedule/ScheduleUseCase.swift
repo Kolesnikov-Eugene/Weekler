@@ -39,12 +39,4 @@ final class ScheduleUseCase: ScheduleUseCaseProtocol {
     func toggleTaskCompletion(with id: UUID, isCompleted: Bool) async {
         await repository.toggleTaskCompletion(with: id, isCompleted: isCompleted)
     }
-    
-//    func completeTask(with id: UUID) async {
-//        await repository.toggleTaskCompletion(with: id, isCompleted: true)
-//    }
-//    
-//    func unCompleteTask(with id: UUID) async {
-//        await repository.toggleTaskCompletion(with: id, isCompleted: false)
-//    }
 }

@@ -88,6 +88,10 @@ final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
         isNotificationEnabled = notification
     }
     
+    func saveDateRange() {
+        print("saving date range")
+    }
+    
     private func extractFirstDate(from dateArray: [Date]) -> Date {
         return dateArray.first ?? Date()
     }

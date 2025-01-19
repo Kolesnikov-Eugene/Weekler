@@ -7,11 +7,31 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 final class SelectRepeatedDaysViewController: UIViewController {
     // MARK: - private properties
     private let reuseId = "DayOfWeekTableView"
     private let segmentedControlTitlesArray = ["По дням недели", "Выбрать числа"]
+    private lazy var saveButton: UIButton = {
+        var configuration = UIButton.Configuration.plain()
+        configuration.image = UIImage(systemName: "checkmark")?.withRenderingMode(.alwaysTemplate)
+        configuration.baseForegroundColor = Colors.mainForeground
+        configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 18)
+        let button = UIButton(configuration: configuration)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    private lazy var cancelButton: UIButton = {
+        var configuration = UIButton.Configuration.plain()
+        configuration.image = UIImage(systemName: "xmark")?.withRenderingMode(.alwaysTemplate)
+        configuration.baseForegroundColor = Colors.mainForeground
+        configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 18)
+        let button = UIButton(configuration: configuration)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     private lazy var daysSegmentedControl: UISegmentedControl = {
         let control = UISegmentedControl(items: segmentedControlTitlesArray)
         control.selectedSegmentIndex = 0
@@ -34,13 +54,25 @@ final class SelectRepeatedDaysViewController: UIViewController {
         calendar.translatesAutoresizingMaskIntoConstraints = false
         return calendar
     }()
-
+    private let viewModel: CreateScheduleViewModelProtocol
+    private var bag = DisposeBag()
+    
+    init(viewModel: CreateScheduleViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         daysTableView.dataSource = self
         daysTableView.delegate = self
         daysTableView.register(DayOfWeekTableViewCell.self, forCellReuseIdentifier: reuseId)
         setupUI()
+        bindToViewModel()
     }
     
     // MARK: - private func
@@ -54,15 +86,19 @@ final class SelectRepeatedDaysViewController: UIViewController {
         view.addSubview(daysSegmentedControl)
         view.addSubview(daysTableView)
         view.addSubview(calendarView)
+        view.addSubview(saveButton)
+        view.addSubview(cancelButton)
     }
     
     private func applyConstraints() {
+        // dateSementedControl constraints
         daysSegmentedControl.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
             $0.centerX.equalTo(view.safeAreaLayoutGuide.snp.centerX)
             $0.height.equalTo(30)
         }
         
+        // daysTableView constraints
         daysTableView.snp.makeConstraints {
             $0.leading.equalTo(view.snp.leading)
             $0.trailing.equalTo(view.snp.trailing)
@@ -70,11 +106,40 @@ final class SelectRepeatedDaysViewController: UIViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
         
+        // calendarView constraints
         calendarView.snp.makeConstraints {
             $0.top.equalTo(daysSegmentedControl.snp.bottom).offset(20)
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).inset(16)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).inset(16)
         }
+        
+        // saveBtn constraitns
+        saveButton.snp.makeConstraints {
+            $0.centerY.equalTo(daysSegmentedControl.snp.centerY)
+            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).inset(16)
+        }
+        
+        // cancelButton constraints
+        cancelButton.snp.makeConstraints {
+            $0.centerY.equalTo(daysSegmentedControl.snp.centerY)
+            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).inset(16)
+        }
+    }
+    
+    private func bindToViewModel() {
+        saveButton.rx.tap
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in
+                self?.viewModel.saveDateRange()
+            })
+            .disposed(by: bag)
+        
+        cancelButton.rx.tap
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in
+                self?.dismiss(animated: true)
+            })
+            .disposed(by: bag)
     }
     
     @objc

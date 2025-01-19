@@ -276,7 +276,7 @@ extension CreateScheduleViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = scheduleItemsTableView.cellForRow(at: indexPath) as? ScheduleItemsTableViewCell,
               cell.cellType == .isRepeated else { return }
-        let vc = SelectRepeatedDaysViewController()
+        let vc = SelectRepeatedDaysViewController(viewModel: viewModel)
         vc.modalPresentationStyle = .pageSheet
         present(vc, animated: true)
     }

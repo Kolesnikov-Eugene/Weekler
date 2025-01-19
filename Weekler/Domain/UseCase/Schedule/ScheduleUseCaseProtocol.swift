@@ -13,6 +13,4 @@ protocol ScheduleUseCaseProtocol {
     func deleteTask(with id: UUID) async
     func edit(_ task: ScheduleTask) async
     func toggleTaskCompletion(with id: UUID, isCompleted: Bool) async
-//    func completeTask(with id: UUID) async
-//    func unCompleteTask(with id: UUID) async
 }

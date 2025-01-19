@@ -18,4 +18,6 @@ protocol CreateScheduleViewModelProtocol: AnyObject {
     func editTask()
     func set(_ date: Date)
     func set(_ notification: Bool)
+    // protocol
+    func saveDateRange()
 }

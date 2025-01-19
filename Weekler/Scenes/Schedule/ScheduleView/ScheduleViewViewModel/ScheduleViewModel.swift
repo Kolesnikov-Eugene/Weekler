@@ -201,6 +201,5 @@ extension ScheduleViewModel: SelectTaskViewModelProtocol {
     func reconfigureMode(_ mode: ScheduleMode) {
         mainMode = mode
         fetchSchedule()
-//        populateData()
     }
 }
