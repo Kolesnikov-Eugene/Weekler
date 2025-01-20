@@ -12,6 +12,9 @@ protocol CreateScheduleViewModelProtocol: AnyObject {
     var textFieldValue: BehaviorRelay<String> { get set }
     var datePickerValue: BehaviorRelay<Date> { get set }
     var notificationSwitchValue: BehaviorRelay<Bool> { get set }
+    var viewNeedsResetToDefault: PublishRelay<Bool> { get set }
+    var textFieldNeedsToBecomeFirstResponder: PublishRelay<Bool> { get set }
+    var hideView: PublishRelay<Bool> { get set }
     var delegate: CreateScheduleDelegate? { get set }
     var taskDescription: String { get set }
     func createTask()
@@ -20,4 +23,7 @@ protocol CreateScheduleViewModelProtocol: AnyObject {
     func set(_ notification: Bool)
     // protocol
     func saveDateRange()
+    func viewDidDisappear()
+    func viewWillAppear()
+    func hideCreateView()
 }

@@ -11,10 +11,15 @@ import RxCocoa
 
 final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
     
-    // MARK: - public properties
+    // MARK: - Output
+    var viewNeedsResetToDefault: PublishRelay<Bool> = .init()
+    var textFieldNeedsToBecomeFirstResponder: PublishRelay<Bool> = .init()
     var textFieldValue = BehaviorRelay<String>(value: "")
     var datePickerValue = BehaviorRelay<Date>(value: Date())
     var notificationSwitchValue = BehaviorRelay<Bool>(value: false)
+    var hideView: PublishRelay<Bool> = .init()
+    
+    // MARK: - public properties
     weak var delegate: CreateScheduleDelegate?
     var taskDescription: String = ""
     
@@ -78,6 +83,18 @@ final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
             )
             delegate?.edit(task)
         }
+    }
+    
+    func hideCreateView() {
+        hideView.accept(true)
+    }
+    
+    func viewDidDisappear() {
+        viewNeedsResetToDefault.accept(true)
+    }
+    
+    func viewWillAppear() {
+        textFieldNeedsToBecomeFirstResponder.accept(true)
     }
     
     func set(_ date: Date) {
