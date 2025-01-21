@@ -158,7 +158,6 @@ final class CalendarView: UIView {
     }
 }
 
-
 //MARK: - JTAppleCalendarViewDataSource
 extension CalendarView: JTAppleCalendarViewDataSource {
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {

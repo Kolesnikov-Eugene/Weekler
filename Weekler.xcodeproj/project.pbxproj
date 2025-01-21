@@ -98,6 +98,7 @@
 		449F18E12BACC4C000F9640D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 449F18E02BACC4C000F9640D /* Assets.xcassets */; };
 		449F18E42BACC4C000F9640D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 449F18E22BACC4C000F9640D /* LaunchScreen.storyboard */; };
 		44A378DF2BFD2D7000E93B5F /* SelectMainModeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A378DE2BFD2D7000E93B5F /* SelectMainModeCollectionViewCell.swift */; };
+		44A41B902D40344B008B4C43 /* ScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A41B8F2D40344B008B4C43 /* ScheduleTableViewController.swift */; };
 		44A88DE02CD6646500D4A007 /* CreateSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A88DDF2CD6646500D4A007 /* CreateSceneDIContainer.swift */; };
 		44A88DE22CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A88DE12CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift */; };
 		44AE39A22CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AE39A12CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift */; };
@@ -236,6 +237,7 @@
 		449F18E32BACC4C000F9640D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		449F18E52BACC4C000F9640D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44A378DE2BFD2D7000E93B5F /* SelectMainModeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMainModeCollectionViewCell.swift; sourceTree = "<group>"; };
+		44A41B8F2D40344B008B4C43 /* ScheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewController.swift; sourceTree = "<group>"; };
 		44A88DDF2CD6646500D4A007 /* CreateSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSceneDIContainer.swift; sourceTree = "<group>"; };
 		44A88DE12CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleSceneContainerAssembly.swift; sourceTree = "<group>"; };
 		44AE39A12CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsFlowCoordinator.swift; sourceTree = "<group>"; };
@@ -654,8 +656,6 @@
 			children = (
 				44B06E122BECEDE7000C3CC6 /* ScheduleViewViewModel */,
 				441CAC752CE0E1DE00064348 /* ScheduleViewFlow */,
-				44079C6C2CD16661006D3A3D /* CalendarView */,
-				44079C692CD16301006D3A3D /* SelectTaskModeView */,
 				447F920F2CD0161D00DDB846 /* ScheduleMainView */,
 				44D18C712C121D0E00F22CED /* ScheduleViewController */,
 				44F409132BCF0A2F0052ABE9 /* WeekCalendarCollectionViewCell */,
@@ -714,8 +714,11 @@
 		447F920F2CD0161D00DDB846 /* ScheduleMainView */ = {
 			isa = PBXGroup;
 			children = (
+				44A41B8E2D40343A008B4C43 /* ScheduleTableView */,
+				44079C692CD16301006D3A3D /* SelectTaskModeView */,
 				44B06E172BECF062000C3CC6 /* ScheduleTableViewCell */,
 				447F92102CD0165600DDB846 /* ScheduleMainView.swift */,
+				44079C6C2CD16661006D3A3D /* CalendarView */,
 			);
 			path = ScheduleMainView;
 			sourceTree = "<group>";
@@ -806,6 +809,14 @@
 				44A378DE2BFD2D7000E93B5F /* SelectMainModeCollectionViewCell.swift */,
 			);
 			path = SelectMainModeCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		44A41B8E2D40343A008B4C43 /* ScheduleTableView */ = {
+			isa = PBXGroup;
+			children = (
+				44A41B8F2D40344B008B4C43 /* ScheduleTableViewController.swift */,
+			);
+			path = ScheduleTableView;
 			sourceTree = "<group>";
 		};
 		44AE39A02CE28B3F00D89B23 /* StatisticsFlow */ = {
@@ -1224,6 +1235,7 @@
 				441DECAE2CC0353A00B725B7 /* Constants.swift in Sources */,
 				44F9EA2D2CDAB1A1009AE5FD /* ScheduleRepository.swift in Sources */,
 				447DBE642BC4A8EB00A99A38 /* TabBarController.swift in Sources */,
+				44A41B902D40344B008B4C43 /* ScheduleTableViewController.swift in Sources */,
 				44F116952BDC394A00134D5F /* SceneAssembly.swift in Sources */,
 				4441EC772CE5303800AFB022 /* ChartView.swift in Sources */,
 				447DBE612BC4A8EB00A99A38 /* AppSettingsViewController.swift in Sources */,

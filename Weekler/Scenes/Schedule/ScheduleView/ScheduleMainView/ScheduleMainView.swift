@@ -13,15 +13,10 @@ import RxCocoa
 final class ScheduleMainView: UIView {
     
     // MARK: - private properties
-    private let scheduleCellReuseId = "scheduleCell"
-    private lazy var scheduleTableView: UITableView = {
-        let tableView = UITableView()
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.allowsSelection = false
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
-    }()
+    
+    private let calendarView: CalendarView
+    private let selectTaskModeView: SelectTaskModeView
+    private let scheduleTableViewController: ScheduleTableViewController
     private lazy var addNewEventButton: UIButton = {
         var configuration = UIButton.Configuration.plain()
         configuration.image = UIImage(systemName: "plus.circle.fill")?.withRenderingMode(.alwaysTemplate)
@@ -43,7 +38,7 @@ final class ScheduleMainView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    private var tableDataSource: UITableViewDiffableDataSource<UITableView.Section, SourceItem>!
+    
     private var viewModel: ScheduleMainViewModelProtocol
     private var bag = DisposeBag()
     
@@ -53,6 +48,11 @@ final class ScheduleMainView: UIView {
         viewModel: ScheduleMainViewModelProtocol
     ) {
         self.viewModel = viewModel
+        let calendarViewModel = viewModel as! CalendarViewModelProtocol
+        let selectTaskViewModel = viewModel as! SelectTaskViewModelProtocol
+        calendarView = CalendarView(frame: .zero, viewModel: calendarViewModel)
+        selectTaskModeView = SelectTaskModeView(frame: .zero, viewModel: selectTaskViewModel)
+        scheduleTableViewController = ScheduleTableViewController(viewModel: viewModel)
         super.init(frame: frame)
         setupUI()
         bindToViewModel()
@@ -64,7 +64,6 @@ final class ScheduleMainView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        scheduleTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 75, right: 0)
         emptyStateImageView.layer.cornerRadius = CGRectGetWidth(CGRect(origin: CGPoint.zero, size: emptyStateImageView.bounds.size)) / 2
     }
     
@@ -72,15 +71,17 @@ final class ScheduleMainView: UIView {
     private func setupUI() {
 //        backgroundColor = Colors.viewBackground
         backgroundColor = .clear
-        scheduleTableView.register(ScheduleTableViewCell.self, forCellReuseIdentifier: scheduleCellReuseId)
-        scheduleTableView.delegate = self
-        setupTableViewDataSource()
         addSubviews()
         applyConstraints()
     }
     
     private func addSubviews() {
+        guard let scheduleTableView = scheduleTableViewController.tableView else {
+            return
+        }
         let views = [
+            calendarView,
+            selectTaskModeView,
             scheduleTableView,
             addNewEventButton,
             emptyStateImageView
@@ -89,17 +90,36 @@ final class ScheduleMainView: UIView {
     }
     
     private func applyConstraints() {
+        guard let scheduleTableView = scheduleTableViewController.tableView else {
+            return
+        }
+        //calendarView constraints
+        calendarView.snp.makeConstraints {
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+            $0.leading.equalTo(safeAreaLayoutGuide.snp.leading)
+            $0.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
+            $0.height.equalTo(70)
+        }
+
+        //selectTaskModeView constraints
+        selectTaskModeView.snp.makeConstraints {
+            $0.top.equalTo(calendarView.snp.bottom)
+            $0.leading.equalTo(safeAreaLayoutGuide.snp.leading).inset(16)
+            $0.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).inset(16)
+            $0.height.equalTo(25)
+        }
+        
         //scheduleTableView Constraints
         scheduleTableView.snp.makeConstraints {
-            $0.top.equalTo(snp.top)
-            $0.leading.equalTo(snp.leading)
-            $0.trailing.equalTo(snp.trailing)
-            $0.bottom.equalTo(snp.bottom)
+            $0.top.equalTo(selectTaskModeView.snp.bottom)
+            $0.leading.equalTo(safeAreaLayoutGuide.snp.leading)
+            $0.trailing.equalTo(safeAreaLayoutGuide.snp.trailing)
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom)
         }
         
         //addNewEventButton constraints
         addNewEventButton.snp.makeConstraints {
-            $0.bottom.equalTo(snp.bottom).inset(16)
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(16)
             $0.trailing.equalTo(snp.trailing).inset(16)
         }
         
@@ -111,97 +131,19 @@ final class ScheduleMainView: UIView {
             $0.height.equalTo(250)
         }
     }
+
+    private func remakeCalendarConstraints(with height: CGFloat) {
+        calendarView.snp.remakeConstraints {
+            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top)
+            $0.leading.equalTo(self.safeAreaLayoutGuide.snp.leading)
+            $0.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing)
+            $0.height.equalTo(height)
+        }
+    }
     
     private func bindToViewModel() {
-        viewModel.dataList
-            .observe(on: MainScheduler.instance)
-            .skip(1)
-            .subscribe(onNext: { [weak self] _ in
-                self?.updateSnapshot(animated: true)
-            })
-            .disposed(by: bag)
-        
         viewModel.emptyStateIsActive
             .drive(emptyStateImageView.rx.isHidden)
             .disposed(by: bag)
-    }
-    
-    private func setupTableViewDataSource() {
-        tableDataSource = UITableViewDiffableDataSource<UITableView.Section, SourceItem>(
-            tableView: scheduleTableView,
-            cellProvider: { tableView, indexPath, itemIdentifier in
-                guard let cell = tableView
-                    .dequeueReusableCell(
-                        withIdentifier: self.scheduleCellReuseId
-                    ) as? ScheduleTableViewCell else {
-                    fatalError()
-                }
-                switch itemIdentifier {
-                case .goal(let goal):
-                    cell.configureCell(text: goal.description)
-                case .priority(let priority):
-                    cell.configureCell(text: priority.description)
-                case .task(let task):
-                    cell.configureCell(with: task, and: self.viewModel.selectedDate)
-                    cell.onTaskCompleted = { [weak self] in
-                        self?.viewModel.completeTask(with: task.id)
-                    }
-                    cell.onTaskButtonTapped = { [weak self] in
-                        self?.viewModel.playAddTask()
-                    }
-                case .completedTask(let completedTask):
-                    cell.configureCompletedTaskCell(with: completedTask, and: self.viewModel.selectedDate)
-                    cell.onTaskCompleted = { [weak self] in
-                        self?.viewModel.unCompleteTask(with: completedTask.id)
-                    }
-                }
-                return cell
-        })
-        updateSnapshot(animated: false)
-    }
-    
-    private func updateSnapshot(animated: Bool) {
-        var snapshot = NSDiffableDataSourceSnapshot<UITableView.Section, SourceItem>()
-        snapshot.deleteAllItems()
-        snapshot.appendSections([.task])
-        snapshot.appendItems(viewModel.data)
-        tableDataSource.apply(snapshot, animatingDifferences: animated)
-    }
-}
-
-//MARK: - scheduleTableView delegate
-extension ScheduleMainView: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
-    }
-    
-    func tableView(
-        _ tableView: UITableView,
-        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
-    ) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(
-            style: .destructive,
-            title: "Удалить") { [weak self] contextualAction, view, boolValue in
-                guard let self = self else { return }
-                self.viewModel.deleteTask(at: indexPath.row)
-            }
-        let config = UIImage.SymbolConfiguration(pointSize: 14)
-        deleteAction.image = UIImage(systemName: "trash")?.applyingSymbolConfiguration(config)
-        let editAction = UIContextualAction(
-            style: .normal,
-            title: "") { [weak self] contextualAction, view, boolValue  in
-                guard let self = self else { return }
-                tableView.isEditing = false
-                self.viewModel.prepareCreateView(at: indexPath.row)
-            }
-        
-        configure(editAction)
-        let swipeActions = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
-        return swipeActions
-    }
-    
-    private func configure(_ action: UIContextualAction) {
-        action.image = UIImage(systemName: "pencil")
-        action.backgroundColor = .lightGray
     }
 }
