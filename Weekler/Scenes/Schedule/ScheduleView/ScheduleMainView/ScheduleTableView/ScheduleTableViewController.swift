@@ -12,6 +12,15 @@ import RxCocoa
 
 final class ScheduleTableViewController: UITableViewController {
     
+    // MARK: - UI
+    private lazy var emptyStateImageView: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(resource: .clock)
+        view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
     // MARK: - private properties
     private let scheduleCellReuseId = "scheduleCell"
     private var tableDataSource: UITableViewDiffableDataSource<UITableView.Section, SourceItem>!
@@ -35,19 +44,29 @@ final class ScheduleTableViewController: UITableViewController {
         tableView.register(ScheduleTableViewCell.self, forCellReuseIdentifier: scheduleCellReuseId)
         configureTableView()
         setupTableViewDataSource()
-        
-        viewModel.dataList
-            .observe(on: MainScheduler.instance)
-            .skip(1)
-            .subscribe(onNext: { [weak self] _ in
-                self?.updateSnapshot(animated: true)
-            })
-            .disposed(by: bag)
+        addEmptyStateImageView()
+        bindToViewModel()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 75, right: 0)
+        
+        emptyStateImageView.layer.cornerRadius = CGRectGetWidth(
+            CGRect(origin: CGPoint.zero, size: emptyStateImageView.bounds.size)) / 2
+    }
+    
+    private func bindToViewModel() {
+        viewModel.dataList
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.updateSnapshot(animated: true)
+            })
+            .disposed(by: bag)
+        
+        viewModel.emptyStateIsActive
+            .drive(emptyStateImageView.rx.isHidden)
+            .disposed(by: bag)
     }
     
     private func configureTableView() {
@@ -55,6 +74,18 @@ final class ScheduleTableViewController: UITableViewController {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func addEmptyStateImageView() {
+        view.addSubview(emptyStateImageView)
+        
+        // emptyStateImageView constraints
+        emptyStateImageView.snp.makeConstraints {
+            $0.centerX.equalTo(view.snp.centerX)
+            $0.centerY.equalTo(view.snp.centerY)
+            $0.width.equalTo(250)
+            $0.height.equalTo(250)
+        }
     }
     
     // MARK: - Table view data source

@@ -15,7 +15,6 @@ import RxCocoa
 final class ScheduleViewController: UIViewController {
     
     //MARK: - private properties
-//    private let scheduleMainView: ScheduleMainView!
     private lazy var calendarSwitchRightBarButtonItem: UIBarButtonItem = {
         let button = UIBarButtonItem()
         let image = UIImage(systemName: "calendar")?.withRenderingMode(.alwaysTemplate)
@@ -74,16 +73,6 @@ final class ScheduleViewController: UIViewController {
     
     private func bind() {
         
-        viewModel.calendarHeightValue
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] height in
-                guard let self = self,
-                      let height = height else { return }
-//                self.remakeCalendarConstraints(with: height)
-                self.view.layoutIfNeeded()
-            })
-            .disposed(by: bag)
-        
         viewModel.navigationTitle
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] title in
@@ -106,7 +95,7 @@ final class ScheduleViewController: UIViewController {
     
     @objc
     private func calendarSwitchRightBarButtonItemTapped() {
-        print("switch")
+        viewModel.toggleCalendarAppearance()
         // TODO: - add viewModel.calendarSwitchTapped
     }
 }

@@ -14,12 +14,14 @@ protocol ScheduleViewModelProtocol: AnyObject {
     var navigationTitle: BehaviorRelay<String> { get set }
     func task(at index: Int) -> ScheduleTask
     func didTapAddNewEventButton() // delete
+    func toggleCalendarAppearance()
+    
 }
 
 protocol ScheduleMainViewModelProtocol: AnyObject {
     var selectedDate: Date { get }
     var data: [SourceItem] { get set }
-    var dataList: BehaviorRelay<[SourceItem]> { get }
+    var dataList: PublishRelay<[SourceItem]> { get }
     var emptyStateIsActive: Driver<Bool> { get set }
     func completeTask(with id: UUID)
     func unCompleteTask(with id: UUID)
@@ -27,6 +29,9 @@ protocol ScheduleMainViewModelProtocol: AnyObject {
     func prepareCreateView(at index: Int)
     func playAddTask()
     func didTapAddNewEventButton()
+//    var calendarHeightValue: PublishRelay<Double?> { get set }
+    var calendarStateSwitch: PublishRelay<Bool> { get set }
+    
 }
 
 protocol CalendarViewModelProtocol: AnyObject {

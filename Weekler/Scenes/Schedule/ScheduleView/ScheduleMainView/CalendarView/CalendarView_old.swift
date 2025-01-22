@@ -11,12 +11,7 @@ import JTAppleCalendar
 import RxSwift
 import RxCocoa
 
-final class CalendarView: UIView {
-    
-    private enum CalendarMode {
-        case week
-        case month
-    }
+final class CalendarView_old: UIView {
     
     // MARK: - UI
     private lazy var weekDaysStackView: UIStackView = {
@@ -49,8 +44,7 @@ final class CalendarView: UIView {
     private var calendarCollectionViewRowsNumber = Constants.weekModeCalendarRowNumber
     private let weekDaysLabelHeight = Constants.weekDaysLabelHeight
     private var viewModel: CalendarViewModelProtocol
-    private var calendarMode: CalendarMode = .week
-//    private var isInitialLayout = false
+    private var isInitialLayout = false
     private var bag = DisposeBag()
     
     // MARK: - lifecycle
@@ -61,6 +55,14 @@ final class CalendarView: UIView {
         self.viewModel = viewModel
         super.init(frame: frame)
         setupUI()
+        
+//        viewModel.calendarStateSwitch
+//            .observe(on: MainScheduler.instance)
+//            .subscribe(onNext: { [weak self] _ in
+//                guard let self = self else { return }
+//                self.calendarSwitchRightBarButtonItemTapped()
+//            })
+//            .disposed(by: bag)
     }
     
     required init?(coder: NSCoder) {
@@ -69,15 +71,11 @@ final class CalendarView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-//        if !isInitialLayout {
-//            let calendarHeight = CGRectGetHeight(CGRect(origin: .zero, size: calendarCollectionView.bounds.size))
-//            viewModel.setCalendarViewWith(calendarHeight + weekDaysLabelHeight)
-//            isInitialLayout = true
-//        }
-    }
-    
-    func toggleMode() {
-        calendarSwitchRightBarButtonItemTapped()
+        if !isInitialLayout {
+            let calendarHeight = CGRectGetHeight(CGRect(origin: .zero, size: calendarCollectionView.bounds.size))
+            viewModel.setCalendarViewWith(calendarHeight + weekDaysLabelHeight)
+            isInitialLayout = true
+        }
     }
     
     // MARK: - private properties
@@ -130,7 +128,7 @@ final class CalendarView: UIView {
     }
     
     private func animateCalendarTransition() {
-        if calendarMode == .week {
+        if calendarCollectionViewRowsNumber == Constants.weekModeCalendarRowNumber {
             self.calendarCollectionView.snp.updateConstraints {
                 $0.height.equalTo(self.calendarCollectionHeight)
             }
@@ -150,7 +148,6 @@ final class CalendarView: UIView {
                 self.calendarCollectionView.reloadData(withanchor: self.viewModel.selectedDate)
             }
         }
-
     }
     
     private func selectCurrentDateToCalendar() {
@@ -161,11 +158,10 @@ final class CalendarView: UIView {
     
     @objc
     func calendarSwitchRightBarButtonItemTapped() {
-        calendarMode = calendarMode == .month ? .week : .month
-        calendarCollectionViewRowsNumber = calendarMode == .month ?
+        calendarCollectionViewRowsNumber = calendarCollectionViewRowsNumber == Constants.weekModeCalendarRowNumber ?
         Constants.monthModeCalendarRowNumber : Constants.weekModeCalendarRowNumber
         
-        calendarCollectionHeight = calendarMode == .month ?
+        calendarCollectionHeight = calendarCollectionHeight == Constants.weekModeCalendarHeight ?
         Constants.monthModeCalendarHeight : Constants.weekModeCalendarHeight
         
         animateCalendarTransition()
@@ -173,7 +169,7 @@ final class CalendarView: UIView {
 }
 
 //MARK: - JTAppleCalendarViewDataSource
-extension CalendarView: JTAppleCalendarViewDataSource {
+extension CalendarView_old: JTAppleCalendarViewDataSource {
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
         let startDate = Date(timeIntervalSince1970: 1577826000)
         let endDate = Date(timeIntervalSince1970: 4102434000)
@@ -195,7 +191,7 @@ extension CalendarView: JTAppleCalendarViewDataSource {
 }
 
 //MARK: - JTAppleCalendarViewDelegate
-extension CalendarView: JTAppleCalendarViewDelegate {
+extension CalendarView_old: JTAppleCalendarViewDelegate {
     func calendar(
         _ calendar: JTAppleCalendarView,
         cellForItemAt date: Date,
@@ -283,3 +279,4 @@ extension CalendarView: JTAppleCalendarViewDelegate {
         viewModel.updateNavTitle(with: dates)
     }
 }
+

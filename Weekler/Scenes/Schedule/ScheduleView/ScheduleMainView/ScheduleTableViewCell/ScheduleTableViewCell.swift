@@ -68,6 +68,7 @@ final class ScheduleTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(updateBackgroundColor),
@@ -209,7 +210,7 @@ final class ScheduleTableViewCell: UITableViewCell {
     
     @objc
     private func updateBackgroundColor() {
-        let color = WeeklerUIManager.shared.selectedColor
+//        let color = WeeklerUIManager.shared.selectedColor
         contentView.backgroundColor = WeeklerUIManager.shared.selectedColor
     }
 }

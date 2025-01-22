@@ -31,13 +31,6 @@ final class ScheduleMainView: UIView {
         
         return button
     }()
-    private lazy var emptyStateImageView: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage(resource: .clock)
-        view.clipsToBounds = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
     
     private var viewModel: ScheduleMainViewModelProtocol
     private var bag = DisposeBag()
@@ -50,12 +43,21 @@ final class ScheduleMainView: UIView {
         self.viewModel = viewModel
         let calendarViewModel = viewModel as! CalendarViewModelProtocol
         let selectTaskViewModel = viewModel as! SelectTaskViewModelProtocol
+        
+        // FIXME: inject dependencies
         calendarView = CalendarView(frame: .zero, viewModel: calendarViewModel)
         selectTaskModeView = SelectTaskModeView(frame: .zero, viewModel: selectTaskViewModel)
         scheduleTableViewController = ScheduleTableViewController(viewModel: viewModel)
         super.init(frame: frame)
         setupUI()
-        bindToViewModel()
+        
+        viewModel.calendarStateSwitch
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                guard let self = self else { return }
+                self.toggleCalendarMode()
+            })
+            .disposed(by: bag)
     }
     
     required init?(coder: NSCoder) {
@@ -64,7 +66,20 @@ final class ScheduleMainView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        emptyStateImageView.layer.cornerRadius = CGRectGetWidth(CGRect(origin: CGPoint.zero, size: emptyStateImageView.bounds.size)) / 2
+    }
+    
+    // MARK: - Public methods
+    func toggleCalendarMode() {
+        calendarView.toggleMode()
+//        calendarView.toggleMode(toMonthMode: toMonthMode, animated: animated)
+        
+//        let newHeight: CGFloat = toMonthMode ? 300 : 100
+        // update constraints
+//        calendarViewHeightConstraint?.constant = newHeight
+        
+        UIView.animate(withDuration: 0.3) {
+            self.layoutIfNeeded()
+        }
     }
     
     // MARK: - private methods
@@ -83,8 +98,7 @@ final class ScheduleMainView: UIView {
             calendarView,
             selectTaskModeView,
             scheduleTableView,
-            addNewEventButton,
-            emptyStateImageView
+            addNewEventButton
         ]
         views.forEach { addSubview($0) }
     }
@@ -103,6 +117,7 @@ final class ScheduleMainView: UIView {
 
         //selectTaskModeView constraints
         selectTaskModeView.snp.makeConstraints {
+//            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
             $0.top.equalTo(calendarView.snp.bottom)
             $0.leading.equalTo(safeAreaLayoutGuide.snp.leading).inset(16)
             $0.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).inset(16)
@@ -122,14 +137,6 @@ final class ScheduleMainView: UIView {
             $0.bottom.equalTo(safeAreaLayoutGuide.snp.bottom).inset(16)
             $0.trailing.equalTo(snp.trailing).inset(16)
         }
-        
-        //emptyStateImageView constraints
-        emptyStateImageView.snp.makeConstraints {
-            $0.centerX.equalTo(snp.centerX)
-            $0.centerY.equalTo(snp.centerY)
-            $0.width.equalTo(250)
-            $0.height.equalTo(250)
-        }
     }
 
     private func remakeCalendarConstraints(with height: CGFloat) {
@@ -139,11 +146,5 @@ final class ScheduleMainView: UIView {
             $0.trailing.equalTo(self.safeAreaLayoutGuide.snp.trailing)
             $0.height.equalTo(height)
         }
-    }
-    
-    private func bindToViewModel() {
-        viewModel.emptyStateIsActive
-            .drive(emptyStateImageView.rx.isHidden)
-            .disposed(by: bag)
     }
 }

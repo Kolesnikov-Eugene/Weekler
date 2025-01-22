@@ -12,10 +12,11 @@ import RxCocoa
 final class ScheduleViewModel: ScheduleViewModelProtocol {
 
     //MARK: - Output
-    var dataList = BehaviorRelay<[SourceItem]>(value: [])
+    var dataList = PublishRelay<[SourceItem]>()
     var emptyStateIsActive: Driver<Bool>
     var calendarHeightValue = PublishRelay<Double?>()
     var navigationTitle = BehaviorRelay<String>(value: "")
+    var calendarStateSwitch: PublishRelay<Bool> = .init()
     
     // MARK: - Input
     var currentDateChangesObserver = PublishRelay<Date>()
@@ -69,6 +70,10 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     func changeDate(for selectedDate: Date) {
         currentDate = selectedDate
         fetchSchedule()
+    }
+    
+    func toggleCalendarAppearance() {
+        calendarStateSwitch.accept(true)
     }
     
     @objc

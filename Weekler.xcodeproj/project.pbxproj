@@ -47,6 +47,7 @@
 		442256842C6BE7B300172C0A /* ScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256832C6BE7B300172C0A /* ScheduleUseCase.swift */; };
 		442256862C6BE82900172C0A /* ScheduleUseCaseAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256852C6BE82900172C0A /* ScheduleUseCaseAssembly.swift */; };
 		442256882C6BEB4400172C0A /* ScheduleDataBaseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256872C6BEB4400172C0A /* ScheduleDataBaseType.swift */; };
+		443A7BE22D418BA200455C2F /* CalendarView_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443A7BE12D418BA200455C2F /* CalendarView_old.swift */; };
 		444045DD2CFF8D0600559126 /* AppSettingsMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444045DC2CFF8D0600559126 /* AppSettingsMainView.swift */; };
 		444045E12CFF8DFE00559126 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444045E02CFF8DFE00559126 /* ProfileView.swift */; };
 		444045E42CFF8E2E00559126 /* AppSettingsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444045E32CFF8E2E00559126 /* AppSettingsCollectionViewController.swift */; };
@@ -129,6 +130,7 @@
 		44E28EE02CEE6F55001FA0CA /* StatisticsDataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E28EDF2CEE6F55001FA0CA /* StatisticsDataSourceProtocol.swift */; };
 		44E28EE22CEE6FF0001FA0CA /* StatisticsServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E28EE12CEE6FF0001FA0CA /* StatisticsServiceAssembly.swift */; };
 		44E28EE62CEE70CA001FA0CA /* StatisticsRepositoryAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E28EE52CEE70CA001FA0CA /* StatisticsRepositoryAssembly.swift */; };
+		44F02F4E2D4156CF00A1E3F2 /* CheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F02F4D2D4156CF00A1E3F2 /* CheckmarkView.swift */; };
 		44F116932BDC384B00134D5F /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F116922BDC384B00134D5F /* DIContainer.swift */; };
 		44F116952BDC394A00134D5F /* SceneAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F116942BDC394A00134D5F /* SceneAssembly.swift */; };
 		44F116982BDC398E00134D5F /* ScheduleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F116972BDC398E00134D5F /* ScheduleAssembly.swift */; };
@@ -184,6 +186,7 @@
 		442256832C6BE7B300172C0A /* ScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleUseCase.swift; sourceTree = "<group>"; };
 		442256852C6BE82900172C0A /* ScheduleUseCaseAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleUseCaseAssembly.swift; sourceTree = "<group>"; };
 		442256872C6BEB4400172C0A /* ScheduleDataBaseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataBaseType.swift; sourceTree = "<group>"; };
+		443A7BE12D418BA200455C2F /* CalendarView_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView_old.swift; sourceTree = "<group>"; };
 		444045DC2CFF8D0600559126 /* AppSettingsMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsMainView.swift; sourceTree = "<group>"; };
 		444045E02CFF8DFE00559126 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		444045E32CFF8E2E00559126 /* AppSettingsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsCollectionViewController.swift; sourceTree = "<group>"; };
@@ -268,6 +271,7 @@
 		44E28EDF2CEE6F55001FA0CA /* StatisticsDataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsDataSourceProtocol.swift; sourceTree = "<group>"; };
 		44E28EE12CEE6FF0001FA0CA /* StatisticsServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsServiceAssembly.swift; sourceTree = "<group>"; };
 		44E28EE52CEE70CA001FA0CA /* StatisticsRepositoryAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsRepositoryAssembly.swift; sourceTree = "<group>"; };
+		44F02F4D2D4156CF00A1E3F2 /* CheckmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkView.swift; sourceTree = "<group>"; };
 		44F116922BDC384B00134D5F /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		44F116942BDC394A00134D5F /* SceneAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneAssembly.swift; sourceTree = "<group>"; };
 		44F116972BDC398E00134D5F /* ScheduleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAssembly.swift; sourceTree = "<group>"; };
@@ -382,6 +386,7 @@
 			isa = PBXGroup;
 			children = (
 				44079C6D2CD169C5006D3A3D /* CalendarView.swift */,
+				443A7BE12D418BA200455C2F /* CalendarView_old.swift */,
 			);
 			path = CalendarView;
 			sourceTree = "<group>";
@@ -666,6 +671,7 @@
 		447DBE572BC4A8EB00A99A38 /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
+				44F02F4C2D41566300A1E3F2 /* Checkmark */,
 				44FB46612C5E72F4005731BC /* CreateSchedule */,
 				447DBE562BC4A8EB00A99A38 /* ScheduleView */,
 			);
@@ -930,6 +936,14 @@
 			path = Statistics;
 			sourceTree = "<group>";
 		};
+		44F02F4C2D41566300A1E3F2 /* Checkmark */ = {
+			isa = PBXGroup;
+			children = (
+				44F02F4D2D4156CF00A1E3F2 /* CheckmarkView.swift */,
+			);
+			path = Checkmark;
+			sourceTree = "<group>";
+		};
 		44F116902BDC382700134D5F /* DependencyInjection */ = {
 			isa = PBXGroup;
 			children = (
@@ -1190,10 +1204,12 @@
 				440B2DD42CDBF07400BA728B /* TaskToEdit.swift in Sources */,
 				44D18C732C121EED00F22CED /* ScheduleTask.swift in Sources */,
 				44A88DE22CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift in Sources */,
+				44F02F4E2D4156CF00A1E3F2 /* CheckmarkView.swift in Sources */,
 				44FB465C2C5E66BD005731BC /* CreateScheduleViewModelProtocol.swift in Sources */,
 				44E28EE02CEE6F55001FA0CA /* StatisticsDataSourceProtocol.swift in Sources */,
 				44727B452C486A68007756A3 /* UITableView+Extension.swift in Sources */,
 				440770FD2BBB472900AD9C98 /* Colors.swift in Sources */,
+				443A7BE22D418BA200455C2F /* CalendarView_old.swift in Sources */,
 				440CF1F72C73CAE600FEFDE0 /* Date+extension.swift in Sources */,
 				445F823F2D1B400100F001DE /* UIColor+Extension.swift in Sources */,
 				44E28EDC2CEE6E88001FA0CA /* StatisticsRepositoryProtocol.swift in Sources */,
