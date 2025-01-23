@@ -13,4 +13,6 @@ struct Constants {
     static let weekModeCalendarHeight = 45.0
     static let monthModeCalendarHeight = 200.0
     static let weekDaysLabelHeight = 25.0
+    static let weekCalendarViewHeight = 70.0
+    static let monthCalendarViewHeight = 225
 }

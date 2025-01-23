@@ -17,7 +17,9 @@ final class CreateScheduleTableViewController: UITableViewController {
     private var bag = DisposeBag()
     
     // MARK: - Lifecycle
-    init(viewModel: CreateScheduleViewModelProtocol) {
+    init(
+        viewModel: CreateScheduleViewModelProtocol
+    ) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -74,8 +76,7 @@ final class CreateScheduleTableViewController: UITableViewController {
         guard let cell = tableView.cellForRow(at: indexPath) as? ScheduleItemsTableViewCell,
               cell.cellType == .isRepeated else { return }
         let vc = SelectRepeatedDaysViewController(viewModel: viewModel) // FIXME: move presentation logic to coordinator
-        vc.modalPresentationStyle = .pageSheet
-        present(vc, animated: true)
+        viewModel.presentViewController(vc)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

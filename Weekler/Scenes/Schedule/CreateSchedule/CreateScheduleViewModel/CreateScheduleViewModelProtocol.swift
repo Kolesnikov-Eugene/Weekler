@@ -17,6 +17,8 @@ protocol CreateScheduleViewModelProtocol: AnyObject {
     var hideView: PublishRelay<Bool> { get set }
     var delegate: CreateScheduleDelegate? { get set }
     var taskDescription: String { get set }
+    var needsPresentView: PublishRelay<SelectRepeatedDaysViewController> { get set }
+    var processSavingTask: PublishRelay<Bool> { get set }
     func createTask()
     func editTask()
     func set(_ date: Date)
@@ -26,4 +28,6 @@ protocol CreateScheduleViewModelProtocol: AnyObject {
     func viewDidDisappear()
     func viewWillAppear()
     func hideCreateView()
+    func presentViewController(_ vc: SelectRepeatedDaysViewController)
+    func saveTask()
 }

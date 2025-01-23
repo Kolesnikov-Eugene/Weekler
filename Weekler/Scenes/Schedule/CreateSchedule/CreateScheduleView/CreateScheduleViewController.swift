@@ -17,6 +17,32 @@ enum CreateMode {
 
 final class CreateScheduleViewController: UIViewController {
     
+    // MARK: - UI
+    private lazy var saveButton: UIBarButtonItem = {
+        let configuration = UIImage.SymbolConfiguration(pointSize: 18)
+        let image = UIImage(
+            systemName: "checkmark",
+            withConfiguration: configuration)?
+            .withTintColor(
+                Colors.mainForeground,
+                renderingMode: .alwaysOriginal
+            )
+        let item = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(saveButtonTapped))
+        return item
+    }()
+    private lazy var cancelButtonItem: UIBarButtonItem = {
+        let configuration = UIImage.SymbolConfiguration(pointSize: 18)
+        let image = UIImage(
+            systemName: "xmark",
+            withConfiguration: configuration)?
+            .withTintColor(
+                Colors.mainForeground,
+                renderingMode: .alwaysOriginal
+            )
+        let item = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(cancelButtonTapped))
+        return item
+    }()
+    
     // MARK: - private properties
     private var viewModel: CreateScheduleViewModelProtocol
     private var mode: CreateMode
@@ -39,11 +65,16 @@ final class CreateScheduleViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
+        let scheduleItemsTableViewController = CreateScheduleTableViewController(viewModel: viewModel)
         self.view = CreateScheduleView(
             viewModel: viewModel,
             mode: mode,
+            scheduleItemsTableViewController: scheduleItemsTableViewController,
             frame: .zero
         )
+        
+        addChild(scheduleItemsTableViewController)
+        scheduleItemsTableViewController.didMove(toParent: self)
         
         viewModel.hideView
             .observe(on: MainScheduler.instance)
@@ -51,11 +82,20 @@ final class CreateScheduleViewController: UIViewController {
                 self?.dismiss(animated: true)
             })
             .disposed(by: bag)
+        
+        viewModel.needsPresentView
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] vc in
+                self?.navigationController?.pushViewController(vc, animated: true)
+            })
+            .disposed(by: bag)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -70,16 +110,28 @@ final class CreateScheduleViewController: UIViewController {
     
     //MARK: - private methods
     private func setupUI() {
-        configureAppearence()
+        navigationItem.title = "Create Schedule"
+        navigationItem.leftBarButtonItem = cancelButtonItem
+        navigationItem.rightBarButtonItem = saveButton
     }
     
-    private func configureAppearence() {
-        if let sheet = self.sheetPresentationController {
-            sheet.detents = [.large(), .medium()]
-            sheet.largestUndimmedDetentIdentifier = .large
-            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-            sheet.prefersEdgeAttachedInCompactHeight = true
-            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
-        }
+    @objc
+    private func saveButtonTapped() {
+        viewModel.saveTask()
     }
+    
+    @objc
+    private func cancelButtonTapped() {
+        dismiss(animated: true)
+    }
+    
+//    private func configureAppearence() {
+//        if let sheet = self.sheetPresentationController {
+//            sheet.detents = [.large(), .medium()]
+//            sheet.largestUndimmedDetentIdentifier = .large
+//            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+//            sheet.prefersEdgeAttachedInCompactHeight = true
+//            sheet.widthFollowsPreferredContentSizeWhenEdgeAttached = true
+//        }
+//    }
 }

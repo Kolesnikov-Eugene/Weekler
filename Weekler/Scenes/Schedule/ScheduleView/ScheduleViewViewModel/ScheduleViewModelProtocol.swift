@@ -10,7 +10,6 @@ import RxCocoa
 
 protocol ScheduleViewModelProtocol: AnyObject {
     var tasks: [ScheduleTask] { get set }
-    var calendarHeightValue: PublishRelay<Double?> { get set }
     var navigationTitle: BehaviorRelay<String> { get set }
     func task(at index: Int) -> ScheduleTask
     func didTapAddNewEventButton() // delete
@@ -29,7 +28,6 @@ protocol ScheduleMainViewModelProtocol: AnyObject {
     func prepareCreateView(at index: Int)
     func playAddTask()
     func didTapAddNewEventButton()
-//    var calendarHeightValue: PublishRelay<Double?> { get set }
     var calendarStateSwitch: PublishRelay<Bool> { get set }
     
 }
@@ -38,7 +36,6 @@ protocol CalendarViewModelProtocol: AnyObject {
     var selectedDate: Date { get }
     var currentDateChangesObserver: PublishRelay<Date> { get set }
     func updateNavTitle(with date: [Date])
-    func setCalendarViewWith(_ height: Double)
 }
 
 protocol SelectTaskViewModelProtocol: AnyObject {

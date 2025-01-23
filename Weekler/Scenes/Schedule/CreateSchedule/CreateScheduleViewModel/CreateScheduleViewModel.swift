@@ -18,6 +18,8 @@ final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
     var datePickerValue = BehaviorRelay<Date>(value: Date())
     var notificationSwitchValue = BehaviorRelay<Bool>(value: false)
     var hideView: PublishRelay<Bool> = .init()
+    var needsPresentView: PublishRelay<SelectRepeatedDaysViewController> = .init()
+    var processSavingTask: PublishRelay<Bool> = .init()
     
     // MARK: - public properties
     weak var delegate: CreateScheduleDelegate?
@@ -49,6 +51,14 @@ final class CreateScheduleViewModel: CreateScheduleViewModelProtocol {
     }
     
     // MARK: - public methods
+    func saveTask() {
+        processSavingTask.accept(true)
+    }
+    
+    func presentViewController(_ vc: SelectRepeatedDaysViewController) {
+        needsPresentView.accept(vc)
+    }
+    
     func createTask() {
         if taskDescription != L10n.Localizable.CreateSchedule.placeholder && taskDescription != "" && taskDescription != " " {
             let notification = isNotificationEnabled

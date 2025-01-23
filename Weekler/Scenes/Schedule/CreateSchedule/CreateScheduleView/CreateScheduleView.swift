@@ -27,16 +27,6 @@ final class CreateScheduleView: UIView {
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
-    private lazy var saveTaskButton: UIButton = {
-        let button = UIButton(type: .custom)
-        button.isEnabled = true
-        button.setTitle(L10n.Localizable.CreateSchedule.doneButtonText, for: .normal)
-        button.setTitleColor(.orange, for: .normal)
-        button.contentHorizontalAlignment = .trailing
-//        button.addTarget(self, action: #selector(didTapSaveButton), for: .touchUpInside)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
     private var scheduleItemsTableViewController: CreateScheduleTableViewController
     
     // MARK: - public properties
@@ -50,11 +40,12 @@ final class CreateScheduleView: UIView {
     init(
         viewModel: CreateScheduleViewModelProtocol,
         mode: CreateMode,
+        scheduleItemsTableViewController: CreateScheduleTableViewController,
         frame: CGRect
     ) {
         self.viewModel = viewModel
         self.mode = mode
-        scheduleItemsTableViewController = CreateScheduleTableViewController(viewModel: viewModel)
+        self.scheduleItemsTableViewController = scheduleItemsTableViewController
         super.init(frame: frame)
         setupUI()
         bindToViewModel()
@@ -83,26 +74,18 @@ final class CreateScheduleView: UIView {
     
     private func addSubviews() {
         addSubview(createScheduleDescriptionTextField)
-        addSubview(saveTaskButton)
         if let tableView = scheduleItemsTableViewController.tableView {
             addSubview(tableView)
         }
     }
     
     private func applyConstraints() {
-        //saveButton constraints
-        saveTaskButton.snp.makeConstraints {
-            $0.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).inset(16)
-            $0.top.equalTo(safeAreaLayoutGuide.snp.top).inset(10)
-            $0.width.equalTo(100)
-            $0.height.equalTo(30)
-        }
         
         //createScheduleDescriptionTextField constraints
         createScheduleDescriptionTextField.snp.makeConstraints {
-            $0.top.equalTo(saveTaskButton.snp.bottom).offset(5)
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top).offset(5)
             $0.leading.equalTo(safeAreaLayoutGuide.snp.leading).inset(16)
-            $0.trailing.equalTo(saveTaskButton.snp.trailing)
+            $0.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).inset(16)
             $0.height.greaterThanOrEqualTo(50)
         }
         
@@ -128,10 +111,10 @@ final class CreateScheduleView: UIView {
             })
             .disposed(by: bag)
         
-        saveTaskButton.rx
-            .tap
-            .subscribe(onNext: {
-                self.didTapSaveButton()
+        viewModel.processSavingTask
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.didTapSaveButton()
             })
             .disposed(by: bag)
         

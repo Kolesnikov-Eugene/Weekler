@@ -14,23 +14,29 @@ final class SelectRepeatedDaysViewController: UIViewController {
     // MARK: - private properties
     private let reuseId = "DayOfWeekTableView"
     private let segmentedControlTitlesArray = ["По дням недели", "Выбрать числа"]
-    private lazy var saveButton: UIButton = {
-        var configuration = UIButton.Configuration.plain()
-        configuration.image = UIImage(systemName: "checkmark")?.withRenderingMode(.alwaysTemplate)
-        configuration.baseForegroundColor = Colors.mainForeground
-        configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 18)
-        let button = UIButton(configuration: configuration)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+    private lazy var saveButton: UIBarButtonItem = {
+        let configuration = UIImage.SymbolConfiguration(pointSize: 18)
+        let image = UIImage(
+            systemName: "checkmark",
+            withConfiguration: configuration)?
+            .withTintColor(
+                Colors.mainForeground,
+                renderingMode: .alwaysOriginal
+            )
+        let item = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(saveButtonTapped))
+        return item
     }()
-    private lazy var cancelButton: UIButton = {
-        var configuration = UIButton.Configuration.plain()
-        configuration.image = UIImage(systemName: "xmark")?.withRenderingMode(.alwaysTemplate)
-        configuration.baseForegroundColor = Colors.mainForeground
-        configuration.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 18)
-        let button = UIButton(configuration: configuration)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+    private lazy var backButtonItem: UIBarButtonItem = {
+        let configuration = UIImage.SymbolConfiguration(pointSize: 18)
+        let image = UIImage(
+            systemName: "arrow.left",
+            withConfiguration: configuration)?
+            .withTintColor(
+                Colors.mainForeground,
+                renderingMode: .alwaysOriginal
+            )
+        let item = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(backButtonTapped))
+        return item
     }()
     private lazy var daysSegmentedControl: UISegmentedControl = {
         let control = UISegmentedControl(items: segmentedControlTitlesArray)
@@ -72,7 +78,6 @@ final class SelectRepeatedDaysViewController: UIViewController {
         daysTableView.delegate = self
         daysTableView.register(DayOfWeekTableViewCell.self, forCellReuseIdentifier: reuseId)
         setupUI()
-        bindToViewModel()
     }
     
     // MARK: - private func
@@ -80,14 +85,16 @@ final class SelectRepeatedDaysViewController: UIViewController {
         view.backgroundColor = Colors.viewBackground
         addSubviews()
         applyConstraints()
+        navigationItem.title = "Select days to repeat"
+        navigationItem.hidesBackButton = true
+        navigationItem.leftBarButtonItem = backButtonItem
+        navigationItem.rightBarButtonItem = saveButton
     }
     
     private func addSubviews() {
         view.addSubview(daysSegmentedControl)
         view.addSubview(daysTableView)
         view.addSubview(calendarView)
-        view.addSubview(saveButton)
-        view.addSubview(cancelButton)
     }
     
     private func applyConstraints() {
@@ -112,34 +119,17 @@ final class SelectRepeatedDaysViewController: UIViewController {
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).inset(16)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).inset(16)
         }
-        
-        // saveBtn constraitns
-        saveButton.snp.makeConstraints {
-            $0.centerY.equalTo(daysSegmentedControl.snp.centerY)
-            $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).inset(16)
-        }
-        
-        // cancelButton constraints
-        cancelButton.snp.makeConstraints {
-            $0.centerY.equalTo(daysSegmentedControl.snp.centerY)
-            $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).inset(16)
-        }
     }
     
-    private func bindToViewModel() {
-        saveButton.rx.tap
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] in
-                self?.viewModel.saveDateRange()
-            })
-            .disposed(by: bag)
-        
-        cancelButton.rx.tap
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] in
-                self?.dismiss(animated: true)
-            })
-            .disposed(by: bag)
+    @objc
+    private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc
+    private func saveButtonTapped() {
+        viewModel.saveDateRange()
+        navigationController?.popViewController(animated: true)
     }
     
     @objc

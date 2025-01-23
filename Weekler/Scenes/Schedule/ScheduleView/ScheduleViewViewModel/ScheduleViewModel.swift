@@ -14,7 +14,6 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     //MARK: - Output
     var dataList = PublishRelay<[SourceItem]>()
     var emptyStateIsActive: Driver<Bool>
-    var calendarHeightValue = PublishRelay<Double?>()
     var navigationTitle = BehaviorRelay<String>(value: "")
     var calendarStateSwitch: PublishRelay<Bool> = .init()
     
@@ -191,9 +190,6 @@ extension ScheduleViewModel: ScheduleMainViewModelProtocol {
 
 //MARK: - CalendarViewModelProtocol
 extension ScheduleViewModel: CalendarViewModelProtocol {
-    func setCalendarViewWith(_ height: Double) {
-        calendarHeightValue.accept(height)
-    }
     
     func updateNavTitle(with date: [Date]) {
         let title = formatter.string(from: date[0])

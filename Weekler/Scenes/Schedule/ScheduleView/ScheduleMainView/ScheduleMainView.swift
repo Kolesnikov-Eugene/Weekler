@@ -34,6 +34,11 @@ final class ScheduleMainView: UIView {
     
     private var viewModel: ScheduleMainViewModelProtocol
     private var bag = DisposeBag()
+    private var calendarMode: CalendarMode = .week {
+        willSet(newValue) {
+            calendarView.toggleMode(to: newValue)
+        }
+    }
     
     // MARK: - lifecycle
     init(
@@ -70,14 +75,13 @@ final class ScheduleMainView: UIView {
     
     // MARK: - Public methods
     func toggleCalendarMode() {
-        calendarView.toggleMode()
-//        calendarView.toggleMode(toMonthMode: toMonthMode, animated: animated)
+        calendarMode = calendarMode == .month ? .week : .month
         
-//        let newHeight: CGFloat = toMonthMode ? 300 : 100
-        // update constraints
-//        calendarViewHeightConstraint?.constant = newHeight
-        
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.6) {
+            self.calendarView.snp.updateConstraints {
+                $0.height.equalTo(self.calendarMode == .month ?
+                                  Constants.monthCalendarViewHeight : Constants.weekCalendarViewHeight)
+            }
             self.layoutIfNeeded()
         }
     }
