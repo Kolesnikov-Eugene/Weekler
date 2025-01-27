@@ -109,8 +109,10 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     private func populateData() {
         switch mainMode {
         case .task:
+            tasks.sortByTime()
             data = tasks.map { .task($0) }
         case .completedTask:
+            completedTasks.sortByTime()
             data = completedTasks.map { .completedTask($0) }
         }
         dataList.accept(data)

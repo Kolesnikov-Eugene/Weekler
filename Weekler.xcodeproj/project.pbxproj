@@ -86,6 +86,8 @@
 		44727B472C486AAC007756A3 /* ScheduleTableViewSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44727B462C486AAC007756A3 /* ScheduleTableViewSectionItem.swift */; };
 		44727B4A2C486B29007756A3 /* SelectRepeatedDaysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44727B492C486B29007756A3 /* SelectRepeatedDaysViewController.swift */; };
 		44727B4C2C486B7B007756A3 /* DaysOfWeekTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44727B4B2C486B7B007756A3 /* DaysOfWeekTableViewCell.swift */; };
+		4477560A2D48156F000DE12F /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447756092D48156F000DE12F /* Array+Extension.swift */; };
+		4477560D2D481937000DE12F /* CreateScheduleFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4477560C2D481937000DE12F /* CreateScheduleFlowCoordinator.swift */; };
 		447DBE612BC4A8EB00A99A38 /* AppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447DBE522BC4A8EB00A99A38 /* AppSettingsViewController.swift */; };
 		447DBE622BC4A8EB00A99A38 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447DBE552BC4A8EB00A99A38 /* ScheduleViewController.swift */; };
 		447DBE632BC4A8EB00A99A38 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447DBE582BC4A8EB00A99A38 /* StatisticsViewController.swift */; };
@@ -225,6 +227,8 @@
 		44727B462C486AAC007756A3 /* ScheduleTableViewSectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewSectionItem.swift; sourceTree = "<group>"; };
 		44727B492C486B29007756A3 /* SelectRepeatedDaysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRepeatedDaysViewController.swift; sourceTree = "<group>"; };
 		44727B4B2C486B7B007756A3 /* DaysOfWeekTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysOfWeekTableViewCell.swift; sourceTree = "<group>"; };
+		447756092D48156F000DE12F /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
+		4477560C2D481937000DE12F /* CreateScheduleFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleFlowCoordinator.swift; sourceTree = "<group>"; };
 		447DBE522BC4A8EB00A99A38 /* AppSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsViewController.swift; sourceTree = "<group>"; };
 		447DBE552BC4A8EB00A99A38 /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		447DBE582BC4A8EB00A99A38 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
@@ -508,6 +512,7 @@
 				4415A1E62CEFBD390065B142 /* Calendar+extension.swift */,
 				445F823E2D1B400100F001DE /* UIColor+Extension.swift */,
 				44DD0F262D38475200BA975D /* DateComponents+Extension.swift */,
+				447756092D48156F000DE12F /* Array+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -631,6 +636,14 @@
 				44727B4B2C486B7B007756A3 /* DaysOfWeekTableViewCell.swift */,
 			);
 			path = SelectRepeatedDaysView;
+			sourceTree = "<group>";
+		};
+		4477560B2D48191F000DE12F /* CreateScheduleFlow */ = {
+			isa = PBXGroup;
+			children = (
+				4477560C2D481937000DE12F /* CreateScheduleFlowCoordinator.swift */,
+			);
+			path = CreateScheduleFlow;
 			sourceTree = "<group>";
 		};
 		447DBE532BC4A8EB00A99A38 /* AppSettingsMainView */ = {
@@ -997,6 +1010,7 @@
 		44FB46612C5E72F4005731BC /* CreateSchedule */ = {
 			isa = PBXGroup;
 			children = (
+				4477560B2D48191F000DE12F /* CreateScheduleFlow */,
 				44FB465A2C5E669F005731BC /* CreateScheduleViewModel */,
 				44CE3BB92C0BA2DB00719B84 /* CreateScheduleView */,
 			);
@@ -1238,6 +1252,7 @@
 				4418D5D82D0B7707003664E6 /* GeneralSettingsViewAssembly.swift in Sources */,
 				4407C0B82D31A85E00780990 /* ConfirmButton.swift in Sources */,
 				44AE39A22CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift in Sources */,
+				4477560A2D48156F000DE12F /* Array+Extension.swift in Sources */,
 				44B06E162BECEE3C000C3CC6 /* ScheduleViewModelProtocol.swift in Sources */,
 				447DBE632BC4A8EB00A99A38 /* StatisticsViewController.swift in Sources */,
 				44C7148D2BD8465300C67B20 /* DaysOfWeek+Extension.swift in Sources */,
@@ -1255,6 +1270,7 @@
 				44F116952BDC394A00134D5F /* SceneAssembly.swift in Sources */,
 				4441EC772CE5303800AFB022 /* ChartView.swift in Sources */,
 				447DBE612BC4A8EB00A99A38 /* AppSettingsViewController.swift in Sources */,
+				4477560D2D481937000DE12F /* CreateScheduleFlowCoordinator.swift in Sources */,
 				44474BA72CF7A28500B03957 /* StatisticsViewModelProtocol.swift in Sources */,
 				44727B3D2C48692E007756A3 /* Goal.swift in Sources */,
 				44E28EDA2CEE6DA7001FA0CA /* StatisticsService.swift in Sources */,

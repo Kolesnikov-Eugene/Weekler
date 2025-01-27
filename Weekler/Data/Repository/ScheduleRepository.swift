@@ -39,13 +39,11 @@ final class ScheduleRepository: ScheduleRepositoryProtocol {
         let taskPredicate = #Predicate<TaskItem> { ids.contains($0.id) }
         let sort = SortDescriptor<TaskItem>(\.id, order: .forward)
         
-        var scheduleItems = await dataSource.fetchTaskItems(
+        let scheduleItems = await dataSource.fetchTaskItems(
             predicate: taskPredicate,
             sortDescriptor: sort
         )
         
-        scheduleItems.sort { $0.time!.onlyTime < $1.time!.onlyTime }
-//        
         let currentScheduleTaskArray = scheduleItems.compactMap { task in
             if let dates = task.dates?.map({ $0.date }) {
                 return ScheduleTask(
@@ -58,6 +56,7 @@ final class ScheduleRepository: ScheduleRepositoryProtocol {
             }
             return nil
         }
+        
         return currentScheduleTaskArray
     }
     
