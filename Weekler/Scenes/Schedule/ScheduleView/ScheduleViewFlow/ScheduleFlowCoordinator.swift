@@ -43,10 +43,6 @@ final class ScheduleFlowCoordinator: Coordinator {
         guard let factory = sceneFactoryDIContainer.createScheduleSceneContainer else {
             fatalError("Dependency createScheduleSceneContainer is nil")
         }
-//        let createScheduleVC = factory.makeCreateScheduleViewController(for: task, with: mode)
-//        let createScheduleNavController = UINavigationController(rootViewController: createScheduleVC)
-//        createScheduleVC.hidesBottomBarWhenPushed = true
-//        navigationController?.present(createScheduleNavController, animated: true)
         
         // Create coordinator impl
         let createScheduleCoordinator = CreateScheduleFlowCoordinator(

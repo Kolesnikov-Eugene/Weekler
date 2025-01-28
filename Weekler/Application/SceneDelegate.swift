@@ -6,14 +6,30 @@
 //
 
 import UIKit
+import UserNotifications
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     private var weeklerAppCoordinator: WeeklerAppCoordinator?
 
+    private func requestNotificationAuthorization() async {
+        let center = UNUserNotificationCenter.current()
+        do {
+            try await center.requestAuthorization(options: [.alert, .badge, .sound])
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        
+        // MARK: - Request authentications allowance
+        Task {
+            await requestNotificationAuthorization()
+        }
+        
+        // MARK: - Create scene
         if let windowScene = scene as? UIWindowScene {
             
             let window = UIWindow(windowScene: windowScene)

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UserNotifications
 
 struct Query: Hashable {
     let date: Date
@@ -67,8 +68,10 @@ final class ScheduleRepository: ScheduleRepositoryProtocol {
             isNotificationEnabled: task.isNotificationEnabled,
             plannedDates: task.dates
         )
-        
         await dataSource.insert(model)
+        
+        // MARK: - add notification for inserted task if added
+        await addNotification(for: task)
     }
     
     func deleteTask(with id: UUID) async {
@@ -128,5 +131,33 @@ final class ScheduleRepository: ScheduleRepositoryProtocol {
             return #Predicate<ScheduleDate> { $0.onlyDate == onlyDate && $0.isCompleted }
         }
         return #Predicate<ScheduleDate> { $0.onlyDate == onlyDate && !$0.isCompleted }
+    }
+    
+    // TODO: - Create service
+    // Move to ViewModel?
+    private func addNotification(for task: ScheduleTask) async {
+        guard let date = task.dates.first else { return }
+        let center = UNUserNotificationCenter.current()
+        
+        let content = UNMutableNotificationContent()
+        content.title = "OLA"
+        content.body = task.description
+        content.sound = UNNotificationSound.default
+        
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+        
+        let request = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: content,
+            trigger: trigger
+        )
+        do {
+            try await center.add(request)
+        } catch {
+            print(error)
+        }
     }
 }
