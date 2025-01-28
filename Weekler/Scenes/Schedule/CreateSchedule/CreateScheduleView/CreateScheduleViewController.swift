@@ -47,14 +47,17 @@ final class CreateScheduleViewController: UIViewController {
     private var viewModel: CreateScheduleViewModelProtocol
     private var mode: CreateMode
     private var bag = DisposeBag()
+    private weak var coordinator: CreateScheduleFlowCoordinator?
     
     // MARK: - lifecycle
     init(
         viewModel: CreateScheduleViewModelProtocol,
-        mode: CreateMode
+        mode: CreateMode,
+        coordinator: CreateScheduleFlowCoordinator?
     ) {
         self.viewModel = viewModel
         self.mode = mode
+        self.coordinator = coordinator
         super.init(nibName: nil, bundle: nil)
         withUnsafePointer(to: self) { print("\($0)") }
     }
@@ -79,7 +82,7 @@ final class CreateScheduleViewController: UIViewController {
         viewModel.hideView
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
-                self?.dismiss(animated: true)
+                self?.coordinator?.finish()
             })
             .disposed(by: bag)
         
@@ -122,7 +125,8 @@ final class CreateScheduleViewController: UIViewController {
     
     @objc
     private func cancelButtonTapped() {
-        dismiss(animated: true)
+        coordinator?.finish()
+//        dismiss(animated: true)
     }
     
 //    private func configureAppearence() {

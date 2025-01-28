@@ -50,14 +50,20 @@ final class ScheduleFlowCoordinator: Coordinator {
         
         // Create coordinator impl
         let createScheduleCoordinator = CreateScheduleFlowCoordinator(
+            parentCoordinator: self,
             dependencies: factory,
             navigationController: navigationController,
             task: task,
             mode: mode
         )
+        createScheduleCoordinator.parentCoordinator = self
         createScheduleCoordinator.start()
         
         // TODO: manage coordinator lifecycle
-//        childCoordinators.append(createScheduleCoordinator)
+        childCoordinators.append(createScheduleCoordinator)
+    }
+    
+    func dismissCreateSchedule() {
+        childCoordinators.removeAll()
     }
 }
