@@ -28,9 +28,17 @@ final class NotificationService: LocalNotificationServiceProtocol {
               let date = task.dates.first else { return }
         
         let content = UNMutableNotificationContent()
-        content.title = "WEEKLER"
-        content.body = task.description
-        content.sound = UNNotificationSound.default
+        
+        if settings.alertSetting == .enabled {
+            // Alert is enabled, show a full notification with an alert
+            content.title = "WEEKLER"
+            content.body = task.description
+            content.sound = UNNotificationSound.default
+        } else {
+            // Alert is disabled, use only badge and sound
+            content.badge = NSNumber(value: 1) // NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1) add logic
+            content.sound = .default
+        }
         
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
