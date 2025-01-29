@@ -62,6 +62,11 @@ final class SceneFactoryDIContainer: SceneFactoryProtocol {
         return hapticsManager
     }
     
+    func makeNotificationService() -> LocalNotificationServiceProtocol {
+        let notificationService: LocalNotificationServiceProtocol = container.resolve()
+        return notificationService
+    }
+    
     func makeSettingsScreen(_ screen: SettingsItem) -> UIViewController {
         switch screen {
         case .general:

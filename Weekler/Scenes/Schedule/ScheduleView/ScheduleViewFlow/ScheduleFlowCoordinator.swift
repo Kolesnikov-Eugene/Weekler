@@ -13,6 +13,7 @@ final class ScheduleFlowCoordinator: Coordinator {
     private var navigationController: UINavigationController?
     private let sceneFactoryDIContainer: SceneFactoryProtocol
     private let tabBar: UITabBarController
+    private var childCoordinators: [Coordinator] = []
     
     // MARK: - lifecycle
     init(
@@ -42,8 +43,23 @@ final class ScheduleFlowCoordinator: Coordinator {
         guard let factory = sceneFactoryDIContainer.createScheduleSceneContainer else {
             fatalError("Dependency createScheduleSceneContainer is nil")
         }
-        let createScheduleVC = factory.makeCreateScheduleViewController(for: task, with: mode)
-        createScheduleVC.hidesBottomBarWhenPushed = true
-        navigationController?.present(createScheduleVC, animated: true)
+        
+        // Create coordinator impl
+        let createScheduleCoordinator = CreateScheduleFlowCoordinator(
+            parentCoordinator: self,
+            dependencies: factory,
+            navigationController: navigationController,
+            task: task,
+            mode: mode
+        )
+        createScheduleCoordinator.parentCoordinator = self
+        createScheduleCoordinator.start()
+        
+        // TODO: manage coordinator lifecycle
+        childCoordinators.append(createScheduleCoordinator)
+    }
+    
+    func dismissCreateSchedule() {
+        childCoordinators.removeAll()
     }
 }

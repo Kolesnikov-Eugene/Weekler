@@ -23,13 +23,21 @@ final class CreateSceneDIContainer: CreateScheduleSceneProtocol {
     }
     
     // MARK: - public methods
-    func makeCreateScheduleViewController(for task: ScheduleTask?, with mode: CreateMode) -> CreateScheduleViewController {
+    func makeCreateScheduleViewController(
+        for task: ScheduleTask?,
+        with mode: CreateMode,
+        coordinator: CreateScheduleFlowCoordinator?
+    ) -> CreateScheduleViewController {
         let createViewModel: CreateScheduleViewModelProtocol = DIContainer.shared.resolve(arguments: createScheduleDelegate, task)
-        let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve(arguments: createViewModel, mode)
+        let createScheduleVC: CreateScheduleViewController = DIContainer.shared.resolve(arguments: createViewModel, mode, coordinator)
         return createScheduleVC
     }
 }
 
 protocol CreateScheduleSceneProtocol {
-    func makeCreateScheduleViewController(for task: ScheduleTask?, with mode: CreateMode) -> CreateScheduleViewController
+    func makeCreateScheduleViewController(
+        for task: ScheduleTask?,
+        with mode: CreateMode,
+        coordinator: CreateScheduleFlowCoordinator?
+    ) -> CreateScheduleViewController
 }

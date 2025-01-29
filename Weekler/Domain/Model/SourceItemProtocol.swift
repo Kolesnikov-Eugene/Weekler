@@ -9,5 +9,5 @@ import Foundation
 
 protocol SourceItemProtocol {
     var id: UUID { get }
-    var date: Date { get }
+    var dates: [Date] { get }
 }

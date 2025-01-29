@@ -8,6 +8,13 @@
 import UIKit
 import SnapKit
 import JTAppleCalendar
+import RxSwift
+import RxCocoa
+
+enum CalendarMode {
+    case week
+    case month
+}
 
 final class CalendarView: UIView {
     
@@ -42,7 +49,8 @@ final class CalendarView: UIView {
     private var calendarCollectionViewRowsNumber = Constants.weekModeCalendarRowNumber
     private let weekDaysLabelHeight = Constants.weekDaysLabelHeight
     private var viewModel: CalendarViewModelProtocol
-    private var isInitialLayout = false
+    private var calendarMode: CalendarMode = .week
+    private var bag = DisposeBag()
     
     // MARK: - lifecycle
     init(
@@ -60,12 +68,11 @@ final class CalendarView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        print("view")
-        if !isInitialLayout {
-            let calendarHeight = CGRectGetHeight(CGRect(origin: .zero, size: calendarCollectionView.bounds.size))
-            viewModel.setCalendarViewWith(calendarHeight + weekDaysLabelHeight)
-            isInitialLayout = true
-        }
+    }
+    
+    // MARK: - Public methods
+    func toggleMode(to calendarMode: CalendarMode) {
+        switchCurrentMode(to: calendarMode)
     }
     
     // MARK: - private properties
@@ -90,6 +97,7 @@ final class CalendarView: UIView {
     }
     
     private func applyConstraints() {
+        // weekDaysStackView constraints
         weekDaysStackView.snp.makeConstraints {
             $0.top.equalTo(snp.top)
             $0.leading.equalTo(snp.leading)
@@ -118,12 +126,11 @@ final class CalendarView: UIView {
     }
     
     private func animateCalendarTransition() {
-        if calendarCollectionViewRowsNumber == Constants.weekModeCalendarRowNumber {
+        if calendarMode == .week {
             self.calendarCollectionView.snp.updateConstraints {
                 $0.height.equalTo(self.calendarCollectionHeight)
             }
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveLinear) {
-                self.viewModel.setCalendarViewWith(self.calendarCollectionHeight + self.weekDaysLabelHeight)
                 self.layoutIfNeeded()
             } completion: { _ in
                 self.calendarCollectionView.reloadData(withanchor: self.viewModel.selectedDate)
@@ -133,11 +140,11 @@ final class CalendarView: UIView {
                 $0.height.equalTo(self.calendarCollectionHeight)
             }
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn) {
-                self.viewModel.setCalendarViewWith(self.calendarCollectionHeight + self.weekDaysLabelHeight)
                 self.layoutIfNeeded()
                 self.calendarCollectionView.reloadData(withanchor: self.viewModel.selectedDate)
             }
         }
+
     }
     
     private func selectCurrentDateToCalendar() {
@@ -146,18 +153,17 @@ final class CalendarView: UIView {
         }
     }
     
-    @objc
-    func calendarSwitchRightBarButtonItemTapped() {
-        calendarCollectionViewRowsNumber = calendarCollectionViewRowsNumber == Constants.weekModeCalendarRowNumber ?
+    func switchCurrentMode(to newCalendarMode: CalendarMode) {
+        calendarMode = newCalendarMode
+        calendarCollectionViewRowsNumber = newCalendarMode == .month ?
         Constants.monthModeCalendarRowNumber : Constants.weekModeCalendarRowNumber
         
-        calendarCollectionHeight = calendarCollectionHeight == Constants.weekModeCalendarHeight ?
+        calendarCollectionHeight = newCalendarMode == .month ?
         Constants.monthModeCalendarHeight : Constants.weekModeCalendarHeight
         
         animateCalendarTransition()
     }
 }
-
 
 //MARK: - JTAppleCalendarViewDataSource
 extension CalendarView: JTAppleCalendarViewDataSource {

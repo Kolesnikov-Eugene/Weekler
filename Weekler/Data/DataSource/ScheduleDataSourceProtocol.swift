@@ -14,8 +14,6 @@ protocol ScheduleDataSourceProtocol {
         sortDescriptor: SortDescriptor<T>
     ) async -> [T]
     func insert<T: PersistentModel>(_ model: T) async
-    func deleteTask<T: PersistentModel>(with predicate: Predicate<T>) async
-    func edit(_ task: TaskToEdit) async
-    func completeTask<T: PersistentModel>(with predicate: Predicate<T>) async
-    func unCompleteTask<T: PersistentModel>(with predicate: Predicate<T>) async
+    func delete<T: PersistentModel>(with predicate: Predicate<T>) async
+    func saveContext() async throws
 }
