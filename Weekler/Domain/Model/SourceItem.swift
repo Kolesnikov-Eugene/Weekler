@@ -20,7 +20,8 @@ enum SourceItem: Hashable, Comparable {
         guard let left,
               let right else { return false }
         
-        return left.date < right.date
+//        return left.date < right.date
+        return left.id < right.id
     }
     
     var castSelfToModel: SourceItemProtocol? {

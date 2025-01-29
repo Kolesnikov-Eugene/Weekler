@@ -26,6 +26,7 @@
 		440B2DD42CDBF07400BA728B /* TaskToEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440B2DD32CDBF07400BA728B /* TaskToEdit.swift */; };
 		440B2DD62CDBF93100BA728B /* ScheduleDataSourceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440B2DD52CDBF93100BA728B /* ScheduleDataSourceAssembly.swift */; };
 		440CF1F72C73CAE600FEFDE0 /* Date+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */; };
+		4412BFB72D36EEBF000E931F /* ScheduleDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4412BFB62D36EEBF000E931F /* ScheduleDate.swift */; };
 		4415A1E72CEFBD390065B142 /* Calendar+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4415A1E62CEFBD390065B142 /* Calendar+extension.swift */; };
 		4418D5CC2D0B7487003664E6 /* GeneralSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4418D5CB2D0B7487003664E6 /* GeneralSettingsViewController.swift */; };
 		4418D5CE2D0B74F0003664E6 /* NotificationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4418D5CD2D0B74F0003664E6 /* NotificationSettingsViewController.swift */; };
@@ -46,6 +47,7 @@
 		442256842C6BE7B300172C0A /* ScheduleUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256832C6BE7B300172C0A /* ScheduleUseCase.swift */; };
 		442256862C6BE82900172C0A /* ScheduleUseCaseAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256852C6BE82900172C0A /* ScheduleUseCaseAssembly.swift */; };
 		442256882C6BEB4400172C0A /* ScheduleDataBaseType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442256872C6BEB4400172C0A /* ScheduleDataBaseType.swift */; };
+		443A7BE22D418BA200455C2F /* CalendarView_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443A7BE12D418BA200455C2F /* CalendarView_old.swift */; };
 		444045DD2CFF8D0600559126 /* AppSettingsMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444045DC2CFF8D0600559126 /* AppSettingsMainView.swift */; };
 		444045E12CFF8DFE00559126 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444045E02CFF8DFE00559126 /* ProfileView.swift */; };
 		444045E42CFF8E2E00559126 /* AppSettingsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444045E32CFF8E2E00559126 /* AppSettingsCollectionViewController.swift */; };
@@ -63,6 +65,8 @@
 		444AC1302CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444AC12F2CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift */; };
 		444B387F2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444B387E2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift */; };
 		444DAB862C655A8F005B8ABC /* SourceItemProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DAB852C655A8F005B8ABC /* SourceItemProtocol.swift */; };
+		4453AF8F2D3ED94E0053C2CF /* CreateScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4453AF8E2D3ED94E0053C2CF /* CreateScheduleView.swift */; };
+		4453AF912D3EDD510053C2CF /* CreateScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4453AF902D3EDD510053C2CF /* CreateScheduleTableViewController.swift */; };
 		445F823B2D1B370F00F001DE /* ThemeSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F823A2D1B370F00F001DE /* ThemeSection.swift */; };
 		445F823D2D1B372B00F001DE /* ThemeCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F823C2D1B372B00F001DE /* ThemeCellType.swift */; };
 		445F823F2D1B400100F001DE /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F823E2D1B400100F001DE /* UIColor+Extension.swift */; };
@@ -82,6 +86,8 @@
 		44727B472C486AAC007756A3 /* ScheduleTableViewSectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44727B462C486AAC007756A3 /* ScheduleTableViewSectionItem.swift */; };
 		44727B4A2C486B29007756A3 /* SelectRepeatedDaysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44727B492C486B29007756A3 /* SelectRepeatedDaysViewController.swift */; };
 		44727B4C2C486B7B007756A3 /* DaysOfWeekTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44727B4B2C486B7B007756A3 /* DaysOfWeekTableViewCell.swift */; };
+		4477560A2D48156F000DE12F /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447756092D48156F000DE12F /* Array+Extension.swift */; };
+		4477560D2D481937000DE12F /* CreateScheduleFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4477560C2D481937000DE12F /* CreateScheduleFlowCoordinator.swift */; };
 		447DBE612BC4A8EB00A99A38 /* AppSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447DBE522BC4A8EB00A99A38 /* AppSettingsViewController.swift */; };
 		447DBE622BC4A8EB00A99A38 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447DBE552BC4A8EB00A99A38 /* ScheduleViewController.swift */; };
 		447DBE632BC4A8EB00A99A38 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447DBE582BC4A8EB00A99A38 /* StatisticsViewController.swift */; };
@@ -95,6 +101,7 @@
 		449F18E12BACC4C000F9640D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 449F18E02BACC4C000F9640D /* Assets.xcassets */; };
 		449F18E42BACC4C000F9640D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 449F18E22BACC4C000F9640D /* LaunchScreen.storyboard */; };
 		44A378DF2BFD2D7000E93B5F /* SelectMainModeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A378DE2BFD2D7000E93B5F /* SelectMainModeCollectionViewCell.swift */; };
+		44A41B902D40344B008B4C43 /* ScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A41B8F2D40344B008B4C43 /* ScheduleTableViewController.swift */; };
 		44A88DE02CD6646500D4A007 /* CreateSceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A88DDF2CD6646500D4A007 /* CreateSceneDIContainer.swift */; };
 		44A88DE22CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44A88DE12CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift */; };
 		44AE39A22CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AE39A12CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift */; };
@@ -110,6 +117,8 @@
 		44BF98922D077861008A2BA3 /* ApplicationSettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BF98912D077861008A2BA3 /* ApplicationSettingsItem.swift */; };
 		44BF98942D077878008A2BA3 /* AppSettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BF98932D077878008A2BA3 /* AppSettingsItem.swift */; };
 		44BF98962D07789A008A2BA3 /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BF98952D07789A008A2BA3 /* SettingsSection.swift */; };
+		44C00B6A2D4AB46F0004DB53 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C00B692D4AB46F0004DB53 /* NotificationService.swift */; };
+		44C00B6C2D4AB5AD0004DB53 /* NotificationServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C00B6B2D4AB5AD0004DB53 /* NotificationServiceAssembly.swift */; };
 		44C7148D2BD8465300C67B20 /* DaysOfWeek+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C7148C2BD8465300C67B20 /* DaysOfWeek+Extension.swift */; };
 		44CD57A52D13611700EF84F7 /* RoundedBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CD57A42D13611700EF84F7 /* RoundedBackgroundView.swift */; };
 		44CE3BBB2C0BA31C00719B84 /* CreateScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CE3BBA2C0BA31C00719B84 /* CreateScheduleViewController.swift */; };
@@ -117,6 +126,7 @@
 		44D18C732C121EED00F22CED /* ScheduleTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D18C722C121EED00F22CED /* ScheduleTask.swift */; };
 		44DBAE572C13222400BF130E /* ScheduleItemsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DBAE562C13222400BF130E /* ScheduleItemsTableViewCell.swift */; };
 		44DBD2AF2C8ED287006AE2F1 /* CompletedTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DBD2AE2C8ED287006AE2F1 /* CompletedTask.swift */; };
+		44DD0F272D38475200BA975D /* DateComponents+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DD0F262D38475200BA975D /* DateComponents+Extension.swift */; };
 		44E28ED82CEE6D9C001FA0CA /* StatisticsServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E28ED72CEE6D9C001FA0CA /* StatisticsServiceProtocol.swift */; };
 		44E28EDA2CEE6DA7001FA0CA /* StatisticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E28ED92CEE6DA7001FA0CA /* StatisticsService.swift */; };
 		44E28EDC2CEE6E88001FA0CA /* StatisticsRepositoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E28EDB2CEE6E88001FA0CA /* StatisticsRepositoryProtocol.swift */; };
@@ -124,6 +134,7 @@
 		44E28EE02CEE6F55001FA0CA /* StatisticsDataSourceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E28EDF2CEE6F55001FA0CA /* StatisticsDataSourceProtocol.swift */; };
 		44E28EE22CEE6FF0001FA0CA /* StatisticsServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E28EE12CEE6FF0001FA0CA /* StatisticsServiceAssembly.swift */; };
 		44E28EE62CEE70CA001FA0CA /* StatisticsRepositoryAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E28EE52CEE70CA001FA0CA /* StatisticsRepositoryAssembly.swift */; };
+		44F02F4E2D4156CF00A1E3F2 /* CheckmarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F02F4D2D4156CF00A1E3F2 /* CheckmarkView.swift */; };
 		44F116932BDC384B00134D5F /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F116922BDC384B00134D5F /* DIContainer.swift */; };
 		44F116952BDC394A00134D5F /* SceneAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F116942BDC394A00134D5F /* SceneAssembly.swift */; };
 		44F116982BDC398E00134D5F /* ScheduleAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F116972BDC398E00134D5F /* ScheduleAssembly.swift */; };
@@ -158,6 +169,7 @@
 		440B2DD32CDBF07400BA728B /* TaskToEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskToEdit.swift; sourceTree = "<group>"; };
 		440B2DD52CDBF93100BA728B /* ScheduleDataSourceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataSourceAssembly.swift; sourceTree = "<group>"; };
 		440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+extension.swift"; sourceTree = "<group>"; };
+		4412BFB62D36EEBF000E931F /* ScheduleDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDate.swift; sourceTree = "<group>"; };
 		4415A1E62CEFBD390065B142 /* Calendar+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Calendar+extension.swift"; sourceTree = "<group>"; };
 		4418D5CB2D0B7487003664E6 /* GeneralSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsViewController.swift; sourceTree = "<group>"; };
 		4418D5CD2D0B74F0003664E6 /* NotificationSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsViewController.swift; sourceTree = "<group>"; };
@@ -178,6 +190,7 @@
 		442256832C6BE7B300172C0A /* ScheduleUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleUseCase.swift; sourceTree = "<group>"; };
 		442256852C6BE82900172C0A /* ScheduleUseCaseAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleUseCaseAssembly.swift; sourceTree = "<group>"; };
 		442256872C6BEB4400172C0A /* ScheduleDataBaseType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDataBaseType.swift; sourceTree = "<group>"; };
+		443A7BE12D418BA200455C2F /* CalendarView_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView_old.swift; sourceTree = "<group>"; };
 		444045DC2CFF8D0600559126 /* AppSettingsMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsMainView.swift; sourceTree = "<group>"; };
 		444045E02CFF8DFE00559126 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		444045E32CFF8E2E00559126 /* AppSettingsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsCollectionViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +208,8 @@
 		444AC12F2CE3E21A0032DA6F /* StatisticsViewModelAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewModelAssembly.swift; sourceTree = "<group>"; };
 		444B387E2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekCalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 		444DAB852C655A8F005B8ABC /* SourceItemProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceItemProtocol.swift; sourceTree = "<group>"; };
+		4453AF8E2D3ED94E0053C2CF /* CreateScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleView.swift; sourceTree = "<group>"; };
+		4453AF902D3EDD510053C2CF /* CreateScheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleTableViewController.swift; sourceTree = "<group>"; };
 		445F823A2D1B370F00F001DE /* ThemeSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSection.swift; sourceTree = "<group>"; };
 		445F823C2D1B372B00F001DE /* ThemeCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCellType.swift; sourceTree = "<group>"; };
 		445F823E2D1B400100F001DE /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
@@ -214,6 +229,8 @@
 		44727B462C486AAC007756A3 /* ScheduleTableViewSectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewSectionItem.swift; sourceTree = "<group>"; };
 		44727B492C486B29007756A3 /* SelectRepeatedDaysViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectRepeatedDaysViewController.swift; sourceTree = "<group>"; };
 		44727B4B2C486B7B007756A3 /* DaysOfWeekTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysOfWeekTableViewCell.swift; sourceTree = "<group>"; };
+		447756092D48156F000DE12F /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
+		4477560C2D481937000DE12F /* CreateScheduleFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleFlowCoordinator.swift; sourceTree = "<group>"; };
 		447DBE522BC4A8EB00A99A38 /* AppSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingsViewController.swift; sourceTree = "<group>"; };
 		447DBE552BC4A8EB00A99A38 /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		447DBE582BC4A8EB00A99A38 /* StatisticsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
@@ -229,6 +246,7 @@
 		449F18E32BACC4C000F9640D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		449F18E52BACC4C000F9640D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44A378DE2BFD2D7000E93B5F /* SelectMainModeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMainModeCollectionViewCell.swift; sourceTree = "<group>"; };
+		44A41B8F2D40344B008B4C43 /* ScheduleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewController.swift; sourceTree = "<group>"; };
 		44A88DDF2CD6646500D4A007 /* CreateSceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSceneDIContainer.swift; sourceTree = "<group>"; };
 		44A88DE12CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleSceneContainerAssembly.swift; sourceTree = "<group>"; };
 		44AE39A12CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsFlowCoordinator.swift; sourceTree = "<group>"; };
@@ -244,6 +262,8 @@
 		44BF98912D077861008A2BA3 /* ApplicationSettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationSettingsItem.swift; sourceTree = "<group>"; };
 		44BF98932D077878008A2BA3 /* AppSettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsItem.swift; sourceTree = "<group>"; };
 		44BF98952D07789A008A2BA3 /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
+		44C00B692D4AB46F0004DB53 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		44C00B6B2D4AB5AD0004DB53 /* NotificationServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationServiceAssembly.swift; sourceTree = "<group>"; };
 		44C7148C2BD8465300C67B20 /* DaysOfWeek+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DaysOfWeek+Extension.swift"; sourceTree = "<group>"; };
 		44CD57A42D13611700EF84F7 /* RoundedBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBackgroundView.swift; sourceTree = "<group>"; };
 		44CE3BBA2C0BA31C00719B84 /* CreateScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewController.swift; sourceTree = "<group>"; };
@@ -251,6 +271,7 @@
 		44D18C722C121EED00F22CED /* ScheduleTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleTask.swift; sourceTree = "<group>"; };
 		44DBAE562C13222400BF130E /* ScheduleItemsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleItemsTableViewCell.swift; sourceTree = "<group>"; };
 		44DBD2AE2C8ED287006AE2F1 /* CompletedTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletedTask.swift; sourceTree = "<group>"; };
+		44DD0F262D38475200BA975D /* DateComponents+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateComponents+Extension.swift"; sourceTree = "<group>"; };
 		44E28ED72CEE6D9C001FA0CA /* StatisticsServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsServiceProtocol.swift; sourceTree = "<group>"; };
 		44E28ED92CEE6DA7001FA0CA /* StatisticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsService.swift; sourceTree = "<group>"; };
 		44E28EDB2CEE6E88001FA0CA /* StatisticsRepositoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsRepositoryProtocol.swift; sourceTree = "<group>"; };
@@ -258,6 +279,7 @@
 		44E28EDF2CEE6F55001FA0CA /* StatisticsDataSourceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsDataSourceProtocol.swift; sourceTree = "<group>"; };
 		44E28EE12CEE6FF0001FA0CA /* StatisticsServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsServiceAssembly.swift; sourceTree = "<group>"; };
 		44E28EE52CEE70CA001FA0CA /* StatisticsRepositoryAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsRepositoryAssembly.swift; sourceTree = "<group>"; };
+		44F02F4D2D4156CF00A1E3F2 /* CheckmarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckmarkView.swift; sourceTree = "<group>"; };
 		44F116922BDC384B00134D5F /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		44F116942BDC394A00134D5F /* SceneAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneAssembly.swift; sourceTree = "<group>"; };
 		44F116972BDC398E00134D5F /* ScheduleAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleAssembly.swift; sourceTree = "<group>"; };
@@ -300,6 +322,7 @@
 				442256812C6BE61500172C0A /* TaskItem.swift */,
 				442256872C6BEB4400172C0A /* ScheduleDataBaseType.swift */,
 				44DBD2AE2C8ED287006AE2F1 /* CompletedTask.swift */,
+				4412BFB62D36EEBF000E931F /* ScheduleDate.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -371,6 +394,7 @@
 			isa = PBXGroup;
 			children = (
 				44079C6D2CD169C5006D3A3D /* CalendarView.swift */,
+				443A7BE12D418BA200455C2F /* CalendarView_old.swift */,
 			);
 			path = CalendarView;
 			sourceTree = "<group>";
@@ -479,6 +503,7 @@
 				4442BA672BE41F38002DC469 /* SceneFactoryAssembly.swift */,
 				44A88DE12CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift */,
 				44AE39A72CE2954500D89B23 /* CoreHapticsManagerAssembly.swift */,
+				44C00B6B2D4AB5AD0004DB53 /* NotificationServiceAssembly.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -491,6 +516,8 @@
 				440CF1F62C73CAE600FEFDE0 /* Date+extension.swift */,
 				4415A1E62CEFBD390065B142 /* Calendar+extension.swift */,
 				445F823E2D1B400100F001DE /* UIColor+Extension.swift */,
+				44DD0F262D38475200BA975D /* DateComponents+Extension.swift */,
+				447756092D48156F000DE12F /* Array+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -616,6 +643,14 @@
 			path = SelectRepeatedDaysView;
 			sourceTree = "<group>";
 		};
+		4477560B2D48191F000DE12F /* CreateScheduleFlow */ = {
+			isa = PBXGroup;
+			children = (
+				4477560C2D481937000DE12F /* CreateScheduleFlowCoordinator.swift */,
+			);
+			path = CreateScheduleFlow;
+			sourceTree = "<group>";
+		};
 		447DBE532BC4A8EB00A99A38 /* AppSettingsMainView */ = {
 			isa = PBXGroup;
 			children = (
@@ -644,8 +679,6 @@
 			children = (
 				44B06E122BECEDE7000C3CC6 /* ScheduleViewViewModel */,
 				441CAC752CE0E1DE00064348 /* ScheduleViewFlow */,
-				44079C6C2CD16661006D3A3D /* CalendarView */,
-				44079C692CD16301006D3A3D /* SelectTaskModeView */,
 				447F920F2CD0161D00DDB846 /* ScheduleMainView */,
 				44D18C712C121D0E00F22CED /* ScheduleViewController */,
 				44F409132BCF0A2F0052ABE9 /* WeekCalendarCollectionViewCell */,
@@ -656,6 +689,7 @@
 		447DBE572BC4A8EB00A99A38 /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
+				44F02F4C2D41566300A1E3F2 /* Checkmark */,
 				44FB46612C5E72F4005731BC /* CreateSchedule */,
 				447DBE562BC4A8EB00A99A38 /* ScheduleView */,
 			);
@@ -704,8 +738,11 @@
 		447F920F2CD0161D00DDB846 /* ScheduleMainView */ = {
 			isa = PBXGroup;
 			children = (
+				44A41B8E2D40343A008B4C43 /* ScheduleTableView */,
+				44079C692CD16301006D3A3D /* SelectTaskModeView */,
 				44B06E172BECF062000C3CC6 /* ScheduleTableViewCell */,
 				447F92102CD0165600DDB846 /* ScheduleMainView.swift */,
+				44079C6C2CD16661006D3A3D /* CalendarView */,
 			);
 			path = ScheduleMainView;
 			sourceTree = "<group>";
@@ -773,6 +810,7 @@
 			children = (
 				44F305722D19EC5F005B32E1 /* WeeklerUIManager.swift */,
 				446C85602CB85B8700077CC5 /* CoreHapticsManager.swift */,
+				44C00B692D4AB46F0004DB53 /* NotificationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -796,6 +834,14 @@
 				44A378DE2BFD2D7000E93B5F /* SelectMainModeCollectionViewCell.swift */,
 			);
 			path = SelectMainModeCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		44A41B8E2D40343A008B4C43 /* ScheduleTableView */ = {
+			isa = PBXGroup;
+			children = (
+				44A41B8F2D40344B008B4C43 /* ScheduleTableViewController.swift */,
+			);
+			path = ScheduleTableView;
 			sourceTree = "<group>";
 		};
 		44AE39A02CE28B3F00D89B23 /* StatisticsFlow */ = {
@@ -858,6 +904,8 @@
 				44CE3BBA2C0BA31C00719B84 /* CreateScheduleViewController.swift */,
 				44DBAE562C13222400BF130E /* ScheduleItemsTableViewCell.swift */,
 				449EF5A22C52DE5900FD187B /* CreateScheduleDelegate.swift */,
+				4453AF8E2D3ED94E0053C2CF /* CreateScheduleView.swift */,
+				4453AF902D3EDD510053C2CF /* CreateScheduleTableViewController.swift */,
 			);
 			path = CreateScheduleView;
 			sourceTree = "<group>";
@@ -905,6 +953,14 @@
 				44E28EE52CEE70CA001FA0CA /* StatisticsRepositoryAssembly.swift */,
 			);
 			path = Statistics;
+			sourceTree = "<group>";
+		};
+		44F02F4C2D41566300A1E3F2 /* Checkmark */ = {
+			isa = PBXGroup;
+			children = (
+				44F02F4D2D4156CF00A1E3F2 /* CheckmarkView.swift */,
+			);
+			path = Checkmark;
 			sourceTree = "<group>";
 		};
 		44F116902BDC382700134D5F /* DependencyInjection */ = {
@@ -960,6 +1016,7 @@
 		44FB46612C5E72F4005731BC /* CreateSchedule */ = {
 			isa = PBXGroup;
 			children = (
+				4477560B2D48191F000DE12F /* CreateScheduleFlow */,
 				44FB465A2C5E669F005731BC /* CreateScheduleViewModel */,
 				44CE3BB92C0BA2DB00719B84 /* CreateScheduleView */,
 			);
@@ -1140,6 +1197,7 @@
 				4418D5E02D0B7845003664E6 /* HelpViewAssembly.swift in Sources */,
 				44AE39A52CE2908600D89B23 /* AppSettingsFlowCoordinator.swift in Sources */,
 				4442BA702BE4277B002DC469 /* SceneFactoryProtocol.swift in Sources */,
+				44C00B6C2D4AB5AD0004DB53 /* NotificationServiceAssembly.swift in Sources */,
 				4442BA6E2BE425F0002DC469 /* AppSettingsVCAssembly.swift in Sources */,
 				444AC12E2CE3E0E60032DA6F /* ServiceAssembly.swift in Sources */,
 				444045E82CFF8F7B00559126 /* AppSettingsViewModel.swift in Sources */,
@@ -1151,6 +1209,7 @@
 				44F305732D19EC5F005B32E1 /* WeeklerUIManager.swift in Sources */,
 				444045E62CFF8EAD00559126 /* AppSettingsCollectionCell.swift in Sources */,
 				44030B0D2D08CBC200A0FABF /* AppSettingsCellConfiguration.swift in Sources */,
+				4453AF912D3EDD510053C2CF /* CreateScheduleTableViewController.swift in Sources */,
 				44E28EE22CEE6FF0001FA0CA /* StatisticsServiceAssembly.swift in Sources */,
 				4407E7D42CD5415C00CC1692 /* SceneFactoryDIContainer.swift in Sources */,
 				4402A1C02CAB292100CCE9D8 /* ScheduleDataSource.swift in Sources */,
@@ -1161,14 +1220,17 @@
 				44BF98902D07783A008A2BA3 /* GeneralSettingsItem.swift in Sources */,
 				44727B3B2C486918007756A3 /* Priority.swift in Sources */,
 				44CD57A52D13611700EF84F7 /* RoundedBackgroundView.swift in Sources */,
+				44DD0F272D38475200BA975D /* DateComponents+Extension.swift in Sources */,
 				44FB465E2C5E66D4005731BC /* CreateScheduleViewModel.swift in Sources */,
 				440B2DD42CDBF07400BA728B /* TaskToEdit.swift in Sources */,
 				44D18C732C121EED00F22CED /* ScheduleTask.swift in Sources */,
 				44A88DE22CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift in Sources */,
+				44F02F4E2D4156CF00A1E3F2 /* CheckmarkView.swift in Sources */,
 				44FB465C2C5E66BD005731BC /* CreateScheduleViewModelProtocol.swift in Sources */,
 				44E28EE02CEE6F55001FA0CA /* StatisticsDataSourceProtocol.swift in Sources */,
 				44727B452C486A68007756A3 /* UITableView+Extension.swift in Sources */,
 				440770FD2BBB472900AD9C98 /* Colors.swift in Sources */,
+				443A7BE22D418BA200455C2F /* CalendarView_old.swift in Sources */,
 				440CF1F72C73CAE600FEFDE0 /* Date+extension.swift in Sources */,
 				445F823F2D1B400100F001DE /* UIColor+Extension.swift in Sources */,
 				44E28EDC2CEE6E88001FA0CA /* StatisticsRepositoryProtocol.swift in Sources */,
@@ -1184,7 +1246,9 @@
 				44079C6E2CD169C5006D3A3D /* CalendarView.swift in Sources */,
 				445F823B2D1B370F00F001DE /* ThemeSection.swift in Sources */,
 				449F18D82BACC4BF00F9640D /* AppDelegate.swift in Sources */,
+				4412BFB72D36EEBF000E931F /* ScheduleDate.swift in Sources */,
 				44A88DE02CD6646500D4A007 /* CreateSceneDIContainer.swift in Sources */,
+				4453AF8F2D3ED94E0053C2CF /* CreateScheduleView.swift in Sources */,
 				44BF98942D077878008A2BA3 /* AppSettingsItem.swift in Sources */,
 				446778872D1204D000B5DEA3 /* AppearanceSettingsView.swift in Sources */,
 				4467788B2D12113A00B5DEA3 /* ThemeCollectionViewController.swift in Sources */,
@@ -1195,6 +1259,7 @@
 				4418D5D82D0B7707003664E6 /* GeneralSettingsViewAssembly.swift in Sources */,
 				4407C0B82D31A85E00780990 /* ConfirmButton.swift in Sources */,
 				44AE39A22CE28B5E00D89B23 /* StatisticsFlowCoordinator.swift in Sources */,
+				4477560A2D48156F000DE12F /* Array+Extension.swift in Sources */,
 				44B06E162BECEE3C000C3CC6 /* ScheduleViewModelProtocol.swift in Sources */,
 				447DBE632BC4A8EB00A99A38 /* StatisticsViewController.swift in Sources */,
 				44C7148D2BD8465300C67B20 /* DaysOfWeek+Extension.swift in Sources */,
@@ -1208,10 +1273,13 @@
 				441DECAE2CC0353A00B725B7 /* Constants.swift in Sources */,
 				44F9EA2D2CDAB1A1009AE5FD /* ScheduleRepository.swift in Sources */,
 				447DBE642BC4A8EB00A99A38 /* TabBarController.swift in Sources */,
+				44A41B902D40344B008B4C43 /* ScheduleTableViewController.swift in Sources */,
 				44F116952BDC394A00134D5F /* SceneAssembly.swift in Sources */,
 				4441EC772CE5303800AFB022 /* ChartView.swift in Sources */,
 				447DBE612BC4A8EB00A99A38 /* AppSettingsViewController.swift in Sources */,
+				4477560D2D481937000DE12F /* CreateScheduleFlowCoordinator.swift in Sources */,
 				44474BA72CF7A28500B03957 /* StatisticsViewModelProtocol.swift in Sources */,
+				44C00B6A2D4AB46F0004DB53 /* NotificationService.swift in Sources */,
 				44727B3D2C48692E007756A3 /* Goal.swift in Sources */,
 				44E28EDA2CEE6DA7001FA0CA /* StatisticsService.swift in Sources */,
 				444B387F2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift in Sources */,

@@ -11,25 +11,40 @@ import SwiftData
 @Model
 final class TaskItem: ScheduleDataBaseType {
     @Attribute(.unique) private(set) var id: UUID
-    var date: Date
     var taskDescription: String
     var isNotificationEnabled: Bool
-    @Relationship(deleteRule: .cascade) var completed: CompletedTask?
+//    @Relationship(deleteRule: .cascade) var completed: CompletedTask?
+    @Relationship(deleteRule: .cascade) var dates: [ScheduleDate]?
     
-    var onlyDate: String
+    var time: Date? // TODO: - ?
     
-    init(id: UUID = UUID(), date: Date, taskDescription: String, isNotificationEnabled: Bool) {
+    init(
+        id: UUID = UUID(),
+        taskDescription: String,
+        isNotificationEnabled: Bool,
+        plannedDates: [Date]
+    ) {
         self.id = id
-        self.date = date
         self.taskDescription = taskDescription
         self.isNotificationEnabled = isNotificationEnabled
-        onlyDate = date.onlyDate
+        self.time = plannedDates.first
+        
+        insert(plannedDates)
     }
     
     func editWithNew(_ task: TaskToEdit) {
-        date = task.date
         taskDescription = task.description
         isNotificationEnabled = task.isNotificationEnabled
-        onlyDate = date.onlyDate
+        insert(task.dates)
+    }
+    
+    private func insert(_ plannedDates: [Date]) {
+        var plannedDatesForCurrentTask: [ScheduleDate] = []
+        plannedDates.forEach { date in
+            let isCompleted = false // when create task it is not completed, value is always false
+            let scheduleDate = ScheduleDate(taskId: id, date: date, isCompleted: isCompleted)
+            plannedDatesForCurrentTask.append(scheduleDate)
+        }
+        dates = plannedDatesForCurrentTask
     }
 }

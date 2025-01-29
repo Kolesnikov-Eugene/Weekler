@@ -20,8 +20,8 @@ final class ScheduleUseCase: ScheduleUseCaseProtocol {
     }
     
     // MARK: - public methods
-    func fetchTaskItems(for date: String) async -> [ScheduleTask] {
-        await repository.fetchTaskItems(for: date)
+    func fetchTaskItems(with query: Query) async -> [ScheduleTask] {
+        await repository.fetchTaskItems(with: query)
     }
     
     func insert(_ task: ScheduleTask) async {
@@ -36,11 +36,7 @@ final class ScheduleUseCase: ScheduleUseCaseProtocol {
         await repository.edit(task)
     }
     
-    func completeTask(with id: UUID) async {
-        await repository.completeTask(with: id)
-    }
-    
-    func unCompleteTask(with id: UUID) async {
-        await repository.unCompleteTask(with: id)
+    func toggleTaskCompletion(with id: UUID, isCompleted: Bool) async {
+        await repository.toggleTaskCompletion(with: id, isCompleted: isCompleted)
     }
 }

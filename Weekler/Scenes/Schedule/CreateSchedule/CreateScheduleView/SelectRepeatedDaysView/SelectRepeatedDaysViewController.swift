@@ -7,11 +7,37 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 final class SelectRepeatedDaysViewController: UIViewController {
     // MARK: - private properties
     private let reuseId = "DayOfWeekTableView"
     private let segmentedControlTitlesArray = ["По дням недели", "Выбрать числа"]
+    private lazy var saveButton: UIBarButtonItem = {
+        let configuration = UIImage.SymbolConfiguration(pointSize: 18)
+        let image = UIImage(
+            systemName: "checkmark",
+            withConfiguration: configuration)?
+            .withTintColor(
+                Colors.mainForeground,
+                renderingMode: .alwaysOriginal
+            )
+        let item = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(saveButtonTapped))
+        return item
+    }()
+    private lazy var backButtonItem: UIBarButtonItem = {
+        let configuration = UIImage.SymbolConfiguration(pointSize: 18)
+        let image = UIImage(
+            systemName: "arrow.left",
+            withConfiguration: configuration)?
+            .withTintColor(
+                Colors.mainForeground,
+                renderingMode: .alwaysOriginal
+            )
+        let item = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(backButtonTapped))
+        return item
+    }()
     private lazy var daysSegmentedControl: UISegmentedControl = {
         let control = UISegmentedControl(items: segmentedControlTitlesArray)
         control.selectedSegmentIndex = 0
@@ -34,7 +60,18 @@ final class SelectRepeatedDaysViewController: UIViewController {
         calendar.translatesAutoresizingMaskIntoConstraints = false
         return calendar
     }()
-
+    private let viewModel: CreateScheduleViewModelProtocol
+    private var bag = DisposeBag()
+    
+    init(viewModel: CreateScheduleViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         daysTableView.dataSource = self
@@ -48,6 +85,10 @@ final class SelectRepeatedDaysViewController: UIViewController {
         view.backgroundColor = Colors.viewBackground
         addSubviews()
         applyConstraints()
+        navigationItem.title = "Select days to repeat"
+        navigationItem.hidesBackButton = true
+        navigationItem.leftBarButtonItem = backButtonItem
+        navigationItem.rightBarButtonItem = saveButton
     }
     
     private func addSubviews() {
@@ -57,12 +98,14 @@ final class SelectRepeatedDaysViewController: UIViewController {
     }
     
     private func applyConstraints() {
+        // dateSementedControl constraints
         daysSegmentedControl.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(20)
             $0.centerX.equalTo(view.safeAreaLayoutGuide.snp.centerX)
             $0.height.equalTo(30)
         }
         
+        // daysTableView constraints
         daysTableView.snp.makeConstraints {
             $0.leading.equalTo(view.snp.leading)
             $0.trailing.equalTo(view.snp.trailing)
@@ -70,11 +113,23 @@ final class SelectRepeatedDaysViewController: UIViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
         
+        // calendarView constraints
         calendarView.snp.makeConstraints {
             $0.top.equalTo(daysSegmentedControl.snp.bottom).offset(20)
             $0.leading.equalTo(view.safeAreaLayoutGuide.snp.leading).inset(16)
             $0.trailing.equalTo(view.safeAreaLayoutGuide.snp.trailing).inset(16)
         }
+    }
+    
+    @objc
+    private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc
+    private func saveButtonTapped() {
+        viewModel.saveDateRange()
+        navigationController?.popViewController(animated: true)
     }
     
     @objc

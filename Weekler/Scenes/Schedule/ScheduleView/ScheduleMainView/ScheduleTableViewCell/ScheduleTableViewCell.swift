@@ -68,6 +68,7 @@ final class ScheduleTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
+        
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(updateBackgroundColor),
@@ -96,8 +97,12 @@ final class ScheduleTableViewCell: UITableViewCell {
     }
     
     // MARK: - public methods
-    func configureCell(with model: ScheduleTask) {
-        let time = dateFormatter.string(from: model.date)
+    func configureCell(
+        with model: ScheduleTask,
+        and selectedDate: Date
+    ) {
+        let date = model.dates.first { $0.onlyDate == selectedDate.onlyDate } ?? Date()
+        let time = dateFormatter.string(from: date)
         timeLabel.text = time
         scheduleDescriptionlabel.text = model.description
         mainMode = .task
@@ -109,8 +114,12 @@ final class ScheduleTableViewCell: UITableViewCell {
         scheduleDescriptionlabel.textColor = Colors.textColorMain
     }
     
-    func configureCompletedTaskCell(with completedTask: ScheduleTask) {
-        let time = dateFormatter.string(from: completedTask.date)
+    func configureCompletedTaskCell(
+        with completedTask: ScheduleTask,
+        and selectedDate: Date
+    ) {
+        let date = completedTask.dates.first { $0.onlyDate == selectedDate.onlyDate } ?? Date()
+        let time = dateFormatter.string(from: date)
         timeLabel.text = time
         scheduleDescriptionlabel.text = completedTask.description
         
@@ -201,7 +210,7 @@ final class ScheduleTableViewCell: UITableViewCell {
     
     @objc
     private func updateBackgroundColor() {
-        let color = WeeklerUIManager.shared.selectedColor
+//        let color = WeeklerUIManager.shared.selectedColor
         contentView.backgroundColor = WeeklerUIManager.shared.selectedColor
     }
 }

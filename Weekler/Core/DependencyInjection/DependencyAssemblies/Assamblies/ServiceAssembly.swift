@@ -17,7 +17,8 @@ final class ServiceAssembly: Assembly {
             ScheduleDataSourceAssembly(),
             CoreHapticsManagerAssembly(),
             StatisticsServiceAssembly(),
-            StatisticsRepositoryAssembly()
+            StatisticsRepositoryAssembly(),
+            NotificationServiceAssembly()
         ]
         assemblies.forEach { $0.assemble(container: container) }
     }

@@ -12,10 +12,10 @@ import RxCocoa
 final class ScheduleViewModel: ScheduleViewModelProtocol {
 
     //MARK: - Output
-    var dataList = BehaviorRelay<[SourceItem]>(value: [])
+    var dataList = PublishRelay<[SourceItem]>()
     var emptyStateIsActive: Driver<Bool>
-    var calendarHeightValue = PublishRelay<Double?>()
     var navigationTitle = BehaviorRelay<String>(value: "")
+    var calendarStateSwitch: PublishRelay<Bool> = .init()
     
     // MARK: - Input
     var currentDateChangesObserver = PublishRelay<Date>()
@@ -35,6 +35,9 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     private var hapticsManager: CoreHapticsManagerProtocol?
     private lazy var scheduleUseCase: ScheduleUseCaseProtocol = {
         dependencies.makeScheduleUseCase()
+    }()
+    private lazy var notificationService: LocalNotificationServiceProtocol = {
+        dependencies.makeNotificationService()
     }()
     private lazy var formatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -71,6 +74,10 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
         fetchSchedule()
     }
     
+    func toggleCalendarAppearance() {
+        calendarStateSwitch.accept(true)
+    }
+    
     @objc
     func didTapAddNewEventButton() {
         hapticsManager?.playTap()
@@ -80,10 +87,21 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     // MARK: - private methods
     private func fetchSchedule() {
         print("fetch")
-        let currentDateOnly = currentDate.onlyDate
-        Task.detached {
-            let scheduleItems = await self.scheduleUseCase.fetchTaskItems(for: currentDateOnly)
-            DispatchQueue.main.async {
+        var query: Query?
+        switch mainMode {
+        case .task:
+            query = .init(date: currentDate, taskIsCompleted: false)
+        case .completedTask:
+            query = .init(date: currentDate, taskIsCompleted: true)
+        }
+        Task.detached { [weak self] in
+            guard let self = self,
+                  let query = query else {
+                return
+            }
+            let scheduleItems = await self.scheduleUseCase.fetchTaskItems(with: query)
+            
+            await MainActor.run {
                 self.tasks = scheduleItems.filter { !$0.completed }
                 self.completedTasks = scheduleItems.filter { $0.completed }
                 self.populateData()
@@ -94,8 +112,10 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     private func populateData() {
         switch mainMode {
         case .task:
+            tasks.sortByTime()
             data = tasks.map { .task($0) }
         case .completedTask:
+            completedTasks.sortByTime()
             data = completedTasks.map { .completedTask($0) }
         }
         dataList.accept(data)
@@ -124,14 +144,26 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
 // MARK: - CreateScheduleDelegate
 extension ScheduleViewModel: CreateScheduleDelegate {
     func didAddTask(_ task: ScheduleTask, mode: ScheduleMode) {
+        // FIXME: - add try await to use case
         Task.detached {
-            await self.scheduleUseCase.insert(task)
+            do {
+                await self.scheduleUseCase.insert(task)
+                try await self.notificationService.addNotification(for: task)
+            } catch {
+                fatalError("Error adding task \(error.localizedDescription)")
+            }
+            
         }
     }
     
     func edit(_ task: ScheduleTask) {
         Task.detached {
-            await self.scheduleUseCase.edit(task)
+            do {
+                await self.scheduleUseCase.edit(task)
+                try await self.notificationService.changeNotification(for: task)
+            } catch {
+                fatalError()
+            }
         }
     }
 }
@@ -148,18 +180,19 @@ extension ScheduleViewModel: ScheduleMainViewModelProtocol {
                 id = self.completedTasks[index].id
             }
             await self.scheduleUseCase.deleteTask(with: id)
+            self.notificationService.removeNotifications(with: [id.uuidString])
         }
     }
     
     func completeTask(with id: UUID) {
         Task.detached {
-            await self.scheduleUseCase.completeTask(with: id)
+            await self.scheduleUseCase.toggleTaskCompletion(with: id, isCompleted: true)
         }
     }
     
     func unCompleteTask(with id: UUID) {
         Task.detached {
-            await self.scheduleUseCase.unCompleteTask(with: id)
+            await self.scheduleUseCase.toggleTaskCompletion(with: id, isCompleted: false)
         }
     }
     
@@ -175,9 +208,6 @@ extension ScheduleViewModel: ScheduleMainViewModelProtocol {
 
 //MARK: - CalendarViewModelProtocol
 extension ScheduleViewModel: CalendarViewModelProtocol {
-    func setCalendarViewWith(_ height: Double) {
-        calendarHeightValue.accept(height)
-    }
     
     func updateNavTitle(with date: [Date]) {
         let title = formatter.string(from: date[0])
@@ -189,6 +219,6 @@ extension ScheduleViewModel: CalendarViewModelProtocol {
 extension ScheduleViewModel: SelectTaskViewModelProtocol {
     func reconfigureMode(_ mode: ScheduleMode) {
         mainMode = mode
-        populateData()
+        fetchSchedule()
     }
 }
