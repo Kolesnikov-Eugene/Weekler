@@ -117,6 +117,8 @@
 		44BF98922D077861008A2BA3 /* ApplicationSettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BF98912D077861008A2BA3 /* ApplicationSettingsItem.swift */; };
 		44BF98942D077878008A2BA3 /* AppSettingsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BF98932D077878008A2BA3 /* AppSettingsItem.swift */; };
 		44BF98962D07789A008A2BA3 /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BF98952D07789A008A2BA3 /* SettingsSection.swift */; };
+		44C00B6A2D4AB46F0004DB53 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C00B692D4AB46F0004DB53 /* NotificationService.swift */; };
+		44C00B6C2D4AB5AD0004DB53 /* NotificationServiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C00B6B2D4AB5AD0004DB53 /* NotificationServiceAssembly.swift */; };
 		44C7148D2BD8465300C67B20 /* DaysOfWeek+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C7148C2BD8465300C67B20 /* DaysOfWeek+Extension.swift */; };
 		44CD57A52D13611700EF84F7 /* RoundedBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CD57A42D13611700EF84F7 /* RoundedBackgroundView.swift */; };
 		44CE3BBB2C0BA31C00719B84 /* CreateScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CE3BBA2C0BA31C00719B84 /* CreateScheduleViewController.swift */; };
@@ -260,6 +262,8 @@
 		44BF98912D077861008A2BA3 /* ApplicationSettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationSettingsItem.swift; sourceTree = "<group>"; };
 		44BF98932D077878008A2BA3 /* AppSettingsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettingsItem.swift; sourceTree = "<group>"; };
 		44BF98952D07789A008A2BA3 /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
+		44C00B692D4AB46F0004DB53 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		44C00B6B2D4AB5AD0004DB53 /* NotificationServiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationServiceAssembly.swift; sourceTree = "<group>"; };
 		44C7148C2BD8465300C67B20 /* DaysOfWeek+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DaysOfWeek+Extension.swift"; sourceTree = "<group>"; };
 		44CD57A42D13611700EF84F7 /* RoundedBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBackgroundView.swift; sourceTree = "<group>"; };
 		44CE3BBA2C0BA31C00719B84 /* CreateScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateScheduleViewController.swift; sourceTree = "<group>"; };
@@ -499,6 +503,7 @@
 				4442BA672BE41F38002DC469 /* SceneFactoryAssembly.swift */,
 				44A88DE12CD669B300D4A007 /* CreateScheduleSceneContainerAssembly.swift */,
 				44AE39A72CE2954500D89B23 /* CoreHapticsManagerAssembly.swift */,
+				44C00B6B2D4AB5AD0004DB53 /* NotificationServiceAssembly.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -805,6 +810,7 @@
 			children = (
 				44F305722D19EC5F005B32E1 /* WeeklerUIManager.swift */,
 				446C85602CB85B8700077CC5 /* CoreHapticsManager.swift */,
+				44C00B692D4AB46F0004DB53 /* NotificationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1191,6 +1197,7 @@
 				4418D5E02D0B7845003664E6 /* HelpViewAssembly.swift in Sources */,
 				44AE39A52CE2908600D89B23 /* AppSettingsFlowCoordinator.swift in Sources */,
 				4442BA702BE4277B002DC469 /* SceneFactoryProtocol.swift in Sources */,
+				44C00B6C2D4AB5AD0004DB53 /* NotificationServiceAssembly.swift in Sources */,
 				4442BA6E2BE425F0002DC469 /* AppSettingsVCAssembly.swift in Sources */,
 				444AC12E2CE3E0E60032DA6F /* ServiceAssembly.swift in Sources */,
 				444045E82CFF8F7B00559126 /* AppSettingsViewModel.swift in Sources */,
@@ -1272,6 +1279,7 @@
 				447DBE612BC4A8EB00A99A38 /* AppSettingsViewController.swift in Sources */,
 				4477560D2D481937000DE12F /* CreateScheduleFlowCoordinator.swift in Sources */,
 				44474BA72CF7A28500B03957 /* StatisticsViewModelProtocol.swift in Sources */,
+				44C00B6A2D4AB46F0004DB53 /* NotificationService.swift in Sources */,
 				44727B3D2C48692E007756A3 /* Goal.swift in Sources */,
 				44E28EDA2CEE6DA7001FA0CA /* StatisticsService.swift in Sources */,
 				444B387F2BD1A7BE00141612 /* WeekCalendarCollectionViewCell.swift in Sources */,

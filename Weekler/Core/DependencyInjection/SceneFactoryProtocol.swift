@@ -16,4 +16,5 @@ protocol SceneFactoryProtocol {
     func makeScheduleUseCase() -> ScheduleUseCaseProtocol
     func makeCoreHapticsManager() -> CoreHapticsManagerProtocol?
     func makeSettingsScreen(_ screen: SettingsItem) -> UIViewController
+    func makeNotificationService() -> LocalNotificationServiceProtocol
 }

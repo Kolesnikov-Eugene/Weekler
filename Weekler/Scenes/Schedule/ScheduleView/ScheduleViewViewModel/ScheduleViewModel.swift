@@ -36,6 +36,9 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
     private lazy var scheduleUseCase: ScheduleUseCaseProtocol = {
         dependencies.makeScheduleUseCase()
     }()
+    private lazy var notificationService: LocalNotificationServiceProtocol = {
+        dependencies.makeNotificationService()
+    }()
     private lazy var formatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MMMM yyyy"
@@ -141,14 +144,26 @@ final class ScheduleViewModel: ScheduleViewModelProtocol {
 // MARK: - CreateScheduleDelegate
 extension ScheduleViewModel: CreateScheduleDelegate {
     func didAddTask(_ task: ScheduleTask, mode: ScheduleMode) {
+        // FIXME: - add try await to use case
         Task.detached {
-            await self.scheduleUseCase.insert(task)
+            do {
+                await self.scheduleUseCase.insert(task)
+                try await self.notificationService.addNotification(for: task)
+            } catch {
+                fatalError("Error adding task \(error.localizedDescription)")
+            }
+            
         }
     }
     
     func edit(_ task: ScheduleTask) {
         Task.detached {
-            await self.scheduleUseCase.edit(task)
+            do {
+                await self.scheduleUseCase.edit(task)
+                try await self.notificationService.changeNotification(for: task)
+            } catch {
+                fatalError()
+            }
         }
     }
 }
@@ -165,6 +180,7 @@ extension ScheduleViewModel: ScheduleMainViewModelProtocol {
                 id = self.completedTasks[index].id
             }
             await self.scheduleUseCase.deleteTask(with: id)
+            self.notificationService.removeNotifications(with: [id.uuidString])
         }
     }
     
