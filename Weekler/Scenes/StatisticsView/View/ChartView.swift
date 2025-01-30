@@ -122,17 +122,50 @@ final class ChartView: UIView {
     }
     
     private func updateProgressAnimated() {
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 2.0) {
-                let animation = CABasicAnimation(keyPath: "strokeEnd")
-                animation.duration = 2.0
-                animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
-                self.progressLayer.strokeEnd = self.progress
-                self.progressLayer.add(animation, forKey: "animateCircle")
-                self.progressLabel.text = "\(Int(round(self.progress * 100)))%"
+        let duration: TimeInterval = 2.0
+        let frameRate: Double = 60.0 // Number of frames per second
+        let _ = duration * frameRate
+        let startValue = Int(round(Double(progressLabel.text?.replacingOccurrences(of: "%", with: "") ?? "0") ?? 0.0))
+        let endValue = Int(round(progress * 100))
+        let increment = endValue > startValue ? 1 : -1
+        
+        // Animate Progress Layer
+        let animation = CABasicAnimation(keyPath: "strokeEnd")
+        animation.duration = duration
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        progressLayer.strokeEnd = progress
+        progressLayer.add(animation, forKey: "animateCircle")
+        
+        // Animate Gradient Label
+        var currentValue = startValue
+        let stepDuration = duration / Double(abs(endValue - startValue)) // Time per step
+        
+        if currentValue == 0  {
+            self.progressLabel.text = "0%"
+        }
+
+        Timer.scheduledTimer(withTimeInterval: stepDuration, repeats: true) { timer in
+            if currentValue == endValue {
+                timer.invalidate()
+            } else {
+                currentValue += increment
+                self.progressLabel.text = "\(currentValue)%"
             }
         }
     }
+    
+//    private func updateProgressAnimated() {
+//        DispatchQueue.main.async {
+//            UIView.animate(withDuration: 2.0) { [self] in
+//                let animation = CABasicAnimation(keyPath: "strokeEnd")
+//                animation.duration = 2.0
+//                animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+//                self.progressLayer.strokeEnd = self.progress
+//                self.progressLayer.add(animation, forKey: "animateCircle")
+//                self.progressLabel.text = "\(Int(round(self.progress * 100)))%"
+//            }
+//        }
+//    }
     
     private func calculateAngleFromPercantage(_ percentage: CGFloat) -> CGFloat {
         let angle = Chart.startPointMultiplier + (percentage * Chart.endFullCircleMultiplier)
